@@ -18,7 +18,7 @@
 ## 指引
 
 - 纯纯写作开发故事：[《愿文字带我们穿越时光，连接过去遥想未来》](https://sspai.com/post/43650)
-- 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md) | [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
+- 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md), [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
 - 参与纯纯写作翻译：[translations](https://github.com/drakeet/resources/tree/master/translations)
 
 ## 即将开发或发布内容
@@ -32,7 +32,7 @@
 ## 建议和回答
 
 - 纯纯写作的开发者有哪些人？
-  答：纯纯写作完全由 drakeet 一人设计和开发，并复制所有相关事务。
+  - 答：纯纯写作完全由 drakeet 一人设计和开发，并复制所有相关事务。
 
 ## Markdown 简明教程
 
