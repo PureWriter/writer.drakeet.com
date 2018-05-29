@@ -160,7 +160,7 @@ strong {
   font-weight:700;
 }
 
-.downloads li + li {
+.downloads li + li + li {
   border-right:none;
   width:89px;
 }
@@ -255,11 +255,11 @@ footer {
   }
 
   .downloads {
-    width:100%;
+    width:99%;
   }
 
-  .downloads li, .downloads li + li {
-    width:50%;
+  .downloads li, .downloads li + li + li {
+    width:33%;
   }
 }
 
