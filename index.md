@@ -1,37 +1,56 @@
-## Welcome to GitHub Pages
+## 新版特性 v3.6.0
 
-You can use the [editor on GitHub](https://github.com/PureWriter/writer.chunchun.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+- **新增 打字机模式（在快捷输入板第三栏）**
+- 支持 全量备份、发送文章到 WebDAV 云盘，以及从云盘拉取文章内容
+- 支持 编辑快捷输入项和修改顺序
+- 修复 点击空白位置把光标定位到文末并唤起键盘
+- 新增 废纸篓（在文件夹列表中）
+- 新增 定时主动检查数据库内容与当前编辑器中的内容是否对等，确保文章正常保存，否则警告用户
+- 支持 导出 txt/md/长图片 文件
+- 支持 本地图片作为自定义稿纸
+- 支持 全屏范围可拉出侧栏文章列表
+- 支持 切换前后台时键盘的状态保存与恢复
+- 优化 点击文章底部文字后光标焦点高度，动态计算，可视范围更广
+- 优化 软键盘弹出逻辑，现在拥有更完美的键盘弹起响应
+- 优化 在编辑器页面往下滑动收起软键盘的流畅性
+- 新增「开源许可证」页面
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## 指引
 
-### Markdown
+- 纯纯写作开发故事：[《愿文字带我们穿越时光，连接过去遥想未来》](https://sspai.com/post/43650)
+- 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md) | [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
+- 参与纯纯写作翻译：[translations](https://github.com/drakeet/resources/tree/master/translations)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## 即将开发或发布内容
+
+- 全屏模式开关
+- 段间距开关
+- 适配印象笔记、Google Drive、Dropbox
+- 改善文章列表排序，提供置顶
+- 文件夹重命名
+
+## 建议和回答
+
+- 纯纯写作的开发者有哪些人？
+  答：纯纯写作完全由 drakeet 一人设计和开发，并复制所有相关事务。
+
+## Markdown 简明教程
+
+Markdown 是一种用纯文本表达富文本内容的标记语言。它简单易学，纯纯写作支持 Markdown(MD)，您可以点击`快捷输入栏` 右边的 `□ MD` 勾选启用。
+
+Markdown 使用 Markdown 需要至少了解以下内容：
+
+- Markdown 规定，两段之间必须**空一行**或者在**段尾部空两格**，才能真正在渲染时换行，比如：
 
 ```markdown
-Syntax highlighted code block
+第一行
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+第二行
 ```
+- 使用**前后两个星号**可以加粗文字，如：`**被加粗的内容**`
+- 使用**前后一个下划线符合**可以斜体文字，如：`_被斜体的内容_`
+- 更多格式可以参加快捷输入板的那些快捷图标，应该都很明显，尝试一番就基本掌握了
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### 帮助
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/PureWriter/writer.chunchun.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：drakeet.me@gmail.com
