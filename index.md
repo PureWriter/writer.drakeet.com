@@ -1,14 +1,15 @@
-### 为什么要创建这个页面以及关于时光机页面改动
+## 指引
 
-我觉得有必要创建一个页面和用户解释、传达各种信息，才能避免许多问题、才能让用户更理解纯纯写作的设计用意、更好地使用它，因此右侧就先暂时放一个动态 web 页面。
-而时光机的位置移动，主要是后台数据统计，时光机的使用率非常低，由于在右侧，容易导致写作体验断片、不连续，而且很容易被忽略，就算我是它的开发者，我也几乎想不到用它来临时记录灵感。因此尝试改变，放到下面更像一个软键盘输入源，更符合直觉，而且收起软键盘和恢复软键盘交互也更流畅，没有大动作，反而不会干扰写作一体性。
+纯纯写作，是一个令人感到安心、拥有历史记录、多重防止文章丢失功能，和许多写作辅助的编辑器。
 
-另外，这只是尝试和初级版本，如果有照顾不周的地方麻烦原谅和理解我一下，您也可以写信告诉我你的想法，但不要抱怨和不高兴，只要和气，我很愿意考虑和做出更好改变。
+- 纯纯写作开发故事：[《愿文字带我们穿越时光，连接过去遥想未来》](https://sspai.com/post/43650)
+- 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md), [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
+- 参与纯纯写作翻译：[translations](https://github.com/drakeet/resources/tree/master/translations)
+- 纯纯写作官方 telegram 用户群：[@PureWriters](https://t.me/purewriter)
 
-## 新版特性 v4.0.2
-- **加快 冷启动速度**
-- **修复 时光机 Shortcut**
-- 修改 时光机展示位置到快捷输入板栏目中（若要快速关闭快捷输入板，可按住快捷输入栏往下拖动即可）
+## 新版特性 v4.3.0
+- **新增 在时光机页面分享纯纯写作功能**
+- **新增 在设置页面中提供了关闭主页悬浮字数统计的开关**
 - 改善 「视一个单词为一个计数」统计逻辑，支持中英文混合统计了
 - 新增 打字机模式（在快捷输入板第三栏）
 - 支持 全量备份、发送文章到 WebDAV 云盘，以及从云盘拉取文章内容
@@ -25,20 +26,11 @@
 - 优化 在编辑器页面往下滑动收起软键盘的流畅性
 - 新增「开源许可证」页面
 
-## 指引
-
-- 纯纯写作开发故事：[《愿文字带我们穿越时光，连接过去遥想未来》](https://sspai.com/post/43650)
-- 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md), [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
-- 参与纯纯写作翻译：[translations](https://github.com/drakeet/resources/tree/master/translations)
-- 纯纯写作官方 telegram 用户群：[@PureWriters](https://t.me/purewriter)
-
 ## 即将开发或发布内容
 
-- 全屏模式开关
 - 段间距开关
 - 适配印象笔记、Google Drive、Dropbox
 - 改善文章列表排序，提供置顶
-- 文件夹重命名
 
 ## 建议和回答
 
@@ -87,3 +79,9 @@ __如果在纯纯写作设置页面开启 `GFM Line Breaks` 则只需要一个�
 ### 帮助
 
 如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：drakeet.me@gmail.com
+
+### 为什么要创建这个页面
+
+我觉得有必要创建一个页面和用户解释、传达各种信息，才能避免许多问题、才能让用户更理解纯纯写作的设计用意、更好地使用它。
+
+如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！
