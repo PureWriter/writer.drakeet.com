@@ -1,5 +1,7 @@
 ### [纯纯写作](/) - 自动备份与云备份教程
 
+注：这个教程很容易的，为了万无一失的备份，请您务必试一试，最后您不仅会觉得很简单，而且将学到许多有用的内容。
+
 #### 自动备份
 
 默认情况下，一旦您的文章内容发生变化且离开纯纯写作，纯纯写作就会自动备份您的所有文章、时光机等内容，这些备份将存储在您的手机内置存储空间 `backups` 或 `backups/PureWriterAutoBackups` 目录下。即使您卸载重装纯纯写作，您仍然能够进入 **纯纯写作 - 设备 - 备份** 页面点击 **恢复备份** 来恢复您先前的备份。
@@ -32,13 +34,13 @@ https://www.jianguoyun.com/d/signup
 
 注册后，您将进入坚果云网盘网页端，可见如下内容：
 
-![image-20190106145739198](/Users/drakeet/Library/Application Support/typora-user-images/image-20190106145739198.png)
+![坚果云主页.png](https://i.loli.net/2019/01/06/5c31aa81ba3d2.png)
 
 点击右上角账户名处选择 【**账户信息**】，然后选择【**安全选项**】。
 
 在 安全选项 中找到 **第三方应用管理**，并选择 **添加应用**，输入名称如：`纯纯写作`后，选择 **生成密码**，选择完成，您将得到类似如下内容：
 
-![image-20190106150111480](/Users/drakeet/Library/Application Support/typora-user-images/image-20190106150111480.png)
+![坚果云WebDAV.png](https://i.loli.net/2019/01/06/5c31aa81a3f38.png)
 
 其中 `https://dav.jianguoyun.com/dav/` 就是您将填入纯纯写作 **WebDAV 网址** 的内容；【使用情况：】后面的邮箱地址就是你的 **WebDAV 账号**；点击显示密码后得到的密码就是你的 **WebDAV 密码**。
 
