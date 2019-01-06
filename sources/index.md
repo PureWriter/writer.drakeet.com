@@ -32,6 +32,7 @@
 
 ### 其它介绍
 
+- [**《纯纯写作自动备份与云备份教程》**](backups)
 - [《纯纯写作保护机制》](protections)
 - [《Markdown 简明教程》](markdown)
 
