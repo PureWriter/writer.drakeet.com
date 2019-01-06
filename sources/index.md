@@ -25,6 +25,7 @@
 ### 下载
 
 **酷安**: https://www.coolapk.com/apk/com.drakeet.purewriter
+
 **Google Play**: https://play.google.com/store/apps/details?id=com.drakeet.purewriter
 
 
