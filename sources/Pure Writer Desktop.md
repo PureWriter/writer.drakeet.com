@@ -2,7 +2,7 @@
 
 
 
-> Pure Writer Writer Desktop itself is completely FREE, and **it is currently very basic**, providing only two-directions real-time synchronous editing for your current article, even it may not work for you at all ⚠️⚠️⚠️. **If you are going to pay _JUST_ for this Desktop, I strongly recommend that you reconsider it.**
+> Pure Writer Writer Desktop itself is completely FREE and **open-source**. **It is currently very basic**, providing only two-directions real-time synchronous editing for your current article, even it may not work for you at all ⚠️⚠️⚠️. **If you are going to pay _JUST_ for this Desktop, I strongly recommend that you reconsider it.**
 
 This is the first alpha version of Pure Writer Desktop, which is designed and developed by me just like [Pure Writer for Android](https://writer.drakeet.com). It is very difficult to develop this desktop version. At present, it is still very basic. It can only provide basic real-time connection and synchronous editing. If you encounter dissatisfaction or problems during use, please understand and wait for its subsequent updates.
 
@@ -19,6 +19,10 @@ This is the first alpha version of Pure Writer Desktop, which is designed and de
 - **7z unziper**: https://www.7-zip.org
 
 - Baidu Cloud: https://pan.baidu.com/s/1nkkwVjuB3NQ_ZCF8yWMo1Q Code: m174
+
+#### Open Source
+
+Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
