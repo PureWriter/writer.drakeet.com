@@ -12,7 +12,7 @@
 
 #### 下载
 
-- 百度云网盘下载: https://pan.baidu.com/s/1nkkwVjuB3NQ_ZCF8yWMo1Q 提取码: m174
+- 百度云网盘下载: https://pan.baidu.com/s/1bNkwN4mivhaiz3nK_GBXww 提取码: t5va
 
 - GitHub 直链下载：
 
@@ -80,4 +80,3 @@
 
 - 纯纯写作介绍：https://writer.drakeet.com
 
-  

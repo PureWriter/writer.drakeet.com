@@ -18,7 +18,7 @@ This is the first alpha version of Pure Writer Desktop, which is designed and de
 
 - **7z unziper**: https://www.7-zip.org
 
-- Baidu Cloud: https://pan.baidu.com/s/1nkkwVjuB3NQ_ZCF8yWMo1Q Code: m174
+- Baidu Cloud: https://pan.baidu.com/s/1bNkwN4mivhaiz3nK_GBXww Code: t5va
 
 #### Open Source
 

@@ -22,7 +22,7 @@
 
 - **7z 壓縮格式解壓軟體**: https://www.7-zip.org
 
-- 百度雲端硬碟下載: https://pan.baidu.com/s/1nkkwVjuB3NQ_ZCF8yWMo1Q 提取碼: m174
+- 百度雲端硬碟下載: https://pan.baidu.com/s/1bNkwN4mivhaiz3nK_GBXww 提取碼: t5va
 
 #### 純純寫作桌面版原始碼
 
