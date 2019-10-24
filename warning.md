@@ -10,9 +10,11 @@
 
 （四）制作、出售假冒他人署名的美术作品的。
 
-* 《中华人民共和国刑法》http://www.npc.gov.cn/wxzl/gongbao/2000-12/17/content_5004680.htm
+* [《中华人民共和国刑法》](http://www.npc.gov.cn/wxzl/gongbao/2000-12/17/content_5004680.htm)
 
-* 《盗版获利 **600** 元被告索赔 300 万》https://www.v2ex.com/t/576941?p=3
+* [《中華民國著作權法》](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=J0070017)
+
+* **[在 v2ex 上的真实案例：《盗版获利 __600__ 元被告索赔 300 万》 ](https://www.v2ex.com/t/576941?p=3)**
 
 **检查到你正在使用破解版或盗版且存在木马程序的纯纯写作！请使用正版！**
 
