@@ -1,6 +1,6 @@
 ### 纯纯写作桌面版 - Pure Writer Desktop
 
-**[English version README](./desktop_en) 👈** | **[繁體中文版說明](./desktop_zh) 👈**
+###### **[English version README](./desktop_en) 👈** | **[繁體中文版說明](./desktop_zh) 👈**
 
 
 
