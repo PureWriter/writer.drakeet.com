@@ -8,6 +8,12 @@ This is the first alpha version of Pure Writer Desktop, which is designed and de
 
 #### Download
 
+⚠️ The path to store Pure Writer Desktop for Windows **cannot contain non-English characters**, otherwise it will not work properly
+
+⚠️ The path to store Pure Writer Desktop for Windows **cannot contain non-English characters**, otherwise it will not work properly
+
+⚠️ The path to store Pure Writer Desktop for Windows **cannot contain non-English characters**, otherwise it will not work properly
+
 - GitHub：
 
   [PureWriter-0.1.6-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.1.6/PureWriter-0.1.6-Windows-x64.7z)
@@ -43,20 +49,6 @@ Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 - Currently, you need to ensure that Pure Writer Android is not killed by the system in the background, otherwise, it will be disconnected and cannot continue editing the current article. This will be resolved later.
 
 - For the macOS version, since I don't currently have an **Apple Developer account**, I can't sign the app. If your system has a network firewall enabled, the mac system will ask the user whether it is allowed to access the network each time. Click Allow, please. This will be resolved later, or if you know how to solve this problem as soon as possible, you can contact me, thank you!
-
-- The current packages are large, I will improve this later.
-
-- Pure Writer Desktop is also inseparable from open source project support. It uses JDK 8 and the following open source projects. The subsequent open-source agreements will be added to the application. If it currently infringes your rights, please contact me, I will immediately take it down:
-
-    ```
-    org.jetbrains.kotlin:kotlin-stdlib-jdk8
-    io.netty:netty-all:4.1.38.Final
-    com.google.protobuf:protobuf-java:3.9.1
-    io.reactivex.rxjava2:rxjava:2.2.11
-    com.jakewharton.rxrelay2:rxrelay:2.1.1
-    com.google.code.gson:gson:2.8.5
-    io.reactivex:rxjavafx:2.0.2
-    ```
 
 - emoji is currently not displayed properly
 

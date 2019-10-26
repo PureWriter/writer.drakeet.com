@@ -12,6 +12,12 @@
 
 #### 下載
 
+注意：Windows 版**存放路徑中不能包含中文**目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️
+
+注意：Windows 版**存放路徑中不能包含中文**目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️
+
+注意：Windows 版**存放路徑中不能包含中文**目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️
+
 - GitHub 直鏈下載：
 
   [PureWriter-0.1.6-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.1.6/PureWriter-0.1.6-Windows-x64.7z)
@@ -51,20 +57,6 @@
 - 目前，您需要保證純純寫作 Android 在後台不被系統殺死，否則將會斷開連線，無法繼續編輯目前文章，後續將解決這個問題
 
 - 對於 macOS 版，因為我目前沒有 Apple 開發者帳號，所以無法對應用進行簽名，如果您的系統開啟了網路防火牆，mac 系統會每次詢問使用者是否允許其訪問網路，請點擊允許或 allow，這將在之後解決，或者如果您知道如何儘快解決這個問題，可以聯繫我，謝謝！
-
-- 目前安裝包體積比較大，後續改善
-
-- 純純寫作桌面版同樣離不開開源項目支援，它使用到 JDK 8 和如下開源項目，後續將在應用內補充各開源協議，如果它目前侵犯了您的權益，請與我聯繫，我將立即下架它：
-
-    ```
-    org.jetbrains.kotlin:kotlin-stdlib-jdk8
-    io.netty:netty-all:4.1.38.Final
-    com.google.protobuf:protobuf-java:3.9.1
-    io.reactivex.rxjava2:rxjava:2.2.11
-    com.jakewharton.rxrelay2:rxrelay:2.1.1
-    com.google.code.gson:gson:2.8.5
-    io.reactivex:rxjavafx:2.0.2
-    ```
 
 - emoji 目前都無法正常顯示
 
