@@ -16,11 +16,11 @@ This is the first alpha version of Pure Writer Desktop, which is designed and de
 
 - GitHub：
 
-  [PureWriter-0.1.7-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.1.7/PureWriter-0.1.7-Windows-x64.7z)
+  [PureWriter-0.2-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-Windows-x64.7z)
 
-  [PureWriter-0.1.7-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.1.7/PureWriter-0.1.7-Windows-x64.zip)
+  [PureWriter-0.2-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-Windows-x64.zip)
 
-  [PureWriter-0.1.7-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.1.7/PureWriter-0.1.7-macOS.dmg)
+  [PureWriter-0.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-macOS.dmg)
 
 - **7z unziper**: https://www.7-zip.org
 
@@ -34,7 +34,7 @@ Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 
 - The path to store Pure Writer Desktop **cannot contain non-English characters**, otherwise it will not work properly
 
-- Pure Writer Desktop 0.1.7 version, which must be used with Pure Writer 13.9.3 or above
+- Pure Writer Desktop 0.2 version, which must be used with Pure Writer 14.7.2 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
