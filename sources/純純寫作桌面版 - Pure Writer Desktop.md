@@ -20,11 +20,11 @@
 
 - GitHub 直鏈下載：
 
-  [PureWriter-0.2-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-Windows-x64.7z)
+  [PureWriter-0.2.2-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-Windows-x64.7z)
 
-  [PureWriter-0.2-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-Windows-x64.zip)
+  [PureWriter-0.2.2-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-Windows-x64.zip)
 
-  [PureWriter-0.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.2/PureWriter-0.2-macOS.dmg)
+  [PureWriter-0.2.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-macOS.dmg)
 
 - **7z 壓縮格式解壓軟體**: https://www.7-zip.org
 
@@ -38,7 +38,7 @@
 
 - 純純寫作桌面版**必須和手機同處於一個 Wi-Fi 或熱點網路**下才可以相互連線
 
-- *純純寫作桌面版 0.2* 版本**必須和純純寫作 14.7.2 或以上版本才能搭配使用**
+- *純純寫作桌面版 0.2.2* 版本**必須和純純寫作 15.0.2 或以上版本才能搭配使用**
 
 - 我在開發這個 0.1 版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，**請不要驚慌**，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：https://writer.drakeet.com/backups
 
