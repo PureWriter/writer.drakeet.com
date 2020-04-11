@@ -38,11 +38,11 @@ Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
-- During the development of this version 0.1, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don't worry, if you get this type of problem, please don't panic because Pure Writer for Android supports multiple backups and measures to prevent loss. If you encounter an error, you can recover/restore it by using "History" or "Undo" in the top right corner. More about automatic backup and cloud backup: https://writer.drakeet.com/backups
+- During the development of this version 0.2.2, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don't worry, if you get this type of problem, please don't panic because Pure Writer for Android supports multiple backups and measures to prevent loss. If you encounter an error, you can recover/restore it by using "History" or "Undo" in the top right corner. More about automatic backup and cloud backup: https://writer.drakeet.com/backups
 
-- Pure Writer version 0.1 does not support automatic indentation when adding new line breaks, which will be supported later. Now you can ignore the indentation. After the article is finished, open the "Formatters" in the top right corner of Pure Writer Android. The tool can automatically insert the indent at the beginning of every paragraph.
+- Pure Writer version 0.2.2 does not support automatic indentation when adding new line breaks, which will be supported later. Now you can ignore the indentation. After the article is finished, open the "Formatters" in the top right corner of Pure Writer Android. The tool can automatically insert the indent at the beginning of every paragraph.
 
-- Pure Writer version 0.1 does not support editing titles on your computer
+- Pure Writer version 0.2.2 does not support editing titles on your computer
 
 - When modifying the current article title on the phone, it will not be synced to the desktop version in real-time. After you modify the body content, the title will be sent to the computer along with the text for simultaneous display. This issue will be fixed in a later release.
 
