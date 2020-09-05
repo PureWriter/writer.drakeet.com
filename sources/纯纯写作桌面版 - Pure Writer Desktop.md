@@ -22,11 +22,11 @@
 
 - GitHub 直链下载：
 
-  [PureWriter-0.2.2-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-Windows-x64.7z)
+  [PureWriter-0.3.0-Windows-x6̥4̥.7z](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-Windows-x64.7z)
 
-  [PureWriter-0.2.2-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-Windows-x64.zip)
+  [PureWriter-0.3.0-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-Windows-x64.zip)
 
-  [PureWriter-0.2.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.2.2/PureWriter-0.2.2-macOS.dmg)
+  [PureWriter-0.3.0-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-macOS.dmg)
 
 - **7z 压缩格式解压软件**: https://www.7-zip.org
 
@@ -38,17 +38,17 @@
 
 - 纯纯写作桌面版**必须和手机同处于一个 Wi-Fi 或热点网络**下才可以相互连接
 
-- *纯纯写作桌面版 0.2.2* 版本**必须和纯纯写作 15.0.2 或以上版本才能搭配使用**
+- *纯纯写作桌面版 0.3.0* 版本**必须和纯纯写作 17.7.10 或以上版本才能搭配使用**
 
-- 我在开发这个 0.2.2 版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，**请不要惊慌**，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：https://writer.drakeet.com/backups
+- 我在开发这个 0.3.0 版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，**请不要惊慌**，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：https://writer.drakeet.com/backups
 
 - macOS 版不支持第三方输入法标点符号，**请使用原生输入法**
 
 - **切换章节时，Android 端可能接收到错误的同步信息，请在切换章节时留意两端的内容，如果不对劲，及时进行撤销或通过「历史记录」进行恢复章节内容**
 
-- 纯纯写作 0.2.2 版本不支持在换行的时候自动缩进，这将在后续提供支持，目前您可以忽略缩进，等到文章完稿后，打开纯纯写作 Android 版右上角的「格式化工具」，通过格式化工具可以统一自动在段首插入缩进
+- 纯纯写作 0.3.0 版本不支持在换行的时候自动缩进，这将在后续提供支持，目前您可以忽略缩进，等到文章完稿后，打开纯纯写作 Android 版右上角的「格式化工具」，通过格式化工具可以统一自动在段首插入缩进
 
-- 纯纯写作 0.2.2 版本不支持在电脑上修改标题
+- 纯纯写作 0.3.0 版本不支持在电脑上修改标题
 
 - 当在手机上修改当前文章标题时，不会实时同步到桌面版上，需要等到您修改正文内容后，标题会随着正文一同发给电脑进行同步显示。这个问题将在后续版本修正
 
