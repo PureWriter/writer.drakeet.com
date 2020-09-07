@@ -26,7 +26,7 @@
 
   [PureWriter-0.3.0-Windows-x6̥4̥.zip](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-Windows-x64.zip)
 
-  [PureWriter-0.3.0-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-macOS.dmg)
+  [PureWriter-0.3.0-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/0.3.0/PureWriter-0.3.0-macOS.pkg)
 
 - **7z 压缩格式解压软件**: https://www.7-zip.org
 
