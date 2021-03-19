@@ -38,7 +38,7 @@ Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
-- During the development of this version 0.3.1, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don't worry, if you get this type of problem, please don't panic because Pure Writer for Android supports multiple backups and measures to prevent loss. If you encounter an error, you can recover/restore it by using "History" or "Undo" in the top right corner. More about automatic backup and cloud backup: https://writer.drakeet.com/backups
+- During the development of this version 0.3.1, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don't worry, if you get this type of problem, please don't panic because Pure Writer for Android supports multiple Documents/PureWriter/Backups and measures to prevent loss. If you encounter an error, you can recover/restore it by using "History" or "Undo" in the top right corner. More about automatic backup and cloud backup: https://writer.drakeet.com/Documents/PureWriter/Backups
 
 - Pure Writer version 0.3.1 does not support automatic indentation when adding new line breaks, which will be supported later. Now you can ignore the indentation. After the article is finished, open the "Formatters" in the top right corner of Pure Writer Android. The tool can automatically insert the indent at the beginning of every paragraph.
 
@@ -58,4 +58,4 @@ Pure Writer Desktop is open source: https://github.com/PureWriter/desktop
 
 (I wrote this article twice, the first time is written directly in the edit box on GitHub, it may be that I accidentally triggered the return button, so when I finally wrote it, it was completely lost. QAQ, very distressed, I didn't expect that I also had this day, and it happened at this moment, it was too dramatic! So I opened Pure Writer Desktop and rewritten this article again on Pure Writer Desktop from beginning to end. Great, it didn't have any problems, with the peace of mind writing experience, feeling awesome ^ ^)
 
-##### Pure Writer cloud backup：https://writer.drakeet.com/backups_en
+##### Pure Writer cloud backup：https://writer.drakeet.com/Documents/PureWriter/Backups_en
