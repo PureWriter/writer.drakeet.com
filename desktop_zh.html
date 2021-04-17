@@ -2,20 +2,22 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>純純寫作桌面版 - Pure Writer Desktop</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+<title>純純寫作桌面版 - Pure Writer Desktop</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
@@ -24,14 +26,14 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
 button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
 p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -43,11 +45,11 @@ h6 { font-size: 1rem; }
 .hidden { display: none; }
 .md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
 a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.701961); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px !important; }
+figure > table { margin: 0px; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
@@ -76,28 +78,31 @@ div.hr:focus { cursor: none; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
 li { margin: 0px; position: relative; }
 blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
   #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
 .md-task-list-item { position: relative; list-style-type: none; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
@@ -141,12 +146,22 @@ a.md-print-anchor { white-space: pre !important; border: none !important; displa
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
-[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
 [lang="mermaid"] .node text { font-size: 1rem; }
 table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print { 
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
 
 
 :root {
@@ -156,12 +171,16 @@ iframe { max-width: 100%; width: 100%; border: none; }
 
 @include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
-html {
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
     font-size: 16px;
 }
 
 body {
-    font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgb(51, 51, 51);
     line-height: 1.6;
 }
@@ -172,6 +191,19 @@ body {
   	padding: 30px;
     padding-bottom: 100px;
 }
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
 #write > ul:first-child,
 #write > ol:first-child{
     margin-top: 30px;
@@ -226,17 +258,33 @@ h6 code {
     font-size: inherit;
 }
 h1 {
-    padding-bottom: .3em;
     font-size: 2.25em;
     line-height: 1.2;
     border-bottom: 1px solid #eee;
 }
 h2 {
-   padding-bottom: .3em;
     font-size: 1.75em;
     line-height: 1.225;
     border-bottom: 1px solid #eee;
 }
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
 h3 {
     font-size: 1.5em;
     line-height: 1.43;
@@ -309,24 +357,24 @@ table tr:nth-child(2n),
 thead {
     background-color: #f8f8f8;
 }
-table tr th {
+table th {
     font-weight: bold;
     border: 1px solid #dfe2e5;
     border-bottom: 0;
     margin: 0;
     padding: 6px 13px;
 }
-table tr td {
+table td {
     border: 1px solid #dfe2e5;
     margin: 0;
     padding: 6px 13px;
 }
-table tr th:first-child,
-table tr td:first-child {
+table th:first-child,
+table td:first-child {
     margin-top: 0;
 }
-table tr th:last-child,
-table tr td:last-child {
+table th:last-child,
+table td:last-child {
     margin-bottom: 0;
 }
 
@@ -496,10 +544,14 @@ header, .context-menu, .megamenu-content, footer{
     background: #999;
 }
 
- .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+ :root {--mermaid-font-zoom:1em ;} 
 </style>
 </head>
-<body class='typora-export' >
-<div  id='write'  class = 'is-mac first-line-indent'><h3><a name="純純寫作桌面版---pure-writer-desktop" class="md-header-anchor"></a><span>純純寫作桌面版 - Pure Writer Desktop</span></h3><h6><a name="english-version-readmedesktopen-👈" class="md-header-anchor"></a><strong><a href='./desktop_en'><span>English version README</span></a><span> 👈</span></strong></h6><p>&nbsp;</p><blockquote><p><span>純純寫作桌面版本身完全免費、完全開源，</span><strong><span>它目前非常初級</span></strong><span>，只提供了雙向即時同步編輯目前文章這個功能，甚至它可能對您來說完全不能用 ⚠️⚠️⚠️。</span><strong><span>如果您打算 </span><em><span>僅僅</span></em><span> 因為這個桌面版而付費，我強烈建議您重新考慮這件事情。</span></strong></p></blockquote><blockquote><p><span>我不得不強調這件事情的原因在於，很多人因為目前的純純寫作桌面版無法使用而要求我退款給他們，當然了，我都退給他們了，但這花費了我很多的時間和精力去解決這些事情，純純寫作的所有客服工作也都是我一個人在做，這導致我沒有時間去開發和改善純純寫作 Android 版的體驗，甚至休息時間變得非常緊張和倍感壓力，以至於影響到我的精神狀態和健康。純純寫作桌面版目前只能說隨緣使用，如果不是這樣，大家可能一年半載都見不到它 —— 因為很多人每天都來催我，所以我提前發布了它，但很可能它在使用上有許多令您不滿的地方或問題，我非常抱歉，所以，請不要 </span><em><span>僅僅</span></em><span> 因為純純寫作桌面版而付費純純寫作，純純寫作還有很多優秀的其它功能，請為它們付費。我每時每刻都在想著下一步怎麼把純純寫作做得更好，請大家給我更多時間和理解，靜待更新，非常非常感謝！</span></p></blockquote><p><span>這是純純寫作桌面版的第一個測試版本，它和</span><a href='https://writer.drakeet.com'><span>純純寫作 Android 版</span></a><span>一樣完全由我一個人設計和開發。開發這個桌面版可以說十分不容易，目前它還十分初級，只能夠提供基礎的雙向即時連線和同步編輯功能，如果您在使用過程中遇到不滿的地方或問題，請諒解和理解，靜待其後續更新。</span></p><h4><a name="下載" class="md-header-anchor"></a><span>下載</span></h4><p><span>注意：Windows 版</span><strong><span>存放路徑中不能包含中文</span></strong><span>目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️</span></p><p><span>注意：Windows 版</span><strong><span>存放路徑中不能包含中文</span></strong><span>目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️</span></p><p><span>注意：Windows 版</span><strong><span>存放路徑中不能包含中文</span></strong><span>目錄，否則將會無法使用❗️❗️❗️另外，請在下載之前閱讀底下的注意事項❗️❗️❗️</span></p><ul><li><p><span>GitHub 直鏈下載：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/0.3.1/PureWriter-0.3.1-Windows-x64.7z'><span>PureWriter-0.3.1-Windows-x6̥4̥.7z</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/0.3.1/PureWriter-0.3.1-Windows-x64.zip'><span>PureWriter-0.3.1-Windows-x6̥4̥.zip</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/0.3.1/PureWriter-0.3.1-macOS.pkg'><span>PureWriter-0.3.1-macOS.pkg</span></a><span>(👈 蘋果電腦 macOS 版, 下載後請右鍵點擊這個 pkg 文件並選擇"打開"來安裝它)</span></p></li><li><p><strong><span>7z 壓縮格式解壓軟體</span></strong><span>: </span><a href='https://www.7-zip.org' target='_blank' class='url'>https://www.7-zip.org</a></p></li><li><p><span>百度雲端硬碟下載: </span><a href='https://pan.baidu.com/s/1bNkwN4mivhaiz3nK_GBXww' target='_blank' class='url'>https://pan.baidu.com/s/1bNkwN4mivhaiz3nK_GBXww</a><span> 提取碼: t5va</span></p></li></ul><h4><a name="純純寫作桌面版原始碼" class="md-header-anchor"></a><span>純純寫作桌面版原始碼</span></h4><p><span>純純寫作桌面版現</span><strong><span>已完全開源</span></strong><span>！完整原始碼請見：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4><a name="目前為止純純寫作桌面版存在一些已知問題請您務必逐一了解⚠️-這非常非常重要❗️❗️❗️" class="md-header-anchor"></a><span>目前為止，純純寫作桌面版存在一些已知問題，請您務必逐一了解，⚠️ 這非常非常重要❗️❗️❗️：</span></h4><ul><li><span>純純寫作桌面版</span><strong><span>必須和手機同處於一個 Wi-Fi 或熱點網路</span></strong><span>下才可以相互連線</span></li><li><em><span>純純寫作桌面版 0.3.1</span></em><span> 版本</span><strong><span>必須和純純寫作 17.7.10 或以上版本才能搭配使用</span></strong></li><li><span>我在開發這個 0.3.1 版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，</span><strong><span>請不要驚慌</span></strong><span>，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li><li><span>macOS 版不支援第三方輸入法標點符號，</span><strong><span>請使用原生輸入法</span></strong></li><li><strong><span>切換章節時，Android 端可能接收到錯誤的同步訊息，請在切換章節時留意兩端的內容，如果不對勁，及時進行復原或透過「歷史記錄」進行復原章節內容</span></strong></li><li><span>Windows 版</span><strong><span>存放路徑中不能包含中文</span></strong><span>目錄，否則將會無法使用</span></li><li><span>純純寫作 0.3.1 版本不支援在換行的時候自動縮排，這將在後續提供支援，目前您可以忽略縮排，等到文章完稿後，打開純純寫作 Android 版右上角的「格式化工具」，透過格式化工具可以統一自動在段首插入縮排</span></li><li><span>純純寫作 0.3.1 版本不支援在電腦上修改標題</span></li><li><span>當在手機上修改目前文章標題時，不會即時同步到桌面版上，需要等到您修改正文內容後，標題會隨著正文一同發給電腦進行同步顯示。這個問題將在後續版本修正</span></li><li><span>目前，您需要保證純純寫作 Android 在後台不被系統殺死，否則將會斷開連線，無法繼續編輯目前文章，後續將解決這個問題</span></li><li><span>對於 macOS 版，因為我目前沒有 Apple 開發者帳號，所以無法對應用進行簽名，如果您的系統開啟了網路防火牆，mac 系統會每次詢問使用者是否允許其訪問網路，請點擊允許或 allow，這將在之後解決，或者如果您知道如何儘快解決這個問題，可以聯繫我，謝謝！</span></li><li><span>emoji 目前都無法正常顯示</span></li></ul><p><span>（以上這篇文章我寫了兩遍，第一遍是直接在 GitHub 上的編輯框裡寫的，可能是我一不小心觸發了返回鍵，於是當我好不容易寫好了，它完全遺失了 QAQ，很苦惱，沒想到我也有這一天，而且是發生在這種時刻，這太戲劇化了！於是我打開純純寫作桌面版，從頭到尾重新在純純寫作桌面版上又寫了一遍這篇文章，太好了，它沒有出現任何問題，安心的寫作體驗，感覺真棒^ ^）</span></p><blockquote><p><span>純純寫作桌面版本身完全免費，並且</span><strong><span>它目前非常初級</span></strong><span>，只提供了雙向即時同步編輯目前文章這個功能，甚至它可能對您來說完全不能用 ⚠️⚠️⚠️。</span><strong><span>如果您打算 </span><em><span>僅僅</span></em><span> 因為這個桌面版而付費，我強烈建議您重新考慮這件事情。</span></strong></p></blockquote><blockquote><p><span>我不得不強調這件事情的原因在於，很多人因為目前的純純寫作桌面版無法使用而要求我退款給他們，當然了，我都退給他們了，但這花費了我很多的時間和精力去解決這些事情，純純寫作的所有客服工作也都是我一個人在做，這導致我沒有時間去開發和改善純純寫作 Android 版的體驗，甚至休息時間變得非常緊張和倍感壓力，以至於影響到我的精神狀態和健康。純純寫作桌面版目前只能說隨緣使用，如果不是這樣，大家可能一年半載都見不到它 —— 因為很多人每天都來催我，所以我提前發布了它，但很可能它在使用上有許多令您不滿的地方或問題，我非常抱歉，所以，請不要 </span><em><span>僅僅</span></em><span> 因為純純寫作桌面版而付費純純寫作，純純寫作還有很多優秀的其它功能，請為它們付費。我每時每刻都在想著下一步怎麼把純純寫作做得更好，請大家給我更多時間和理解，靜待更新，非常非常感謝！</span></p></blockquote><p><span>更多純純寫作進階版功能（只要您啟動純純寫作 Pro，您可以使用以下所有內容，以及後續的更多進階版內容，無需多次付費）：</span></p><p><img src='https://user-images.githubusercontent.com/5214214/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png' alt='Pure Writer Pro' referrerPolicy='no-referrer' /></p><h5><a name="純純寫作介紹httpswriterdrakeetcom" class="md-header-anchor"></a><span>純純寫作介紹：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5></div>
+<body class='typora-export'>
+<div id='write'  class=''><h3><a name="純純寫作桌面版---pure-writer-desktop" class="md-header-anchor"></a><span>純純寫作桌面版 - Pure Writer Desktop</span></h3><h6><a name="english-version-readmedesktopen-👈--简体中文说明desktop-👈" class="md-header-anchor"></a><strong><a href='./desktop_en'><span>English version README</span></a><span> 👈</span></strong><span> | </span><strong><a href='./desktop'><span>简体中文说明</span></a><span> 👈</span></strong></h6><p><img src="https://user-images.githubusercontent.com/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><p><span>這是純純寫作桌面版的第一個測試版本，它和</span><a href='https://writer.drakeet.com'><span>純純寫作 Android 版</span></a><span>一樣完全由 Drakeet 一個人設計和開發。</span></p><blockquote><p><span>純純寫作桌面版本身完全免費，</span><strong><span>它目前尚屬初級</span></strong><span>，只提供了雙向即時同步編輯目前文章這個功能，甚至它可能對您來說完全不能用 ⚠️⚠️⚠️。</span><strong><span>如果您打算 </span><em><span>僅僅</span></em><span> 因為這個桌面版而付費，我強烈建議您重新考慮這件事情。</span></strong>
+<span>請不要 </span><em><span>僅僅</span></em><span> 因為純純寫作桌面版而付費純純寫作，純純寫作還有很多優秀的其它功能，請為它們付費。如果遇到問題，請透過郵件聯繫 </span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a><span>，靜待更新，非常感謝！</span></p></blockquote><h4><a name="下載" class="md-header-anchor"></a><span>下載</span></h4><blockquote><p><span>如果你是 Windows 10 系統使用者，請下載安裝 PureWriter-1.2.2-Win10-x64.msi 文件。</span>
+<span>如果你是 Windows 7 ~ 8.1 系統使用者，請下載安裝 PureWriter-1.2.2-Win7-8.1-x64.msi 文件。</span>
+<span>如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。</span>
+<span>macOS 則使用 PureWriter-1.2.2-macOS.pkg，下載後右鍵點擊該文件選擇“打開”即可進行安裝。</span></p></blockquote><ul><li><p><span>百度雲端硬碟下載: </span><a href='https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ' target='_blank' class='url'>https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ</a><span> 提取碼: </span><code>g35w</code></p></li><li><p><span>GitHub 直鏈下載：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win10-x64.msi'><span>PureWriter-1.2.2-Win10-x64.msi</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win7-8.1-x64.msi'><span>PureWriter-1.2.2-Win7~8.1-x64.msi</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-macOS.pkg'><span>PureWriter-1.2.2-macOS.pkg</span></a></p></li><li><p><span>Telegram 下載: </span><a href='https://t.me/PureWriter/710' target='_blank' class='url'>https://t.me/PureWriter/710</a></p></li></ul><h4><a name="舊版純純寫作桌面版原始碼" class="md-header-anchor"></a><span>舊版純純寫作桌面版原始碼</span></h4><p><span>舊版純純寫作桌面版現</span><strong><span>已完全開源</span></strong><span>！完整原始碼請見：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4><a name="更新日誌" class="md-header-anchor"></a><span>更新日誌</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4><a name="目前為止純純寫作桌面版存在一些限制或問題請您務必逐一了解⚠️-這非常重要❗️❗️❗️" class="md-header-anchor"></a><span>目前為止，純純寫作桌面版存在一些限制或問題，請您務必逐一了解，⚠️ 這非常重要❗️❗️❗️：</span></h4><ul><li><span>純純寫作桌面版</span><strong><span>必須和手機同處於一個 Wi-Fi 或熱點網路</span></strong><span>下才可以相互連接</span></li><li><em><span>純純寫作桌面版 1.2.2</span></em><span> 版本</span><strong><span>必須和純純寫作 19.2.9 或以上版本才能搭配使用</span></strong></li><li><span>我在開發這個版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，</span><strong><span>請不要驚慌</span></strong><span>，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li><li><strong><span>切換章節時，Android 端可能接收到錯誤的同步訊息，請在切換章節時留意兩端的內容，如果不對勁，及時進行復原或透過「歷史記錄」進行復原章節內容</span></strong></li><li><span>當在手機上修改目前文章標題時，不會即時同步到桌面版上，需要等到您修改正文內容後，標題會隨著正文一同發給電腦進行同步顯示。這個問題將在後續版本修正</span></li><li><span>目前，您需要保證純純寫作 Android 在後台不被系統殺死，否則將會斷開連接，無法繼續編輯目前文章，特別是華為手機，請開啟「手動管理」並允許自啟動，避免系統在鎖定螢幕時切斷應用的網路</span></li></ul><p><span>更多純純寫作進階版功能詳見純純寫作 Pro 頁面（只要您啟動純純寫作 Pro，您可以使用所有內容，以及後續的更多進階版內容，無需多次付費）</span></p><p><img src="https://user-images.githubusercontent.com/5214214/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png" referrerpolicy="no-referrer" alt="Pure Writer Pro"></p><h5><a name="純純寫作介紹httpswriterdrakeetcom" class="md-header-anchor"></a><span>純純寫作介紹：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5></div>
 </body>
 </html>
