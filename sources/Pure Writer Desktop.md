@@ -12,7 +12,7 @@
 
   [PureWriter-1.2.2-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win7-8.1-x64.msi)
 
-  [PureWriter-1.2.2-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-macOS.pkg)
+  [PureWriter-1.3.0-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.3.0-macOS.pkg)
 
 - Telegram: https://t.me/PureWriter/710
 
@@ -28,7 +28,7 @@
 
 #### macOS
 
-* **Please install `PureWriter-1.2.2-macOS.pkg`**
+* **Please install `PureWriter-1.3.0-macOS.pkg`**
 
 #### Open Source
 
