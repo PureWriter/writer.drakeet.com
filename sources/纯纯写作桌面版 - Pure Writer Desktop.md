@@ -15,7 +15,7 @@
 > 如果你是 Windows 10 系统用户，请下载安装 PureWriter-1.3.3-Win10-x64.msi 文件。
 > 如果你是 Windows 7 ~ 8.1 系统用户，请下载安装 PureWriter-1.3.3-Win7-8.1-x64.msi 文件。
 > 如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。
-> macOS 则使用 PureWriter-1.3.3-macOS-x64.pkg，下载后右键点击该文件选择“打开”即可进行安装。
+> macOS 则使用 PureWriter-1.3.3-macOS.pkg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 百度云网盘下载: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取码: `g35w`
 
@@ -25,7 +25,7 @@
 
   [PureWriter-1.3.3-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
 
-  [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
+  [PureWriter-1.3.3-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS.pkg)
 
 - Telegram 下载: https://t.me/PureWriter/735
 
