@@ -11,20 +11,20 @@
 
 #### 下載
 
-> 如果你是 Windows 10 系統使用者，請下載安裝 PureWriter-1.2.2-Win10-x64.msi 文件。
-> 如果你是 Windows 7 ~ 8.1 系統使用者，請下載安裝 PureWriter-1.2.2-Win7-8.1-x64.msi 文件。
+> 如果你是 Windows 10 系統使用者，請下載安裝 PureWriter-1.3.3-Win10-x64.msi 文件。
+> 如果你是 Windows 7 ~ 8.1 系統使用者，請下載安裝 PureWriter-1.3.3-Win7-8.1-x64.msi 文件。
 > 如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。
-> macOS 則使用 PureWriter-1.3.0-macOS.pkg，下載後右鍵點擊該文件選擇“打開”即可進行安裝。
+> 1.3.3 則使用 PureWriter-1.3.3-macOS-x64.pkg，下載後右鍵點擊該文件選擇“打開”即可進行安裝。
 
 - 百度雲端硬碟下載: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取碼: `g35w`
 
 - GitHub 直鏈下載：
 
-  [PureWriter-1.2.2-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win10-x64.msi)
+  [PureWriter-1.3.3-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi)
 
-  [PureWriter-1.2.2-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win7-8.1-x64.msi)
+  [PureWriter-1.3.3-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
 
-  [PureWriter-1.3.0-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.3.0-macOS.pkg)
+  [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
 
 - Telegram 下載: https://t.me/PureWriter/710
 
@@ -40,7 +40,7 @@ https://github.com/PureWriter/desktop/releases
 
 - 純純寫作桌面版**必須和手機同處於一個 Wi-Fi 或熱點網路**下才可以相互連接
 
-- *純純寫作桌面版 1.2.2* 版本**必須和純純寫作 19.3.0 或以上版本才能搭配使用**
+- *純純寫作桌面版 1.3.3* 版本**必須和純純寫作 19.4.2 或以上版本才能搭配使用**
 
 - 我在開發這個版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，**請不要驚慌**，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：https://writer.drakeet.com/backups
 

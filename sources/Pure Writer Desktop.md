@@ -8,11 +8,11 @@
 
 - GitHub：
 
-  [PureWriter-1.2.2-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win10-x64.msi)
+  [PureWriter-1.3.3-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi)
 
-  [PureWriter-1.2.2-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.2.2-Win7-8.1-x64.msi)
+  [PureWriter-1.3.3-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
 
-  [PureWriter-1.3.0-macOS.pkg](https://github.com/PureWriter/desktop/releases/download/1.2.2/PureWriter-1.3.0-macOS.pkg)
+  [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
 
 - Telegram: https://t.me/PureWriter/710
 
@@ -20,15 +20,15 @@
 
 #### Windows 10
 
-* **Please install `PureWriter-1.2.2-Win10-x64.msi`**
+* **Please install `PureWriter-1.3.3-Win10-x64.msi`**
 
 #### Windows 7、8、8.1
 
-* **Please install `PureWriter-1.2.2-Win7-8.1-x64.msi`**
+* **Please install `PureWriter-1.3.3-Win7-8.1-x64.msi`**
 
 #### macOS
 
-* **Please install `PureWriter-1.3.0-macOS.pkg`**
+* **Please install `PureWriter-1.3.3-macOS-x64.pkg`**
 
 #### Open Source
 
@@ -40,7 +40,7 @@ https://github.com/PureWriter/desktop/releases
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
-- Pure Writer Desktop 1.2.2 version must be used with Pure Writer 19.3.0 or above
+- Pure Writer Desktop 1.3.3 version must be used with Pure Writer 19.4.2 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
