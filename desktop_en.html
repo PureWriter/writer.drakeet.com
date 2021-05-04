@@ -2,20 +2,22 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>Pure Writer Desktop</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+<title>Pure Writer Desktop</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
@@ -24,14 +26,14 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
 button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
 p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -47,7 +49,7 @@ sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); 
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px !important; }
+figure > table { margin: 0px; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
@@ -76,28 +78,31 @@ div.hr:focus { cursor: none; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
 li { margin: 0px; position: relative; }
 blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
   #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
 .md-task-list-item { position: relative; list-style-type: none; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
@@ -141,16 +146,22 @@ a.md-print-anchor { white-space: pre !important; border: none !important; displa
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
-[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
 [lang="mermaid"] .node text { font-size: 1rem; }
 table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
-svg[id^="mermaidChart"] { line-height: 1em; }
 mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
 .md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
 mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print { 
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
 
 
 :root {
@@ -160,12 +171,16 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
 
 @include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
-html {
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
     font-size: 16px;
 }
 
 body {
-    font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgb(51, 51, 51);
     line-height: 1.6;
 }
@@ -176,6 +191,19 @@ body {
   	padding: 30px;
     padding-bottom: 100px;
 }
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
 #write > ul:first-child,
 #write > ol:first-child{
     margin-top: 30px;
@@ -230,17 +258,33 @@ h6 code {
     font-size: inherit;
 }
 h1 {
-    padding-bottom: .3em;
     font-size: 2.25em;
     line-height: 1.2;
     border-bottom: 1px solid #eee;
 }
 h2 {
-   padding-bottom: .3em;
     font-size: 1.75em;
     line-height: 1.225;
     border-bottom: 1px solid #eee;
 }
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
 h3 {
     font-size: 1.5em;
     line-height: 1.43;
@@ -313,24 +357,24 @@ table tr:nth-child(2n),
 thead {
     background-color: #f8f8f8;
 }
-table tr th {
+table th {
     font-weight: bold;
     border: 1px solid #dfe2e5;
     border-bottom: 0;
     margin: 0;
     padding: 6px 13px;
 }
-table tr td {
+table td {
     border: 1px solid #dfe2e5;
     margin: 0;
     padding: 6px 13px;
 }
-table tr th:first-child,
-table tr td:first-child {
+table th:first-child,
+table td:first-child {
     margin-top: 0;
 }
-table tr th:last-child,
-table tr td:last-child {
+table th:last-child,
+table td:last-child {
     margin-bottom: 0;
 }
 
@@ -500,10 +544,10 @@ header, .context-menu, .megamenu-content, footer{
     background: #999;
 }
 
- .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+ :root {--mermaid-font-zoom:1em ;} 
 </style>
 </head>
-<body class='typora-export' >
-<div  id='write'  class = 'is-mac first-line-indent'><h3><a name="pure-writer-desktop" class="md-header-anchor"></a><span>Pure Writer Desktop</span></h3><p><img src="https://user-images.githubusercontent.com/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><blockquote><p><span>Pure Writer Desktop is currently basic, providing only two-directions real-time synchronous editing for your current article. </span><strong><span>If you are going to pay </span><em><span>JUST</span></em><span> for this Desktop, I strongly recommend that you reconsider it.</span></strong></p></blockquote><h4><a name="download" class="md-header-anchor"></a><span>Download</span></h4><ul><li><p><span>GitHub：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi'><span>PureWriter-1.3.3-Win10-x64.msi</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi'><span>PureWriter-1.3.3-Win7~8.1-x64.msi</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg'><span>PureWriter-1.3.3-macOS-x64.pkg</span></a></p></li><li><p><span>Telegram: </span><a href='https://t.me/PureWriter/735' target='_blank' class='url'>https://t.me/PureWriter/735</a></p></li></ul><h3><a name="❗️❗️❗️" class="md-header-anchor"></a><span>❗️❗️❗️</span></h3><h4><a name="windows-10" class="md-header-anchor"></a><span>Windows 10</span></h4><ul><li><strong><span>Please install </span><code>PureWriter-1.3.3-Win10-x64.msi</code></strong></li></ul><h4><a name="windows-7881" class="md-header-anchor"></a><span>Windows 7、8、8.1</span></h4><ul><li><strong><span>Please install </span><code>PureWriter-1.3.3-Win7-8.1-x64.msi</code></strong></li></ul><h4><a name="macos" class="md-header-anchor"></a><span>macOS</span></h4><ul><li><strong><span>Please install </span><code>PureWriter-1.3.3-macOS-x64.pkg</code></strong></li></ul><h4><a name="open-source" class="md-header-anchor"></a><span>Open Source</span></h4><p><span>Pure Writer Desktop is open source: </span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4><a name="changelog" class="md-header-anchor"></a><span>Changelog</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4><a name="so-far-pure-writer-desktop-has-some-known-issues-please-be-sure-to-read-them-all" class="md-header-anchor"></a><span>So far, Pure Writer Desktop has some known issues, please be sure to read them all:</span></h4><ul><li><span>Pure Writer Desktop 1.3.3 version must be used with Pure Writer 19.4.2 or above</span></li><li><span>Pure Writer Desktop must be </span><strong><span>on the same Wi-Fi or hotspot network</span></strong><span> as the phone to connect to each other</span></li><li><span>During the development of this desktop version, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don&#39;t worry, because Pure Writer for Android supports multiple Backups. You can recover/restore it by using &quot;History&quot; or &quot;Undo&quot;. More about automatic backup and cloud backup: </span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li></ul><h5><a name="pure-writer-cloud-backuphttpswriterdrakeetcombackupsen" class="md-header-anchor"></a><span>Pure Writer cloud backup：</span><a href='https://writer.drakeet.com/backups_en' target='_blank' class='url'>https://writer.drakeet.com/backups_en</a></h5></div>
+<body class='typora-export'>
+<div id='write'  class=''><h3><a name="pure-writer-desktop" class="md-header-anchor"></a><span>Pure Writer Desktop</span></h3><p><img src="https://user-images.githubusercontent.com/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><blockquote><p><span>Pure Writer Desktop is currently basic, providing only two-directions real-time synchronous editing for your current article. </span><strong><span>If you are going to pay </span><em><span>JUST</span></em><span> for this Desktop, I strongly recommend that you reconsider it.</span></strong></p></blockquote><h4><a name="download" class="md-header-anchor"></a><span>Download</span></h4><h6><a name="windows-10" class="md-header-anchor"></a><span>Windows 10</span></h6><ul><li><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi'><span>PureWriter-1.3.3-Win10-x64.msi</span></a></li></ul><h6><a name="windows-7881" class="md-header-anchor"></a><span>Windows 7、8、8.1</span></h6><ul><li><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi'><span>PureWriter-1.3.3-Win7~8.1-x64.msi</span></a></li></ul><h6><a name="macos-x64" class="md-header-anchor"></a><span>macOS x64</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg'><span>PureWriter-1.3.3-macOS-x64.pkg</span></a></p><p>&nbsp;</p></li></ul><p><span>Download from Telegram: </span><a href='https://t.me/PureWriter/735' target='_blank' class='url'>https://t.me/PureWriter/735</a></p><p>&nbsp;</p><h4><a name="open-source" class="md-header-anchor"></a><span>Open Source</span></h4><p><span>Pure Writer Desktop is open source: </span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4><a name="changelog" class="md-header-anchor"></a><span>Changelog</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4><a name="so-far-pure-writer-desktop-has-some-known-issues-please-be-sure-to-read-them-all" class="md-header-anchor"></a><span>So far, Pure Writer Desktop has some known issues, please be sure to read them all:</span></h4><ul><li><span>Pure Writer Desktop 1.3.3 version must be used with Pure Writer 19.4.2 or above</span></li><li><span>Pure Writer Desktop must be </span><strong><span>on the same Wi-Fi or hotspot network</span></strong><span> as the phone to connect to each other</span></li><li><span>During the development of this desktop version, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don&#39;t worry, because Pure Writer for Android supports multiple Backups. You can recover/restore it by using &quot;History&quot; or &quot;Undo&quot;. More about automatic backup and cloud backup: </span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li></ul><h5><a name="pure-writer-cloud-backuphttpswriterdrakeetcombackupsen" class="md-header-anchor"></a><span>Pure Writer cloud backup：</span><a href='https://writer.drakeet.com/backups_en' target='_blank' class='url'>https://writer.drakeet.com/backups_en</a></h5></div>
 </body>
 </html>

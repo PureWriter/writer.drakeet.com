@@ -7,7 +7,8 @@
 这是纯纯写作桌面版的第一个测试版本，它和[纯纯写作 Android 版](https://writer.drakeet.com)一样完全由 Drakeet 一个人设计和开发。
 
 > 纯纯写作桌面版本身完全免费，**它当前尚属初级**，只提供了双向实时同步编辑当前文章这个功能，甚至它可能对您来说完全不能用 ⚠️⚠️⚠️。**如果您打算 _仅仅_ 因为这个桌面版而付费，我强烈建议您重新考虑这件事情。**
-> 请不要 _仅仅_ 因为纯纯写作桌面版而付费纯纯写作，纯纯写作还有很多优秀的其它功能，请为它们付费。如果遇到问题，请通过邮件联系 drakeet@drakeet.com，静待更新，非常感谢！
+> 请不要 _仅仅_ 因为纯纯写作桌面版而付费纯纯写作，纯纯写作还有很多优秀的其它功能，请为它们付费。如果遇到问题，请通过邮件联系 
+> drakeet@drakeet.com，静待更新，非常感谢！
 
 #### 下载
 
@@ -27,7 +28,7 @@
   [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
 
 - Telegram 下载: https://t.me/PureWriter/735
- 
+
 #### 旧版纯纯写作桌面版源代码
 
 旧版纯纯写作桌面版现**已完全开源**！完整源代码请见：https://github.com/PureWriter/desktop
