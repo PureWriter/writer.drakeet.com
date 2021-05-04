@@ -14,7 +14,7 @@
 
   [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
 
-- Telegram: https://t.me/PureWriter/710
+- Telegram: https://t.me/PureWriter/735
 
 ### ❗️❗️❗️
 

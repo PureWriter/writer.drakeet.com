@@ -26,7 +26,7 @@
 
   [PureWriter-1.3.3-macOS-x64.pkg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS-x64.pkg)
 
-- Telegram 下载: https://t.me/PureWriter/710
+- Telegram 下载: https://t.me/PureWriter/735
  
 #### 旧版纯纯写作桌面版源代码
 
