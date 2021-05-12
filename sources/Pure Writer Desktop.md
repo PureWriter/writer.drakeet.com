@@ -18,7 +18,9 @@
 
 * [PureWriter-1.3.3-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS.dmg)
 
-  
+###### Linux
+
+* [PureWriter-1.3.3-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Linux-amd64.deb)
 
 Download from Telegram: https://t.me/PureWriter/735
 

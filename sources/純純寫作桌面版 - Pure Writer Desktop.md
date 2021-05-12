@@ -21,11 +21,13 @@
 
 - GitHub 直鏈下載：
 
-  [PureWriter-1.3.3-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi)
+  [PureWriter-1.3.3-**Win10**-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi)
 
-  [PureWriter-1.3.3-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
+  [PureWriter-1.3.3-**Win7~8.1**-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
 
-  [PureWriter-1.3.3-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS.dmg)
+  [PureWriter-1.3.3-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS.dmg)
+
+  [PureWriter-1.3.3-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Linux-amd64.deb)
 
 - Telegram 下載: https://t.me/PureWriter/735
 
