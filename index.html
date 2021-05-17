@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>纯纯写作 - 绝不丢失文本编辑器</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+
+<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
@@ -65,8 +66,8 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping pre { white-space: pre; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit; background-repeat: inherit; }
-.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
@@ -74,7 +75,7 @@ div.hr:focus { cursor: none; }
 .CodeMirror-line, twitterwidget { break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
@@ -91,10 +92,11 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
   .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
   .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
 #write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
@@ -131,17 +133,18 @@ a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; 
 .md-attr { display: none; }
 .md-fn-count::after { content: "."; }
 code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
 code { text-align: left; }
-a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
 .html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
-.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.md-fences-math .MathJax_SVG_Display, .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: visible; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
-.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; zoom: 90%; }
+#math-inline-preview-content { zoom: 1.1; }
 .MathJax_SVG * { transition: none; }
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
@@ -152,9 +155,10 @@ table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
-mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
 .md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
-mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
 @media print { 
   .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
 }
@@ -162,6 +166,50 @@ mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
 .md-diagram-panel .start-state { fill: var(--node-fill); }
 .md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
 .md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-math .MathJax_SVG_Display { margin-top: 8px; cursor: default; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) { 
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) { 
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ''; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ''; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ''; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: '−'; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
 
 
 :root {
@@ -349,7 +397,7 @@ table {
     word-break: initial;
 }
 table tr {
-    border-top: 1px solid #dfe2e5;
+    border: 1px solid #dfe2e5;
     margin: 0;
     padding: 0;
 }
@@ -523,9 +571,9 @@ header, .context-menu, .megamenu-content, footer{
     color: #b4654d;
 }
 
-.html-for-mac .context-menu {
+/*.html-for-mac {
     --item-hover-bg-color: #E6F0FE;
-}
+}*/
 
 #md-notification .btn {
     border: 0;
@@ -533,6 +581,7 @@ header, .context-menu, .megamenu-content, footer{
 
 .dropdown-menu .divider {
     border-color: #e5e5e5;
+    opacity: 0.4;
 }
 
 .ty-preferences .window-content {
@@ -544,10 +593,16 @@ header, .context-menu, .megamenu-content, footer{
     background: #999;
 }
 
- :root {--mermaid-font-zoom:1em ;}  .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
-</style>
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+ :root {--mermaid-font-zoom:1em ;}  @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>纯纯写作 - 绝不丢失文本编辑器</title>
 </head>
-<body class='typora-export'>
-<div id='write'  class=' first-line-indent'><h3><a name="纯纯写作---绝不丢失文本编辑器" class="md-header-anchor"></a><span>纯纯写作 - 绝不丢失文本编辑器</span></h3><p><span>一个令人感到安心、拥有历史记录、段间距、多重防止文章丢失功能，和许多写作辅助的编辑器。</span></p><p><span>纯纯写作是一款致力于提供 绝不丢失内容、快速、优秀写作体验 的 App。在源于全世界用户对于纯纯写作的评论中，有许多用户对纯纯写作给予了夸张的赞赏，比如「没用过这么好用的 App」、「这真的是我用过最舒服的写作 App 了」、「很好用，彻底改变我用纸笔写作的习惯」、「忍不住想夸你，这个应用真的好棒，正因为你们这样的开发者在，Android 才会这么精彩」...</span></p><p><img src="https://i.loli.net/2019/01/06/5c3199ab7f96e.jpg" referrerpolicy="no-referrer" alt="PureWriter1024x500.jpg"></p><p><span>它在 Android 上实现了</span><strong><span>完美的行间距和段间距</span></strong><span>，令你的写作内容更加赏心悦目，同时，它提供了多重防止丢失保障措施，最大程度上给用户营造安心、随时随地的写作体验。</span></p><p><span>此外，纯纯写作还支持「</span><strong><span>快捷输入栏</span></strong><span>」和「</span><strong><span>格式化工具</span></strong><span>」，快捷输入栏能够让用户自定义快捷词语和短语；格式化面板则能够帮助用户快速调整文章格式，比如在中英文之间自动插入空格，或者自动进行缩进调整等等。</span></p><p><span>在实现了这些显著功能以外，纯纯写作还在</span><strong><span>流畅体验</span></strong><span>上下了很多功夫，它拥有 完美的键盘响应逻辑。使用纯纯写作时，你能够往下快速滑动页面或快捷输入栏来收起软键盘；能够点击文章某一行后，动态获得合适的光标焦点定位；能够在收起软键盘时，文章位置保持不动 ... 许多这样的细节内容，当你对比使用其他编辑器项目时，你才会发现纯纯写作做得更加出色、流畅，细致入微。</span></p><p><span>至于一个编辑器该有的功能，纯纯写作也都没有落下，比如 </span><strong><span>WebDAV 云备份、段首缩进、生成长图片、悬浮字数统计、撤销、Markdown、更换信纸、指纹加锁、夜间模式、单词联想输入、打字机模式</span></strong><span> 等等。但即使这样，纯纯写作仍然保持了简约、蕴繁于简的设计风格，遵循 Material Design 设计，并且它还有一个像是哆啦 A 梦 </span><strong><span>时光机</span></strong><span> 的图标，寓意着「文字能够连接过去，遥想未来」，也照应了纯纯写作特别提供的「历史记录」功能。</span></p><p><span>令人感到安心，顺滑流畅的写作体验，如你所愿，这就是纯纯写作，请享受写作吧！</span></p><h3><a name="下载" class="md-header-anchor"></a><span>下载</span></h3><p><strong><span>酷安</span></strong><span>: </span><a href='https://app.mi.com/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://app.mi.com/details?id=com.drakeet.purewriter</a></p><p><strong><span>Google Play</span></strong><span>: </span><a href='https://play.google.com/store/apps/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></p><p>&nbsp;</p><h3><a name="其它介绍" class="md-header-anchor"></a><span>其它介绍</span></h3><ul><li><a href='backups'><strong><span>《纯纯写作自动备份与云备份教程》</span></strong></a></li><li><a href='protections'><span>《纯纯写作保护机制》</span></a></li><li><a href='markdown'><span>《Markdown 简明教程》</span></a></li><li><a href='desktop'><span>纯纯写作</span><strong><span>桌面版</span></strong></a></li></ul><p>&nbsp;</p><h3><a name="帮助" class="md-header-anchor"></a><span>帮助</span></h3><p><span>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p><p><span>如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！</span></p></div>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h3 id='纯纯写作---绝不丢失文本编辑器'><span>纯纯写作 - 绝不丢失文本编辑器</span></h3><p><span>一个令人感到安心、拥有历史记录、段间距、多重防止文章丢失功能，和许多写作辅助的编辑器。</span></p><p><span>纯纯写作是一款致力于提供 绝不丢失内容、快速、优秀写作体验 的 App。在源于全世界用户对于纯纯写作的评论中，有许多用户对纯纯写作给予了夸张的赞赏，比如「没用过这么好用的 App」、「这真的是我用过最舒服的写作 App 了」、「很好用，彻底改变我用纸笔写作的习惯」、「忍不住想夸你，这个应用真的好棒，正因为你们这样的开发者在，Android 才会这么精彩」...</span></p><p><img src="https://i.loli.net/2019/01/06/5c3199ab7f96e.jpg" referrerpolicy="no-referrer" alt="PureWriter1024x500.jpg"></p><p><span>它在 Android 上实现了</span><strong><span>完美的行间距和段间距</span></strong><span>，令你的写作内容更加赏心悦目，同时，它提供了多重防止丢失保障措施，最大程度上给用户营造安心、随时随地的写作体验。</span></p><p><span>此外，纯纯写作还支持「</span><strong><span>快捷输入栏</span></strong><span>」和「</span><strong><span>格式化工具</span></strong><span>」，快捷输入栏能够让用户自定义快捷词语和短语；格式化面板则能够帮助用户快速调整文章格式，比如在中英文之间自动插入空格，或者自动进行缩进调整等等。</span></p><p><span>在实现了这些显著功能以外，纯纯写作还在</span><strong><span>流畅体验</span></strong><span>上下了很多功夫，它拥有 完美的键盘响应逻辑。使用纯纯写作时，你能够往下快速滑动页面或快捷输入栏来收起软键盘；能够点击文章某一行后，动态获得合适的光标焦点定位；能够在收起软键盘时，文章位置保持不动 ... 许多这样的细节内容，当你对比使用其他编辑器项目时，你才会发现纯纯写作做得更加出色、流畅，细致入微。</span></p><p><span>至于一个编辑器该有的功能，纯纯写作也都没有落下，比如 </span><strong><span>WebDAV 云备份、段首缩进、生成长图片、悬浮字数统计、撤销、Markdown、更换信纸、指纹加锁、夜间模式、单词联想输入、打字机模式</span></strong><span> 等等。但即使这样，纯纯写作仍然保持了简约、蕴繁于简的设计风格，遵循 Material Design 设计，并且它还有一个像是哆啦 A 梦 </span><strong><span>时光机</span></strong><span> 的图标，寓意着「文字能够连接过去，遥想未来」，也照应了纯纯写作特别提供的「历史记录」功能。</span></p><p><span>令人感到安心，顺滑流畅的写作体验，如你所愿，这就是纯纯写作，请享受写作吧！</span></p><h3 id='下载'><span>下载</span></h3><p><strong><span>国内下载</span></strong><span>: </span><a href='https://app.mi.com/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://app.mi.com/details?id=com.drakeet.purewriter</a></p><p><strong><span>Google Play</span></strong><span>: </span><a href='https://play.google.com/store/apps/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></p><p>&nbsp;</p><h3 id='其它介绍'><span>其它介绍</span></h3><ul><li><a href='backups'><strong><span>《纯纯写作自动备份与云备份教程》</span></strong></a></li><li><a href='protections'><span>《纯纯写作保护机制》</span></a></li><li><a href='markdown'><span>《Markdown 简明教程》</span></a></li><li><a href='desktop'><span>纯纯写作</span><strong><span>桌面版</span></strong></a></li></ul><p>&nbsp;</p><h3 id='帮助'><span>帮助</span></h3><p><span>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p><p><span>如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！</span></p></div></div>
 </body>
 </html>

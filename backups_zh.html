@@ -2,20 +2,23 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>純純寫作 - 自動備份與雲備份教學</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; }
+
+<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
 @media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
@@ -24,14 +27,14 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
 button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
 p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
 p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
@@ -43,11 +46,11 @@ h6 { font-size: 1rem; }
 .hidden { display: none; }
 .md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
 a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.701961); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px !important; }
+figure > table { margin: 0px; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
@@ -64,7 +67,7 @@ div.hr:focus { cursor: none; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
 .md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
-.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
@@ -76,28 +79,32 @@ div.hr:focus { cursor: none; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
 li { margin: 0px; position: relative; }
 blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
 @media print { 
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid-page; break-before: avoid-page; }
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
   #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid-page; }
+  .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
 pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
 .md-math-block { width: 100%; }
 .md-math-block:not(:empty)::after { display: none; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
 .md-task-list-item { position: relative; list-style-type: none; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
@@ -132,21 +139,77 @@ code { text-align: left; }
 a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
 .html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
-.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.md-fences-math .MathJax_SVG_Display, .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: visible; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
 .MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
-.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; zoom: 90%; }
+#math-inline-preview-content { zoom: 1.1; }
 .MathJax_SVG * { transition: none; }
 .MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
-[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
 [lang="mermaid"] .node text { font-size: 1rem; }
 table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print { 
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-math .MathJax_SVG_Display { margin-top: 8px; cursor: default; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) { 
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) { 
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ''; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ''; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ''; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: '−'; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
 
 
 :root {
@@ -156,12 +219,16 @@ iframe { max-width: 100%; width: 100%; border: none; }
 
 @include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
-html {
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
     font-size: 16px;
 }
 
 body {
-    font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgb(51, 51, 51);
     line-height: 1.6;
 }
@@ -172,6 +239,19 @@ body {
   	padding: 30px;
     padding-bottom: 100px;
 }
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
 #write > ul:first-child,
 #write > ol:first-child{
     margin-top: 30px;
@@ -226,17 +306,33 @@ h6 code {
     font-size: inherit;
 }
 h1 {
-    padding-bottom: .3em;
     font-size: 2.25em;
     line-height: 1.2;
     border-bottom: 1px solid #eee;
 }
 h2 {
-   padding-bottom: .3em;
     font-size: 1.75em;
     line-height: 1.225;
     border-bottom: 1px solid #eee;
 }
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
 h3 {
     font-size: 1.5em;
     line-height: 1.43;
@@ -301,7 +397,7 @@ table {
     word-break: initial;
 }
 table tr {
-    border-top: 1px solid #dfe2e5;
+    border: 1px solid #dfe2e5;
     margin: 0;
     padding: 0;
 }
@@ -309,24 +405,24 @@ table tr:nth-child(2n),
 thead {
     background-color: #f8f8f8;
 }
-table tr th {
+table th {
     font-weight: bold;
     border: 1px solid #dfe2e5;
     border-bottom: 0;
     margin: 0;
     padding: 6px 13px;
 }
-table tr td {
+table td {
     border: 1px solid #dfe2e5;
     margin: 0;
     padding: 6px 13px;
 }
-table tr th:first-child,
-table tr td:first-child {
+table th:first-child,
+table td:first-child {
     margin-top: 0;
 }
-table tr th:last-child,
-table tr td:last-child {
+table th:last-child,
+table td:last-child {
     margin-bottom: 0;
 }
 
@@ -475,9 +571,9 @@ header, .context-menu, .megamenu-content, footer{
     color: #b4654d;
 }
 
-.html-for-mac .context-menu {
+/*.html-for-mac {
     --item-hover-bg-color: #E6F0FE;
-}
+}*/
 
 #md-notification .btn {
     border: 0;
@@ -485,6 +581,7 @@ header, .context-menu, .megamenu-content, footer{
 
 .dropdown-menu .divider {
     border-color: #e5e5e5;
+    opacity: 0.4;
 }
 
 .ty-preferences .window-content {
@@ -496,10 +593,16 @@ header, .context-menu, .megamenu-content, footer{
     background: #999;
 }
 
- .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
-</style>
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+ :root {--mermaid-font-zoom:1em ;}  @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>純純寫作 - 自動備份與雲備份教學</title>
 </head>
-<body class='typora-export' >
-<div  id='write'  class = 'is-mac first-line-indent'><h3><a name="純純寫作---自動備份與雲備份教學" class="md-header-anchor"></a><a href=''><span>純純寫作</span></a><span> - 自動備份與雲備份教學</span></h3><p><span>註：這個教學其實非常簡單，為了萬無一失的備份，特別是《雲備份》一節內容，請您務必試一試。雲備份非常重要，因為我們誰也無法保證手機永遠不會壞掉或遺失，</span><strong><span>如果沒有雲備份，則一旦手機壞掉或重設，就會失去所有寶貴的文章——這對於沒有雲備份的使用者來說，是遲早有一天要發生的事情。</span></strong><span>我知道失去辛苦創作的文章非常令人難過，所以我不得不反覆告訴大家需要給純純寫作設定雲備份帳號。🙏 拜託了！</span></p><h4><a name="自動備份" class="md-header-anchor"></a><span>自動備份</span></h4><p><span>預設情況下，一旦您的文章內容發生變化且您離開純純寫作，純純寫作就會自動備份您的所有文章、時光機等內容，這些備份將存儲在您的手機內建存儲空間 </span><code>Documents/PureWriter/Backups</code><span> 或 </span><code>Documents/PureWriter/Backups/Auto</code><span> 目錄下。即使您移除重裝純純寫作，您仍然能夠進入 </span><strong><span>純純寫作 - 設定 - 備份</span></strong><span> 頁面點擊 </span><strong><span>復原備份</span></strong><span> 來復原您先前的備份。</span></p><p><span>此本機自動備份無法關閉，否則純純寫作將無法保證您的文字安全。但您可以放心，純純寫作不會無限地備份導致您的手機剩餘存儲空間不斷縮小，它會幫助您自動維持 25 份最新自動備份文件，過舊的備份版本將被刪掉。當然了，您手動點擊純純寫作的 </span><strong><span>立即備份</span></strong><span> 而產生的備份則不會納入在內，它們會永久存儲於你的手機之中，除非你自行去把它們刪除。</span></p><p><span>手動點擊 </span><strong><span>立即備份</span></strong><span> 產生的備份在 </span><code>Documents/PureWriter/Backups</code><span> 目錄，自動備份產生的備份在 </span><code>Documents/PureWriter/Backups/Auto</code><span> 目錄。</span></p><h4><a name="雲備份" class="md-header-anchor"></a><span>雲備份</span></h4><p><span>純純寫作另外支援</span><strong><span>雲備份</span></strong><span>，如果設定了雲備份，即使你手機遺失或因為刷機而清空手機所有內容，您仍然能夠透過重新安裝純純寫作，登入雲備份帳號後，復原您先前的雲備份內容。</span></p><p><span>在純純寫作 </span><strong><span>設定 -  備份與雲備份</span></strong><span> 頁面，您可以使用 Dropbox 或 WebDAV 雲端硬碟帳號作為雲備份的目標網路硬碟。推薦使用 </span><strong><span>Dropbox</span></strong><span>，點擊該項後登入 Dropbox 帳號即可，非常容易。從此萬無一失。</span></p><p>&nbsp;</p><hr /><p>&nbsp;</p><p>&nbsp;</p><p><span>如果您不想使用 Dropbox，您也可以使用 WebDAV，WebDAV 雲備份教學如下：</span></p><p><span>開啟雲備份之前，您需要去註冊一個 WebDAV 雲端硬碟帳號，對於 WebDAV 您可以理解為是一種通用的網路硬碟連接協議，只要支援 WebDAV 的網路硬碟，統統可以接入到純純寫作，作為純純寫作雲備份的目標網路硬碟。</span></p><p><span>在中國國內，推薦使用</span><strong><span>堅果雲</span></strong><span>提供的雲端硬碟服務，純純寫作和堅果雲沒有任何利益或合作關係，僅僅是堅果雲做得非常好，所以特別推薦它。</span></p><h4><a name="堅果雲-webdav-帳號註冊及接入純純寫作方法非常簡單一勞永逸萬無一失）" class="md-header-anchor"></a><span>堅果雲 WebDAV 帳號註冊及接入純純寫作方法（非常簡單，一勞永逸，萬無一失）</span></h4><p><span>您在純純寫作 - 設定 - 備份 - 雲備份頁面中可以看到有三個設定項，分別是：</span></p><ul><li><span>WebDAV 網址</span></li><li><span>WebDAV 帳號</span></li><li><span>WebDAV 密碼</span></li></ul><p><span>只要正確填寫這三項之後，您將自動獲得啟用純純寫作的</span><strong><span>自動雲備份</span></strong><span>功能。</span></p><p><span>要獲得這三項的訊息，您需要</span><strong><span>註冊一個堅果雲帳號</span></strong><span>。</span></p><p><span>以下提供兩種註冊堅果雲 WebDAV 的方法，一種是下載堅果雲 Android 版，在其應用內可得 WebDAV 三項訊息，另一種是透過網頁版堅果雲獲得 WebDAV 三項訊息（如果你不想下載堅果雲 Android 版，可以使用網頁）：</span></p><hr /><h5><a name="在手機版堅果雲註冊-webdav非常簡單）堅果雲備份設定方式之一）" class="md-header-anchor"></a><span>在手機版堅果雲註冊 WebDAV（非常簡單）（堅果雲備份設定方式之一）</span></h5><p><span>在酷安或打開這個連結即可下載堅果雲 Android 版：</span></p><p><a href='https://www.coolapk.com/apk/nutstore.android' target='_blank' class='url'>https://www.coolapk.com/apk/nutstore.android</a></p><p><span>下載安裝後，自行註冊和登入。</span></p><p><span>登入後打開</span><strong><span>【左側欄】選單</span></strong><span>  → </span><strong><span>設定</span></strong><span> → </span><strong><span>第三方應用管理</span></strong><span>，可得如圖結果：</span></p><p><strong><em><span>圖片中紅字內容</span></em></strong><span>：</span></p><ol start='' ><li><span>點擊“添加應用密碼”，在打開的頁面中輸入：純純寫作。然後確定即可回到這個頁面</span></li><li><span>回到這個頁面後，你就可以看到下面多了一個“應用密碼”</span></li><li><span>依次把這三項複製到純純寫作備份頁面頂部填入即可。從此</span><strong><span>萬無一失，一勞永逸</span></strong></li></ol><p><img src='https://i.loli.net/2019/08/04/NOyAdwHxivseVpn.png' alt='在手機版堅果雲註冊 WebDAV 帳號及接入純純寫作方法' referrerPolicy='no-referrer' /></p><hr /><p>&nbsp;</p><p>&nbsp;</p><h5><a name="在網頁版堅果雲註冊-webdav-帳號堅果雲備份設定方式之二）" class="md-header-anchor"></a><span>在網頁版堅果雲註冊 WebDAV 帳號（堅果雲備份設定方式之二）</span></h5><blockquote><p><span>如果你已透過《在手機版堅果雲註冊 WebDAV（非常簡單）（堅果雲備份設定方式之一）》章節設定好堅果雲了，則無需再閱讀以下內容，以下內容是給不想使用手機版堅果雲但擁有電腦的使用者閱讀的。</span></p></blockquote><p><span>在電腦上使用瀏覽器打開這個註冊連結：</span></p><p><a href='https://www.jianguoyun.com/d/signup' target='_blank' class='url'>https://www.jianguoyun.com/d/signup</a></p><p><span>註冊後，您將進入堅果雲端硬碟網頁端，可見如下內容：</span></p><p><img src='https://i.loli.net/2019/01/06/5c31aa81ba3d2.png' alt='堅果雲首頁.png' referrerPolicy='no-referrer' /></p><p><span>點擊右上角帳戶名處選擇 【</span><strong><span>帳戶訊息</span></strong><span>】，然後選擇【</span><strong><span>安全選項</span></strong><span>】。</span></p><p><span>在 安全選項 中找到 </span><strong><span>第三方應用管理</span></strong><span>，並選擇 </span><strong><span>添加應用</span></strong><span>，輸入名稱如：</span><code>純純寫作</code><span>後，選擇 </span><strong><span>生成密碼</span></strong><span>，選擇完成，您將得到類似如下內容：</span></p><p><img src='https://i.loli.net/2019/01/06/5c31aa81a3f38.png' alt='堅果雲WebDAV.png' referrerPolicy='no-referrer' /></p><p><span>其中 </span><code>https://dav.jianguoyun.com/dav/</code><span> 就是您將填入純純寫作 </span><strong><span>WebDAV 網址</span></strong><span> 的內容；【使用情況：】後面的信箱地址就是你的 </span><strong><span>WebDAV 帳號</span></strong><span>；點擊顯示密碼後得到的密碼就是你的 </span><strong><span>WebDAV 密碼</span></strong><span>。</span></p><p><span>將以上得到的三項內容一一填入純純寫作中，您就可以享受萬無一失的雲備份了。</span></p><p><span>建議您透過微信或 QQ 發送 </span><strong><span>WebDAV 密碼</span></strong><span> 到您手機上，再複製到純純寫作裡，免得您手動輸錯密碼。</span></p></div>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h3 id='純純寫作---自動備份與雲備份教學'><a href=''><span>純純寫作</span></a><span> - 自動備份與雲備份教學</span></h3><p><span>註：這個教學其實非常簡單，為了萬無一失的備份，特別是《雲備份》一節內容，請您務必試一試。雲備份非常重要，因為我們誰也無法保證手機永遠不會壞掉或遺失，</span><strong><span>如果沒有雲備份，則一旦手機壞掉或重設，就會失去所有寶貴的文章——這對於沒有雲備份的使用者來說，是遲早有一天要發生的事情。</span></strong><span>我知道失去辛苦創作的文章非常令人難過，所以我不得不反覆告訴大家需要給純純寫作設定雲備份帳號。🙏 拜託了！</span></p><h4 id='自動備份'><span>自動備份</span></h4><p><span>預設情況下，一旦您的文章內容發生變化且您離開純純寫作，純純寫作就會自動備份您的所有文章、時光機等內容，這些備份將存儲在您的手機內建存儲空間 </span><code>Documents/PureWriter/Backups</code><span> 或 </span><code>Documents/PureWriter/Backups/Auto</code><span> 目錄下。即使您移除重裝純純寫作，您仍然能夠進入 </span><strong><span>純純寫作 - 設定 - 備份</span></strong><span> 頁面點擊 </span><strong><span>復原備份</span></strong><span> 來復原您先前的備份。</span></p><p><span>此本機自動備份無法關閉，否則純純寫作將無法保證您的文字安全。但您可以放心，純純寫作不會無限地備份導致您的手機剩餘存儲空間不斷縮小，它會幫助您自動維持 25 份最新自動備份文件，過舊的備份版本將被刪掉。當然了，您手動點擊純純寫作的 </span><strong><span>立即備份</span></strong><span> 而產生的備份則不會納入在內，它們會永久存儲於你的手機之中，除非你自行去把它們刪除。</span></p><p><span>手動點擊 </span><strong><span>立即備份</span></strong><span> 產生的備份在 </span><code>Documents/PureWriter/Backups</code><span> 目錄，自動備份產生的備份在 </span><code>Documents/PureWriter/Backups/Auto</code><span> 目錄。</span></p><h4 id='雲備份'><span>雲備份</span></h4><p><span>純純寫作另外支援</span><strong><span>雲備份</span></strong><span>，如果設定了雲備份，即使你手機遺失或因為刷機而清空手機所有內容，您仍然能夠透過重新安裝純純寫作，登入雲備份帳號後，復原您先前的雲備份內容。</span></p><p><span>在純純寫作 </span><strong><span>設定 -  備份與雲備份</span></strong><span> 頁面，您可以使用 Dropbox 或 WebDAV 雲端硬碟帳號作為雲備份的目標網路硬碟。推薦使用 </span><strong><span>Dropbox</span></strong><span>，點擊該項後登入 Dropbox 帳號即可，非常容易。從此萬無一失。</span></p><p>&nbsp;</p><hr /><p>&nbsp;</p><p>&nbsp;</p><p><span>如果您不想使用 Dropbox，您也可以使用 WebDAV，WebDAV 雲備份教學如下：</span></p><p><span>開啟雲備份之前，您需要去註冊一個 WebDAV 雲端硬碟帳號，對於 WebDAV 您可以理解為是一種通用的網路硬碟連接協議，只要支援 WebDAV 的網路硬碟，統統可以接入到純純寫作，作為純純寫作雲備份的目標網路硬碟。</span></p><p><span>在中國國內，推薦使用</span><strong><span>堅果雲</span></strong><span>提供的雲端硬碟服務，純純寫作和堅果雲沒有任何利益或合作關係，僅僅是堅果雲做得非常好，所以特別推薦它。</span></p><h4 id='堅果雲-webdav-帳號註冊及接入純純寫作方法非常簡單一勞永逸萬無一失）'><span>堅果雲 WebDAV 帳號註冊及接入純純寫作方法（非常簡單，一勞永逸，萬無一失）</span></h4><p><span>您在純純寫作 - 設定 - 備份 - 雲備份頁面中可以看到有三個設定項，分別是：</span></p><ul><li><span>WebDAV 網址</span></li><li><span>WebDAV 帳號</span></li><li><span>WebDAV 密碼</span></li></ul><p><span>只要正確填寫這三項之後，您將自動獲得啟用純純寫作的</span><strong><span>自動雲備份</span></strong><span>功能。</span></p><p><span>要獲得這三項的訊息，您需要</span><strong><span>註冊一個堅果雲帳號</span></strong><span>。</span></p><p><span>以下提供兩種註冊堅果雲 WebDAV 的方法，一種是下載堅果雲 Android 版，在其應用內可得 WebDAV 三項訊息，另一種是透過網頁版堅果雲獲得 WebDAV 三項訊息（如果你不想下載堅果雲 Android 版，可以使用網頁）：</span></p><hr /><h5 id='在手機版堅果雲註冊-webdav非常簡單）堅果雲備份設定方式之一）'><span>在手機版堅果雲註冊 WebDAV（非常簡單）（堅果雲備份設定方式之一）</span></h5><p><span>在酷安或打開這個連結即可下載堅果雲 Android 版：</span></p><p><a href='https://www.coolapk.com/apk/nutstore.android' target='_blank' class='url'>https://www.coolapk.com/apk/nutstore.android</a></p><p><span>下載安裝後，自行註冊和登入。</span></p><p><span>登入後打開</span><strong><span>【左側欄】選單</span></strong><span>  → </span><strong><span>設定</span></strong><span> → </span><strong><span>第三方應用管理</span></strong><span>，可得如圖結果：</span></p><p><strong><em><span>圖片中紅字內容</span></em></strong><span>：</span></p><ol start='' ><li><span>點擊“添加應用密碼”，在打開的頁面中輸入：純純寫作。然後確定即可回到這個頁面</span></li><li><span>回到這個頁面後，你就可以看到下面多了一個“應用密碼”</span></li><li><span>依次把這三項複製到純純寫作備份頁面頂部填入即可。從此</span><strong><span>萬無一失，一勞永逸</span></strong></li></ol><p><img src="https://i.loli.net/2019/08/04/NOyAdwHxivseVpn.png" referrerpolicy="no-referrer" alt="在手機版堅果雲註冊 WebDAV 帳號及接入純純寫作方法"></p><hr /><p>&nbsp;</p><p>&nbsp;</p><h5 id='在網頁版堅果雲註冊-webdav-帳號堅果雲備份設定方式之二）'><span>在網頁版堅果雲註冊 WebDAV 帳號（堅果雲備份設定方式之二）</span></h5><blockquote><p><span>如果你已透過《在手機版堅果雲註冊 WebDAV（非常簡單）（堅果雲備份設定方式之一）》章節設定好堅果雲了，則無需再閱讀以下內容，以下內容是給不想使用手機版堅果雲但擁有電腦的使用者閱讀的。</span></p></blockquote><p><span>在電腦上使用瀏覽器打開這個註冊連結：</span></p><p><a href='https://www.jianguoyun.com/d/signup' target='_blank' class='url'>https://www.jianguoyun.com/d/signup</a></p><p><span>註冊後，您將進入堅果雲端硬碟網頁端，可見如下內容：</span></p><p><img src="https://i.loli.net/2019/01/06/5c31aa81ba3d2.png" referrerpolicy="no-referrer" alt="堅果雲首頁.png"></p><p><span>點擊右上角帳戶名處選擇 【</span><strong><span>帳戶訊息</span></strong><span>】，然後選擇【</span><strong><span>安全選項</span></strong><span>】。</span></p><p><span>在 安全選項 中找到 </span><strong><span>第三方應用管理</span></strong><span>，並選擇 </span><strong><span>添加應用</span></strong><span>，輸入名稱如：</span><code>純純寫作</code><span>後，選擇 </span><strong><span>生成密碼</span></strong><span>，選擇完成，您將得到類似如下內容：</span></p><p><img src="https://i.loli.net/2019/01/06/5c31aa81a3f38.png" referrerpolicy="no-referrer" alt="堅果雲WebDAV.png"></p><p><span>其中 </span><code>https://dav.jianguoyun.com/dav/</code><span> 就是您將填入純純寫作 </span><strong><span>WebDAV 網址</span></strong><span> 的內容；【使用情況：】後面的信箱地址就是你的 </span><strong><span>WebDAV 帳號</span></strong><span>；點擊顯示密碼後得到的密碼就是你的 </span><strong><span>WebDAV 密碼</span></strong><span>。</span></p><p><span>將以上得到的三項內容一一填入純純寫作中，您就可以享受萬無一失的雲備份了。</span></p><p><span>建議您透過微信或 QQ 發送 </span><strong><span>WebDAV 密碼</span></strong><span> 到您手機上，再複製到純純寫作裡，免得您手動輸錯密碼。</span></p></div></div>
 </body>
 </html>
