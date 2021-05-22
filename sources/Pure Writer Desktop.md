@@ -8,19 +8,19 @@
 
 ###### Windows 10
 
-* [PureWriter-1.3.3-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win10-x64.msi)
+* [PureWriter-1.3.4-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.4/PureWriter-1.3.4-Win10-x64.msi)
 
 ###### Windows 7、8、8.1
 
-* [PureWriter-1.3.3-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Win7-8.1-x64.msi)
+* [PureWriter-1.3.4-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.3.4/PureWriter-1.3.4-Win7-8.1-x64.msi)
 
 ###### macOS x64
 
-* [PureWriter-1.3.3-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-macOS.dmg)
+* [PureWriter-1.3.4-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.3.4/PureWriter-1.3.4-macOS.dmg)
 
 ###### Linux
 
-* [PureWriter-1.3.3-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.3.3/PureWriter-1.3.3-Linux-amd64.deb)
+* [PureWriter-1.3.4-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.3.4/PureWriter-1.3.4-Linux-amd64.deb)
 
 Download from Telegram: https://t.me/PureWriter/735
 
@@ -36,7 +36,7 @@ https://github.com/PureWriter/desktop/releases
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
-- Pure Writer Desktop 1.3.3 version must be used with Pure Writer 19.4.2 or above
+- Pure Writer Desktop 1.3.4 version must be used with Pure Writer 19.4.2 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
