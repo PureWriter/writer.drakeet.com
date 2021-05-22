@@ -29,7 +29,7 @@
 
   [PureWriter-1.3.4-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.3.4/PureWriter-1.3.4-Linux-amd64.deb)
 
-- Telegram 下载: https://t.me/PureWriter/735
+- Telegram 下载: https://t.me/PureWriter/771
 
 #### 旧版纯纯写作桌面版源代码
 
