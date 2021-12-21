@@ -6,13 +6,9 @@
 
 #### Download
 
-###### Windows 10
+###### Windows
 
-* [PureWriter-1.4.0-Win10-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.4.0/PureWriter-1.4.0-Win10-x64.msi)
-
-###### Windows 7、8、8.1
-
-* [PureWriter-1.4.0-Win7~8.1-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.4.0/PureWriter-1.4.0-Win7-8.1-x64.msi)
+* [PureWriter-1.4.2-Windows-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.4.0/PureWriter-1.4.2-Windows-x64.msi)
 
 ###### macOS x64
 
@@ -36,7 +32,7 @@ https://github.com/PureWriter/desktop/releases
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
-- Pure Writer Desktop 1.4.0 version must be used with Pure Writer 19.9.0 or above
+- Pure Writer Desktop 1.4.0 version must be used with Pure Writer 19.90.1 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
