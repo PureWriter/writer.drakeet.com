@@ -18,7 +18,7 @@
 
 * [PureWriter-1.5.0-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.0/PureWriter-1.5.0-Linux-amd64.deb)
 
-Download from Telegram: https://t.me/PureWriter/771
+Download from Telegram: https://t.me/PureWriter/925
 
 
 

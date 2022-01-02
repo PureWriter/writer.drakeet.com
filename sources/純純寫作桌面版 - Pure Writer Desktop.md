@@ -26,7 +26,7 @@
 
   [PureWriter-1.4.0-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.0/PureWriter-1.5.0-Linux-amd64.deb)
 
-- Telegram 下載: https://t.me/PureWriter/771
+- Telegram 下載: https://t.me/PureWriter/925
 
 #### 舊版純純寫作桌面版原始碼
 
