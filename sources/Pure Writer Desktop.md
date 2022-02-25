@@ -8,15 +8,15 @@
 
 ###### Windows
 
-* [PureWriter-1.5.1-Windows-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.5.0/PureWriter-1.5.1-Windows-x64.msi)
+* [PureWriter-1.5.2-Windows-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Windows-x64.msi)
 
 ###### macOS x64
 
-* [PureWriter-1.5.1-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.5.0/PureWriter-1.5.1-macOS.dmg)
+* [PureWriter-1.5.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-macOS.dmg)
 
 ###### Linux
 
-* [PureWriter-1.5.1-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.0/PureWriter-1.5.1-Linux-amd64.deb)
+* [PureWriter-1.5.2-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Linux-amd64.deb)
 
 Download from Telegram: https://t.me/PureWriter/932
 
@@ -32,7 +32,7 @@ https://github.com/PureWriter/desktop/releases
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
-- Pure Writer Desktop 1.4.0 version must be used with Pure Writer 19.92.0 or above
+- Pure Writer Desktop 1.5.2 version must be used with Pure Writer 19.99.4 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
