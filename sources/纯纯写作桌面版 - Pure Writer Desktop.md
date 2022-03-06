@@ -14,7 +14,7 @@
 
 > 如果你是 Windows 系统用户，请下载安装 PureWriter-1.5.2-**Windows**-x64.msi 文件。
 > 如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。
-> macOS 则使用 PureWriter-1.5.2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
+> macOS 则使用 PureWriter-1.5.3-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 百度云网盘下载: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取码: `g35w`
 
@@ -22,11 +22,11 @@
 
   [PureWriter-1.5.2-**Windows**-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Windows-x64.msi)
 
-  [PureWriter-1.5.2-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-macOS.dmg)
+  [PureWriter-1.5.3-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.3-macOS.dmg)
 
   [PureWriter-1.5.2-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Linux-amd64.deb)
 
-- Telegram 下载: https://t.me/PureWriter/957
+- Telegram 下载: https://t.me/PureWriter/961
 
 #### 旧版纯纯写作桌面版源代码
 
