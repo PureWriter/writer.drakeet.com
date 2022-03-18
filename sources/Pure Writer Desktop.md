@@ -8,7 +8,7 @@
 
 ###### Windows
 
-* [PureWriter-1.5.2-Windows-x64.msi](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Windows-x64.msi)
+* [PureWriter-1.5.4-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.4-Windows-x64.exe)
 
 ###### macOS x64
 
