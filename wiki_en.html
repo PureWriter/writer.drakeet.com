@@ -1,0 +1,1160 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Source+Sans+Pro&display=swap' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror-linenumber { }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit; background-repeat: inherit; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit; background-repeat: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+@include-when-export url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Source+Sans+Pro&display=swap');
+
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+:root {
+  --side-bar-bg-color: #2b2b2b;
+  --control-text-color: #999;
+  --select-text-bg-color: #ff7a6679;
+  --select-text-font-color: #f0f0f0;
+  --active-file-text-color: #f0f0f0;
+  --active-file-border-color: #f22f27;
+  --active-file-bg-color: #1f2335;
+  --item-hover-bg-color: #3b4057;
+  --item-hover-text-color: #f0f0f0;
+  --primary-color: #f22f27;
+  --bg-color: #2b2b2b;
+  --window-border: #393550;
+  --border-color: #393550;
+  --text-color: #d9d9d9;
+  --rawblock-edit-panel-bd: #1f2335;
+  --focus-ring-color: #ff5d52;
+
+  /* 中性色 */
+  --mid-13: #ffffff;
+  --mid-12: #f5f5f5;
+  --mid-11: #f0f0f0;
+  --mid-10: #dedede;
+  --mid-9: #bfbfbf;
+  --mid-8: #a5a5a5;
+  --mid-7: #595959;
+  --mid-6: #434343;
+  --mid-5: #262626;
+  --mid-4: #1f1f1f;
+  --mid-3: #141414;
+  --mid-2: #000000;
+  --mid-1: #000000;
+  /* 主题色 */
+  --main-10: #ffd4cc;
+  --main-9: #ffafa3;
+  --main-8: #ff887a;
+  --main-7: #ff5d52;
+  --main-6: #f22f27;
+  --main-5: #cc1616;
+  --main-4: #a60a0f;
+  --main-3: #80010a;
+  --main-2: #590009;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Source Sans Pro', '等距更纱黑体 SC', '微软雅黑', Arial, sans-serif !important;
+  color: var(--mid-10);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8rem;
+  letter-spacing: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+footer.ty-footer {
+  border-top: var(--border-color);
+}
+
+#write {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 30px 160px;
+}
+
+#write p {
+  word-spacing: 0.05rem;
+}
+
+#write ol li {
+  margin-left: -4px;
+}
+
+#write ol li p {
+  margin-left: 4px;
+}
+
+#write ul {
+  line-height: 2rem;
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+  margin-top: 30px;
+}
+
+body > *:first-child {
+  margin-top: 0 !important;
+}
+
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: var(--main-6);
+  font-weight: 500;
+  padding: 0 2px;
+  text-decoration: none;
+}
+
+/* 链接 */
+#write a {
+  border-bottom: 1px solid var(--main-6);
+  color: var(--main-6);
+  text-decoration: none;
+}
+
+/* 链接内容为空时直接啥也不显示，比如锚点的地方 */
+#write a:empty {
+  border: none;
+  font-size: 0;
+}
+
+/* 目录 */
+#write a.md-toc-inner {
+  line-height: 1.6;
+  white-space: pre-line;
+  border-bottom: none;
+}
+
+#write a:hover {
+  border-bottom: 2px solid var(--main-6);
+  color: var(--main-7);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt,
+h1 code,
+h2 tt,
+h2 code,
+h3 tt,
+h3 code,
+h4 tt,
+h4 code,
+h5 tt,
+h5 code,
+h6 tt,
+h6 code {
+  font-size: inherit !important;
+}
+
+h2 a,
+h3 a {
+  color: var(--mid-9);
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  line-height: 1.2;
+  margin: 2.4em auto 1.2em;
+}
+
+h1:after {
+  content: '';
+  display: block;
+  margin: 0.2em auto 0;
+  width: 100px;
+  height: 2px;
+  border-bottom: 2px dashed var(--main-6);
+}
+
+h2 {
+  margin: 2em auto 1.4em;
+  padding-left: 6px;
+  line-height: 1.4;
+  font-size: 1.6em;
+  border-left: 6px solid var(--main-6);
+}
+
+h3 {
+  margin: 1.6em auto 1.2em;
+  font-size: 1.35em;
+  line-height: 1.43;
+}
+
+/*--- 三级标题左边的小圆点 ---*/
+h3:before {
+  content: '';
+  border-radius: 50%;
+  background-color: var(--main-5);
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  vertical-align: middle;
+  line-height: 1.43;
+  margin-bottom: 0.18em;
+  margin-right: 6px;
+}
+
+/* 三级四级标题点击后左边的提示图标 */
+#write > h3.md-focus:before,
+#write > h4.md-focus:before {
+  width: auto;
+  height: auto;
+  background-color: var(--main-5);
+  color: var(--mid-10);
+  border: 1px solid var(--main-5);
+}
+
+h4 {
+  margin-top: 1.4em;
+  font-size: 1.2em;
+}
+
+/*--- 四级标题左边的小短线 ---*/
+h4:before {
+  background-color: var(--main-4);
+  content: '';
+  width: 6px;
+  display: inline-block;
+  height: 2px;
+  vertical-align: middle;
+  margin-bottom: 0.18em;
+  margin-right: 8px;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 1em;
+  color: var(--mid-8);
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+  margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+  margin: 0 0;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  padding: 0;
+  margin: 46px auto 64px;
+  background-color: var(--main-4);
+  border: 0;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h3:first-child,
+body > h4:first-child,
+body > h5:first-child,
+body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1,
+a:first-child h2,
+a:first-child h3,
+a:first-child h4,
+a:first-child h5,
+a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 p,
+h2 p,
+h3 p,
+h4 p,
+h5 p,
+h6 p {
+  margin-top: 0;
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+  margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+/*--- 引用块 ---*/
+blockquote {
+  position: relative;
+  border: none;
+  border-left: 2px solid var(--main-6);
+  color: var(--mid-8);
+  font-size: 1em;
+  font-style: normal;
+  padding: 24px 16px 12px;
+  margin: 24px 0 36px;
+  line-height: 1.6;
+  text-indent: 0;
+}
+
+blockquote blockquote {
+  padding-right: 0;
+}
+
+blockquote a {
+  color: var(--main-4);
+}
+
+blockquote:before {
+  content: '“';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  color: var(--main-6);
+  font-size: 2em;
+  font-family: Arial, serif;
+  line-height: 1em;
+  font-weight: 700;
+}
+
+table {
+  margin: 36px auto;
+  padding: 0;
+  word-break: initial;
+}
+
+table tr {
+  border-top: 1px solid var(--mid-7);
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+  background-color: #202336;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--mid-7);
+  border-bottom: 0;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid var(--mid-7);
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+#write table thead th {
+  background-color: #202336;
+  text-align: center;
+}
+
+#write strong {
+  padding: 0 1px;
+  color: #f8f8f8;
+}
+
+#write em {
+  padding: 0 5px 0 2px;
+}
+
+#write .CodeMirror-gutters {
+  border-right: none;
+}
+
+/* 代码块 */
+#write .md-fences {
+  -webkit-font-smoothing: initial;
+  margin: 1.8rem 0 2rem !important;
+  line-height: 1.55rem;
+  font-family: 'Roboto Mono', 'Source Sans Pro', 'Microsoft YaHei', '微软雅黑' !important;
+  font-size: 0.9rem;
+  word-wrap: normal;
+  color: var(--mid-9);
+}
+
+#write .CodeMirror-wrap .CodeMirror-code pre {
+  padding-left: 12px;
+  line-height: 1.55rem;
+}
+
+#write .CodeMirror-cursors .CodeMirror-cursor {
+  border-left: 2px solid var(--mid-9);
+}
+
+#write .md-fences .code-tooltip {
+  background-color: #1f2335;
+}
+
+#write code,
+tt {
+  margin: 0 2px;
+  padding: 2px 4px 1px;
+  border-radius: 3px;
+  font-family: 'Roboto Mono', 'Source Sans Pro', 'Microsoft YaHei', '微软雅黑' !important;
+  font-size: 0.92rem;
+  color: var(--main-6);
+  background-color: #ffb5b333;
+}
+
+#write .md-footnote {
+  color: var(--main-6);
+  background-color: var(--main-1);
+}
+
+/* 流程图块 */
+#write .md-diagram-panel {
+  position: relative;
+  margin: 24px auto;
+}
+
+#write .md-focus .md-diagram-panel {
+  border: 1px solid var(--main-4);
+  border-radius: 4px;
+}
+
+/* heighlight. */
+#write mark {
+  background-color: var(--main-6);
+  border-radius: 2px;
+  padding: 2px 4px;
+  margin: 0 2px;
+  color: var(--mid-11);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+#write del {
+  padding: 1px 2px;
+}
+
+/* 任务列表小方框 */
+.md-task-list-item > input {
+  margin-left: -1.3em;
+  margin-top: 0.3rem;
+  -webkit-appearance: none;
+}
+
+.md-task-list-item > input:before {
+  content: '';
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--mid-1);
+  border-radius: 2px;
+  border: 1px solid var(--main-4);
+  margin-top: -0.4rem;
+  transition: all 0.2s linear;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before {
+  content: '\2714';
+  font-size: 0.625rem;
+  color: var(--mid-1);
+  border: 1px solid var(--main-6);
+  background-color: var(--main-6);
+}
+
+@media print {
+  html {
+    font-size: 13px;
+  }
+
+  table,
+  pre {
+    page-break-inside: avoid;
+  }
+
+  pre {
+    word-wrap: break-word;
+  }
+}
+
+#write pre.md-meta-block {
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border: 0;
+  border-radius: 3px;
+  color: #777777;
+  margin-top: 0 !important;
+}
+
+.mathjax-block > .code-tooltip {
+  bottom: 0.375rem;
+}
+
+#write > h3.md-focus:before {
+  left: -1.5625rem;
+  top: 0.375rem;
+}
+
+#write > h4.md-focus:before {
+  left: -1.5625rem;
+  top: 0.285714286rem;
+}
+
+#write > h5.md-focus:before {
+  left: -1.5625rem;
+  top: 0.285714286rem;
+}
+
+#write > h6.md-focus:before {
+  left: -1.5625rem;
+  top: 0.285714286rem;
+}
+
+/*--- 图片 ---*/
+.md-image {
+  margin: 24px auto;
+  border-radius: 4px;
+}
+
+.md-image img {
+  border-radius: 4px;
+  border: none;
+}
+
+/* 当 “![shadow-随便写]()”写时，会有阴影 */
+.md-image img[alt|='shadow'] {
+  box-shadow: 0 4px 24px -6px var(--mid-8);
+}
+
+.md-image > .md-meta {
+  border-radius: 3px;
+  font-family: Consolas, 'Liberation Mono', Courier, monospace;
+  padding: 2px 0 0 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+/* emoji */
+.md-emoji-span:before {
+  content: attr(data-emoji);
+  font-weight: 400;
+  vertical-align: inherit;
+}
+
+.md-tag {
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.sidebar-tabs {
+  border-bottom: none;
+}
+
+#typora-quick-open {
+  background-color: var(--bg-color);
+}
+
+.typora-quick-open-item {
+  background-color: var(--bg-color);
+}
+.typora-quick-open-item.active {
+  background-color: var(--active-file-bg-color);
+}
+
+#md-notification:before {
+  top: 10px;
+}
+
+/** 专注模式 */
+
+.on-focus-mode blockquote {
+  border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header,
+.context-menu,
+.megamenu-content,
+footer {
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+  background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+  color: #b4654d;
+}
+
+.html-for-mac .context-menu {
+  --item-hover-bg-color: #e6f0fe;
+}
+
+/* 侧边栏 */
+.file-list-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.file-list-item.active {
+  background: var(--active-file-bg-color);
+  color: var(--active-file-text-color);
+  border-left: 4px solid var(--main-6);
+}
+
+.file-tree-node.active > .file-node-background {
+  background-color: var(--active-file-bg-color);
+  border-left: 4px solid var(--main-6);
+  border-color: var(--active-file-border-color);
+}
+
+/* 文件， 大纲*/
+.info-panel-tab:hover {
+  color: var(--mid-8);
+}
+
+/* 底部按钮 */
+.footer-item:hover,
+.sidebar-footer-item:hover {
+  background: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color);
+}
+
+/* 退出显示源码 */
+.typora-sourceview-on #toggle-sourceview-btn {
+  background: var(--bg-color);
+}
+.typora-sourceview-on #toggle-sourceview-btn:hover {
+  background: var(--item-hover-bg-color);
+}
+
+/* 暂时只直到作用于 显示隐藏侧边栏按钮 */
+#outline-btn:hover {
+  color: var(--item-hover-text-color);
+}
+
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff33;
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: #ffffff55;
+}
+
+/* 设置面板 */
+.nav-group-item.active,
+.nav-group-item:active {
+  background-color: var(--item-hover-bg-color) !important;
+}
+
+.megamenu-content {
+  /* background: linear-gradient(to bottom, #272b40ff, #272b4000),
+    url(file:///Users/drakeet/Library/Application%20Support/abnerworks.Typora/themes/cubes.png); */
+  background: var(--bg-color);
+}
+
+.megamenu-opened header {
+  background-image: none;
+}
+
+#megamenu-menu-sidebar {
+  background-color: var(--bg-color);
+}
+
+#recent-file-panel-action-btn {
+  background-color: var(--bg-color);
+}
+
+#recent-file-panel tbody tr:nth-child(2n-1) {
+  background-color: var(--bg-color);
+}
+
+.megamenu-menu-panel .btn:hover {
+  background-color: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color);
+}
+
+.btn:focus {
+  outline-color: var(--focus-ring-color);
+}
+
+button.btn-default:not([disabled]):hover,
+.btn-default:not([disabled]):hover {
+  background-color: var(--item-hover-bg-color);
+  background-image: none;
+}
+
+/* ----------------- 代码块主题 ----------------- */
+
+.cm-s-inner.CodeMirror {
+  padding: 0.8rem 0 1rem;
+  background-color: #1f2335;
+  color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.cm-s-inner .CodeMirror-gutters {
+  background: #1f2335;
+  color: #676e95;
+  border: none;
+}
+
+.cm-s-inner .CodeMirror-guttermarker,
+.cm-s-inner .CodeMirror-guttermarker-subtle,
+.cm-s-inner .CodeMirror-linenumber {
+  color: #676e95;
+}
+
+.cm-s-inner .CodeMirror-cursor {
+  border-left: 1px solid #ffcc00;
+}
+
+.cm-s-inner div.CodeMirror-selected {
+  background: rgba(113, 124, 180, 0.2);
+}
+
+.cm-s-inner.CodeMirror-focused div.CodeMirror-selected {
+  background: rgba(113, 124, 180, 0.2);
+}
+
+/*
+.cm-s-inner .CodeMirror-line::selection,
+.cm-s-inner .CodeMirror-line > span::selection,
+.cm-s-inner .CodeMirror-line > span > span::selection {
+  background: rgba(128, 203, 196, 0.2);
+}
+
+.cm-s-inner .CodeMirror-line::-moz-selection,
+.cm-s-inner .CodeMirror-line > span::-moz-selection,
+.cm-s-inner .CodeMirror-line > span > span::-moz-selection {
+  background: rgba(128, 203, 196, 0.2);
+} */
+
+/* .cm-s-inner .CodeMirror-activeline-background {
+    background: rgba(255, 255, 255, 0.5);
+  } */
+
+.cm-s-inner .cm-keyword {
+  color: #c792ea;
+}
+
+.cm-s-inner .cm-operator {
+  color: #89ddff;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #eeffff;
+}
+
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #f07178;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #ffcb6b;
+}
+
+.cm-s-inner .cm-atom {
+  color: #f78c6c;
+}
+
+.cm-s-inner .cm-number {
+  color: #ff5370;
+}
+
+.cm-s-inner .cm-def {
+  color: #82aaff;
+}
+
+.cm-s-inner .cm-string {
+  color: #c3e88d;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #f07178;
+}
+
+.cm-s-inner .cm-comment {
+  color: #676e95;
+}
+
+.cm-s-inner .cm-variable {
+  color: #f07178;
+}
+
+.cm-s-inner .cm-tag {
+  color: #ff5370;
+}
+
+.cm-s-inner .cm-meta {
+  color: #ffcb6b;
+}
+
+.cm-s-inner .cm-attribute {
+  color: #c792ea;
+}
+
+.cm-s-inner .cm-property {
+  color: #c792ea;
+}
+
+.cm-s-inner .cm-qualifier {
+  color: #decb6b;
+}
+
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #decb6b;
+}
+
+.cm-s-inner .cm-error {
+  color: rgba(255, 255, 255, 1);
+  background-color: #ff5370;
+}
+
+.cm-s-inner .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>Pure Writer Help</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='pure-writer-user-manual'><span>Pure Writer User Manual</span></h1><p><span>This manual is divided into Pure Writer Q&amp;A, Pure Writer Cloud Backup FAQ, Pure Writer Markdown Usage Guide In addition, there are some parts: Pure Writer Markdown FAQ, Pure Writer Desktop Beta FAQ.</span></p><p><span>In use, </span><strong><span>please make good use of the web search, you can use Ctrl+F to open the web search on the computer side, on the mobile side, please find the web search in the web menu by yourself</span></strong><span>.</span></p><h2 id='catalog-search-by-its-keyword-to-get-the-corresponding-section'><span>Catalog (Search by its keyword to get the corresponding section)</span></h2><ul><li><p><span>Different kinds of word count</span></p></li><li><p><span>About the use of horizontal screen</span></p></li><li><p><span>Introduction to the use of the Quick Input field</span></p><ul><li><span>About shortcut tools</span></li></ul></li><li><p><span>About shortcut cursor drop</span></p></li><li><p><span>How to insert the current time through the shortcut?</span></p></li><li><p><span>Introduction and problems with status bar focus mode</span></p></li><li><p><span>About formatting options</span></p></li><li><p><span>How to find/replace text?</span></p></li><li><p><span>How to use the &quot;Search for an article/Quick jump to an article&quot; feature?</span></p></li><li><p><span>Is there a word limit for a single chapter?</span></p></li><li><p><span>How to check the creation/update time of a chapter?</span></p></li><li><p><span>How do I open an external document?</span></p></li><li><p><span>Why can&#39;t I open/import too large documents?</span></p></li><li><p><span>How to change font and font size?</span></p></li><li><p><span>How to make the text translucent?</span></p></li><li><p><span>How to adjust the left and right margins of the text?</span></p></li><li><p><span>How to adjust the line/paragraph spacing?</span></p></li><li><p><span>Why can&#39;t the text be aligned at both ends?</span></p></li><li><p><span>Modify the background after the font color is not very obvious how to do?</span></p></li><li><p><span>Can Pure Writer modify the font color?</span></p></li><li><p><span>How to redo the content that was undone by mistake?</span></p></li><li><p><span>How to restore the historical version of an article through the history?</span></p></li><li><p><span>What&#39;s wrong with highlighting only one paragraph/line of text when coding?</span></p></li><li><p><span>Can I export .docx or .epub format?</span></p></li><li><p><span>How to open the exported document in the reader is garbled?</span></p></li><li><p><span>Why does the list of books pop up after clicking &quot;Outline&quot; in Time Machine?</span></p></li><li><p><span>What is Typewriter Mode?</span></p></li><li><p><span>What is read-only mode?</span></p></li><li><p><span>How do I turn on read-only mode?</span></p></li><li><p><span>How do I exit read-only mode?</span></p></li><li><p><span>How to insert a new article in another location?</span></p></li><li><p><span>About The Minority Option</span></p></li><li><p><span>What should I do if there is an abnormal inverse color in use?</span></p></li><li><p><span>Why does the &quot;This feature is an advanced feature&quot; pop-up appear?</span></p></li><li><p><span>Can I use Pure Writer without purchasing the premium version?</span></p></li><li><p><span>Why don&#39;t the custom pages disappear?</span></p></li><li><p><span>When I restore a backup, will the paper be restored?</span></p></li><li><p><span>Can I customize the background of exported images in Pure Writer?</span></p></li><li><p><span>What is the problem with the indent width?</span></p></li><li><p><span>Why is there no indentation when writing?</span></p></li><li><p><span>Why is the format .md when exporting text?</span></p></li><li><p><span>Can I use Markdown/LaTeX in Pure Writer?</span></p></li><li><p><span>Markdown shortcut pages</span></p></li><li><p><span>Can Markdown be rendered in real time in Pure Writer?</span></p></li><li><p><span>What should I do if the application is slow to load or takes a long time to open?</span></p></li><li><p><span>What if I get stuck when switching to the wastepaper basket or a book?</span></p></li><li><p><span>Can I bold text/insert images in Pure Writer?</span></p></li><li><p><span>Why does Pure Writer prompt me to &quot;skip&quot; or automatically create a new article when I open it?</span></p></li><li><p><span>Is there a limit to the number of devices that can be logged into a Pure Writer account?</span></p></li><li><p><span>Why does my Google Play membership sometimes lose its activation?</span></p></li><li><p><span>Why can&#39;t I use carriage return for line feeds on Chrome OS devices, Fyde OS devices, or some Android x86 devices?</span></p></li><li><p><span>Why can&#39;t I customize all setting items?</span></p></li><li><p><span>Is there an iOS version of Pure Writer?</span></p></li><li><p><span>Is there a risk of article theft when using Pure Writer?</span></p></li><li><p><span>Pure Writer Backup and Sync FAQ</span></p><ul><li><span>About Cloud Backup</span></li><li><span>How to configure cloud backup?</span></li><li><span>How to restore articles from an old device in a new device?</span></li><li><span>Error message: Your WebDAV configuration is incomplete or incorrect</span></li><li><span>Error message: Wrong account and password</span></li><li><span>Why is the initial article still the same after restoring backup for a new device?</span></li><li><span>Does Pure Writer support automatic synchronization? [#Does Pure Writer support automatic synchronization?</span></li><li><span>Why doesn&#39;t Pure Writer have fully automatic synchronization?</span></li><li><span>Will the contents of a backup be automatically merged when using multiple devices?</span></li><li><span>How should I ensure that the version being edited is up-to-date when using on multiple devices?</span></li><li><span>Can&#39;t find backup files in Google Drive?</span></li><li><span>Can Pure Writer be backed up using Baidu Cloud/Ali Cloud?</span></li><li><span>Uniform reply about using other cloud backup</span></li><li><span>Why can&#39;t I turn off automatic backups? [#Why can&#39;t I turn off automatic backup?</span></li></ul></li><li><p><span>Pure Writer Markdown Usage Guide</span></p><ul><li><p><span>What is Markdown?</span></p><ul><li><span>Notes</span></li></ul></li><li><p><span>Body</span></p><ul><li><span>Title</span></li><li><span>bold/italic/bold italic</span></li><li><span>strikethrough/underline</span></li><li><span>ordered list</span></li><li><span>unordered list</span></li><li><span>citation</span></li><li><span>footnotes</span></li><li><span>Corner</span></li><li><span>text left/center/right</span></li><li><span>Insert Image</span></li><li><span>Insert link]Insert link)</span></li><li><span>Insert table]Insert table)</span></li><li><span>Select Box</span></li><li><span>Quick Jump Within Page</span></li><li><span>Split Line</span></li><li><span>Change Character Color</span></li><li><span>Enter markup characters</span></li><li><span>about-other-html-code</span></li><li><span>Code Block</span></li></ul></li></ul></li><li><p><span>Pure Writer Markdown Usage FAQ</span></p><ul><li><span>About Pure Writer Markdown usage specification and compatibility test</span></li><li><span>Why does text highlighting or other parts of code in Markdown not work?</span></li><li><span>Why doesn&#39;t center code work in Markdown?</span></li></ul></li><li><p><span>Pure Writer Desktop Beta FAQ</span></p><ul><li><span>Where to download the desktop version?</span></li><li><span>How do I connect to the desktop version?</span></li><li><span>Why doesn&#39;t the desktop version open?) [Why doesn&#39;t the desktop version open?</span></li><li><span>Why can&#39;t I connect my phone to the desktop version?</span></li><li><span>Why is the connection between desktop version and cell phone often disconnected?</span></li><li><span>Why can&#39;t I connect to the desktop version automatically even after I turn on auto-connect?</span></li><li><span>How to solve the problem of text ghosting in the desktop version?</span></li></ul></li></ul><h1 id='pure-writer-qa'><span>Pure Writer Q&amp;A</span></h1><h2 id='different-kinds-of-word-count'><span>Different kinds of word count</span></h2><p><span>In the Chinese environment, Pure Writer has three modes of word count: without spaces and line breaks, with all symbols and text, and excluding all punctuation, spaces and line breaks. The scope of the statistics can be clearly understood based on the literal content, so we will not elaborate on it here.</span></p><p><span>Under English usage, if you find your word count will count a letter as a word instead of a word as a count, you can turn on &quot;Treat a word as a count&quot; in the setting item to use word count, but the word count option for Chinese will be disabled and will be defaulted to &quot;Do not include spaces and newlines&quot;.</span></p><h2 id='about-the-use-of-the-landscape-screen'><span>About the use of the landscape screen</span></h2><p><span>At present, Pure Writer is not very compatible with cell phones in landscape, so if you want to use it in landscape, it is most recommended to use a tablet or computer Android system.</span></p><p><span>When using Pure Writer on a large screen device, you can open the Tablet Settings and Guidelines on the right side of the top bar, through which you can turn on or off some optimizations made for large screen devices.</span></p><p><span>Shortcut keys for shortcut entries: Press and hold the Ctrl or Alt key on the physical keyboard to shortcut the first 10 shortcut entries.</span></p><p><strong><span>The way to open the landscape screen</span></strong><span>: Turn off the system&#39;s Orientation Lock and rotate your device to landscape.</span></p><p><span>If you can&#39;t find this setting, please open your phone&#39;s Settings, find the setting with the word Display or Display &amp; Brightness in it, find Turn off Vertical Screen Lock or Auto Rotate Screen, and turn it on.</span></p><p><span>You can also make it a landscape display by dragging and dropping the border when using the tablet&#39;s desktop mode or PC Android.</span></p><h2 id='introduction-to-the-use-of-shortcut-input-fields'><span>Introduction to the use of shortcut input fields</span></h2><p><span>The shortcut input field is a small column above the Pure Writer keyboard. In this column, users can set their own shortcut input content (such as time and date, people&#39;s names or common punctuation marks, etc.) or shortcut tools.</span></p><p><span>Click &quot;⊕&quot; or &quot;⊕ Create Shortcut&quot; to create a new shortcut or shortcut tool, and long press an existing shortcut to sort, modify or delete it. Move the cursor position in &quot;Content&quot; to set the cursor&#39;s landing point after inserting this content.</span></p><p><span>The Formatting Options menu opens when you click on the ⌘ symbol (M↓ icon in Markdown) on the left side of the shortcut input field (opens as a shortcut input panel in Markdown).</span></p><p><span>It is worth noting that, unlike elsewhere, when you select a paragraph and insert a shortcut entry with the cursor landing in the middle of the text, this item appears on both sides of the selected text instead of replacing the paragraph; when writing, this way you can quickly add symbols to sentences or paragraphs that are missing quotation marks or brackets.</span></p><p><span>The Quick Input field is supported to be turned off, you can turn off the Quick Input field in Minority Options in Settings.</span></p><h3 id='about-quick-tools'><span>About Quick Tools</span></h3><p><span>The &quot;Create Shortcut Input Item&quot; allows you to create shortcut tools located in the shortcut input field. Currently, the supported shortcut tools are Redo, Indent at the beginning of a paragraph, Formatting option for one-click typesetting, Focus to end of text, Focus to top, Copy currently selected text or full text, Search article/Quick jump to an article, Quick move cursor (need to be enabled separately in Minority option). When creating or modifying a shortcut input item, users can set the function of that shortcut button by themselves.</span></p><p><span>In subsequent updates to Pure Writer, several optimizations and adjustments may still be made to the shortcut input field, so you can make suggestions to the developers if you are not satisfied with the existing features.</span></p><h2 id='about-shortcut-input-item-cursor-landing-point'><span>About shortcut input item cursor landing point</span></h2><p><span>The shortcut entry consists of two parts: &quot;Content&quot; and &quot;Short Description&quot;. The cursor position of the shortcut entry depends on the cursor position in the &quot;Content&quot; column.</span></p><p><span>If </span><code>&quot;|&quot;</code><span> is in </span><code>Contents&#39;, the cursor will fall between</code><span>&quot;</span><code>after clicking the quick input item, and if</code><span>&quot;|&quot;</span><code>is in</code><span>Contents&#39;, the cursor will fall after </span><code>&quot;</code><span> after clicking the quick input item.</span></p><h2 id='how-can-i-insert-the-current-time-through-the-shortcut-input-item'><span>How can I insert the current time through the shortcut input item?</span></h2><p><span>To set this item, you need to use the format </span><code>${&lt;format&gt;}</code><span> and add the corresponding content in the Content of the Quick Input Item.</span></p><p><span>First put a table of quick time input, if you can&#39;t read it, you can skip it and directly use the </span><strong><span>million dollar formula</span></strong><span> given later.</span></p><p><img src="https://wx1.sinaimg.cn/mw2000/86e2ff85gy1gsvqom2btsj20or0vj455.jpg" referrerpolicy="no-referrer" alt="Cross-reference table with examples"></p><p><span>A few golden formulas are included, which can be copied and added or deleted according to your needs.</span></p><p><strong><span>12-hour timer</span></strong><span>: </span><code>${GG yyyy-MM-dd E aa hh:mm:ss.SSS(z)}</code></p><p><strong><span>Output format is </span></strong><span>: Era Year-Month-Day Week Morning/Afternoon 12 Hour Timer:Minute:Second. thousandths of a second (time zone information)</span></p><p><strong><span>24-hour timer</span></strong><span>: </span><code>${GG yyyy-MM-dd E HH:mm:ss.SSS(z)}</code></p><p><strong><span>Output format is </span></strong><span>: Era Year-Month-Day Week 24 Hour Timer:Minute:Second. thousandths of a second (time zone information)</span></p><p><strong><span>You can also directly use Chinese characters</span></strong><span> if you want to output Chinese character content, e.g.</span></p><p><strong><span>12-hour timekeeping</span></strong><span>: </span><code>${GG chronological year yyyy year M month d day E aa hh hour mm minute ss second SSS millisecond Time zone: z}</code></p><p><strong><span>24-hour timekeeping</span></strong><span>: </span><code>${GG chronological year yyyy year MM month dd day EEEEE HH hour mm minute ss second SSS millisecond Time zone: z}</code></p><p><strong><span>Note: When a single letter is used, &quot;04&quot; will be displayed as &quot;4&quot;, and similarly, &quot;Tuesday&quot; will be displayed as &quot;Tuesday </span></strong><span>Note: When a single letter is used, &quot;04&quot; will be displayed as &quot;4&quot; and &quot;Tuesday&quot; will be displayed as &quot;Tuesday. **</span></p><p><span>A more detailed description of the contents of the image can be found at the link: </span><a href='https://docs.oracle.com/javase/tutorial/i18n/format/simpleDateFormat.html'><span>Customizing Formats</span></a></p><h2 id='introduction-and-problems-with-status-bar-focus-mode'><span>Introduction and problems with status bar focus mode</span></h2><p><span>Status bar focus mode is a feature used to hide most of the notification icons in the status bar.</span></p><p><span>It is located to the right of the paragraph spacing switch in the menu of &quot;Line Spacing|Left and Right Margins&quot;. Xiaomi/Redmi phone users can&#39;t hide the status bar icon because of the limitation of MIUI, so the icon is hidden by default.</span></p><p><span>Please understand that this feature has different degrees of adaptation on different models, and the effect may also vary depending on the ROM, so please understand that this mode cannot be set successfully on some models.</span></p><h2 id='about-formatting-options'><span>About formatting options</span></h2><p><span>Formatting options are options used to quickly give uniform formatting to the content of the full text.</span></p><p><span>In it, you can add or remove extra blank lines between paragraphs, insert spaces between English and Chinese for easier reading, add indentation or remove spaces at the beginning of paragraphs, and quickly traditionalize or simplify the whole text.</span></p><p><span>The formatting option is useful for editing long paragraphs, so don&#39;t feel intimidated by the word &quot;formatting&quot; and feel free to use it.</span></p><h2 id='how-to-findreplace-text'><span>How to find/replace text?</span></h2><p><span>Click the More icon in the top bar on the main page and open Find &amp; Replace (Find &amp; Replace) in the pop-up menu.</span></p><p><span>The top input field is the content you want to find, and the bottom input field is the content you want to replace. If you only need to find, you do not need to enter the content in the lower column; when you want to replace, you need to select the part you want to replace and click Replace.</span></p><p><span>The first column of the selection bar below the input box allows you to choose different search modes and ranges, currently provided are: &quot;Current Chapter&quot;, &quot;Current Book&quot;, &quot;All Books&quot;, and &quot;The second column is for some function buttons, such as: &quot;Replace&quot;, &quot;Select All&quot;, &quot;Inverse &quot;, &quot;Put away soft keyboard&quot; and the switch of &quot;Search article/Quick jump to an article&quot; panel.</span></p><p><strong><span>For article search, please use the &quot;Search Article/Quick Jump to an Article&quot; function. </span></strong></p><h2 id='how-to-use-the-search-articlequick-jump-to-an-article-feature'><span>How to use the &quot;Search Article/Quick Jump to an Article&quot; feature?</span></h2><p><span>The main purpose of this feature is to search for </span><strong><span>articles with specific content</span></strong><span> in books, not </span><strong><span>relevant content within articles</span></strong><span>, so even if multiple keywords appear in a single article, only the first keyword in the text will be displayed as a search result.</span></p><p><strong><span>Simple usage:</span></strong><span> Enter the relevant content from that article in your memory to search for articles with that content. When there are </span><strong><span>multiple keywords/phrases</span></strong><span>, you can search by </span><strong><span>line feed</span></strong><span> entering multiple keywords/phrases, but only the first keyword/phrase will be highlighted in its results.</span></p><p><span>This search method can be used for chapter name/title search, where you can enter the title of a relevant article to search for articles with that content. Although the &quot;title only&quot; feature is not currently supported, it is possible to search for special characters (such as spaces, &quot;chapter&quot;) used in the title together to achieve similar results.</span></p><p><strong><span>Regular expressions (regular expressions)</span></strong><span>: you can use regular expressions to search the content of the article, as regular expressions users are less, here do not provide tutorials, interested can check on the network.</span></p><h2 id='is-there-a-word-limit-for-individual-chapters'><span>Is there a word limit for individual chapters?</span></h2><p><span>Pure Writer completely overcomes the technical challenge of having a limit on the number of words in a single chapter, enabling </span><strong><span>unlimited word count in a single chapter</span></strong><span>, with the number of words in a single chapter determined only by your personal wishes and the performance of your phone.</span></p><p><span>Pure Writer has been tested to be able to browse articles of ten million words without lagging, and theoretically to browse 100 million words without lagging (this data is obtained from the developer&#39;s experiments. Please note that random experiments may cause the cloud backup traffic to be quickly exhausted).</span></p><p><span>In actual use if you want to edit, it is recommended to keep the word count of a single chapter below </span><strong><span>20,000</span></strong><span> to get a smooth experience. Because due to cell phone performance limitations, some devices will have a slight lag when editing after a single chapter word count of more than 10,000, browsing will not be affected.</span></p><h2 id='how-can-i-check-the-creationupdate-time-of-a-chapter'><span>How can I check the creation/update time of a chapter?</span></h2><ul><li><span>Click the &quot;More&quot; icon at the top of the chapter list sidebar, and click &quot;Zoom&quot;.</span></li><li><span>Click the &quot;Sort Rules&quot; icon at the top of the chapter list sidebar, click &quot;Show Time Type&quot; and select the desired display type.</span></li></ul><h2 id='how-do-i-open-an-external-document'><span>How do I open an external document?</span></h2><p><span>Pure Writer supports opening external TXT/Markdown documents.</span></p><p><span>Generally you can find &quot;Open with Pure Writer&quot; from &quot;Open with Third Party Applications&quot; in the system file manager, some managers may not show &quot;Open with Pure Writer&quot;, you can replace other file managers to open it.</span></p><h2 id='why-cant-i-openimport-documents-that-are-too-large'><span>Why can&#39;t I open/import documents that are too large?</span></h2><p><span>Due to the performance limitations of cell phones, Pure Writer will lag when opening some large TXT documents, which makes many users mistakenly believe that the application or the system is stuck. Therefore, Pure Writer actively disables users from importing documents that are too large, and users can still import them by copying and pasting.</span></p><p><strong><span>Large documents are typically 300KiB or larger, and vary depending on the performance of the phone. </span></strong></p><h2 id='how-to-change-the-font-and-font-size'><span>How to change the font and font size?</span></h2><p><span>Custom fonts are a premium feature, but free users can experience the feature for free.</span></p><p><span>Android 11 or below: Place the TTF file of your favorite font in the </span><code>/Documents/PureWriter/App</code><span> folder of the storage directory, open Custom Fonts in the settings, and then exit Pure Writer and re-enter to load the custom font.</span></p><p><span>Android 11 and above system settings: open &quot;Custom Fonts&quot; in Settings, tap &quot;Select Fonts&quot;, and select the preferred font in the pop-up interface.</span></p><p><span>There is an option to change the font size of the title and body text in the settings.</span></p><h2 id='how-to-make-text-translucent'><span>How to make text translucent?</span></h2><p><span>Click the &quot;More&quot; icon on the top bar of the homepage, and click &quot;Line Spacing|Left and Right Margins&quot; in the pop-up menu below to modify the transparency of the text.</span></p><h2 id='how-do-i-adjust-the-left-and-right-margins-of-the-text'><span>How do I adjust the left and right margins of the text?</span></h2><p><span>Click the &quot;More&quot; icon on the top bar of the home page, and click &quot;Line Spacing|Left and Right Margins&quot; in the pop-up menu below to modify the left and right margins of the text.</span></p><h2 id='how-do-i-adjust-the-lineparagraph-spacing'><span>How do I adjust the line/paragraph spacing?</span></h2><p><span>Click the &quot;More&quot; icon on the top bar of the home page, and click &quot;Line Spacing|Left and Right Margins&quot; in the pop-up menu below to modify the line spacing and paragraph spacing of the text.</span></p><h2 id='why-cant-the-text-be-aligned-at-both-ends'><span>Why can&#39;t the text be aligned at both ends?</span></h2><p><span>Android&#39;s native TextView can&#39;t align text at both ends, only the WebView can, but the WebView&#39;s performance is poor, so Pure Writer chooses to use the TextView, which has both performance and alignment.</span></p><p><span>This issue is not useful to give feedback to Pure, Pure Writer can&#39;t fix the problem on Android, please give feedback to Google official about the issue.</span></p><h2 id='what-if-the-font-color-is-not-very-obvious-after-modifying-the-background'><span>What if the font color is not very obvious after modifying the background?</span></h2><p><span>The font color (black and white only) can be forced to be changed under the &quot;Fixed, No Automatic Switching&quot; option in Theme &amp; Drafting Paper.</span></p><h2 id='can-pure-writer-change-the-font-color'><span>Can Pure Writer change the font color?</span></h2><p><span>Currently Pure Writer only supports forcing black and white fonts to be switched in Themes and Scripts, no font colors can be modified, and there are no plans to support related features.</span></p><p><span>You can use Markdown to implement related functions if you need.</span></p><h2 id='how-do-i-redo-content-that-has-been-undone-by-mistake'><span>How do I redo content that has been undone by mistake?</span></h2><p><span>Click on the More icon in the top bar and there is a Redo button at the bottom of the pop-up menu.</span></p><p><span>After a single click to redo, the settings menu will disappear, providing enough visibility for the user to click multiple times to redo.</span></p><p><span>It is also possible to perform quicker undo and redo operations through the Quick Toolbar, which is available by creating the relevant tools in the Quick Input field.</span></p><h2 id='how-to-restore-the-historical-version-of-an-article-by-history'><span>How to restore the historical version of an article by history?</span></h2><p><span>In the &quot;More&quot; menu on the top bar of the application home page, click &quot;History&quot; to enter the history page.</span></p><p><span>In the History page, you can go through and preview the recent editing history of the current article, and also restore the current article to the corresponding historical version.</span></p><h2 id='whats-wrong-with-highlighting-only-one-paragraphline-of-text-when-coding'><span>What&#39;s wrong with highlighting only one paragraph/line of text when coding?</span></h2><p><span>You can turn it off in the menu of &quot;More&quot; in the top bar of the main page.</span></p><h2 id='can-i-export-docx-or-epub-format'><span>Can I export .docx or .epub format?</span></h2><p><span>Pure Writer does not support exporting files in other formats at this time. There are plans to support exporting .docx files, but this is a low priority; exporting formats such as .epub involves too many changes to be discussed later.</span></p><h2 id='exported-documents-in-the-reader-to-open-is-garbled-how-to-do'><span>exported documents in the reader to open is garbled how to do?</span></h2><p><span>The encoding format of Pure Writer is UTF-8, some readers may not support or recognize the document as UTF-8 encoding, if the text is displayed as garbled after opening, you can manually switch the text encoding or change other readers to open it.</span></p><h2 id='why-does-the-list-of-books-pop-up-when-i-click-on-outline-in-time-machine'><span>Why does the list of books pop up when I click on Outline in Time Machine?</span></h2><p><span>Since the outline no longer exists, the purpose of opening the book list is to remind you that you can create a book as an outline and open it in the second editor to check the outline while writing.</span></p><h2 id='what-is-the-typewriter-mode'><span>What is the typewriter mode?</span></h2><p><span>In typewriter mode, only the paragraph currently being edited will be highlighted, allowing the user to focus more on the text at hand, and also providing a degree of protection from prying eyes from behind.</span></p><p><span>If typewriter mode is turned on by mistake, you can turn it off in the menu of &quot;More&quot; in the top bar of the main page.</span></p><h2 id='what-is-read-only-mode'><span>What is read-only mode?</span></h2><p><span>Read-only mode can be approximated as a reading mode, in which you can swipe and flip through your articles at will without worrying about accidental text deletion, missing and other problems brought about by accidental touch, ensuring that the content is </span><strong><span>safe and risk-free</span></strong><span>.</span></p><p><span>Advanced read-only mode feature profile.</span></p><p><span>(a) When the cursor is not visible, a double-click on the editor is required to add the cursor.</span></p><p><span>(a) When the cursor is visible, it can be added by simply clicking on the editor.</span></p><p><span>When the cursor is visible and the input method panel has been retracted, you can tap Back to hide the cursor and re-enter the read-only mode.</span></p><h2 id='how-do-i-turn-on-read-only-mode'><span>How do I turn on read-only mode?</span></h2><p><span>Read-only mode is collected in the </span><code>⊕</code><span> menu at the bottom right corner. Click or long-press (depending on your settings) the </span><code>⊕</code><span> symbol at the bottom right corner to enable read-only mode in the pop-up list.</span></p><h2 id='how-do-i-exit-read-only-mode'><span>How do I exit read-only mode?</span></h2><p><span>To temporarily leave read-only mode for editing, double-click the editor to break read-only and insert the cursor.</span></p><p><span>To turn off read-only mode, click or long press (depending on your settings) on the ⊕ symbol in the lower right corner to turn off read-only mode in the pop-up menu.</span></p><h2 id='how-can-i-insert-a-new-post-in-another-location'><span>How can I insert a new post in another location?</span></h2><p><span>Inserting new articles in other locations (at the bottom of the article list, at the end of the volume, after the current article) is collected uniformly in the </span><code>⊕</code><span> position at the bottom right corner, long press the </span><code>⊕</code><span> symbol at the bottom right corner to bring up the list of this item.</span></p><h2 id='about-the-minority-option'><span>About The Minority Option</span></h2><p><span>The Minority option offers some options that are relatively more rarely chosen or not recommended by developers to be turned on, such as turning off the smooth cursor, turning off title centering, hiding the shortcut input field, etc.</span></p><h2 id='what-should-i-do-if-there-is-an-unusual-back-color-in-use'><span>What should I do if there is an unusual back-color in use?</span></h2><p><span>This problem is usually found in the systems of Chinese cell phone manufacturers. This problem is caused by the forced inverse color of the dark color mode of Chinese systems, and currently Pure Writer cannot completely circumvent this problem.</span></p><p><span>Solutions that can be provided at this time.</span></p><ul><li><span>Turn off the system&#39;s forced dark color for Pure Writer in the phone&#39;s system settings.</span></li><li><span>Try to avoid turning on dark color mode when using Pure Writer.</span></li><li><span>Suggest to the relevant system vendor to modify and optimize the relevant functions, and ask the vendor to open the interface for rejecting the forced dark color mode by the system, etc.</span></li></ul><h2 id='why-does-the-this-feature-is-an-advanced-feature-pop-up-appear'><span>Why does the &quot;This feature is an advanced feature&quot; pop-up appear?</span></h2><p><span>Custom manuscript paper, preview (including Markdown quick preview), export, Material Design 2 theme, find and replace, merge into book export, second editor, and custom fonts are advanced features that are available to paid users with unlimited access.</span></p><p><span>Some of the features allow free users to try, but in the trial will pop-up &quot;this feature is a premium feature&quot; pop-up or half-screen prompt, does not affect the normal use of this feature.</span></p><p><span>If you are already a paid user and still get this pop-up, please go to the Premium page to check if your Pure Writer account or Google account is logged in, if not, please log in again or go to the Google Store to verify your Google account.</span></p><h2 id='can-i-use-pure-writer-without-purchasing-the-premium-version'><span>Can I use Pure Writer without purchasing the premium version?</span></h2><p><strong><span>You can</span></strong><span>, Pure Writer&#39;s core features are free, including an excellent editor experience with foolproof cloud backup. You can use most of the features in Pure Writer for free, and Pure Writer does not gain any other revenue by inserting ads for users of the free version.</span></p><p><span>Every year, there will be price reductions on the double 11, if you are not in a hurry, you can wait for the double 11 event or other events from time to time.</span></p><h2 id='why-doesnt-the-custom-draft-paper-disappear'><span>Why doesn&#39;t the custom draft paper disappear?</span></h2><p><span>In Pure Writer&#39;s Themes and Scripts, the app automatically remembers the scripts the user has used on the selection page to facilitate quick changes to the script.</span></p><p><span>Pure Writer allows two custom sheets to be memorized at the same time. When the user sets a new sheet, the old one is overwritten and can be deleted by long-pressing on the Once item.</span></p><h2 id='when-restoring-a-backup-does-it-restore-the-manuscript-paper'><span>When restoring a backup, does it restore the manuscript paper?</span></h2><p><span>Pure Writer&#39;s backup package automatically backs up the bed link or RGB color value of the user&#39;s sheet. If RGB color values or bed links are used when setting up the sheet, the original sheet will be restored when restoring the backup; if a local image is used as the sheet, it cannot be restored on other devices.</span></p><h2 id='can-pure-writer-customize-the-background-of-exported-images'><span>Can Pure Writer customize the background of exported images?</span></h2><p><strong><span>Cannot. </span></strong></p><p><span>Sorry, because the length of the article may be very long and long, and the length of the background image is fixed, if stretched, it will be hard to see and distorted. Pending solution.</span></p><ol start='' ><li><span>try to use gradient transitions beyond the length, but user images are so varied that it is difficult to adapt them really well.</span></li><li><span>Use repeated tiling, but again, it may not be coordinated, and if the image is too complex, it will easily lead to an exponential increase in the size of the resulting long image, which will be very unfavorable to dissemination and compression by many platforms.</span></li></ol><h2 id='whats-wrong-with-the-indent-width'><span>What&#39;s wrong with the indent width?</span></h2><p><span>There are generally two possible reasons for problems with the indentation display: font changes and application (system) language other than Chinese.</span></p><ul><li><p><span>The most common situation is the problem caused by the modification of the font, the common performance of the display of the indentation length is not enough (generally half-space, that is, the indentation of two full-space only a Chinese character character width) or display as the wrong symbol, dot, box, etc..</span></p><p><span>Pure Writer&#39;s indent content is two full-cornered spaces, while some fonts are made with full-cornered spaces (U+3000) as the width of half-cornered spaces or other content, resulting in the displayed indent content not being full-cornered spaces but other characters.</span></p><p><strong><span>Solution</span></strong><span>: This situation can only be solved by switching fonts with normal full-space display, please switch the system font or refer to the content in this Q&amp;A to switch third-party fonts; users with technical conditions can modify the full-space in the font to make it conform to the specification.</span></p></li><li><p><span>Another situation is caused by modifying the application or system language.</span></p><p><span>Pure Writer is released for users all over the world, and its indentation rules will be based on the usage habits of users in different regions, such as four half-space indents in English environment, one full-space indent in Japanese and Korean environment, etc.</span></p><p><strong><span>Solution</span></strong><span>: Switch the application language or system language to Chinese.</span></p></li></ul><h2 id='why-is-there-no-more-indentation-when-coding'><span>Why is there no more indentation when coding?</span></h2><ul><li><span>You may have Markdown mode turned on, which will automatically stop indenting and return to normal when Markdown is turned off.</span></li><li><span>If Markdown is not turned on, go to Settings and check to see if Indenting is turned off.</span></li></ul><h2 id='why-is-the-format-md-when-exporting-text'><span>Why is the format .md when exporting text?</span></h2><p><span>The .md format is the export format for Markdown documents.</span></p><p><span>To export a TXT text document, go back to the main page and click the </span><code>M↓</code><span> icon on the right side of the top bar to turn off Markdown mode.</span></p><h2 id='can-i-use-markdownlatex-in-pure-writer'><span>Can I use Markdown/LaTeX in Pure Writer?</span></h2><p><span>Pure Writer supports the use of Markdown and some HTML tags (such as the underlined </span><code>&lt;u&gt;text&lt;/u&gt;</code><span>), while LaTeX supports the insertion of interlinear and intralinear formulas, but currently the LaTeX part of the text is somewhat sunken.</span></p><p><span>To enable Markdown/LaTeX, tap the </span><code>TXT</code><span> button on the right side of the top bar to change it to </span><code>M↓</code><span>.</span></p><p><span>To get a preview when using Markdown, click the icon next to the plus sign in the bottom right corner to toggle the preview status.</span></p><p><span>If you plan to try Markdown, you can get a brief introduction from the developer here: </span><a href='https://writer.drakeet.com/markdown'><span>Markdown in a Nutshell</span></a><span>, or you can read the [Pure Writer Markdown User Guide]Pure-Writer-Markdown-Guide) in this manual. Writer-Markdown-User&#39;s Guide).</span></p><p><span>For more questions about using Markdown, please refer to: [Pure Writer Markdown Usage FAQ]Pure Writer-Markdown-Usage FAQ).</span></p><h2 id='markdown-shortcut-input-page'><span>Markdown shortcut input page</span></h2><p><span>The Markdown shortcut page integrates some common Markdown symbols, so Markdown writers can use it to type Markdown symbols more easily.</span></p><p><span>In Markdown mode, click the </span><code>M↓</code><span> icon at the far left of the shortcut column to open the Markdown shortcut page; in non-Markdown mode, you need to open the formatting options and move to the left to the Markdown shortcut page.</span></p><p><span>Here you can quickly type in some of the Markdown tags, such as bold, italic, insert images, etc., though this page&#39;s stuff </span><strong><span>does not support modifications</span></strong><span>.</span></p><h2 id='can-markdown-be-rendered-in-real-time-in-pure-writer'><span>Can Markdown be rendered in real time in Pure Writer?</span></h2><p><span>Pure Writer has tried to support Markdown real-time rendering, but after testing, it was found that the performance of today&#39;s mobile devices does not yet meet expectations, so Pure Writer will not offer this feature until the performance of mobile devices is up to par.</span></p><h2 id='what-should-i-do-if-the-application-is-slow-to-load-or-takes-a-long-time-to-open'><span>What should I do if the application is slow to load or takes a long time to open?</span></h2><p><span>This usually happens because you have opened too long articles in Pure Writer. Due to the limited performance of the phone, there is a certain waiting time when opening very long articles.</span></p><p><span>Pure Writer is an editor, not a reader, so please try to avoid opening excessively long articles with Pure Writer. If you find that the start-up is slow due to excessively long articles, please completely delete the externally imported oversized articles.</span></p><h2 id='what-should-i-do-if-i-get-stuck-or-stuck-when-switching-to-the-wastepaper-basket-or-a-book'><span>What should I do if I get stuck or stuck when switching to the wastepaper basket or a book?</span></h2><p><strong><span>If this entry does not resolve the issue, please write an email feedback to the developer (email: </span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a><span>). </span></strong></p><p><span>This is usually caused by too many articles stored in the wastepaper basket, which exceeds the computing power of the phone. At this time, Pure Writer** is not stuck**, but loading the articles in the wastepaper basket, so the app cannot make any answer, which will make people think that the app is stuck, please wait a little until all the articles are loaded, and try to delete or empty the contents of the wastepaper basket after opening to avoid getting stuck again.</span></p><p><strong><span>Please note that you must not exit the application at this time, as this may cause the application to flash back the next time you open it. </span></strong>
+<span>The solution to the flashback occurred.</span></p><ol start='' ><li><span>Make sure you have made a backup, if you don&#39;t have a cloud backup then copy and keep the backup package from the local backup folder </span><code>Documents/PureWriter/backups/Auto</code><span> or the backup folder you have set for yourself when you haven&#39;t opened the wastepaper basket (not the latest backup package, it is recommended to save more than one, just in case).</span></li><li><span>Uninstall Pure Writer and reinstall it.</span></li><li><span>Restore the backup before the flashback occurred by using the backup package you kept locally or in the cloud. 4.</span></li><li><span>At this point, you can re-enter the wastepaper basket page and wait for its page to open.</span></li></ol><p><strong><span>This may also happen when switching to other books or very long articles, mostly when &quot;opening books that you don&#39;t open often but frequently move content to them&quot; or &quot;switching from a high powered phone to a low powered phone and the user has a very large article&quot;. </span></strong></p><h2 id='can-i-bold-textinsert-images-in-pure-writer'><span>Can I bold text/insert images in Pure Writer?</span></h2><p><span>Pure Writer is a plain text editor that is dedicated to providing an excellent plain text writing experience and assistance. Images are rich text content and cannot be expressed directly in plain text, but you can use Markdown to describe rich text content in plain text, and Pure Writer supports Markdown.</span></p><p><span>And if you support rich text or images, it will make the complexity of the editor rises significantly, complexity means that it is easy to make mistakes and difficult to achieve perfection, focus to do the best.</span></p><p><span>So I&#39;m sorry, Pure Writer has not planned to support rich text from the beginning, and will not plan to do so in the future.</span></p><p><span>I hope I can get your understanding.</span></p><p><span>If you plan to try Markdown, you can get a brief introduction from the developer here: </span><a href='https://writer.drakeet.com/markdown'><span>Markdown in a Nutshell</span></a><span>, or you can read the [Pure Writer Markdown Manual]PureWriter-Markdown-Manual) in this tutorial. Writer-Markdown-Manual).</span></p><h2 id='why-does-pure-writer-prompt-me-to-skip-or-automatically-create-a-new-article-when-i-open-it'><span>Why does Pure Writer prompt me to &quot;skip&quot; or automatically create a new article when I open it?</span></h2><p><span>This situation is usually caused by the use of a startup skip application that requires secondary/access privileges. To avoid this, close the application in question or set Pure Writer to skip whitelist.</span></p><p><span>About the accessibility permission, it is actually very dangerous and will seriously affect the system performance. It is recommended that ordinary users try to avoid using applications (or services) that require accessibility permissions. Accessibility services are essentially designed to serve users with inconvenient operations such as the blind, and abuse of this feature may lead to loss of phone performance or even loss of personal information.</span></p><p><strong><span>External links:</span></strong><a href='https://www.androidperformance.com/2019/01/21/android-performance-case-jank-accessbility/'><span>Case study of whole machine lag caused by Android accessibility service</span></a></p><p><strong><span>Addendum:</span></strong><span> Pure Writer has been updated in version 14.9.5 to disable the launch of skip-like software that clicks to create new posts.</span></p><h2 id='is-there-a-limit-to-the-number-of-devices-i-can-log-into-my-pure-writer-account'><span>Is there a limit to the number of devices I can log into my Pure Writer account?</span></h2><p><span>Currently a Pure Writer account can only be logged in on a maximum of 3 devices at the same time. If you log in on the 4th device, the earliest previously logged in device will be logged out.</span></p><h2 id='why-do-google-play-purchased-memberships-sometimes-lose-their-activation'><span>Why do Google Play purchased memberships sometimes lose their activation?</span></h2><p><span>This is a cache expiration of the Google account on your system. Please make sure you are logged into a paid Google account on your system again.</span></p><p><span>The cache of paid status may expire periodically, and you must stay logged into your Google account to keep it active at all times to avoid malicious borrowing of accounts or refund swiping.</span></p><p><span>The most effective and straightforward way** when experiencing lost Google activation is to log out of all Google accounts, log in to only the Google account that has paid for Pure Writer, and then open Pure Writer in order to accurately identify whether or not it is paid and to generate a new cache.</span></p><h2 id='why-cant-i-use-carriage-return-for-line-feeds-on-chrome-os-devices-fyde-os-devices-or-some-android-x86-devices'><span>Why can&#39;t I use carriage return for line feeds on Chrome OS devices, Fyde OS devices or some Android x86 devices?</span></h2><p><span>This is usually a system problem, many systems have modified the line feed key, try using Ctrl+Enter or Shift+Enter for line feed, many systems use this key as a hotkey for line feed.</span></p><p><span>If this does not work, we recommend looking up the line feeds for your system on the web.</span></p><h2 id='why-cant-i-customize-all-setting-items'><span>Why can&#39;t I customize all setting items?</span></h2><p><span>If everything is open to user customization, it will only make the software settings page dense, like an airplane dashboard, confusing and intimidating, and will also make the more critical settings less accessible. A good user experience should be well thought out, well designed, and ready to use right out of the box. Also, if everything is allowed to be modified, many users will make Pure Writer ugly and kill the style, which developers and most users don&#39;t want to see.</span></p><h2 id='is-there-an-ios-version-of-pure-writer'><span>Is there an iOS version of Pure Writer?</span></h2><p><strong><span>No. </span></strong><span>No.</span></p><p><span>Pure Writer is developed by Drakeet alone, and the goal is to keep making the best of Android. It&#39;s not for nothing that there&#39;s no Android version of the same great iOS editor, because the workload to replicate it is too big, and Pure Writer is still relatively niche, so it&#39;s not worth developing an iOS version, sorry about that.</span></p><h2 id='is-there-a-risk-of-article-theft-with-pure-writer'><span>Is there a risk of article theft with Pure Writer?</span></h2><p><strong><span>Pure Writer does not steal users&#39; articles. </span></strong></p><p><span>Stealing users&#39; articles is of no practical use to Pure Writer and is an unworthy and discreditable act.</span></p><p><span>Pure Writer does not do special protection and encryption of users&#39; backup packages, as this would seriously affect the speed of opening and editing articles and take up the phone&#39;s performance; Pure Writer&#39;s article backups are and will be saved in at most two places - the local public backup folder (where manual backups are different from Pure Writer&#39;s article backups are saved in at most two places - the local public backup folder (where manual backups are different from automatic backups) and the corresponding folder in the cloud drive set by the user (if no cloud backup is set, it will not be saved in any cloud, but articles may be lost when the phone is replaced, lost, or damaged), but not for other uses. So to a certain extent, encryption of the backup package is meaningless, if someone wants to steal your articles and can get your backup package from your phone&#39;s local/cloud provider, then the encryption is useless for that person too.</span></p><p><span>Note: Pure Writer cannot guarantee the safety of articles in the cracked version of Pure Writer, please use the genuine Pure Writer, the free version of Pure Writer is perfectly adequate for normal use by ordinary users.</span></p><h1 id='pure-writer-backup--sync-faq'><span>Pure Writer Backup &amp; Sync FAQ</span></h1><h2 id='about-cloud-backup'><span>About Cloud Backup</span></h2><p><span>Pure Writer supports cloud backup, it is very simple, once and for all, foolproof. Cloud backup is very important because even though Pure Writer already provides multiple precautions and protections, people still lose all their articles when their phone is lost or flashed because they don&#39;t want to do cloud backup. No one can guarantee that your phone will not be damaged or lost, and if it is, your article backups will be gone and you will regret it too much.</span></p><p><span>Pure Writer respects and protects the privacy of its users, so the server does not store any private information about the user, and the user&#39;s articles are not stored in a location outside the user&#39;s control.</span></p><p><span>Cloud backup is quite easy, you can visit </span><a href='https://writer.drakeet.com/backups'><span>&quot;Pure Writer - Automatic Backup and Cloud Backup Tutorial&quot;</span></a><span> to learn about Pure Writer&#39;s automatic backup and cloud backup features.</span></p><p><span>If users do not set up cloud backups, they should manually save local backups to a location they can trust for emergencies.</span></p><h2 id='how-to-configure-cloud-backup'><span>How to configure cloud backup?</span></h2><p><span>Open the &quot;Backup, Cloud Backup, Cloud Sync&quot; page within the settings page of Pure Writer.</span>
+<span>To learn more or understand about backup configuration you can visit </span><a href='https://writer.drakeet.com/backups'><span>Cloud Backup and Automatic Backup Tutorial</span></a></p><h2 id='how-to-restore-articles-from-old-device-in-new-device'><span>How to restore articles from old device in new device?</span></h2><p><span>When switching devices, you can restore your backups using two ways: restore via cloud backup or restore via local backup.</span></p><ul><li><p><span>Restore via Cloud Backup</span></p><p><span>After making sure the cloud backup is configured in the &quot;Backup, Cloud Backup, Cloud Sync&quot; page of the new device, click &quot;Restore Backup&quot; (this option can also be found in the popup menu of the cloud icon in the upper right corner of the app home page) and select the backup you want to restore based on the number of books and articles, backup time, and backup model in the popup page. Generally, you can choose the latest backup from your old device and overwrite it to restore it.</span></p></li><li><p><span>Restore via local backup</span></p><p><span>Users who do not perform cloud backups and refuse Pure Writer cloud backup alerts should always manually save local backups to a trusted location.</span></p><p><span>If the old device is still available, you can click &quot;Backup to local storage now&quot; on the &quot;Backup, Cloud Backup, Cloud Sync&quot; page of the old device to perform a manual backup, find the generated .pwb file in the corresponding storage directory, send it to the new device, and open it with Pure Writer to restore the local backup.</span></p><p><span>If your old device is no longer available and you are not using cloud backup, after replacing your device, you can place the latest manually saved backup in the Pure Writer backup folder of your new device and then manually restore the backup from Pure Writer; you can also place the backup package on your phone and then open the backup package directly using Pure Writer.</span></p><p><span>If you do not use cloud backup, the old device is not available and you do not save your own local backup, you will </span><strong><span>not be able to restore the article</span></strong><span>.</span></p></li></ul><h2 id='error-message-your-webdav-configuration-is-incomplete-or-incorrect'><span>Error message: Your WebDAV configuration is incomplete or incorrect</span></h2><p><span>Please check if you have under-entered or mis-entered some parts of your WebDAV configuration.</span></p><h2 id='error-message-wrong-account-and-password'><span>Error message: wrong account and password</span></h2><ul><li><span>Please check if you have under-entered or mis-entered some parts of your account number or password.</span></li><li><span>Please check if there are extra spaces or line feeds when you enter your WebDAV account or password, this problem can easily occur when copying and pasting, please try to delete the configuration content you have entered and re-enter it manually.</span></li><li><span>If the check is OK, you can check whether the WebDAV account is blocked.</span></li></ul><h2 id='why-is-the-initial-article-still-on-the-new-device-after-restoring-the-backup'><span>Why is the initial article still on the new device after restoring the backup?</span></h2><p><span>Please take care to select the backup with the correct time and volume** from the old device and not the empty backup that was triggered by your current new installation.</span></p><h2 id='does-pure-writer-support-automatic-synchronization'><span>Does Pure Writer support automatic synchronization?</span></h2><p><span>Pure Writer does not support fully automatic synchronization, but supports semi-automatic and manual synchronization.</span></p><p><span>When syncing is enabled, the article content will be automatically merged and updated when syncing between different devices. Please read &quot;About Cloud Sync&quot; in the cloud icon in the upper right corner of the app for details on sync timing, precautions, etc.</span></p><h2 id='why-doesnt-pure-writer-have-fully-automatic-synchronization'><span>Why doesn&#39;t Pure Writer have fully automatic synchronization?</span></h2><p><span>Fully automated cloud sync is bound to be accompanied by sync conflicts, sync failures, lost overlays, etc. This is basically insurmountable, especially to deal with conflicts on cell phones ...... Think about the most tried and tested git, which requires many programmers to participate and tediously resolve various conflicts, so fully automated cloud sync can be said to be almost impossible Unless each end can maintain a high-speed real-time connection, instantaneous synchronization ......</span></p><h2 id='will-the-content-in-backups-be-automatically-merged-when-multiple-devices-are-used'><span>Will the content in backups be automatically merged when multiple devices are used?</span></h2><p><span>Pure Writer supports manual &quot;merge backups&quot;. If you want Pure Writer to automatically merge changes in the cloud, please enable the cloud sync function in the &quot;Backup, Cloud Backup, Cloud Sync&quot; page.</span></p><p><span>** Please use the Cloud Sync function after confirming that you have read and agreed to &quot;About Cloud Sync&quot; in detail. **</span></p><h2 id='when-using-on-multiple-devices-how-should-i-ensure-that-the-version-being-edited-is-up-to-date'><span>When using on multiple devices, how should I ensure that the version being edited is up to date?</span></h2><ul><li><p><span>When using cloud backup only</span></p><p><span>Perform a restore cloud backup operation each time you switch devices. When clicking Restore Backup, it is more recommended to use Merge Backup.</span></p><p><span>If you are using Pure Writer on multiple devices, you can merge content with each other more easily by merging backups, although it is recommended that one device be the primary one.</span></p><p><span>Since cloud backups have a limited number of files retained in the cloud folder, when a device makes multiple cloud backups in a row (which can easily happen when multiple apps collaborate to edit documents), there is a chance that another device&#39;s cloud backup will be automatically cleaned out.</span></p></li><li><p><span>When using Cloud Sync</span></p><p><span>Before using Cloud Sync, please take care to read and understand &quot;About Cloud Sync&quot; in detail.</span></p><p><span>Depending on the manual sync and semi-automatic sync options, articles will be synced between devices in the cloud. Manual sync requires manually tapping the sync button located at the bottom of the editor to sync; semi-automatic sync automatically syncs when the text changes and the keyboard is put away, with a minimum of 6 seconds between syncs.</span></p></li></ul><h2 id='cant-find-backup-files-in-google-drive'><span>Can&#39;t find backup files in Google Drive?</span></h2><p><span>Google Drive does not support users to modify the cloud backup files created by the app, so even if the backup is shown successfully in the app, users still cannot find the corresponding folder on Google Drive.</span></p><p><span>Due to the above reasons, when users use Google Drive, they will </span><strong><span>not be able to use cloud read/write</span></strong><span>, so please choose according to your situation and needs.</span></p><h2 id='uniform-reply-about-using-other-cloud-disk-for-backup'><span>Uniform reply about using other cloud disk for backup</span></h2><p><span>Pure Writer currently supports synchronization using WebDAV, Dropbox and Google Drive.</span></p><p><span>For WebDAV, you can choose from TeraCloud in Japan, Yandex Disk in Russia, and Box Cloud in the United States.</span></p><h2 id='why-cant-i-turn-off-automatic-backups'><span>Why can&#39;t I turn off automatic backups?</span></h2><p><span>Local automatic backups cannot be turned off, otherwise Pure Writer will not be able to keep your texts safe. But you can rest assured that Pure Writer will not keep backing up infinitely, causing your phone&#39;s remaining storage space to shrink. It will help you automatically maintain 25 up-to-date automatic backup files, and older backup versions will be deleted. Of course, the backups you make by manually clicking &quot;Back up now&quot; in Pure Writer are not included, they will be stored in your phone permanently unless you delete them yourself.</span></p><h1 id='pure-writer-markdown-users-guide'><span>Pure Writer Markdown User&#39;s Guide</span></h1><h2 id='what-is-markdown'><span>What is Markdown?</span></h2><p><span>Markdown is a markup language for expressing rich text content in plain text. It is easy to learn and Pure Writer supports Markdown(MD). It is easy to learn and Pure Writer supports Markdown(MD), you can switch it to </span><code>M↓</code><span> by clicking </span><code>TXT</code><span> on the right side of the top bar to enable Markdown.</span></p><p><span>Pure Writer provides a Markdown shortcut panel, you can use them by clicking the </span><code>M↓</code><span> icon on the left side of the shortcut bar.</span></p><h3 id='caution'><span>Caution</span></h3><ol start='' ><li><p><strong><span>space</span></strong><span> is an important component in Markdown and cannot be missing.</span></p></li><li><p><span>The markup used in Markdown is mostly </span><strong><span>half-corners</span></strong><span>, so please do not confuse it with full-corners.</span></p></li><li><p><span>Markdown default ** can not use indentation **, there is a need to indent the paragraph please manually insert the indent.</span></p></li><li><p><span>There is no fully unified specification for Markdown, Pure Writer follows and implements CommonMark&#39;s Markdown standard, and some third-party Markdown </span><strong><span>may not work</span></strong><span> in Pure Writer (e.g. </span><code>==Highlighted Text===</code><span>).</span></p></li><li><p><span>Components such as headers, lists, quoted text, tables, selection boxes, dividers, etc. </span><strong><span>cannot be used </span></strong><span>in-line** and must be used and rendered at </span><strong><span>the beginning of the line</span></strong><span>.</span></p></li><li><p><span>A Pure Writer tip that you may not necessarily find: After selecting some text, use the shortcut input items or shortcut Markdown tags inside Pure Writer, when the cursor position of the shortcut input is in the insert item (such as inserting brackets and setting the cursor in the brackets after inserting), it will be inserted directly before and after the selected text, instead of replacing the paragraph text.</span></p></li><li><p><span>By default Markdown states that a line must be </span><strong><span>blank</span></strong><span> between two paragraphs or two spaces at the end of a </span><strong><span>paragraph</span></strong><span> to actually make a line break on rendering, e.g.</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="md"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="md"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 19.6875px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">First line</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 21px;"></div><div class="CodeMirror-gutters" style="display: none; height: 21px;"></div></div></div></pre></li></ol><p>&nbsp;</p><p><span>   Second line</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 19.6875px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; If you turn on `GFM Line Breaks` in the Pure Writer settings page, you only need one line break to get a line break on rendering. Since `GFM Line Breaks` is turned on by default, this tutorial is written with the `GFM Line Breaks` switch turned on by default.</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">8. Throughout this guide, the vertical tab `|` is used to refer to the cursor point, except for the table section.</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">## Full text section</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">### Title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Markdown headings are represented by the well symbol `#` with spaces, and the number of `#`s represents the hierarchy of headings, from less to more, there are six levels.</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">The text content of the title is filled in after the space. For example.</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">```md</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"># First level title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">## Secondary Title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">### Third level title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">#### Level 4 Title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">##### Level 5 Title</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">###### Grade 6 Title</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 609px;"></div><div class="CodeMirror-gutters" style="display: none; height: 609px;"></div></div></div></pre><p><span>Headings should actually insert the same number of well symbols </span><code>#</code><span> before and after (e.g. </span><code>## secondary heading ##</code><span>), which is not required in Pure Writer.</span></p><p><span>Another heading style is a first-level heading consisting of at least three equal signs </span><code>=</code><span> or a second-level heading consisting of at least three short hyphens/minus signs </span><code>-</code><span>, which should be inserted in the line below the corresponding heading text.</span></p><p><span>Note that there must be no blank lines between the text and the short connecting line, otherwise it will be recognized as a split line.</span></p><h3 id='bolditalicbold-italic'><span>Bold/italic/bold italic</span></h3><p><span>These three things are said together, mainly because the marker symbols they mainly use are the same, they are all asterisks </span><code>*</code><span> or underscores </span><code>_</code><span>, the difference only lies in the number of symbols.</span></p><p><span>Italics are composed of one preceded by one followed by two asterisks or underscores: </span><code>*italic text*</code><span>, </span><code>_italic text_</code></p><p><span>Bold is usually composed of four asterisks or underscores before and after: </span><code>**bold text**</code><span>, </span><code>__bold text__</code></p><p><span>And bold italics by analogy are composed of the first three followed by three six asterisks or underscores: </span><code>***bold italic text***</code><span>, </span><code>___bold italic ____</code></p><p><span>No underline style shortcut input is provided in Pure Writer, so it is recommended to use asterisks to bold or italicize.</span></p><h3 id='strikethroughunderline'><span>strikethrough/underline</span></h3><p><span>Strikethrough and underline are both text plus lines, so they are put together.</span></p><p><span>The strikethrough is composed of four wavy lines in the front two and the back two: </span><code>~~strikethrough text~~</code></p><p><span>You can&#39;t directly insert underscores in Markdown, so you need to use the in-line HTML tag </span><code>&lt;u&gt;|&lt;/u&gt;</code><span> to insert them.</span></p><p><span>Underline effect can be achieved by inserting text in the </span><code>&lt;u&gt;|&lt;/u&gt;</code><span> tag, example: </span><code>&lt;u&gt;Underline text&lt;/u&gt;</code></p><h3 id='ordered-list'><span>Ordered list</span></h3><p><span>An ordered list is marked in a simpler way, with a number plus a period plus a space: </span><code>1. The first point</code></p><p><span>A line feed automatically completes the next line of the sequence.</span></p><h3 id='unordered-list'><span>Unordered list</span></h3><p><span>There are three ways to use unordered lists, and Pure Writer offers two of the common ones and provides automatic filling for them.</span></p><p><span>The first is a short hyphen/ minus sign </span><code>-</code><span> plus space: </span><code>- minus sign list</code></p><p><span>The second one is asterisk </span><code>*</code><span> with space: </span><code>* asterisk list</code></p><p><span>In addition, Pure Writer does not provide shortcut input but supports the rendering of markers with the plus sign </span><code>+</code><span> plus space: </span><code>+ plus list</code></p><p><span>There is no difference in the practical use of the three.</span></p><p><span>A point worth noting is that when rendering consecutive unordered lists, lists consisting of the same tokens will be closer together, while lists consisting of different tokens will be further apart, which can be useful in some cases.</span></p><p><span>Ordered and unordered lists can be nested with each other, and the nesting can be done by adding at least two spaces in front of the list.</span></p><h3 id='quote'><span>Quote</span></h3><p><span>When you need to quote a passage, try the quote marker, which is composed of a greater than sign </span><code>&gt;</code><span> plus a space: </span><code>&gt; Quoted text</code></p><h3 id='footnotes'><span>Footnotes</span></h3><p><span>Add a footnote name after the text you need to add a footnote to: </span><code>[^footnote name]</code><span>. Then add a footnote in an empty line anywhere in the text (usually at the end): </span><code>[^footnote name]:footnote content</code><span>, you can insert a footnote.</span></p><p><span>Note: A space should not be added after the colon </span><code>:</code><span> in the footnote.</span></p><p><span>Pure Writer&#39;s footnotes do not open in a small window, but will jump directly to the browser, so this feature is currently less useful.</span></p><h3 id='corner-labels'><span>Corner labels</span></h3><p><span>Markdown does not natively support top and bottom corner markers, but this can be done in Pure Writer via HTML code.</span></p><p><span>The code for the upper corner is: </span><code>&lt;sup&gt;|&lt;/sup&gt;</code><span>; the code for the lower corner is: </span><code>&lt;sub&gt;|&lt;/sub&gt;</code><span>.</span></p><p><span>Examples: </span><code>Citation&lt;sup&gt;[1]&lt;/sup&gt;</code><span>, </span><code>C&lt;sub&gt;2&lt;/sub&gt;H&lt;sub&gt;5&lt;/sub&gt;OH</code><span>.</span></p><h3 id='leftcenterright-text'><span>Left/center/right text</span></h3><p><span>Markdown cannot directly center text, so it uses the HTML code </span><code>&lt;p align=&quot;&quot;&gt;|&lt;/p&gt;</code><span>, which Pure Writer provides by default as </span><code>&lt;p align=&quot;center&quot;&gt;|&lt;/p&gt;</code><span>, but by modifying the corresponding position code, it can support both left and center, left, center, right.</span></p><p><span>The format of the text position is: </span><code>&lt;p align=&quot;position&quot;&gt;Text that needs to be modified in position&lt;/p&gt;</code></p><p><span>Pure Writer** does not work with **</span><code>&lt;center&gt;|&lt;\center&gt;</code><span> code centering.</span></p><h3 id='insert-image'><span>Insert image</span></h3><p><span>Inserting an image is a relatively important feature, and it has the format: </span><code>![]()</code><span>.</span></p><p><span>The first square brackets fill in the image name, while the second brackets fill in the image location. When you are using a web image you should fill in its web location, when you are using a local image you should check or fill in its local location with the image selector.</span></p><p><span>It is important to note that when using a network image bed, you should pay attention to protect your privacy and choose a trustworthy image bed; when using a local image, the image cannot be moved or deleted, otherwise it will not be displayed properly, and the image cannot be shared and synchronized with Markdown documents.</span></p><h3 id='insert-link'><span>Insert link</span></h3><p><span>Similar to inserting an image, the format is: </span><code>[]()</code><span>.</span></p><p><span>Just enter the link description in the front square brackets and the link in the back round brackets, e.g.: </span><code>[POPO Original Marketplace](https://www.popo.tw/index.html)</code></p><h3 id='insert-table'><span>Insert table</span></h3><p><span>Pure Writer provides a shortcut to insert a three-column, four-row table.</span></p><p><span>Tables in Markdown don&#39;t have a lot of formatting like excel, just a simple table with a few columns and rows.</span></p><p><span>The basic components of the table are the vertical tab </span><code>|</code><span>, space, colon </span><code>:</code><span> and short hyphen/ minus </span><code>-</code><span> four components, tab separates each column of the table, space to determine the text content of the table, colon to determine the location of the text in the table, short hyphen is responsible for marking the table header and auxiliary to determine the location of the text in the table.</span></p><p><span>Example.</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="md"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="md"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 19.6875px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| left-justified | centered | right-justified |</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| :----- | :----: | -----: |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| left | center | right |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| left | center | right |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| left | center | right |</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 105px;"></div><div class="CodeMirror-gutters" style="display: none; height: 105px;"></div></div></div></pre><p><span>The actual display results are</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>left-aligned</span></th><th style='text-align:center;' ><span>centered</span></th><th style='text-align:right;' ><span>right-aligned</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>left</span></td><td style='text-align:center;' ><span>center</span></td><td style='text-align:right;' ><span>right</span></td></tr><tr><td style='text-align:left;' ><span>left</span></td><td style='text-align:center;' ><span>center</span></td><td style='text-align:right;' ><span>right</span></td></tr><tr><td style='text-align:left;' ><span>left</span></td><td style='text-align:center;' ><span>center</span></td><td style='text-align:right;' ><span>right</span></td></tr></tbody></table></figure><p><span>Points to note.</span></p><ol start='' ><li><span>When inserting a table, the previous row of the table must be empty, otherwise the table will not be rendered successfully.</span></li><li><code>:--:</code><span> means the content and title bar are left-aligned, </span><code>:--:</code><span> means the content and title bar are centered, and </span><code>--:</code><span> means the content and title bar are right-aligned.</span></li><li><span>The extra spaces between </span><code>|</code><span> and </span><code>-</code><span> are ignored and do not affect the layout.</span></li><li><span>Extra spaces between the content and </span><code>|</code><span> are ignored, so for aesthetic purposes you can use spaces to align cells in different rows, and the number of </span><code>-</code><span> at the table header should be at least one.</span></li><li><span>The first </span><code>|</code><span> and last </span><code>|</code><span> of each line can be omitted, so an extra line should be left blank when entering the content after the form to prevent the next line from being considered the content of the form.</span></li></ol><h3 id='select-box'><span>Select box</span></h3><p><span>Markdown&#39;s checkboxes are made up of a hyphen/minus </span><code>-</code><span> and square brackets </span><code>[]</code><span>, and a space or the letter </span><code>x</code><span> is entered in the square brackets to determine if the checkbox is selected. The order of the checkboxes is short hyphen, space, front square bracket, space or letter </span><code>x</code><span>, back square bracket, space plus the text to be selected, all of which are indispensable, and the Markdown shortcut in Pure Writer already provides shortcuts to the corresponding checkboxes to avoid typing errors.</span></p><p><span>Examples: </span><code>- [ ] unchecked</code><span>, </span><code>- [x] checked</code></p><h3 id='fast-jumping-within-pages'><span>Fast jumping within pages</span></h3><p><span>The fast jump within the page needs to be supported by headers (h1~h6).</span></p><p><span>Insert a jump link to a title to enable in-page jumping in the preview page.</span></p><p><span>The format is.</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="md"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="md"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 19.6875px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"># title1</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">...</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">[Back to title 1]title1)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 105px;"></div><div class="CodeMirror-gutters" style="display: none; height: 105px;"></div></div></div></pre><p><span>In this case, Back to title 1 will be shown in blue on the live preview page, click it to jump to the corresponding location.</span></p><p><strong><span>Note:</span></strong></p><ul><li><span>There is a space after the well </span><code>#</code><span> in the previous title, but no space after the well </span><code>#</code><span> in the parentheses of the jump link.</span></li><li><span>If there are spaces in the title, the space in </span><code>#</code><span> should be removed. (In some specifications this should be replaced with </span><code>%20</code><span> or </span><code>-</code><span>)</span></li><li><span>The current version only enables jumping in the preview (Preview &amp; Save As) page, not in Live Preview.</span></li><li><span>It may not be possible to jump or jump to the browser in Pure Writer, due to limitations for various reasons, this issue cannot be solved at this time.</span></li></ul><h3 id='dividing-line'><span>Dividing line</span></h3><p><span>The dividing line is made up of at least three short connecting lines/minus signs </span><code>-</code><span> that occupy a separate line.</span></p><p><span>Note that a blank line should be added between the text and the split line below it, otherwise the text on the split line will be recognized as a title.</span></p><h3 id='change-character-color'><span>Change character color</span></h3><p><span>Pure Writer can change the color of characters via HTML&#39;s </span><code>&lt;font color=&quot;|&quot;&gt;|&lt;/font&gt;</code><span> in the format </span><code>&lt;font color=&quot;color color code or English word of common color&quot;&gt;Text to be changed in color&lt;/font&gt;</code><span>.</span></p><p><span>Examples: </span><code>&lt;font color=&quot;black&quot;&gt;black text&lt;/font&gt;</code><span>, </span><code>&lt;font color=&quot;#000000&quot;&gt;black text&lt;/font&gt;</code></p><p><span>Note: Changing the font color and character centering temporarily </span><strong><span>cannot be nested</span></strong><span>; changing the font color may cause conflicts in many places and </span><strong><span>cannot be displayed</span></strong><span> (e.g. tables), </span><strong><span>please use caution</span></strong><span>.</span></p><h3 id='enter-marker-characters'><span>Enter marker characters</span></h3><p><span>If you need to enter the body of the markdown character, then you need to look at this article. Markdown enters the markdown character via a backslash </span><code>\</code><span>.</span></p><p><span>For example: </span><code>\*italics\*</code><span> will be rendered as </span><code>*italics*</code><span> in Markdown.</span></p><h3 id='about-other-html-codes'><span>About other HTML codes</span></h3><p><span>A significant portion of HTML code can be used in Markdown, and Pure Writer has some support for it. For example, the underline </span><code>&lt;u&gt;|&lt;/u&gt;</code><span> (</span><code>&lt;ins&gt;|&lt;/ins&gt;</code><span>), the top and bottom corner markers </span><code>&lt;sup&gt;|&lt;/sup&gt;</code><span>, </span><code>&lt;sub&gt;|&lt;/sub&gt;</code><span>, etc., which were introduced earlier.</span></p><p><span>Note that Pure Writer&#39;s Markdown editor is not a true HTML editor, so not all HTML code can be used and rendered in Pure Writer&#39;s Markdown mode. Users who need to do so can experiment with Pure Writer to see if it supports it.</span></p><h3 id='code-block'><span>Code block</span></h3><p><span>Markdown can contain multiple lines of code by using </span><code></code><span>|</span><code></code><span> and in-line code by using </span><code></code><span>|</span><code></code><span>.</span></p><p><span>Pure Writer supports code highlighting, just enter the language name after the ````` at the beginning.</span></p><p><span>Examples.</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="md" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="md"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 19.6875px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">```js</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">windows.addEventListener('load', function(){</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">console.log('windows loaded');</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">```</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">```python</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">def myfun(x):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  return(x**2)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">```</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 315px;"></div><div class="CodeMirror-gutters" style="display: none; height: 315px;"></div></div></div></pre><p><span>More and more complete Markdown guidelines can be found at </span><a href='https://segmentfault.com/markdown'><span>Markdown Editor Syntax Guide</span></a></p><h1 id='pure-writer-markdown-usage-faq'><span>Pure Writer Markdown Usage FAQ</span></h1><h2 id='about-pure-writer-markdown-usage-specification-and-compatibility-testing'><span>About Pure Writer Markdown usage specification and compatibility testing</span></h2><p><span>Pure Writer&#39;s Markdown follows the CommonMark specification, reference link: </span><a href='https://spec.commonmark.org/0.29/'><span>CommonMark Spec</span></a></p><p><span>Markdown in Pure Writer can be tested using the official tester provided by CommonMark: </span><a href='https://spec.commonmark.org/dingus/'><span>CommonMark specification tester</span></a></p><h2 id='why-doesnt-text-highlighting-or-other-parts-of-the-code-work-in-markdown'><span>Why doesn&#39;t text highlighting or other parts of the code work in Markdown?</span></h2><p><span>The common codes for text highlighting </span><code>=|==</code><span> are not native to Markdown, but are added by other third-party applications, and Pure Writer does not support these non-native codes. If needed you can try using in-line code blocks (whose code is: </span><code></code><span>in-line code block ``, shortcut input is provided in Pure Writer) instead. Note that in-line code blocks do not render bold, italic, strikethrough, underline, etc. code.</span></p><p><span>Why doesn&#39;t the center code work in ## Markdown?</span></p><p><span>Pure Writer&#39;s centering and left/right alignment can only be done using the </span><code>&lt;p align=&quot;center/left/right&quot;&gt;|&lt;/p&gt;</code><span> code. Pure Writer has removed support for </span><code>&lt;center&gt;|&lt;/center&gt;</code><span> code because of bugs that prevented line breaks from being rendered correctly.</span></p><h1 id='pure-writer-desktop-beta-faq'><span>Pure Writer Desktop Beta FAQ</span></h1><h2 id='where-can-i-download-the-desktop-version'><span>Where can I download the desktop version?</span></h2><p><span>Pure Writer desktop version will be updated in </span><a href='http://writer.drakeet.com/desktop_en'><span>Pure Writer desktop download</span></a><span>, Telegram channel, official QQ group, WeChat group and public number, so you can download it through relevant channels.</span></p><p><span>In addition, please do not trust the versions provided by third parties. We are not able to help you in case of loss of files or leakage of contents caused by using the versions from unknown sources.</span></p><h2 id='how-do-i-connect-to-the-desktop-version'><span>How do I connect to the desktop version?</span></h2><p><span>Keep your phone and computer in the same WIFI network or hotspot, open the mobile version, click the cloud icon in the upper right corner, click &quot;Connect to Pure Writer Desktop&quot;, enter the IP address shown in the input field of the desktop version, and you can connect to the desktop version instantly and edit your current articles in both directions.</span></p><ul><li><span>If you see multiple lines of IP addresses, please try to connect to them one by one.</span></li><li><span>The Windows version cannot contain Chinese directories, otherwise it will not work!</span></li></ul><h2 id='why-cant-i-open-the-desktop-version'><span>Why can&#39;t I open the desktop version?</span></h2><ul><li><span>The desktop version of Pure Writer is currently only available in 64-bit version. Please first check the &quot;System&quot; in your computer&#39;s control panel to make sure that you have a 32-bit operating system.</span></li><li><span>Please make sure that you have installed the corresponding version of your current system.</span></li><li><span>The storage path for Windows version cannot contain Chinese directories, please check if your storage path has Chinese.</span></li></ul><h2 id='why-cant-i-connect-my-phone-to-the-desktop-version'><span>Why can&#39;t I connect my phone to the desktop version?</span></h2><ul><li><span>Please check if your devices are under the same network.</span></li><li><span>Check that your IP address has been entered correctly.</span></li><li><span>Check that your computer&#39;s firewall is not blocking Pure Writer on the desktop side from connecting to the network (or a public network), and if so, allow Pure Writer to connect to the network.</span></li><li><span>Check if the WIFI network you are using has AP quarantine turned on. Many WIFI networks in public places (such as schools, businesses, restaurants, etc.) have AP quarantine turned on to prevent users from connecting to each other causing loss of critical information. In this case, you can open a hotspot through your phone/computer and connect another device to the hotspot to solve the problem.</span></li></ul><h2 id='why-is-the-connection-between-the-desktop-version-and-the-cell-phone-often-disconnected'><span>Why is the connection between the desktop version and the cell phone often disconnected?</span></h2><p><span>This situation is usually caused by automatically clearing background applications or unstable wireless network after the phone rests on the screen, so it is difficult to avoid this situation very effectively.</span></p><p><span>Currently Pure Writer for PC can be connected and used normally with a significant number of models. In the future, Pure Writer will try to further enhance the application preservation in the state of connection with the computer side. The following are a few suggestions that may help with connection stability.</span></p><ul><li><span>You can prevent Pure Writer from being cleaned in the background by various means, such as padlocking Pure Writer in the background, whitelisting Pure Writer for power consumption restrictions, turning off automatic background cleaning after screen rest, etc. You can refer to </span><a href='https://dontkillmyapp.com/'><span>Don&#39;t kill my app!</span></a><span> for countermeasures.</span></li><li><span>Try to ensure the wireless signal strength and connection stability to avoid unstable connection due to the distance from the router. The current solution is to use your phone to connect to the WLAN (not mandatory, but it saves traffic and does not increase the number of IPs on the connection page) and then use your computer to connect to the hotspot to keep the two close together.</span></li></ul><h2 id='why-cant-i-connect-to-the-desktop-version-automatically-even-after-turning-on-auto-connect'><span>Why can&#39;t I connect to the desktop version automatically even after turning on auto-connect?</span></h2><p><span>When you switch networks several times, the IP address of your phone may change, resulting in not automatically connecting to the desktop version.</span></p><p><span>In this case, you can select &quot;Static IP Address&quot; in the phone&#39;s WLAN settings, so that when using this WLAN, you will no longer be unable to connect to the desktop version automatically.</span></p><h2 id='how-to-solve-the-ghosting-phenomenon-of-text-in-desktop-version'><span>How to solve the ghosting phenomenon of text in desktop version?</span></h2><p><span>You can try changing the refresh rate setting in the Nvidia control panel to a fixed refresh rate to resolve the issue.</span></p><h1 id='pure-gossip'><span>Pure gossip</span></h1><h2 id='a-little-egg-from-pure-writer'><span>A little egg from Pure Writer</span></h2><p><span>There are small hidden eggs on the membership page, through which you can see an icon and a pop-up egg that Pure Writer had designed but eventually abandoned.</span></p><p><span>This egg icon is now also used in Pure Writer&#39;s launch animation in Android 12.</span></p><p>&nbsp;</p></div></div>
+</body>
+</html>
