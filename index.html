@@ -6,7 +6,7 @@
 <link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
@@ -19,11 +19,9 @@ a:active, a:hover { outline: 0px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
 .typora-export .task-list-item input { pointer-events: none; }
-@media screen and (max-width: 500px) { 
+@media screen and (max-width: 500px) {
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
-  .CodeMirror-sizer { margin-left: 0px !important; }
-  .CodeMirror-gutters { display: none !important; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
@@ -46,12 +44,12 @@ h6 { font-size: 1rem; }
 .hidden { display: none; }
 .md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
 a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
 figure > table { margin: 0px; }
-tr { break-inside: avoid; break-after: auto; }
+thead, tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
 table.md-table td { min-width: 32px; }
@@ -66,16 +64,17 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping pre { white-space: pre; }
 #write pre.ty-contain-cm { white-space: normal; }
 .CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit; background-repeat: inherit; }
 .md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
 #write .md-fences.mock-cm { white-space: pre-wrap; }
 .md-fences.md-fences-with-lineno { padding-left: 0px; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
 .md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
 .CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
@@ -85,10 +84,10 @@ blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
-@media print { 
+@media print {
   body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
-  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
-  .typora-export * { -webkit-print-color-adjust: exact; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
   .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
   .is-mac table { break-inside: avoid; }
@@ -96,7 +95,7 @@ blockquote > :first-child, li > :first-child { margin-top: 0px; }
 }
 .footnote-line { margin-top: 0.714em; font-size: 0.7em; }
 a img, img a { cursor: pointer; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; }
 p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
 #write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
 p > .md-image:only-child { display: inline-block; width: 100%; }
@@ -109,7 +108,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
 .math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
 .md-toc-content { position: relative; margin-left: 0px; }
 .md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
@@ -122,7 +121,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 .md-toc-h4 .md-toc-inner { margin-left: 6em; }
 .md-toc-h5 .md-toc-inner { margin-left: 8em; }
 .md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) { 
+@media screen and (max-width: 48em) {
   .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
   .md-toc-h4 .md-toc-inner { margin-left: 5em; }
   .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
@@ -130,23 +129,14 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 }
 a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
 .footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
 .md-attr { display: none; }
 .md-fn-count::after { content: "."; }
 code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
-.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
 code { text-align: left; }
-a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
-.md-inline-math .MathJax_SVG .noError { display: none !important; }
-.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
-.md-fences-math .MathJax_SVG_Display, .md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: visible; display: block !important; }
-.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
-.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
-.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
-.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; zoom: 90%; }
-#math-inline-preview-content { zoom: 1.1; }
-.MathJax_SVG * { transition: none; }
-.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
 .md-diagram-panel > svg { max-width: 100%; }
 [lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
@@ -155,38 +145,36 @@ table tr th { border-bottom-width: 0px; }
 video { max-width: 100%; display: block; margin: 0px auto; }
 iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
-mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
 .md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
 .md-expand mark .md-meta { opacity: 0.3 !important; }
 mark .md-meta { color: rgb(0, 0, 0); }
-@media print { 
+@media print {
   .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
 }
 .md-diagram-panel .messageText { stroke: none !important; }
 .md-diagram-panel .start-state { fill: var(--node-fill); }
 .md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
-.md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
 .md-fences.md-fences-math { font-size: 1em; }
-.md-fences-math .MathJax_SVG_Display { margin-top: 8px; cursor: default; }
 .md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
-.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit; background-repeat: inherit; }
 .typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
 .typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
 .typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
 .typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
-@media screen and (max-width: 1024px) { 
+@media screen and (max-width: 1024px) {
   .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
 }
-@media screen and (max-width: 800px) { 
+@media screen and (max-width: 800px) {
   .typora-export-sidebar { display: none; }
 }
 .outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
 .outline-content ul { margin-top: 0px; margin-bottom: 0px; }
 .outline-content strong { font-weight: 400; }
 .outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
-.outline-expander::before { content: ''; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
 .outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
-.outline-expander:hover::before { content: ''; }
+.outline-expander:hover::before { content: ""; }
 .outline-h1 > .outline-item { padding-left: 0px; }
 .outline-h2 > .outline-item { padding-left: 1em; }
 .outline-h3 > .outline-item { padding-left: 2em; }
@@ -198,18 +186,19 @@ mark .md-meta { color: rgb(0, 0, 0); }
 .outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
 .outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
 .outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
-.outline-item-open > .outline-item > .outline-expander::before { content: ''; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
 .outline-children { display: none; }
 .info-panel-tab-wrapper { display: none; }
 .outline-item-open > .outline-children { display: block; }
 .typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
 .typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
 .typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
-.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: '−'; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
 .typora-export-collapse-outline .outline-children { display: none; }
 .typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
 .typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
 .typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
 
 
 :root {
@@ -225,10 +214,11 @@ mark .md-meta { color: rgb(0, 0, 0); }
     /* open-sans-700italic - latin-ext_latin */
   html {
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
-    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
     color: rgb(51, 51, 51);
     line-height: 1.6;
 }
@@ -467,11 +457,8 @@ code {
     html {
         font-size: 13px;
     }
-    table,
     pre {
         page-break-inside: avoid;
-    }
-    pre {
         word-wrap: break-word;
     }
 }
@@ -599,10 +586,10 @@ header, .context-menu, .megamenu-content, footer{
 }
 
 
- :root {--mermaid-font-zoom:1em ;}  @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
 </style><title>纯纯写作 - 绝不丢失文本编辑器</title>
 </head>
 <body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><h3 id='纯纯写作---绝不丢失文本编辑器'><span>纯纯写作 - 绝不丢失文本编辑器</span></h3><p><span>一个令人感到安心、拥有历史记录、段间距、多重防止文章丢失功能，和许多写作辅助的编辑器。</span></p><p><span>纯纯写作是一款致力于提供 绝不丢失内容、快速、优秀写作体验 的 App。在源于全世界用户对于纯纯写作的评论中，有许多用户对纯纯写作给予了夸张的赞赏，比如「没用过这么好用的 App」、「这真的是我用过最舒服的写作 App 了」、「很好用，彻底改变我用纸笔写作的习惯」、「忍不住想夸你，这个应用真的好棒，正因为你们这样的开发者在，Android 才会这么精彩」...</span></p><p><img src="https://wx1.sinaimg.cn/mw2000/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" referrerpolicy="no-referrer" alt="PureWriter1024x500.jpg"></p><p><span>它在 Android 上实现了</span><strong><span>完美的行间距和段间距</span></strong><span>，令你的写作内容更加赏心悦目，同时，它提供了多重防止丢失保障措施，最大程度上给用户营造安心、随时随地的写作体验。</span></p><p><span>此外，纯纯写作还支持「</span><strong><span>快捷输入栏</span></strong><span>」和「</span><strong><span>格式化工具</span></strong><span>」，快捷输入栏能够让用户自定义快捷词语和短语；格式化面板则能够帮助用户快速调整文章格式，比如在中英文之间自动插入空格，或者自动进行缩进调整等等。</span></p><p><span>在实现了这些显著功能以外，纯纯写作还在</span><strong><span>流畅体验</span></strong><span>上下了很多功夫，它拥有 完美的键盘响应逻辑。使用纯纯写作时，你能够往下快速滑动页面或快捷输入栏来收起软键盘；能够点击文章某一行后，动态获得合适的光标焦点定位；能够在收起软键盘时，文章位置保持不动 ... 许多这样的细节内容，当你对比使用其他编辑器项目时，你才会发现纯纯写作做得更加出色、流畅，细致入微。</span></p><p><span>至于一个编辑器该有的功能，纯纯写作也都没有落下，比如 </span><strong><span>WebDAV 云备份、段首缩进、生成长图片、悬浮字数统计、撤销、Markdown、更换信纸、指纹加锁、夜间模式、单词联想输入、打字机模式</span></strong><span> 等等。但即使这样，纯纯写作仍然保持了简约、蕴繁于简的设计风格，遵循 Material Design 设计，并且它还有一个像是哆啦 A 梦 </span><strong><span>时光机</span></strong><span> 的图标，寓意着「文字能够连接过去，遥想未来」，也照应了纯纯写作特别提供的「历史记录」功能。</span></p><p><span>令人感到安心，顺滑流畅的写作体验，如你所愿，这就是纯纯写作，请享受写作吧！</span></p><h3 id='下载'><span>下载</span></h3><p><strong><span>国内下载</span></strong><span>: </span><a href='https://a.app.qq.com/o/simple.jsp?pkgname=com.drakeet.purewriter' target='_blank' class='url'>https://a.app.qq.com/o/simple.jsp?pkgname=com.drakeet.purewriter</a></p><p><strong><span>Google Play</span></strong><span>: </span><a href='https://play.google.com/store/apps/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></p><p>&nbsp;</p><h3 id='其它介绍'><span>其它介绍</span></h3><ul><li><a href='backups'><strong><span>《纯纯写作自动备份与云备份教程》</span></strong></a></li><li><a href='protections'><span>《纯纯写作保护机制》</span></a></li><li><a href='markdown'><span>《Markdown 简明教程》</span></a></li><li><a href='desktop'><span>纯纯写作</span><strong><span>桌面版</span></strong></a></li></ul><p>&nbsp;</p><h3 id='帮助'><span>帮助</span></h3><p><span>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p><p><span>如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！</span></p></div></div>
+<div id='write'  class=''><h3 id='纯纯写作---绝不丢失文本编辑器'><span>纯纯写作 - 绝不丢失文本编辑器</span></h3><p><span>一个令人感到安心、拥有历史记录、支持云同步、云备份、多重防丢失功能，和许多写作辅助的极速编辑器。</span></p><p><img src="https://wx1.sinaimg.cn/mw2000/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" referrerpolicy="no-referrer" alt="PureWriter1024x500.jpg"></p><p>&nbsp;</p><p><span>　　写作，让我们连接过去，遥想未来。然而，您是否经历过一些写作软件：启动不够快导致灵感稍纵即逝？经常出错导致文字付诸东流？缺乏许多写作该有的功能与辅助令人感觉不够顺手？</span></p><p><span>　　纯纯写作能够解决所有这些问题。这是一个极速的纯文本编辑器，我们希望写作能够回到原本的样子：</span><b><span>纯粹、有安全感、随时、绝不丢失内容、具备良好的写作体验。</span></b></p><p><span>　　</span><strong><span>令人安心</span></strong></p><p><span>　　纯纯写作的图标是一个时光机的投影，寓意着文字能够带我们穿越时空，也照应了纯纯写作特别提供的「历史记录」和「自动备份」功能，通过这些保障，</span><strong><span>即使您误操作将文本删除，或手机瞬间断电关机，您的文章仍然能够被完整保存</span></strong><span>或者在历史记录里找回。多年来，纯纯写作提供了</span><strong><span>令人安心，充满安全感的写作体验</span></strong><span>，做到了难得的无一丢失，广受好评。</span></p><p><span>　　</span><strong><span>丝滑流畅</span></strong></p><p><span>　　除了实现最重要的安全保障之外，纯纯写作的 UI 界面和各种写作辅助功能，也能令用户感到这个应用真是赏心悦目又丝滑流畅。纯纯写作</span><strong><span>适配了 Android 11 的软键盘接口，能够让您的手指顺滑地控制软键盘起落</span></strong><span>。同时，它还提供了</span><strong><span>呼吸式的光标</span></strong><span>，光标不再仅仅一闪一闪，而是像人的呼吸一样，渐隐渐显。许多类似这样的细节，纯纯写作都打磨到了极致，与此同时，它又拥有许多写作辅助功能，比如</span><strong><span>「自动补全成对符号」、按删除时删除成对符号</span></strong><span>、在完成对话内容时按回车键跳出引号范围……许多这样的辅助功能，都会令人感到适时和自然，</span><strong><span>当你对比其他编辑器应用时，便会发现纯纯写作做得更加出色、流畅、细致入微。</span></strong></p><p><span>　　</span><strong><span>蕴繁于简</span></strong></p><p><span>　　许多编辑器该有的基本功能，纯纯写作也都没有落下，比如 快捷输入栏、</span><b><span>多设备云同步</span></b><span>、段首缩进、段间距、生成精美的长图片、撤销、字数统计、双编辑器左右对照、一键调整格式、查找替换、Markdown、</span><a href='desktop'><span>电脑版</span></a><span>……还有一些十分有创意的独家功能，比如：使用 TTS 语音引擎实时读出您输入的文字，</span><strong><span>帮您换一种感官方式检查输入的文字</span></strong><span>是否正确。再比如它实现了「</span><strong><span>无限字数</span></strong><span>」，只要您的手机性能允许，没有字数限制。即使这样，纯纯写作仍然保持了简约的设计风格，遵循 Material Design 设计，好用又好看。</span></p><p><span>　　您能够最快速度到达灵感页面，能够随时随地中断和继续写作，这些纯纯写作都已经为您做好了。令人感到安心且流畅的写作体验，这就是纯纯写作，请享受写作吧！</span></p><h3 id='下载'><span>下载</span></h3><p><strong><span>国内下载</span></strong><span>: </span><a href='https://a.app.qq.com/o/simple.jsp?pkgname=com.drakeet.purewriter' target='_blank' class='url'>https://a.app.qq.com/o/simple.jsp?pkgname=com.drakeet.purewriter</a></p><p><strong><span>Google Play</span></strong><span>: </span><a href='https://play.google.com/store/apps/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></p><p>&nbsp;</p><h3 id='纯纯写作获奖情况'><span>纯纯写作获奖情况</span></h3><ul><li><span>小米金米奖</span></li><li><span>OPPO 至美奖</span></li><li><span>华为匠心奖、年度最佳应用</span></li><li><span>少数派年度最佳应用</span></li></ul><p>&nbsp;</p><h3 id='其它介绍'><span>其它介绍</span></h3><ul><li><a href='backups'><strong><span>《纯纯写作自动备份与云备份教程》</span></strong></a></li><li><a href='protections'><span>《纯纯写作保护机制》</span></a></li><li><a href='markdown'><span>《Markdown 简明教程》</span></a></li><li><a href='desktop'><span>纯纯写作</span><strong><span>桌面版</span></strong></a></li><li><a href='wiki'><span>《纯纯写作用户手册》</span></a></li></ul><p>&nbsp;</p><h3 id='帮助'><span>帮助</span></h3><p><span>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p><p><span>如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！</span></p></div></div>
 </body>
 </html>
