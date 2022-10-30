@@ -6,12 +6,12 @@
 <link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
 .in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
 #write.first-line-indent p { text-indent: 2em; }
 #write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
 #write.first-line-indent li { margin-left: 2em; }
@@ -19,11 +19,9 @@ a:active, a:hover { outline: 0px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
 .typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
 .typora-export .task-list-item input { pointer-events: none; }
-@media screen and (max-width: 500px) { 
+@media screen and (max-width: 500px) {
   body.typora-export { padding-left: 0px; padding-right: 0px; }
   #write { padding-left: 20px; padding-right: 20px; }
-  .CodeMirror-sizer { margin-left: 0px !important; }
-  .CodeMirror-gutters { display: none !important; }
 }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
@@ -46,12 +44,12 @@ h6 { font-size: 1rem; }
 .hidden { display: none; }
 .md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
 a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
 sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
 figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
 figure > table { margin: 0px; }
-tr { break-inside: avoid; break-after: auto; }
+thead, tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
 table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
 table.md-table td { min-width: 32px; }
@@ -73,6 +71,7 @@ div.hr:focus { cursor: none; }
 #write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
 .md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
 .CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
 .md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
@@ -85,10 +84,10 @@ blockquote > :last-child { margin-bottom: 0px; }
 blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
 #write .footnote-line { white-space: pre-wrap; }
-@media print { 
+@media print {
   body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
-  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
-  .typora-export * { -webkit-print-color-adjust: exact; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
   .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
   .is-mac table { break-inside: avoid; }
@@ -109,7 +108,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
 .md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
 .math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
 .md-toc-content { position: relative; margin-left: 0px; }
 .md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
@@ -122,7 +121,7 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 .md-toc-h4 .md-toc-inner { margin-left: 6em; }
 .md-toc-h5 .md-toc-inner { margin-left: 8em; }
 .md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) { 
+@media screen and (max-width: 48em) {
   .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
   .md-toc-h4 .md-toc-inner { margin-left: 5em; }
   .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
@@ -130,10 +129,11 @@ p > .md-image:only-child { display: inline-block; width: 100%; }
 }
 a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
 .footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
 .md-attr { display: none; }
 .md-fn-count::after { content: "."; }
 code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
 code { text-align: left; }
 a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
@@ -149,7 +149,7 @@ mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
 .md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
 .md-expand mark .md-meta { opacity: 0.3 !important; }
 mark .md-meta { color: rgb(0, 0, 0); }
-@media print { 
+@media print {
   .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
 }
 .md-diagram-panel .messageText { stroke: none !important; }
@@ -162,16 +162,16 @@ mark .md-meta { color: rgb(0, 0, 0); }
 .typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
 .typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
 .typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
-@media screen and (max-width: 1024px) { 
+@media screen and (max-width: 1024px) {
   .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
 }
-@media screen and (max-width: 800px) { 
+@media screen and (max-width: 800px) {
   .typora-export-sidebar { display: none; }
 }
 .outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
 .outline-content ul { margin-top: 0px; margin-bottom: 0px; }
 .outline-content strong { font-weight: 400; }
-.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
 .outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
 .outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
 .outline-expander:hover::before { content: ""; }
@@ -199,6 +199,7 @@ mark .md-meta { color: rgb(0, 0, 0); }
 .typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
 .typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
 .md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
 
 
 :root {
@@ -457,11 +458,8 @@ code {
     html {
         font-size: 13px;
     }
-    table,
     pre {
         page-break-inside: avoid;
-    }
-    pre {
         word-wrap: break-word;
     }
 }
@@ -595,8 +593,9 @@ header, .context-menu, .megamenu-content, footer{
 <body class='typora-export'><div class='typora-export-content'>
 <div id='write'  class=''><h3 id='纯纯写作桌面版---pure-writer-desktop'><span>纯纯写作桌面版 - Pure Writer Desktop</span></h3><h6 id='english-version-readme-👈--繁體中文版說明-👈'><strong><a href='./desktop_en'><span>English version README</span></a><span> 👈</span></strong><span> | </span><strong><a href='./desktop_zh'><span>繁體中文版說明</span></a><span> 👈</span></strong></h6><p><img src="https://user-images.githubusercontent.com/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><p><span>这是纯纯写作桌面版的第一个测试版本，它和</span><a href='https://writer.drakeet.com'><span>纯纯写作 Android 版</span></a><span>一样完全由 Drakeet 一个人设计和开发。</span></p><blockquote><p><span>纯纯写作桌面版本身完全免费，</span><strong><span>它当前尚属初级</span></strong><span>，只提供了双向实时同步编辑当前文章这个功能，甚至它可能对您来说完全不能用 ⚠️⚠️⚠️。</span><strong><span>如果您打算 </span><em><span>仅仅</span></em><span> 因为这个桌面版而付费，我强烈建议您重新考虑这件事情。</span></strong>
 <span>请不要 </span><em><span>仅仅</span></em><span> 因为纯纯写作桌面版而付费纯纯写作，纯纯写作还有很多优秀的其它功能，请为它们付费。如果遇到问题，请通过邮件联系 </span>
-<a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a><span>，静待更新，非常感谢！</span></p></blockquote><h4 id='下载'><span>下载</span></h4><blockquote><p><span>如果你是 Windows 系统用户，请下载安装 PureWriter-1.6.0-</span><strong><span>Windows</span></strong><span>-x64.exe 文件。</span>
+<a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a><span>，静待更新，非常感谢！</span></p></blockquote><h4 id='下载'><span>下载</span></h4><blockquote><p><span>如果你是 Windows 系统用户，请下载安装 PureWriter-1.6.0-Windows-x64.exe 文件。</span>
 <span>如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。</span>
-<span>macOS 则使用 PureWriter-1.6.2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。</span></p></blockquote><ul><li><p><span>百度云网盘下载: </span><a href='https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ' target='_blank' class='url'>https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ</a><span> 提取码: </span><code>g35w</code></p></li><li><p><span>GitHub 直链下载：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.0-Windows-x64.exe'><span>PureWriter-1.6.0-</span><strong><span>Windows</span></strong><span>-x64.exe</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.2-macOS.dmg'><span>PureWriter-1.6.2-</span><strong><span>macOS</span></strong><span>.dmg</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Linux-amd64.deb'><span>PureWriter-1.5.2-</span><strong><span>Linux</span></strong><span>-amd64.deb</span></a></p></li><li><p><span>Telegram 下载: </span><a href='https://t.me/PureWriter/961' target='_blank' class='url'>https://t.me/PureWriter/961</a></p></li></ul><h4 id='旧版纯纯写作桌面版源代码'><span>旧版纯纯写作桌面版源代码</span></h4><p><span>旧版纯纯写作桌面版现</span><strong><span>已完全开源</span></strong><span>！完整源代码请见：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4 id='更新日志'><span>更新日志</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='目前为止纯纯写作桌面版存在一些限制或问题请您务必逐一了解⚠️-这非常重要❗️❗️❗️'><span>目前为止，纯纯写作桌面版存在一些限制或问题，请您务必逐一了解，⚠️ 这非常重要❗️❗️❗️：</span></h4><ul><li><span>纯纯写作桌面版</span><strong><span>必须和手机同处于一个 Wi-Fi 或热点网络</span></strong><span>下才可以相互连接</span></li><li><em><span>纯纯写作桌面版 1.5.2</span></em><span> 版本</span><strong><span>必须和纯纯写作 19.99.4 或以上版本才能搭配使用</span></strong></li><li><span>我在开发这个版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，</span><strong><span>请不要惊慌</span></strong><span>，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li><li><strong><span>切换章节时，Android 端可能接收到错误的同步信息，请在切换章节时留意两端的内容，如果不对劲，及时进行撤销或通过「历史记录」进行恢复章节内容</span></strong></li><li><span>目前，您需要保证纯纯写作 Android 在后台不被系统杀死，否则将会断开连接，无法继续编辑当前文章，特别是华为手机，请开启「手动管理」并允许自启动，避免系统在锁屏时切断应用的网络</span></li></ul><p><span>更多纯纯写作高级版功能详见纯纯写作 Pro 页面（只要您激活纯纯写作 Pro，您可以使用所有内容，以及后续的更多高级版内容，无需多次付费）</span></p><p><img src="https://user-images.githubusercontent.com/5214214/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png" referrerpolicy="no-referrer" alt="Pure Writer Pro"></p><h5 id='纯纯写作介绍httpswriterdrakeetcom'><span>纯纯写作介绍：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5></div></div>
+<span>macOS 则使用 PureWriter-1.6.2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。</span></p></blockquote><ul><li><p><span>蓝奏云下载（首要推荐，无限速，国内下载更快）:</span>
+<a href='https://drakeet.lanzouy.com/tp/iV8wo0eu37id'><span>PureWriter-1.6.0-Windows-x64.exe</span></a></p><p><a href='https://drakeet.lanzouy.com/tp/ibTT10etwabc'><span>PureWriter-1.6.2-</span><strong><span>macOS</span></strong><span>.dmg</span></a></p></li><li><p><span>百度云网盘下载: </span><a href='https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ' target='_blank' class='url'>https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ</a><span> 提取码: </span><code>g35w</code></p></li><li><p><span>GitHub 直链下载：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.0-Windows-x64.exe'><span>PureWriter-1.6.0-Windows-x64.exe</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.2-macOS.dmg'><span>PureWriter-1.6.2-</span><strong><span>macOS</span></strong><span>.dmg</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Linux-amd64.deb'><span>PureWriter-1.5.2-</span><strong><span>Linux</span></strong><span>-amd64.deb</span></a></p></li><li><p><span>Telegram 下载: </span><a href='https://t.me/PureWriter/1152' target='_blank' class='url'>https://t.me/PureWriter/1152</a></p></li></ul><h4 id='旧版纯纯写作桌面版源代码'><span>旧版纯纯写作桌面版源代码</span></h4><p><span>旧版纯纯写作桌面版现</span><strong><span>已完全开源</span></strong><span>！完整源代码请见：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4 id='更新日志'><span>更新日志</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='目前为止纯纯写作桌面版存在一些限制或问题请您务必逐一了解⚠️-这非常重要❗️❗️❗️'><span>目前为止，纯纯写作桌面版存在一些限制或问题，请您务必逐一了解，⚠️ 这非常重要❗️❗️❗️：</span></h4><ul><li><span>纯纯写作桌面版</span><strong><span>必须和手机同处于一个 Wi-Fi 或热点网络</span></strong><span>下才可以相互连接</span></li><li><em><span>纯纯写作桌面版 1.5.2</span></em><span> 版本</span><strong><span>必须和纯纯写作 19.99.4 或以上版本才能搭配使用</span></strong></li><li><span>我在开发这个版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，</span><strong><span>请不要惊慌</span></strong><span>，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></li><li><strong><span>切换章节时，Android 端可能接收到错误的同步信息，请在切换章节时留意两端的内容，如果不对劲，及时进行撤销或通过「历史记录」进行恢复章节内容</span></strong></li><li><span>目前，您需要保证纯纯写作 Android 在后台不被系统杀死，否则将会断开连接，无法继续编辑当前文章，特别是华为手机，请开启「手动管理」并允许自启动，避免系统在锁屏时切断应用的网络</span></li></ul><p><span>更多纯纯写作高级版功能详见纯纯写作 Pro 页面（只要您激活纯纯写作 Pro，您可以使用所有内容，以及后续的更多高级版内容，无需多次付费）</span></p><p><img src="https://user-images.githubusercontent.com/5214214/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png" referrerpolicy="no-referrer" alt="Pure Writer Pro"></p><h5 id='纯纯写作介绍httpswriterdrakeetcom'><span>纯纯写作介绍：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5></div></div>
 </body>
 </html>
