@@ -8,11 +8,11 @@
 
 ###### Windows
 
-* [PureWriter-1.5.4-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.4-Windows-x64.exe)
+* [PureWriter-1.6.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.0-Windows-x64.exe)
 
 ###### macOS x64
 
-* [PureWriter-1.5.3-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.3-macOS.dmg)
+* [PureWriter-1.6.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.2-macOS.dmg)
 
 ###### Linux
 
