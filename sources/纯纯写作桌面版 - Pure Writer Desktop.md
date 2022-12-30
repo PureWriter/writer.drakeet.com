@@ -12,26 +12,26 @@
 
 #### 下载
 
-> 如果你是 Windows 系统用户，请下载安装 PureWriter-1.6.1-Windows-x64.exe 文件。
+> 如果你是 Windows 系统用户，请下载安装 PureWriter-1.7.0-Windows-x64.exe 文件。
 > 如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。
-> macOS 则使用 PureWriter-1.6.2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
+> macOS 则使用 PureWriter-1.7.0-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载（首要推荐，无限速，国内下载更快）:
-  [PureWriter-1.6.1-Windows-x64.exe](https://drakeet.lanzouy.com/ibI340iinzyj)
+  [PureWriter-1.7.0-Windows-x64.exe](https://drakeet.lanzouy.com/ip5DW0jo3uif)
 
-  [PureWriter-1.6.2-**macOS**.dmg](https://drakeet.lanzouy.com/tp/ibTT10etwabc)
+  [PureWriter-1.7.0-**macOS**.dmg](https://drakeet.lanzouy.com/i2eDq0jo3uah)
 
 - 百度云网盘下载: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取码: `g35w`
 
 - GitHub 直链下载：
 
-  [PureWriter-1.6.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.1-Windows-x64.exe)
+  [PureWriter-1.7.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Windows-x64.exe)
 
-  [PureWriter-1.6.2-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.6.0/PureWriter-1.6.2-macOS.dmg)
+  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-macOS.dmg)
 
-  [PureWriter-1.5.2-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.5.2/PureWriter-1.5.2-Linux-amd64.deb)
+  [PureWriter-1.7.0-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Linux-amd64.deb)
 
-- Telegram 下载: https://t.me/PureWriter/1152
+- Telegram 下载: https://t.me/PureWriter/1178
 
 #### 旧版纯纯写作桌面版源代码
 
@@ -46,7 +46,7 @@ https://github.com/PureWriter/desktop/releases
 
 - 纯纯写作桌面版**必须和手机同处于一个 Wi-Fi 或热点网络**下才可以相互连接
 
-- *纯纯写作桌面版 1.5.2* 版本**必须和纯纯写作 19.99.4 或以上版本才能搭配使用**
+- *纯纯写作桌面版 1.7.0* 版本**必须和纯纯写作 21.0.0 或以上版本才能搭配使用**
 
 - 我在开发这个版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，**请不要惊慌**，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：https://writer.drakeet.com/backups
 
