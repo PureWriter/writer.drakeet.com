@@ -12,7 +12,7 @@
 
 #### 下載
 
-> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.7.0-Windows-x64.exe 文件。
+> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.7.1-Windows-x64.exe 文件。
 > 如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。
 > macOS 則使用 PureWriter-1.7.0-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
 
@@ -20,13 +20,13 @@
 
 - GitHub 直鏈下載：
 
-  [PureWriter-1.7.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Windows-x64.exe)
+  [PureWriter-1.7.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-Windows-x64.exe)
 
-  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-macOS.dmg)
+  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-macOS.dmg)
 
   [PureWriter-1.7.0-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Linux-amd64.deb)
 
-- Telegram 下載: https://t.me/PureWriter/1178
+- Telegram 下載: https://t.me/PureWriter/1183
 
 #### 舊版純純寫作桌面版原始碼
 
