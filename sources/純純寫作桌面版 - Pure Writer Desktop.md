@@ -2,7 +2,7 @@
 
 ###### **[English version README](./desktop_en) 👈** | **[简体中文说明](./desktop) 👈**
 
-![Preview](/images/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png)
+![Preview](/images/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png)
 
 這是純純寫作桌面版的第一個測試版本，它和[純純寫作 Android 版](https://writer.drakeet.com)一樣完全由 Drakeet 一個人設計和開發。
 
@@ -50,6 +50,6 @@ https://github.com/PureWriter/desktop/releases
 
 更多純純寫作進階版功能詳見純純寫作 Pro 頁面（只要您啟動純純寫作 Pro，您可以使用所有內容，以及後續的更多進階版內容，無需多次付費）
 
-![Pure Writer Pro](/images/5214214/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png)
+![Pure Writer Pro](/images/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png)
 
 ##### 純純寫作介紹：https://writer.drakeet.com

@@ -1,6 +1,6 @@
 ### Pure Writer Desktop
 
-![Preview](/images/5214214/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png)
+![Preview](/images/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png)
 
 > Pure Writer Desktop is currently basic, providing only two-directions real-time synchronous editing for your current article. **If you are going to pay _JUST_ for this Desktop, I strongly recommend that you reconsider it.**
 
