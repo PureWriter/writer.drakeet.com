@@ -12,21 +12,21 @@
 
 #### 下載
 
-> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.7.1-Windows-x64.exe 文件。
+> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.7.2-Windows-x64.exe 文件。
 > 如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。
-> macOS 則使用 PureWriter-1.7.0-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
+> macOS 則使用 PureWriter-1.7.2-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
 
 - 百度雲端硬碟下載: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取碼: `g35w`
 
 - GitHub 直鏈下載：
 
-  [PureWriter-1.7.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-Windows-x64.exe)
+  [PureWriter-1.7.2-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-Windows-x64.exe)
 
-  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-macOS.dmg)
+  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-macOS.dmg)
 
   [PureWriter-1.7.0-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Linux-amd64.deb)
 
-- Telegram 下載: https://t.me/PureWriter/1183
+- Telegram 下載: https://t.me/PureWriter/1186
 
 #### 舊版純純寫作桌面版原始碼
 
@@ -40,7 +40,7 @@ https://github.com/PureWriter/desktop/releases
 
 - 純純寫作桌面版**必須和手機同處於一個 Wi-Fi 或熱點網路**下才可以相互連接
 
-- *純純寫作桌面版 1.7.0* 版本**必須和純純寫作 21.1.0 或以上版本才能搭配使用**
+- *純純寫作桌面版 1.7.0* 版本**必須和純純寫作 21.4.3 或以上版本才能搭配使用**
 
 - 我在開發這個版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，**請不要驚慌**，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：https://writer.drakeet.com/backups
 

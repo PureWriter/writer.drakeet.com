@@ -12,26 +12,26 @@
 
 #### 下载
 
-> 如果你是 Windows 系统用户，请下载安装 PureWriter-1.7.1-Windows-x64.exe 文件。
+> 如果你是 Windows 系统用户，请下载安装 PureWriter-1.7.2-Windows-x64.exe 文件。
 > 如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。
-> macOS 则使用 PureWriter-1.7.0-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
+> macOS 则使用 PureWriter-1.7.2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载（首要推荐，无限速，国内下载更快）:
-  [PureWriter-1.7.1-Windows-x64.exe](https://drakeet.lanzouy.com/i3fgF0jzlxji)
+  [PureWriter-1.7.1-Windows-x64.exe](https://drakeet.lanzouy.com/iQm0V0k68jod)
 
-  [PureWriter-1.7.0-**macOS**.dmg](https://drakeet.lanzouy.com/i5yBj0jzlylg)
+  [PureWriter-1.7.2-**macOS**.dmg](https://drakeet.lanzouy.com/ixLJm0k68jih)
 
 - 百度云网盘下载: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取码: `g35w`
 
 - GitHub 直链下载：
 
-  [PureWriter-1.7.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-Windows-x64.exe)
+  [PureWriter-1.7.2-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-Windows-x64.exe)
 
-  [PureWriter-1.7.0-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.1-macOS.dmg)
+  [PureWriter-1.7.2-**macOS**.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-macOS.dmg)
 
   [PureWriter-1.7.0-**Linux**-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Linux-amd64.deb)
 
-- Telegram 下载: https://t.me/PureWriter/1183
+- Telegram 下载: https://t.me/PureWriter/1186
 
 #### 旧版纯纯写作桌面版源代码
 
