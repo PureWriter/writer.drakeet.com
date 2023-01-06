@@ -8,17 +8,17 @@
 
 ###### Windows
 
-* [PureWriter-1.7.2-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-Windows-x64.exe)
+* [PureWriter-1.7.4-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-Windows-x64.exe)
 
 ###### macOS x64
 
-* [PureWriter-1.7.2-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.2-macOS.dmg)
+* [PureWriter-1.7.4-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-macOS.dmg)
 
 ###### Linux
 
-* [PureWriter-1.7.0-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.0/PureWriter-1.7.0-Linux-amd64.deb)
+* [PureWriter-1.7.4-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-Linux-amd64.deb)
 
-Download from Telegram: https://t.me/PureWriter/1186
+Download from Telegram: https://t.me/PureWriter/1188
 
 
 
