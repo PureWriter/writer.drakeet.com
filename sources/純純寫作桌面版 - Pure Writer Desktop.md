@@ -12,21 +12,21 @@
 
 #### 下載
 
-> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.7.4-Windows-x64.exe 文件。
+> 如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.8.0-Windows-x64.exe 文件。
 > 如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。
-> macOS 則使用 PureWriter-1.7.4-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
+> macOS 則使用 PureWriter-1.8.0-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
 
 - 百度雲端硬碟下載: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取碼: `g35w`
 
 - GitHub 直鏈下載：
 
-  [PureWriter-1.7.4-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-Windows-x64.exe)
+  [PureWriter-1.8.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.8.0/PureWriter-1.8.0-Windows-x64.exe)
 
-  [PureWriter-1.7.4-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-macOS.dmg)
+  [PureWriter-1.8.0-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.8.0/PureWriter-1.8.0-macOS.dmg)
 
   [PureWriter-1.7.4-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.7.4/PureWriter-1.7.4-Linux-amd64.deb)
 
-- Telegram 下載: https://t.me/PureWriter/1188
+- Telegram 下載: https://t.me/PureWriter/1194
 
 #### 舊版純純寫作桌面版原始碼
 
