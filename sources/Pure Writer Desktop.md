@@ -32,7 +32,7 @@ https://github.com/PureWriter/desktop/releases
 
 #### So far, Pure Writer Desktop has some known issues, please be sure to read them all:
 
-- Pure Writer Desktop 1.9.0 version must be used with Pure Writer 23.9.0 or above
+- Pure Writer Desktop 1.9.0 version must be used with Pure Writer 24.3.0 or above
 
 - Pure Writer Desktop must be **on the same Wi-Fi or hotspot network** as the phone to connect to each other
 
