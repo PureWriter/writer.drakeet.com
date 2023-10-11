@@ -57,3 +57,7 @@ https://github.com/PureWriter/desktop/releases
 ![Pure Writer Pro](/images/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png)
 
 ##### 纯纯写作介绍：https://writer.drakeet.com
+
+
+
+<img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /> [闽ICP备2021006387号-1](https://beian.miit.gov.cn/)
