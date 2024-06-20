@@ -22,7 +22,7 @@
 > macOS 则使用 PureWriter2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载（首要推荐，无限速，国内下载更快）:
-  [PureWriter2-2.0.0-Windows-x64.exe](https://drakeet.lanzouj.com/i0CwU22abodi)
+  [PureWriter2-2.0.0-Windows-x64.exe](https://drakeet.lanzouj.com/ix3OA22abpzg)
 
   [PureWriter2-2.0.0-macOS.dmg](https://drakeet.lanzouj.com/i0CwU22abodi)
 
