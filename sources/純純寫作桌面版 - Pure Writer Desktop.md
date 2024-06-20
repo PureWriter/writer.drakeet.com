@@ -14,7 +14,7 @@
 > 如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。
 > macOS 則使用 PureWriter-1.9.0-macOS.dmg，下載後**右鍵點擊該文件**選擇“打開”即可進行安裝。
 
-- 百度雲端硬碟下載: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取碼: `g35w`
+- 百度雲端硬碟下載: https://pan.baidu.com/s/1Ivc4Ef6CT0aIjDGjMWR07w?pwd=pure 提取码: `pure`
 
 - GitHub 直鏈下載：
 

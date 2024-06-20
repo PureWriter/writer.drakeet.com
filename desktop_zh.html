@@ -7,7 +7,7 @@
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4, h5 { white-space: pre-wrap; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; tab-size: 4; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
@@ -27,7 +27,7 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
-button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
@@ -203,6 +203,20 @@ mark .md-meta { color: rgb(0, 0, 0); }
 .typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
 .md-inline-math-container mjx-container { zoom: 0.95; }
 mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
 
 
 :root {
@@ -558,6 +572,10 @@ header, .context-menu, .megamenu-content, footer{
     background-color: var(--side-bar-bg-color);
 }
 
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
 .md-lang {
     color: #b4654d;
 }
@@ -598,6 +616,6 @@ header, .context-menu, .megamenu-content, footer{
 <span>請不要 </span><em><span>僅僅</span></em><span> 因為純純寫作桌面版而付費純純寫作，純純寫作還有很多優秀的其它功能，請為它們付費。如果遇到問題，請透過郵件聯繫 </span>
 <a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a><span>，靜待更新，非常感謝！</span></p></blockquote><h4 id='下載'><span>下載</span></h4><blockquote><p><span>如果你是 Windows 系統使用者，請下載安裝 PureWriter-1.9.0-Windows-x64.exe 文件。</span>
 <span>如果沒有按照上述指引進行安裝，可能會遇到一些顯示問題，比如不支援高解析度，或者視窗異常。如果安裝了錯誤的版本，請先進入系統的程式移除頁面移除，然後重新安裝正常版本。</span>
-<span>macOS 則使用 PureWriter-1.9.0-macOS.dmg，下載後</span><strong><span>右鍵點擊該文件</span></strong><span>選擇“打開”即可進行安裝。</span></p></blockquote><ul><li><p><span>百度雲端硬碟下載: </span><a href='https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ' target='_blank' class='url'>https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ</a><span> 提取碼: </span><code>g35w</code></p></li><li><p><span>GitHub 直鏈下載：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Windows-x64.exe'><span>PureWriter-1.9.0-Windows-x64.exe</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-macOS.dmg'><span>PureWriter-1.9.0-macOS.dmg</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Linux-amd64.deb'><span>PureWriter-1.9.0-Linux-amd64.deb</span></a></p></li><li><p><span>Telegram 下載: </span><a href='https://t.me/PureWriter/1283' target='_blank' class='url'>https://t.me/PureWriter/1283</a></p></li></ul><h4 id='舊版純純寫作桌面版原始碼'><span>舊版純純寫作桌面版原始碼</span></h4><p><span>舊版純純寫作桌面版現</span><strong><span>已完全開源</span></strong><span>！完整原始碼請見：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4 id='更新日誌'><span>更新日誌</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='目前為止純純寫作桌面版存在一些限制或問題請您務必逐一了解⚠️-這非常重要❗️❗️❗️'><span>目前為止，純純寫作桌面版存在一些限制或問題，請您務必逐一了解，⚠️ 這非常重要❗️❗️❗️：</span></h4><ul><li><p><span>純純寫作桌面版</span><strong><span>必須和手機同處於一個 Wi-Fi 或熱點網路</span></strong><span>下才可以相互連接</span></p></li><li><p><em><span>純純寫作桌面版 1.9.0</span></em><span> 版本</span><strong><span>必須和純純寫作 24.3.0 或以上版本才能搭配使用</span></strong></p></li><li><p><span>我在開發這個版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，</span><strong><span>請不要驚慌</span></strong><span>，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></p></li><li><p><strong><span>切換章節時，Android 端可能接收到錯誤的同步訊息，請在切換章節時留意兩端的內容，如果不對勁，及時進行復原或透過「歷史記錄」進行復原章節內容</span></strong></p></li><li><p><span>目前，您需要保證純純寫作 Android 在後台不被系統殺死，否則將會斷開連接，無法繼續編輯目前文章，特別是華為手機，請開啟「手動管理」並允許自啟動，避免系統在鎖定螢幕時切斷應用的網路</span></p></li></ul><p><span>更多純純寫作進階版功能詳見純純寫作 Pro 頁面（只要您啟動純純寫作 Pro，您可以使用所有內容，以及後續的更多進階版內容，無需多次付費）</span></p><p><img src="/images/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png" referrerpolicy="no-referrer" alt="Pure Writer Pro"></p><h5 id='純純寫作介紹httpswriterdrakeetcom'><span>純純寫作介紹：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5><p>&nbsp;</p><p>&nbsp;</p></div></div>
+<span>macOS 則使用 PureWriter-1.9.0-macOS.dmg，下載後</span><strong><span>右鍵點擊該文件</span></strong><span>選擇“打開”即可進行安裝。</span></p></blockquote><ul><li><p><span>百度雲端硬碟下載: </span><a href='https://pan.baidu.com/s/1Ivc4Ef6CT0aIjDGjMWR07w?pwd=pure' target='_blank' class='url'>https://pan.baidu.com/s/1Ivc4Ef6CT0aIjDGjMWR07w?pwd=pure</a><span> 提取码: </span><code>pure</code></p></li><li><p><span>GitHub 直鏈下載：</span></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Windows-x64.exe'><span>PureWriter-1.9.0-Windows-x64.exe</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-macOS.dmg'><span>PureWriter-1.9.0-macOS.dmg</span></a></p><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Linux-amd64.deb'><span>PureWriter-1.9.0-Linux-amd64.deb</span></a></p></li><li><p><span>Telegram 下載: </span><a href='https://t.me/PureWriter/1283' target='_blank' class='url'>https://t.me/PureWriter/1283</a></p></li></ul><h4 id='舊版純純寫作桌面版原始碼'><span>舊版純純寫作桌面版原始碼</span></h4><p><span>舊版純純寫作桌面版現</span><strong><span>已完全開源</span></strong><span>！完整原始碼請見：</span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4 id='更新日誌'><span>更新日誌</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='目前為止純純寫作桌面版存在一些限制或問題請您務必逐一了解⚠️-這非常重要❗️❗️❗️'><span>目前為止，純純寫作桌面版存在一些限制或問題，請您務必逐一了解，⚠️ 這非常重要❗️❗️❗️：</span></h4><ul><li><p><span>純純寫作桌面版</span><strong><span>必須和手機同處於一個 Wi-Fi 或熱點網路</span></strong><span>下才可以相互連接</span></p></li><li><p><em><span>純純寫作桌面版 1.9.0</span></em><span> 版本</span><strong><span>必須和純純寫作 24.3.0 或以上版本才能搭配使用</span></strong></p></li><li><p><span>我在開發這個版本過程中，曾經遇到過一些情況會導致純純寫作 Android 版上的目前文章被清空，雖然這個問題已經被修復了，但我不能完全確定是否有一些場景可能再次觸發這個問題。如果您遇到此類問題，</span><strong><span>請不要驚慌</span></strong><span>，因為純純寫作 Android 版支援多重備份和防止遺失措施，如果遇到錯誤，您可以透過右上角的「歷史記錄」或「復原」來復原您的文章。更多關於自動備份和雲備份，萬無一失：</span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></p></li><li><p><strong><span>切換章節時，Android 端可能接收到錯誤的同步訊息，請在切換章節時留意兩端的內容，如果不對勁，及時進行復原或透過「歷史記錄」進行復原章節內容</span></strong></p></li><li><p><span>目前，您需要保證純純寫作 Android 在後台不被系統殺死，否則將會斷開連接，無法繼續編輯目前文章，特別是華為手機，請開啟「手動管理」並允許自啟動，避免系統在鎖定螢幕時切斷應用的網路</span></p></li></ul><p><span>更多純純寫作進階版功能詳見純純寫作 Pro 頁面（只要您啟動純純寫作 Pro，您可以使用所有內容，以及後續的更多進階版內容，無需多次付費）</span></p><p><img src="/images/65221084-d741dc00-daee-11e9-980d-3f6d7d234d29.png" referrerpolicy="no-referrer" alt="Pure Writer Pro"></p><h5 id='純純寫作介紹httpswriterdrakeetcom'><span>純純寫作介紹：</span><a href='https://writer.drakeet.com' target='_blank' class='url'>https://writer.drakeet.com</a></h5><p>&nbsp;</p><p>&nbsp;</p></div></div>
 </body>
 </html>

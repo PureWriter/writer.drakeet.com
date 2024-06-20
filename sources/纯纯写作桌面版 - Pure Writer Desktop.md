@@ -10,16 +10,15 @@
 
 #### 下载
 
-> 如果你是 Windows 系统用户，请下载安装 PureWriter-1.9.0-Windows-x64.exe 文件。
-> 如果没有按照上述指引进行安装，可能会遇到一些显示问题，比如不支持高分辨率，或者窗口异常。如果安装了错误的版本，请先进入系统的程序卸载页面卸载，然后重新安装正常版本。
-> macOS 则使用 PureWriter-1.9.0-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
+> 如果你是 Windows 系统用户，请下载安装 PureWriter-Windows-x64.exe 文件。
+> macOS 则使用 PureWriter-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载（首要推荐，无限速，国内下载更快）:
   [PureWriter-1.9.0-Windows-x64.exe](https://drakeet.lanzouj.com/iLsa1111u9be)
 
   [PureWriter-1.9.0-macOS.dmg](https://drakeet.lanzouj.com/iICHB111ucab)
 
-- 百度云网盘下载: https://pan.baidu.com/s/1ocWzpL5pAW0Ac2BIZACkPQ 提取码: `g35w`
+- 百度云网盘下载: https://pan.baidu.com/s/1Ivc4Ef6CT0aIjDGjMWR07w?pwd=pure 提取码: `pure`
 
 - GitHub 直链下载：
 
@@ -44,7 +43,7 @@ https://github.com/PureWriter/desktop/releases
 
 - 纯纯写作桌面版**必须和手机同处于一个 Wi-Fi 或热点网络**下才可以相互连接
 
-- *纯纯写作桌面版 1.9.0* 版本**必须和纯纯写作 24.3.0 或以上版本才能搭配使用**
+- *纯纯写作桌面版 1.9.0* 版本**必须和纯纯写作 25.3.0 或以上版本才能搭配使用**
 
 - 我在开发这个版本过程中，曾经遇到过一些情况会导致纯纯写作 Android 版上的当前文章被清空，虽然这个问题已经被修复了，但我不能完全确定是否有一些场景可能再次触发这个问题。如果您遇到此类问题，**请不要惊慌**，因为纯纯写作 Android 版支持多重备份和防止丢失措施，如果遇到错误，您可以通过右上角的「历史记录」或「撤销」来恢复您的文章。更多关于自动备份和云备份，万无一失：https://writer.drakeet.com/backups
 
