@@ -1,0 +1,687 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
+.CodeMirror-linenumber { -webkit-user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: medium; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+
+/*
+ * 适用于 core/typora-bear.scss。
+ * 所有 typora-bear 主题，只需 import 这个文件，然后修改配色方案即可。
+ */
+/*
+ * Default theme，适用于 core/mweb-base.scss。
+ * 取值参考 chrome 默认样式：
+ * https://chromium.googlesource.com/chromium/blink/+/refs/heads/main/Source/core/css/html.css
+ * 所有 import "core/mweb-base.scss" 的文件都应该同时导入此变量文件。
+ */
+/* color */
+/* font & line */
+/* boxing */
+/* elememts */
+/* font */
+/* header */
+/* spacing */
+/* table */
+/* default color */
+/**
+ * 在 bear 的主题中，某些变量的取值和其他变量是绑定的。
+ * 统一写在这里，这个文件应该在变量文件的最后被引入。
+ */
+/*
+ * 基准样式，相当于 reset.css，使主题在不同平台下有统一的表现。
+ * 各个属性的默认值为 chrome 的默认样式，见 variables/default.scss。
+ */
+:root {
+  --text-color: #423f37;
+  --bg-color: #fbfaf0;
+  --side-bar-bg-color: #fbfaf0;
+  --active-file-bg-color: #fbfaf0;
+  --rawblock-edit-panel-bd: #fefef8;
+  --window-border: 0 solid #fbfaf0;
+  --control-text-color: #423f37;
+  --primary-color: #95afa3;
+  --primary-btn-border-color: #95afa3;
+  --active-file-border-color: #95afa3;
+  --primary-btn-text-color: #95afa3;
+  --item-hover-text-color: #95afa3;
+  --meta-content-color: #95afa3;
+  --search-select-text-color: #95afa3;
+  --heading-char-color: #95afa3;
+  /* Mermaid diagrams*/
+  --mermaid-theme: default;
+}
+
+#write {
+  line-height: 1.68;
+  -webkit-text-size-adjust: 100%;
+  max-width: 46rem;
+  margin: 0px auto;
+  padding: 1.6rem 3.2rem;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, Segoe UI, PingFang SC, Microsoft Yahei, Hiragino Sans GB, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 16px;
+  color: #423f37;
+  /* spacing */
+  /* block */
+  /* list */
+  /* inline */
+  /* table */
+  /* code block */
+}
+#write * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#write > *:first-child {
+  margin-top: 0 !important;
+}
+#write > *:last-child {
+  margin-top: 0 !important;
+}
+#write p, #write details, #write dl, #write ol, #write ul, #write xmp, #write plaintext, #write listing, #write blockquote, #write table, #write figure, #write hr {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+#write h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 26px;
+  margin-bottom: 10px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 22px;
+  margin-bottom: 8px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write h5 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write h6 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  margin-left: 0;
+  margin-right: 0;
+}
+#write p {
+  margin-left: 0;
+  margin-right: 0;
+}
+#write pre, #write xmp, #write plaintext, #write listing {
+  font-family: var(--monospace);
+}
+#write blockquote > :first-child {
+  margin-top: 0;
+}
+#write blockquote > :last-child {
+  margin-bottom: 0;
+}
+#write hr {
+  border-style: inset;
+  border-width: 1px;
+}
+#write img {
+  max-width: 100%;
+  height: auto;
+}
+#write li {
+  word-wrap: break-all;
+}
+#write li + li {
+  margin-top: 4px;
+}
+#write ul ul, #write ol ul, #write ul ol, #write ol ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#write .task-list-item {
+  list-style-type: none;
+}
+#write a {
+  color: #215f4f;
+  text-decoration: underline;
+}
+#write a img {
+  border: none;
+}
+#write b, #write strong {
+  font-weight: bold;
+}
+#write i, #write cite, #write em, #write var, #write address, #write dfn {
+  font-style: italic;
+}
+#write code, #write kbd, #write tt, #write samp {
+  font-family: var(--monospace);
+}
+#write mark {
+  color: #423f37;
+  padding: 0.2em 0;
+  background-color: #f9dcaf;
+}
+#write del, #write s {
+  color: #7e968f;
+}
+#write table {
+  color: #595852;
+  border-collapse: collapse;
+  background-color: #fefef8;
+  border-spacing: 2px;
+  font-size: 1em;
+}
+#write th, #write td {
+  border-color: #dddbd6;
+  border-width: 1px;
+  border-style: solid;
+}
+#write th {
+  padding: 8px 8px;
+  font-size: 1em;
+  font-weight: 500;
+}
+#write td {
+  padding: 8px 8px;
+  font-size: 1em;
+  font-weight: normal;
+}
+#write pre.md-fences,
+#write pre.md-meta-block,
+#write .md-rawblock-control:not(.md-rawblock-tooltip) .md-rawblock-input {
+  border-radius: 3px;
+  border: 1px solid #dddbd6;
+  padding: 10px;
+  background-color: #fefef8;
+}
+#write .CodeMirror div.CodeMirror-cursor {
+  border-color: #423f37;
+}
+#write .md-math-block, #write .md-rawblock {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#write .md-rawblock > .md-rawblock-tooltip {
+  background-color: #fefef8;
+  transition: 0.5s;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+}
+#write .md-rawblock:hover > .md-rawblock-tooltip {
+  transition: 0.5s;
+  visibility: visible;
+  opacity: 1;
+  animation: none;
+}
+#write .md-rawblock-control:not(.md-rawblock-tooltip) {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+/**
+ * 整体采用飞书云文档的布局规范，可以配合不同的 bear 配色方案。
+ * Bear 的配色方案位于 src/themes/bear-palettes 目录。
+ */
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6 {
+  color: #2b6451;
+}
+#write del, #write s {
+  color: #7e968f;
+}
+#write u {
+  text-decoration: none;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #95afa3 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 2px;
+  background-position: 0 1em;
+}
+#write * {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6 {
+  line-height: 1.4;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0.37em;
+}
+#write blockquote {
+  display: block;
+  margin-left: 0;
+  padding-left: 14px;
+  border-left: 2px solid #95afa3;
+}
+#write code {
+  border-radius: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border: 1px solid #dddbd6;
+  background-color: #fefef8;
+  word-spacing: normal;
+  line-height: 1.6;
+  padding: 0 2px;
+  color: #595852;
+}
+#write a {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  hyphens: auto;
+  word-break: break-word;
+  text-decoration: none;
+}
+#write a:hover {
+  text-decoration: underline;
+}
+#write hr {
+  margin: 13px 0 12px;
+  border: 0px;
+  height: 1px;
+  background-origin: content-box;
+  background-image: linear-gradient(90deg, #dddbd6, #dddbd6);
+  background-repeat: no-repeat;
+}
+#write ul {
+  margin-left: 0;
+  padding-left: 22px;
+  list-style: none;
+}
+#write ul > li:not([class*=task-list-item]) {
+  word-wrap: break-all;
+  padding-left: 0px;
+}
+#write ul > li:not([class*=task-list-item]):before {
+  position: absolute;
+  top: 2px;
+  content: "•";
+  color: #95afa3;
+  display: inline-block;
+  margin-left: -20px;
+  margin-right: 20px;
+  width: 0px;
+  font-size: 0.8em;
+  transform: scale(1.25);
+  font-family: PingFangSC-Regular, PingFang SC;
+}
+#write ul > li:not([class*=task-list-item]) li:not([class*=task-list-item])::before {
+  content: "◦";
+  transform: scale(1);
+  font-weight: 700;
+}
+#write ul > li:not([class*=task-list-item]) li:not([class*=task-list-item]) li:not([class*=task-list-item])::before {
+  content: "▪";
+  transform: scale(1.25);
+  font-weight: normal;
+}
+#write ol {
+  counter-reset: ol_counter;
+  margin-left: 0;
+  padding-left: 22px;
+  list-style: none;
+}
+#write ol > li:not([class*=task-list-item]) {
+  word-wrap: break-all;
+  padding-left: 0px;
+  position: relative;
+}
+#write ol > li:not([class*=task-list-item]):before {
+  content: counter(ol_counter) ".";
+  counter-increment: ol_counter;
+  color: #95afa3;
+  position: absolute;
+  margin-left: -22px;
+  margin-right: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: visible;
+  min-width: 18px;
+  border-radius: 2px;
+  transform: translateX(-2px);
+  font-family: Helvetica Neue, Consolas;
+}
+#write li + li, #write ul ul, #write ol ul, #write ul ol, #write ol ol, #write li ul, #write li ol {
+  margin-top: 4px;
+}
+#write .task-list-item {
+  padding-left: 0.3rem;
+}
+#write .task-list-item > p {
+  transition: color 0.3s, opacity 0.3s;
+}
+#write .task-list-item.task-list-done > p {
+  color: #7e968f;
+  text-decoration: line-through;
+}
+#write .task-list-item.task-list-done > p > .md-emoji {
+  opacity: 0.5;
+}
+#write .task-list-item.task-list-done > p > .md-link > a {
+  opacity: 0.6;
+}
+#write .task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid #dddbd6;
+  border-radius: 0.25rem;
+  margin-left: -1.5rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: border-color 0.3s;
+  background-color: #fbfaf0;
+}
+#write .task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+#write .task-list-item > input:hover {
+  border-color: #95afa3;
+}
+#write .task-list-item > input[checked]::before {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  height: 60%;
+  width: 2px;
+  transform: rotate(40deg);
+  background: #95afa3;
+}
+#write .task-list-item > input[checked]::after {
+  content: "";
+  position: absolute;
+  top: 46%;
+  left: 25%;
+  height: 30%;
+  width: 2px;
+  transform: rotate(-40deg);
+  background: #95afa3;
+}
+#write .cm-s-inner .cm-comment {
+  color: #878b88;
+}
+#write .cm-s-inner .cm-property,
+#write .cm-s-inner .cm-tag {
+  color: #905;
+}
+#write .cm-s-inner .cm-bracket,
+#write .cm-s-inner .cm-punctuation {
+  color: #999;
+}
+#write .cm-s-inner .cm-number {
+  color: #337f00;
+}
+#write .cm-s-inner .cm-qualifier,
+#write .cm-s-inner .cm-string, #write .cm-s-inner .cm-string-2,
+#write .cm-s-inner .cm-builtin {
+  color: #d06d1f;
+}
+#write .cm-s-inner .cm-attribute {
+  color: #d06d1f;
+}
+#write .cm-s-inner .cm-operator {
+  color: #920448;
+}
+#write .cm-s-inner .cm-atom,
+#write .cm-s-inner .cm-keyword {
+  color: #a96498;
+}
+#write .cm-s-inner .cm-def,
+#write .cm-s-inner .cm-variable,
+#write .cm-s-inner .cm-variable-2, #write .cm-s-inner .cm-variable-3 {
+  color: #0E73A2;
+}
+#write .cm-s-inner .cm-type {
+  color: #04202d;
+}
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>New Desktop Dev Story</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><p><strong><span>&quot;Without a Deadline, I Can&#39;t Get Anything Done&quot;</span></strong></p><p><span>Yesterday, I wrote a short piece reflecting on how I&#39;ve been incredibly busy lately, but in a strangely satisfying way. The product that has troubled me for years is finally about to be released in its true 1.0 version. Back in June, I forcefully released a crippled version, humorously naming it &quot;Almost Unusable.&quot; Even though it was June, it feels like yesterday—two months have flown by in the blink of an eye. What have I been doing all this time? What did I do to finally reach the point where I’m about to fulfill my mission and overcome this enormous challenge? I feel both terrified and excited.</span></p><p><span>The truth is, this product has been in development for over two years, not just two months. What have I been doing all these two years? Looking back, words like pain, pressure, responsibility, and torment flood my mind. About three months ago, I told my wife, &quot;I feel like I’m about to collapse because of this new product. I really want to give up; the pressure is too much.&quot; At that point, the product had already been in development for two years, overcoming numerous hurdles. Yet, the biggest challenge still lay ahead. Even though I had come so far, I genuinely wanted to quit. That feeling is still vivid today, but I had no option to &quot;give up,&quot; nor could I hastily cobble the product together just because I wanted to quit. I knew I had to keep going and had to continue building every foundation step by step with best practices.</span></p><p><span>This is a massive five-year project, but because it’s already been implemented once on the mobile side, it doesn’t really need to take five years—that&#39;s both a benefit and a constraint. I need to transfer the vast amount of code logic from the past five years (actually seven years) to a very different project. Just two or three months ago, there were still over 1,400 errors in the code file before me, each needing to be resolved one by one. Every time I faced these, I had to muster up immense mental energy, because until all those errors were collectively resolved, it was nearly impossible to test any single one of them ahead of time—and any one of them could ultimately crash the program or leave hidden dangers. Thankfully, those 1,400 errors have now all been resolved flawlessly—who could understand the mental strength this requires?</span></p><p><span>Thankfully—thankful for every mountain that I wanted so desperately to give up on but managed to cross.</span></p><p><span>In 2021, at the age of 28, I voluntarily resigned from Microsoft—not because I had achieved financial freedom, but because I had already worked for nearly a decade and wanted more freedom in steering my own life. In the workplace, there are often various tasks imposed by superiors that have to be executed, and every day, you have to follow routines, go to your desk, deal with various constraints, and even idle times can make you feel anxious and uneasy. Looking back now, those days full of constraints were somewhat blissful. Although constraints were always present, they didn’t come with the fierce storms and waves you have to face when steering your own ship, nor did they carry the immense burden of responsibility that you can’t shake off. Workplace constraints are like being soaked in shallow bitter water—though the bitterness is constant, it doesn’t suffocate you. Once you leave the workplace, in the boundless ocean, storms and waves can destroy tomorrow’s calm at any time. Redeveloping a five-year project is like this—responsibility weighs heavily, and no matter how big the challenge, you must find the motivation within yourself to grit your teeth and push through. Often, you look around in confusion, realizing you’re trekking alone, holding fast…</span></p><p><span>Fortunately, the new summit is already in sight. In June, we released the &quot;Almost Unusable&quot; version, receiving hundreds of comments from users cheering us on. Everyone could understand the challenges of this product, and I was deeply touched. So, I set a new milestone: to release a truly usable version by August 20th. This is a writing software, and a truly usable version must at least implement many of the basic editor functions, along with a system that can sync across devices. Looking back now, without the encouragement from users in June and without a new deadline, I wouldn’t have been able to do anything. Things are so difficult, and what I’ve completed so far is far from satisfactory. If there hadn’t been a deadline, I certainly wouldn’t have presented it to the public, wouldn’t have worked so hard, and wouldn’t have felt, as I said in the beginning, both extremely busy yet oddly happy.</span></p><p><span>This afternoon, I was sitting in a barbershop, with the barber trimming my hair, when I suddenly felt the urge to write this article. It’s much like how we feel when we start implementing a product idea—initially driven by enthusiasm, then struggling, feeling pretentious and bitter, accompanied by self-doubt and self-loathing, editing and revising until it’s finally placed before you. Will anyone understand me after reading it?</span></p><p><span>Always feeling both incredibly anxious and incredibly hopeful.</span></p><p><span>August 16, 2024.</span></p><p><span>Drakeet</span></p></div></div>
+</body>
+</html>
