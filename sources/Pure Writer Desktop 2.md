@@ -1,0 +1,76 @@
+### Pure Writer Desktop 2
+
+![Preview](/images/desktop2dark.png)
+
+##### Current Pure Writer Desktop v1.9.0 (Old version, but stable, requires real-time connection with the phone): https://writer.drakeet.com/desktop_en
+
+> v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
+
+#### v2.0 Beta
+
+> Finally, once again, Nice to see you.
+>
+> What you see before you is the all-new Pure Writer Desktop.
+>
+> The all-new Pure Writer Desktop is an enormous project, one that would take at least five years to fully complete. The client we are releasing today is essentially a half-finished product. **Currently, it only supports some of the most basic features, along with cloud backup and Cloud synchronization—cloud sync only works with OneDrive for now.** Many features and UI elements have yet to be implemented or are in their initial stages, and a lot of details still need refinement and adjustment…
+>
+> Because many users were eagerly looking forward to it, we decided to release it even though it is far from a fully mature version. Perhaps this is a good starting point, even though it is still far from the version we would consider ready for release. However, it is already more advanced and richer than the first release of Pure Writer for Android back in 2017.
+>
+> The road ahead is long, difficult, and winding, but we have not given up. We believe that one day we will reach that satisfying and groundbreaking milestone. Until then, the all-new Pure Writer Desktop will remain completely free for an extended period.
+>
+> We hope you can find joy in some of the details and offer us your understanding and patience as we continue our relentless efforts. Your support will be greatly appreciated.
+>
+> The current version may have many shortcomings and issues, so we ask for your patience and understanding!
+>
+> For more about the **development story** of this desktop version, please visit:
+>
+> https://writer.drakeet.com/blog/NewDesktopDevStory
+
+
+> If you are a Windows user, please download and install PureWriter2-Windows-x64.exe. **Currently only supports Windows 10/11**.
+> For macOS, use PureWriter2-macOS.dmg. After downloading, **right-click the file and select "Open" to install.**
+
+- LanZou Cloud Download:
+  [PureWriter2-2.0.1-Windows-x64.exe](https://drakeet.lanzouj.com/iFEWQ27r0l2f)
+
+  [PureWriter2-2.0.1-macOS.dmg](https://drakeet.lanzouj.com/itTD827r0mmb)
+
+#### Release Dates
+
+v2.0.0 Beta was released on June 20, 2024, at 16:43, Thursday, the day before the Summer Solstice.
+
+**v2.0.1** Beta **Preview** was released on August 18, 2024, at 17:58, Sunday.
+
+**v2.0.2** Beta was released on August 19, 2024, Monday, the day before the release of "Black Myth: Wukong."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /> [Min ICP No. 2021006387-1](https://beian.miit.gov.cn/)
