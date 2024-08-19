@@ -6,7 +6,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，半成品
 
-#### v2.0 Beta 版下载
+#### v2.0.3 Beta 版下载
 
 > 终于，再一次，很高兴见到你。
 >
@@ -34,9 +34,9 @@
 > macOS 则使用 PureWriter2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载:
-  [PureWriter2-2.0.2-Windows-x64.exe](https://drakeet.lanzouj.com/i30tc27t4lgf)
+  [PureWriter2-2.0.3-Windows-x64.exe](https://drakeet.lanzouj.com/ifWLi27tg7jg)
 
-  [PureWriter2-2.0.2-macOS.dmg](https://drakeet.lanzouj.com/igIXW27t4jpc)
+  [PureWriter2-2.0.3-macOS.dmg](https://drakeet.lanzouj.com/iOTCQ27tg6qh)
 
 
 
