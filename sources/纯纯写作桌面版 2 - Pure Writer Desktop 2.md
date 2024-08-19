@@ -30,7 +30,7 @@
 
 
 
-> 如果你是 Windows 系统用户，请下载安装 PureWriter2-Windows-x64.exe，**目前暂时仅支持 Windows 10/11**
+> 如果您是 Windows 系统用户，请下载安装 PureWriter2-Windows-x64.exe，**目前暂时仅支持 Windows 10/11**
 > macOS 则使用 PureWriter2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载:
@@ -66,6 +66,9 @@ v2.0.1 Beta 预发版 发布于 2024.8.18 17:58, 周日
 * 暂不支持历史记录，但支持 `ctrl + z` 或 `⌘ + z` 撤销
 
 * 支持在右侧侧栏打开文章
+  
+* 不支持 Markdown
+  
   ……
   
   更多内容请自行探索，许多功能和文案目前不够得体，请多担待。如有难以忍受的问题，请致信，我们将竭力为您服务：drakeet@drakeet.com
