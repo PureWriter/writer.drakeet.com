@@ -1,6 +1,6 @@
 ### Pure Writer Desktop 2
 
-![Preview](/images/desktop2dark.png)
+![Preview](/images/desktop2dark_en.png)
 
 ##### Current Pure Writer Desktop v1.9.0 (Old version, but stable, requires real-time connection with the phone): 
 
