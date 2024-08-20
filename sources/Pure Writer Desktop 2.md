@@ -2,7 +2,7 @@
 
 ![Preview](/images/desktop2dark_en.png)
 
-##### Current Pure Writer Desktop v1.9.0 (Old version, but stable, requires real-time connection with the phone): 
+##### Pure Writer Desktop v1.9.0 (Old version, but stable, requires real-time connection with the phone):
 
 https://writer.drakeet.com/desktop_en
 
@@ -33,6 +33,8 @@ https://writer.drakeet.com/desktop_en
 
 > If you are a Windows user, please download and install PureWriter2-Windows-x64.exe. **Currently only supports Windows 10/11**.
 > For macOS, use PureWriter2-macOS.dmg. After downloading, **right-click the file and select "Open" to install.**
+>
+> ⚠️ Windows systems may encounter false positives from antivirus software. Please be assured and simply add the desktop installer and the installed files (`C:\Program Files\Pure Writer 2`) to the whitelist. We are a verified developer and company, so it's impossible for us to create malicious software, as that would not only ruin our reputation but also result in imprisonment and bankruptcy. Antivirus software on Windows may flag unsigned executables by default, and we will address this issue in the future.
 
 - Download:
   
