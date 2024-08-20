@@ -31,7 +31,10 @@
 
 
 > 如果您是 Windows 系统用户，请下载安装 PureWriter2-Windows-x64.exe，**目前暂时仅支持 Windows 10/11**
-> macOS 则使用 PureWriter2-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
+>
+> macOS 则使用 PureWriter2-macOS.dmg，下载后**右键点击该文件选择“打开”**即可进行安装。
+>
+> ⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（`C:\Program Files\Pure Writer 2`）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。
 
 - 蓝奏云下载:
   [PureWriter2-2.0.3-Windows-x64.exe](https://drakeet.lanzouj.com/ifWLi27tg7jg)
