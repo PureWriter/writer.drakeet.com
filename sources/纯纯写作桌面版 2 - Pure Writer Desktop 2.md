@@ -41,9 +41,9 @@
 
   [PureWriter2-2.0.6-macOS.dmg](https://drakeet.lanzouj.com/ih1f328ejkqf)
 
+⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
-
-请注意，**OneDrive 不是坚果云**，而是微软公司的网盘。目前必须在纯纯写作 Android 端切换到 OneDrive 云备份，同时桌面端登录同一个 OneDrive 账号方可相互同步：
+⚠️ 请注意，**OneDrive 不是坚果云**，而是微软公司的网盘。目前必须在纯纯写作 Android 端切换到 OneDrive 云备份，同时桌面端登录同一个 OneDrive 账号方可相互同步：
 
 <img src="/images/OneDriveOnAndroidGuide.jpg" width=480/>
 

@@ -44,6 +44,8 @@ https://writer.drakeet.com/desktop_en
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and log in with the same OneDrive account on the desktop to enable synchronization between the two.
 
+⚠️ If update, please **close the software before installing** the update to avoid the "restart" issue.
+
 
 
 #### Release Dates
