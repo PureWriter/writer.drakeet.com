@@ -6,7 +6,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，半成品
 
-#### v2.0.5 Beta 版下载
+#### v2.0.6 Beta 版下载
 
 > 终于，再一次，很高兴见到你。
 >
@@ -37,9 +37,9 @@
 > ⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（`C:\Program Files\Pure Writer 2`）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。
 
 - 蓝奏云下载:
-  [PureWriter2-2.0.5-Windows-x64.exe](https://drakeet.lanzouj.com/iuOLc281nt2b)
+  [PureWriter2-2.0.6-Windows-x64.exe](https://drakeet.lanzouj.com/iPC9X28ejo4h)
 
-  [PureWriter2-2.0.5-macOS.dmg](https://drakeet.lanzouj.com/iVigg281ns5i)
+  [PureWriter2-2.0.6-macOS.dmg](https://drakeet.lanzouj.com/ih1f328ejkqf)
 
 
 
@@ -59,7 +59,7 @@ v2.0.1 Beta 预发版 发布于 2024.8.18 17:58, 周日
 
 
 
-目前 v2.0.2 版本要点如下：
+v2.0.2 版本要点如下：
 * 支持云备份和云同步，但目前仅限 OneDrive，您必须在 Android 端上也登录同一个 OneDrive 网盘才能与之同步，请在正式使用本软件之前，设置好云备份网盘、开启云同步，看看这方面是否正常，因为 OneDrive 是国外微软公司的服务，**在部分国家和地区可能无法顺畅连接 OneDrive，请首先检查此方面**
 
 * 我们将在下一个关键版本中支持「阿里云盘」
