@@ -36,11 +36,11 @@ https://writer.drakeet.com/desktop_en
 >
 > ⚠️ Windows systems may encounter false positives from antivirus software. Please be assured and simply add the desktop installer and the installed files (`C:\Program Files\Pure Writer 2`) to the whitelist. We are a verified developer and company, so it's impossible for us to create malicious software, as that would not only ruin our reputation but also result in imprisonment and bankruptcy. Antivirus software on Windows may flag unsigned executables by default, and we will address this issue in the future.
 
-- Download:
+- **Download**:
   
-  [PureWriter2-2.0.6-Windows-x64.exe](https://drakeet.lanzouj.com/iPC9X28ejo4h)
+  [PureWriter2-2.0.6-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.6-Windows-x64.exe)
 
-  [PureWriter2-2.0.6-macOS.dmg](https://drakeet.lanzouj.com/ih1f328ejkqf)
+  [PureWriter2-2.0.6-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.6-macOS.dmg)
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and log in with the same OneDrive account on the desktop to enable synchronization between the two.
 
