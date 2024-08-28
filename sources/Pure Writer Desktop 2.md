@@ -8,7 +8,7 @@ https://writer.drakeet.com/desktop_en
 
 > v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
 
-#### v2.0.6 Beta
+#### v2.0.10 Beta
 
 > Finally, once again, Nice to see you.
 >
@@ -38,9 +38,9 @@ https://writer.drakeet.com/desktop_en
 
 - **Download**:
   
-  [PureWriter2-2.0.6-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.6-Windows-x64.exe)
+  [PureWriter2-2.0.10-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.10-Windows-x64.exe)
 
-  [PureWriter2-2.0.6-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.6-macOS.dmg)
+  [PureWriter2-2.0.10-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.10-macOS.dmg)
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and log in with the same OneDrive account on the desktop to enable synchronization between the two.
 
@@ -58,9 +58,9 @@ v2.0.1 Beta Preview was released on August 18, 2024, at 17:58, Sunday.
 
 
 
-The key points of version 2.0.2 are as follows:
+The key points of version 2.0.10 are as follows:
 * Support Cloud backup and Cloud sync, but currently only OneDrive is supported. You must also log in to the same OneDrive cloud storage on the Android version to sync with it. **Before using this software, set up cloud backup storage and enable cloud sync to see if it works properly**. Please check this first.
-* Support double-clicking the `shift` key to open text and book search, but currently you cannot move the focus entry in the search results using the up and down arrow keys.
+* Support `ESC` key to open text and book search, but currently you cannot move the focus entry in the search results using the up and down arrow keys.
 * Support `ctrl + f` or `⌘ + f` to find a keyword, you can also select a word and then press this shortcut key to find more. 
 * Support static cursor. 
 * Folding folders are not supported for now.
