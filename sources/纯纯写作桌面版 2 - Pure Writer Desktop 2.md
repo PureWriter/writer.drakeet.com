@@ -6,7 +6,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.0.10 Beta 版下载
+#### v2.0.11 Beta 版下载
 
 > 终于，再一次，很高兴见到你。
 >
@@ -37,9 +37,9 @@
 > ⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（`C:\Program Files\Pure Writer 2`）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。
 
 - 蓝奏云**下载**:
-  [PureWriter2-2.0.10-Windows-x64.exe](https://drakeet.lanzouj.com/iXUrc28kbkhe)
+  [PureWriter2-2.0.11-Windows-x64.exe](https://drakeet.lanzouj.com/imi5t28n5u0j)
 
-  [PureWriter2-2.0.10-macOS.dmg](https://drakeet.lanzouj.com/ihfBF28kbjta)
+  [PureWriter2-2.0.11-macOS.dmg](https://drakeet.lanzouj.com/iyMe328n5s9g)
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 

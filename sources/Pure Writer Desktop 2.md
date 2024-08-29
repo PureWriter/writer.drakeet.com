@@ -8,7 +8,7 @@ https://writer.drakeet.com/desktop_en
 
 > v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
 
-#### v2.0.10 Beta
+#### v2.0.11 Beta
 
 > Finally, once again, Nice to see you.
 >
@@ -38,9 +38,9 @@ https://writer.drakeet.com/desktop_en
 
 - **Download**:
   
-  [PureWriter2-2.0.10-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.10-Windows-x64.exe)
+  [PureWriter2-2.0.11-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.11-Windows-x64.exe)
 
-  [PureWriter2-2.0.10-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.10-macOS.dmg)
+  [PureWriter2-2.0.11-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/2.0.6/PureWriter2-2.0.11-macOS.dmg)
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and log in with the same OneDrive account on the desktop to enable synchronization between the two.
 
