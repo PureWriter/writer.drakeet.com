@@ -39,7 +39,9 @@
 - 蓝奏云**下载**:
   [PureWriter2-2.0.11-Windows-x64.exe](https://drakeet.lanzouj.com/imi5t28n5u0j)
 
-  [PureWriter2-2.0.11-macOS.dmg](https://drakeet.lanzouj.com/iyMe328n5s9g)
+  [PureWriter2-2.0.11-macOS.dmg](https://drakeet.lanzouj.com/iyMe328n5s9g)  用于 **Intel** 芯片
+  
+  [PureWriter2-2.0.11-macOS-aarch64.dmg](https://drakeet.lanzouj.com/is4w328skh1c)  用于苹果 M 系列芯片 / **Apple M Silicon**
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
