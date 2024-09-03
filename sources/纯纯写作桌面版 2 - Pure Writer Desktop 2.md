@@ -1,18 +1,20 @@
 ### 纯纯写作桌面版 2 - Pure Writer Desktop 2
 
+| [English](/desktop2_en)
+
 ![Preview](/images/desktop2dark.png)
 
 ##### 旧版纯纯写作桌面版 v1.9.0（旧版，但稳定，需与手机实时连接）：https://writer.drakeet.com/desktop
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.0.11 Beta 版下载
+#### v2.1.2 Beta 版下载
 
 > 终于，再一次，很高兴见到你。
 >
 > 呈现在您眼前的正是全新的纯纯写作桌面版。
 >
-> 全新的纯纯写作桌面版是一个巨大工程量的产品，至少需要五年以上的时间才能完成，如今发布的本客户端实际上是一个半成品。目前，它仅支持一些最基础的功能和云备份、云同步，云同步的话仅支持 OneDrive，许多功能和 UI 都还未实现或处于初始态，大量的细节缺乏打磨和调整……
+> 全新的纯纯写作桌面版是一个巨大工程量的产品，至少需要五年以上的时间才能完成，如今发布的本客户端实际上是一个半成品。目前，它仅支持一些最基础的功能和云备份、云同步，云同步的话仅支持 OneDrive 和**「阿里云盘」**，许多功能和 UI 都还未实现或处于初始态，大量的细节缺乏打磨和调整……
 >
 > 由于许多用户热切希望尽快见到它，所以即使距离真正成熟的版本还很远，但我们决定发布它了，或许这是一个不错的开端，它已经比 2017 年初次发布的纯纯写作 Android 版来得新进和丰富了。
 >
@@ -37,17 +39,19 @@
 > ⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（`C:\Program Files\Pure Writer 2`）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。
 
 - 蓝奏云**下载**:
-  [PureWriter2-2.0.11-Windows-x64.exe](https://drakeet.lanzouj.com/imi5t28n5u0j)
+  [PureWriter2-2.1.2-Windows-x64.exe](https://drakeet.lanzouj.com/iMaP8292urne)
 
-  [PureWriter2-2.0.11-macOS.dmg](https://drakeet.lanzouj.com/iyMe328n5s9g)  用于 **Intel** 芯片
+  [PureWriter2-2.1.2-macOS.dmg](https://drakeet.lanzouj.com/ipRif292uqch)  用于 **Intel** 芯片
   
-  [PureWriter2-2.0.11-macOS-aarch64.dmg](https://drakeet.lanzouj.com/i7TUW28tlz8j)  用于苹果 M 系列芯片 / **Apple M Silicon**
+  [PureWriter2-2.1.2-macOS-aarch64.dmg](https://drakeet.lanzouj.com/isHcp292uped)  用于苹果 M 系列芯片 / **Apple M Silicon**
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
-⚠️ 请注意，**OneDrive 不是坚果云**，而是微软公司的网盘。目前必须在纯纯写作 Android 端切换到 OneDrive 云备份，同时桌面端登录同一个 OneDrive 账号方可相互同步：
+⚠️ 请注意，**OneDrive 和「阿里云盘」都不是坚果云**。目前必须在纯纯写作 Android 端切换到与桌面端同一个云备份/云同步网盘方可相互同步：
 
-<img src="/images/OneDriveOnAndroidGuide.jpg" width=480/>
+<img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/>
+
+（因为云盘只是一个单向备份的载体，或者云同步的中转，所以没必要迁移云盘数据，直接切换即可）
 
 
 
@@ -61,10 +65,11 @@ v2.0.1 Beta 预发版 发布于 2024.8.18 17:58, 周日
 
 
 
-v2.0.10 版本要点如下：
-* 支持云备份和云同步，但目前仅限 OneDrive，您必须在 Android 端上也登录同一个 OneDrive 网盘才能与之同步，请在正式使用本软件之前，设置好云备份网盘、开启云同步，看看这方面是否正常，因为 OneDrive 是国外微软公司的服务，**在部分国家和地区可能无法顺畅连接 OneDrive，请首先检查此方面**
+v2.1.2 版本要点如下：
 
-* 我们将在下一个关键版本中支持「阿里云盘」
+* 支持「**阿里云盘**」
+
+* 支持云备份和云同步，但目前仅限 OneDrive 和「阿里云盘」，您必须在 Android 端上也登录**同一个网盘**才能与之同步，请在正式使用本软件之前，设置好云备份网盘、开启云同步，看看这方面是否正常，因为 OneDrive 是国外微软公司的服务，**在部分国家和地区可能无法顺畅连接 OneDrive，若使用 OneDrive 请首先检查此方面**
 
 * 支持 `ESC` 键打开文章和书籍搜索，但目前还不能通过上下方向键在搜索结果中移动焦点条目
 
