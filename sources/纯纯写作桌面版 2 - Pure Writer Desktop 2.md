@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.1.2 Beta 版下载
+#### v2.1.5 Beta 版下载
 
 > 终于，再一次，很高兴见到你。
 >
@@ -39,11 +39,11 @@
 > ⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（`C:\Program Files\Pure Writer 2`）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。
 
 - 蓝奏云**下载**:
-  [PureWriter2-2.1.2-Windows-x64.exe](https://drakeet.lanzouj.com/iMaP8292urne)
+  [PureWriter2-2.1.5-Windows-x64.exe](https://drakeet.lanzouj.com/iiSWN298agcd)
 
-  [PureWriter2-2.1.2-macOS.dmg](https://drakeet.lanzouj.com/ipRif292uqch)  用于 **Intel** 芯片
+  [PureWriter2-2.1.5-macOS.dmg](https://drakeet.lanzouj.com/iQbkd298af9e)  用于 **Intel** 芯片
   
-  [PureWriter2-2.1.2-macOS-aarch64.dmg](https://drakeet.lanzouj.com/isHcp292uped)  用于苹果 M 系列芯片 / **Apple M Silicon**
+  [PureWriter2-2.1.5-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iviEP298aewb)  用于苹果 M 系列芯片 / **Apple M Silicon**
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -65,7 +65,7 @@ v2.0.1 Beta 预发版 发布于 2024.8.18 17:58, 周日
 
 
 
-v2.1.2 版本要点如下：
+v2.1.5 版本要点如下：
 
 * 支持「**阿里云盘**」
 
