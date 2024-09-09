@@ -59,4 +59,24 @@ https://github.com/PureWriter/desktop/releases
 
 
 
+
+
+**🥚 *全新纯纯写作桌面版 2 - Beta：***
+
+https://writer.drakeet.com/desktop2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /> [闽ICP备2021006387号-1](https://beian.miit.gov.cn/)

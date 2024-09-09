@@ -54,3 +54,7 @@ https://github.com/PureWriter/desktop/releases
 
 
 
+**🥚 *全新纯纯写作桌面版 2 - Beta：***
+
+https://writer.drakeet.com/desktop2
+
