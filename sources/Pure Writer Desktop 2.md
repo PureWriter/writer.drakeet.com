@@ -8,7 +8,7 @@ https://writer.drakeet.com/desktop_en
 
 > v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
 
-#### v2.1.6 Beta
+#### v2.1.8 Beta
 
 > Finally, once again, Nice to see you.
 >
@@ -36,29 +36,26 @@ https://writer.drakeet.com/desktop_en
 >
 > ⚠️ Windows systems may encounter false positives from antivirus software. Please be assured and simply add the desktop installer and the installed files (`C:\Program Files\Pure Writer 2`) to the whitelist. We are a verified developer and company, so it's impossible for us to create malicious software, as that would not only ruin our reputation but also result in imprisonment and bankruptcy. Antivirus software on Windows may flag unsigned executables by default, and we will address this issue in the future.
 
-- **Download**:
-  
-  [PureWriter2-2.1.6-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.6-Windows-x64.exe)
 
-  [PureWriter2-2.1.6-macOS.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.6-macOS-x64.dmg) for Intel Silicon
-  
-  [PureWriter2-2.1.6-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.6-macOS-aarch64.dmg) for **Apple M Silicon**
 
-Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and log in with the same OneDrive account on the desktop to enable synchronization between the two.
+#### Download
+
+[PureWriter2-2.1.8-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.8-Windows-x64.exe)
+
+[PureWriter2-2.1.8-macOS.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.8-macOS-x64.dmg) for Intel Silicon
+
+[PureWriter2-2.1.8-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.8-macOS-aarch64.dmg) for **Apple M Silicon**
+
+Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and **log in with the same OneDrive account** on the desktop to enable synchronization between the two.
 
 ⚠️ If update, please **close the software before installing** the update to avoid the "restart" issue.
 
 
 
-#### Release Dates
+The key points of version 2.1.8 are as follows:
 
-v2.0.0 Beta was released on June 20, 2024, at 16:43, Thursday, the day before the Summer Solstice.
+* Improve Cloud Sync
 
-**v2.0.2** Beta was released on August 19, 2024, at 8:34, Monday
-
-
-
-The key points of version 2.1.6 are as follows:
 * Support Cloud backup and Cloud sync, but currently only OneDrive & AliyunDrive are supported. You must also log in to **the same cloud storage** on the Android version to sync with it
 * Support `ESC` key to open text and book search, but currently you cannot move the focus entry in the search results using the up and down arrow keys.
 * Support `ctrl + f` or `⌘ + f` to find a keyword, you can also select a word and then press this shortcut key to find more. 

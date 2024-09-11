@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4, h5 { white-space: pre-wrap; }
@@ -219,400 +219,687 @@ mjx-container { break-inside: avoid; }
 .md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
 
 
-:root {
-    --side-bar-bg-color: #fafafa;
-    --control-text-color: #777;
+
+
+.cm-s-inner .cm-variable {
+  color: #fff;
 }
 
-@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-property {
+  color: #6699CC;
+}
 
-/* open-sans-regular - latin-ext_latin */
-  /* open-sans-italic - latin-ext_latin */
-    /* open-sans-700 - latin-ext_latin */
-    /* open-sans-700italic - latin-ext_latin */
-  html {
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
+.cm-s-inner .cm-tag {
+  color: #EC5F67;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #b8bfc6;
+  z-index: 3;
+}
+
+.cm-s-inner .cm-string {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-comment,
+.cm-s-inner.cm-comment {
+  color: #65737E;
+}
+
+.cm-s-inner .cm-header,
+.cm-s-inner .cm-def,
+.cm-s-inner.cm-header,
+.cm-s-inner.cm-def,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-operator {
+  color: #C594C5;
+}
+
+.cm-s-inner .cm-quote,
+.cm-s-inner.cm-quote {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-hr {
+  color: #d8d5d5;
+}
+
+.cm-s-inner .cm-link {
+  color: #d3d3ef;
+}
+
+.cm-s-inner .cm-negative {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-positive {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-meta,
+.cm-s-inner .cm-qualifier {
+  color: #b7b3b3;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #f3b3f8;
+}
+
+.cm-s-inner .cm-bracket {
+  color: #5FB3B3;
+}
+
+.cm-s-inner .cm-atom,
+.cm-s-inner.cm-atom {
+  color: #84B6CB;
+}
+
+.cm-s-inner .cm-number {
+  color: #F99157;
+}
+
+.cm-s-inner .cm-variable {
+  color: #b8bfc6;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #9FBAD5;
+}
+
+.cm-s-inner .cm-variable-3 {
+  color: #1cc685;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+  background: #4a89dc;
+  color: #fff !important;
+  text-shadow: none;
+}
+
+.CodeMirror-gutters {
+  border-right: none;
+}@import '';
+
+:root {
+  --primary-color: #fcba03;
+  --primary-color-rgb: 252, 186, 3;
+
+  --bg-color: #292929;
+  --bg-color-dark: #1f1f1f;
+  --dark-trait: #141414;
+  --light-trait-100: #3d3d3d;
+  --light-trait-200: #545454;
+  --light-trait-300: #777;
+  --light-trait-400: #8c8c8c;
+
+  --text-color: #f8f8f2;
+  --text-color-secondary: #d2d3d3;
+  --text-highlight-color: #fff;
+  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
+  --select-text-bg-color: rgba(255, 255, 255, 0.2);
+  --search-select-text-color: var(--text-highlight-color);
+  --search-select-bg-color: var(--text-highlight-bg);
+
+  --code-color: #f3b3f8;
+
+  --border-radius: 3px;
+
+  --font-size: 14px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
+
+  --heading-char-color: var(--light-trait-400);
+  --color-popover-bg-color: var(--text-color);
+  --rawblock-edit-panel-bd: var(--bg-color-dark);
+  --control-text-color: var(--text-color);
+  --meta-content-color: var(--primary-color);
+  --primary-btn-border-color: var(--primary-color);
+  --side-bar-bg-color: var(--bg-color-dark);
+  --item-hover-bg-color: var(--bg-color);
+  --item-hover-text-color: var(--text-highlight-color);
+  --active-file-bg-color: var(--bg-color);
+  --active-file-border-color: var(--bg-color);
+  --window-border: 1px solid var(--bg-color);
+  --focus-ring-color: transparent;
+  --table-bg-darker-color: var(--bg-color-dark);
+  --table-bg-color: var(--bg-color);
+}
+
+html {
+  font-size: var(--font-size);
 }
 
 body {
-    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
-    color: rgb(51, 51, 51);
-    line-height: 1.6;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 #write {
-    max-width: 860px;
-  	margin: 0 auto;
-  	padding: 30px;
-    padding-bottom: 100px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 100px;
 }
 
 @media only screen and (min-width: 1400px) {
-	#write {
-		max-width: 1024px;
-	}
+  #write {
+    max-width: 1024px;
+  }
 }
 
 @media only screen and (min-width: 1800px) {
-	#write {
-		max-width: 1200px;
-	}
+  #write {
+    max-width: 1200px;
+  }
 }
 
 #write > ul:first-child,
-#write > ol:first-child{
-    margin-top: 30px;
+#write > ol:first-child {
+  margin-top: 30px;
 }
 
 a {
-    color: #4183C4;
+  color: var(--primary-color);
 }
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    line-height: 1.4;
-    cursor: text;
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
 }
+
 h1:hover a.anchor,
 h2:hover a.anchor,
 h3:hover a.anchor,
 h4:hover a.anchor,
 h5:hover a.anchor,
 h6:hover a.anchor {
-    text-decoration: none;
+  text-decoration: none;
 }
+
 h1 tt,
-h1 code {
-    font-size: inherit;
-}
+h1 code,
 h2 tt,
-h2 code {
-    font-size: inherit;
-}
+h2 code,
 h3 tt,
-h3 code {
-    font-size: inherit;
-}
+h3 code,
 h4 tt,
-h4 code {
-    font-size: inherit;
-}
+h4 code,
 h5 tt,
-h5 code {
-    font-size: inherit;
-}
+h5 code,
 h6 tt,
 h6 code {
-    font-size: inherit;
+  font-size: inherit;
 }
+
 h1 {
-    font-size: 2.25em;
-    line-height: 1.2;
-    border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+  font-size: 2.2em;
+  line-height: 1.3;
 }
+
 h2 {
-    font-size: 1.75em;
-    line-height: 1.225;
-    border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
 }
-
-/*@media print {
-    .typora-export h1,
-    .typora-export h2 {
-        border-bottom: none;
-        padding-bottom: initial;
-    }
-
-    .typora-export h1::after,
-    .typora-export h2::after {
-        content: "";
-        display: block;
-        height: 100px;
-        margin-top: -96px;
-        border-top: 1px solid #eee;
-    }
-}*/
 
 h3 {
-    font-size: 1.5em;
-    line-height: 1.43;
+  font-size: 1.4em;
+  line-height: 1.43;
 }
+
 h4 {
-    font-size: 1.25em;
+  font-size: 1.2em;
 }
+
 h5 {
-    font-size: 1em;
+  font-size: 1em;
 }
+
 h6 {
-   font-size: 1em;
-    color: #777;
+  font-size: 1em;
+  color: var(--light-trait-300);
 }
+
 p,
 blockquote,
 ul,
 ol,
 dl,
-table{
-    margin: 0.8em 0;
+table {
+  margin: 0.8em 0;
 }
-li>ol,
-li>ul {
-    margin: 0 0;
+
+li > ol,
+li > ul {
+  margin: 0 0;
 }
+
 hr {
-    height: 2px;
-    padding: 0;
-    margin: 16px 0;
-    background-color: #e7e7e7;
-    border: 0 none;
-    overflow: hidden;
-    box-sizing: content-box;
+  height: 2px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: var(--light-trait-100);
+  border: 0 none;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+sup.md-footnote {
+  background-color: var(--light-trait-400);
+  color: var(--light-trait-100);
 }
 
 li p.first {
-    display: inline-block;
+  display: inline-block;
 }
+
 ul,
 ol {
-    padding-left: 30px;
+  padding-left: 30px;
 }
+
 ul:first-child,
 ol:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
+
 ul:last-child,
 ol:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
+
+mark,
+.ty-file-search-match-text,
+.md-search-hit {
+  background: var(--search-select-bg-color);
+  color: var(--search-select-text-color);
+}
+.md-search-hit * {
+  color: var(--search-select-text-color);
+}
+.cm-search-hit.CodeMirror-selectedtext,
+.md-search-hit.md-search-select,
+.md-search-select {
+  outline: 2px solid var(--primary-color);
+}
+.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
+  outline-width: 2px;
+}
+.outline-item.select {
+  outline-offset: 0px;
+}
+
 blockquote {
-    border-left: 4px solid #dfe2e5;
-    padding: 0 15px;
-    color: #777777;
+  margin-left: -14px;
+  margin-right: -14px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--light-trait-300);
+  background-color: var(--light-trait-100);
+  padding: 7px 14px 7px 10px;
 }
+
 blockquote blockquote {
-    padding-right: 0;
+  padding-right: 0;
 }
+
 table {
-    padding: 0;
-    word-break: initial;
+  padding: 0;
+  word-break: initial;
 }
+
 table tr {
-    border: 1px solid #dfe2e5;
-    margin: 0;
-    padding: 0;
+  border-top: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 0;
 }
+
 table tr:nth-child(2n),
 thead {
-    background-color: #f8f8f8;
-}
-table th {
-    font-weight: bold;
-    border: 1px solid #dfe2e5;
-    border-bottom: 0;
-    margin: 0;
-    padding: 6px 13px;
-}
-table td {
-    border: 1px solid #dfe2e5;
-    margin: 0;
-    padding: 6px 13px;
-}
-table th:first-child,
-table td:first-child {
-    margin-top: 0;
-}
-table th:last-child,
-table td:last-child {
-    margin-bottom: 0;
+  background-color: var(--side-bar-bg-color);
 }
 
-.CodeMirror-lines {
-    padding-left: 4px;
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--dark-trait);
+  border-bottom: 0;
+  margin: 0;
+  padding: 6px 13px;
 }
 
-.code-tooltip {
-    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
-    border-top: 1px solid #eef2f2;
+table tr td {
+  border: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  font-size: 0.875rem;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  box-shadow: 0 2px 0 var(--dark-trait);
+  color: var(--text-color-secondary);
 }
 
 .md-fences,
 code,
 tt {
-    border: 1px solid #e7eaed;
-    background-color: #f8f8f8;
-    border-radius: 3px;
-    padding: 0;
-    padding: 2px 4px 0px 4px;
-    font-size: 0.9em;
-}
-
-code {
-    background-color: #f3f4f4;
-    padding: 0 2px 0 2px;
+  border: 1px solid var(--dark-trait);
+  background-color: var(--bg-color-dark);
+  border-radius: var(--border-radius);
+  padding: 2px 4px 0px 4px;
+  font-size: 0.9em;
+  font-family: var(--monospace);
 }
 
 .md-fences {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    padding-top: 8px;
-    padding-bottom: 6px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: var(--side-bar-bg-color);
 }
 
-
-.md-task-list-item > input {
-  margin-left: -1.3em;
-}
-
-@media print {
-    html {
-        font-size: 13px;
-    }
-    pre {
-        page-break-inside: avoid;
-        word-wrap: break-word;
-    }
-}
-
-.md-fences {
-	background-color: #f8f8f8;
-}
 #write pre.md-meta-block {
-	padding: 1rem;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f7f7f7;
-    border: 0;
-    border-radius: 3px;
-    color: #777777;
-    margin-top: 0 !important;
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--bg-color-dark);
+  border: 0;
+  border-radius: var(--border-radius);
+  color: var(--light-trait-400);
+  margin-top: 0 !important;
 }
 
-.mathjax-block>.code-tooltip {
-	bottom: .375rem;
+#write .mathjax-block .md-rawblock-tooltip {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+#write .mathjax-block .md-math-container {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+#write .md-mathblock-panel .md-rawblock-control:first-of-type {
+  border-top-left-radius: var(--border-radius);
 }
 
 .md-mathjax-midline {
-    background: #fafafa;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-#write>h3.md-focus:before{
-	left: -1.5625rem;
-	top: .375rem;
-}
-#write>h4.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h5.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h6.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-.md-image>.md-meta {
-    /*border: 1px solid #ddd;*/
-    border-radius: 3px;
-    padding: 2px 0px 0px 4px;
-    font-size: 0.9em;
-    color: inherit;
+.md-inline-math script {
+  color: var(--code-color);
 }
 
-.md-tag {
-    color: #a7a7a7;
-    opacity: 1;
+code {
+  padding: 0 2px 0 2px;
 }
 
-.md-toc { 
-    margin-top:20px;
-    padding-bottom:20px;
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+}
+
+#write .code-tooltip {
+  bottom: initial;
+  top: 100%;
+  left: initial;
+  right: -1px;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  font-family: var(--monospace);
+}
+
+#write .md-mathblock-panel .code-tooltip {
+  right: 0;
+  border: none;
+}
+
+#write .md-task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid var(--light-trait-200);
+  border-radius: 50%;
+  margin-left: -1.8rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: background 0.3s;
+}
+
+#write .md-task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#write .md-task-list-item > input[checked] {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#write .md-task-list-item > input[checked]::before {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: var(--dark-trait);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.md-image > .md-meta {
+  border-radius: var(--border-radius);
+  padding: 2px 0px 0px 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Source mode */
+.CodeMirror.cm-s-typora-default *,
+.cm-s-typora-default * {
+  background: inherit;
+  color: var(--text-color);
+  font-family: var(--monospace);
+  font-size: var(--font-size) !important;
+  font-style: normal;
+  font-weight: normal;
+}
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+  border-left: 2px solid var(--light-trait-400);
 }
 
 .sidebar-tabs {
-    border-bottom: none;
+  border-bottom: none;
 }
 
-#typora-quick-open {
-    border: 1px solid #ddd;
-    background-color: #f8f8f8;
+.outline-expander {
+  width: 1.5rem;
+  vertical-align: initial;
+}
+.outline-expander:before,
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before,
+.outline-item-open > .outline-item > .outline-expander:hover:before {
+  content: "\f125";
+  transition: transform 125ms ease-in-out;
+}
+.outline-item-open > .outline-item > .outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+  transform: rotate(90deg);
+}
+.outline-label:hover {
+  text-decoration: none;
 }
 
-#typora-quick-open-item {
-    background-color: #FAFAFA;
-    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
-    border-style: solid;
-    border-width: 1px;
+#toc-dropmenu {
+  background: var(--bg-color-dark);
+}
+#toc-dropmenu .outline-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.dropdown-menu .divider {
+  display: none;
 }
 
-/** focus mode */
-.on-focus-mode blockquote {
-    border-left-color: rgba(85, 85, 85, 0.12);
+.context-menu {
+  background-color: var(--bg-color-dark);
 }
 
-header, .context-menu, .megamenu-content, footer{
-    font-family: "Segoe UI", "Arial", sans-serif;
+.file-node-background {
+  height: 31px;
 }
-
 .file-node-content:hover .file-node-icon,
-.file-node-content:hover .file-node-open-state{
-    visibility: visible;
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+.file-node-icon {
+  margin-right: 8px;
+}
+.file-library-node:not(.file-node-root):focus>.file-node-content {
+  outline: none;
+}
+
+/* New file animation */
+.blink-area {
+  animation: none;
+}
+
+.file-list-item-summary {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+#md-searchpanel input {
+  border-radius: var(--border-radius);
+  box-shadow: none;
+}
+#md-searchpanel input:focus {
+  box-shadow: none;
+  border-color: var(--meta-content-color);
+}
+#md-searchpanel .search-type-selection {
+  width: auto;
+}
+#md-searchpanel .btn:not(.close-btn):hover {
+  box-shadow: none;
 }
 
 .mac-seamless-mode #typora-sidebar {
-    background-color: #fafafa;
-    background-color: var(--side-bar-bg-color);
+  background-color: var(--side-bar-bg-color);
 }
-
-.mac-os #write{
-    caret-color: AccentColor;
-}
-
-.md-lang {
-    color: #b4654d;
-}
-
-/*.html-for-mac {
-    --item-hover-bg-color: #E6F0FE;
-}*/
 
 #md-notification .btn {
-    border: 0;
+  border: 0;
 }
 
-.dropdown-menu .divider {
-    border-color: #e5e5e5;
-    opacity: 0.4;
+.megamenu-menu {
+  background-color: var(--bg-color-dark);
 }
 
-.ty-preferences .window-content {
-    background-color: #fafafa;
+.megamenu-opened header {
+  background-image: none;
 }
 
-.ty-preferences .nav-group-item.active {
-    color: white;
-    background: #999;
+/* mega menu */
+.megamenu-content,
+.megamenu-opened header {
+    background: var(--bg-color);
 }
 
-.menu-item-container a.menu-style-btn {
-    background-color: #f5f8fa;
-    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+.megamenu-opened .megamenu-content {
+  visibility: visible;
+  opacity: 1;
+  animation: none;
+  background-color: inherit;
 }
 
+#recent-file-panel tbody tr:nth-child(2n) {
+  background-color: var(--table-bg-darker-color);
+}
+
+#recent-file-panel tbody tr:nth-child(2n + 1) {
+  background-color: var(--table-bg-color);
+}
+
+#recent-file-panel-action-btn {
+  background-color: var(--bg-color);
+}
+
+.long-btn:hover {
+  background-color: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color) !important;
+}
+
+#recent-file-panel-action-btn:hover{
+  background-color: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color) !important;
+}
+
+.mouse-entered #top-titlebar .toolbar-icon.btn:hover,
+.mouse-entered #top-titlebar .toolbar-icon.btn.hover {
+    background-color: var(--item-hover-bg-color);
+}
+
+#m-import-local:hover .preference-item-hint {
+  color: var(--item-hover-text-color);
+}
+
+.typora-sourceview-on #toggle-sourceview-btn {
+  background-color: var(--bg-color-dark);
+}
 
  @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
 </style><title>纯纯写作桌面版 2 - Pure Writer Desktop 2</title>
 </head>
 <body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><h3 id='纯纯写作桌面版-2---pure-writer-desktop-2'><span>纯纯写作桌面版 2 - Pure Writer Desktop 2</span></h3><p><span>| </span><a href='/desktop2_en'><span>English</span></a></p><p><img src="/images/desktop2dark.png" referrerpolicy="no-referrer" alt="Preview"></p><h5 id='旧版纯纯写作桌面版-v190旧版但稳定需与手机实时连接httpswriterdrakeetcomdesktop'><span>旧版纯纯写作桌面版 v1.9.0（旧版，但稳定，需与手机实时连接）：</span><a href='https://writer.drakeet.com/desktop' target='_blank' class='url'>https://writer.drakeet.com/desktop</a></h5><blockquote><p><span>v1.9.0 为非全新版本，但毫无问题，以下的 </span><strong><span>2.0 版本</span></strong><span>为测试版，</span><strong><span>半成品</span></strong></p></blockquote><h4 id='v216-beta-版下载'><span>v2.1.6 Beta 版下载</span></h4><blockquote><p><span>终于，再一次，很高兴见到你。</span></p><p><span>呈现在您眼前的正是全新的纯纯写作桌面版。</span></p><p><span>全新的纯纯写作桌面版是一个巨大工程量的产品，至少需要五年以上的时间才能完成，如今发布的本客户端实际上是一个半成品。目前，它仅支持一些最基础的功能和云备份、云同步，云同步的话仅支持 OneDrive 和</span><strong><span>「阿里云盘」</span></strong><span>，许多功能和 UI 都还未实现或处于初始态，大量的细节缺乏打磨和调整……</span></p><p><span>由于许多用户热切希望尽快见到它，所以即使距离真正成熟的版本还很远，但我们决定发布它了，或许这是一个不错的开端，它已经比 2017 年初次发布的纯纯写作 Android 版来得新进和丰富了。</span></p><p><span>前路漫漫，</span><strong><span>百废待兴</span></strong><span>，艰难且漫长，但我们没有放弃，相信我们终有一天能抵达那个令人满意且最超前的里程碑。在此之前，全新的纯纯写作桌面端将长久保持完全免费。</span></p><p><span>希望您能为一些细节感到欣喜，同时</span><strong><span>给予我们一些理解和更多等待时间</span></strong><span>，将不胜感激，不懈努力。</span></p><p><span>当前版本可能会有许多不足和问题，请多担待！</span></p><p><span>最后，为了避免一些二道打包贩子在安装包里插入风险代码，请确保您从 </span><a href='https://writer.drakeet.com/desktop2' target='_blank' class='url'>https://writer.drakeet.com/desktop2</a><span> 下载和更新本软件。目前它是完全免费的，也无需破解版，请勿轻信任何破解版。</span></p><p><span>更多关于这个桌面版的</span><strong><span>开发故事</span></strong><span>请见：</span></p><p><a href='https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ' target='_blank' class='url'>https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ</a></p></blockquote><p>&nbsp;</p><blockquote><p><span>如果您是 Windows 系统用户，请下载安装 PureWriter2-Windows-x64.exe，</span><strong><span>目前暂时仅支持 Windows 10/11</span></strong></p><p><span>macOS 则使用 PureWriter2-macOS.dmg，下载后</span><strong><span>右键点击该文件选择“打开”</span></strong><span>即可进行安装。</span></p><p><span>⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（</span><code>C:\Program Files\Pure Writer 2</code><span>）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。</span></p></blockquote><ul><li><p><span>蓝奏云</span><strong><span>下载</span></strong><span>:</span>
-<a href='https://drakeet.lanzouj.com/iiJvW29ldwjc'><span>PureWriter2-2.1.6-Windows-x64.exe</span></a></p><p><a href='https://drakeet.lanzouj.com/ijdEN29ldv2j'><span>PureWriter2-2.1.6-macOS.dmg</span></a><span>  用于 </span><strong><span>Intel</span></strong><span> 芯片</span></p><p><a href='https://drakeet.lanzouj.com/iH7MU29ldtxi'><span>PureWriter2-2.1.6-macOS-aarch64.dmg</span></a><span>  用于苹果 M 系列芯片 / </span><strong><span>Apple M Silicon</span></strong></p></li></ul><p><span>⚠️ 若更新，请</span><strong><span>关闭本软件后再安装更新</span></strong><span>，这样可以避免「</span><em><span>需要重启</span></em><span>」问题。</span></p><p><span>⚠️ 请注意，OneDrive 和「阿里云盘」都不是坚果云。目前</span><strong><span>必须在纯纯写作 Android 端切换到与桌面端同一个云备份/云同步网盘方可相互同步：</span></strong></p><p><span class='md-image'><img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/></span></p><p><span>（因为云盘只是一个单向备份的载体，或者云同步的中转，所以没必要迁移云盘数据，直接切换即可）</span></p><p>&nbsp;</p><h4 id='发布日期'><span>发布日期</span></h4><p><span>v2.0.0 测试版发布于 2024.06.20 16:43, 周四, 2024 夏至前日</span></p><p><strong><span>v2.0.2</span></strong><span> Beta 版发布于 2024.8.19 8:34, 周一</span></p><p>&nbsp;</p><p><span>v2.1.6 版本要点如下：</span></p><ul><li><p><span>适配「微信输入法」符号自动配对</span></p></li></ul><ul><li><p><span>支持「</span><strong><span>阿里云盘</span></strong><span>」</span></p></li><li><p><span>支持云备份和云同步，但目前仅限 OneDrive 和「阿里云盘」，您必须在 Android 端上也登录</span><strong><span>同一个网盘</span></strong><span>才能与之同步，请在正式使用本软件之前，设置好云备份网盘、开启云同步，看看这方面是否正常，因为 OneDrive 是国外微软公司的服务，</span><strong><span>在部分国家和地区可能无法顺畅连接 OneDrive，若使用 OneDrive 请首先检查此方面</span></strong></p></li><li><p><span>支持 </span><code>ESC</code><span> 键打开文章和书籍搜索，但目前还不能通过上下方向键在搜索结果中移动焦点条目</span></p></li><li><p><span>支持 </span><code>ctrl + f</code><span> 或 </span><code>⌘ + f</code><span> 查找某关键词，也可以选定一个词语后，再按此快捷键对其进行更多查找</span></p></li><li><p><span>支持静态光标</span></p></li><li><p><span>暂不支持折叠卷</span></p></li><li><p><span>暂不支持历史记录，但支持 </span><code>ctrl + z</code><span> 或 </span><code>⌘ + z</code><span> 撤销</span></p></li><li><p><span>支持在右侧侧栏打开文章</span></p></li><li><p><span>不支持 Markdown</span></p></li><li><p><span>不支持每日统计，并且会造成 Android 端当天的每日统计不准确（将不会统计在桌面端书写的内容）</span></p><p><span>……</span></p><p><span>更多内容请自行探索，许多功能和文案目前不够得体，请多担待。如有难以忍受的问题，请致信，我们将竭力为您服务：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p></li></ul><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /><span> </span><a href='https://beian.miit.gov.cn/'><span>闽ICP备2021006387号-1</span></a></p></div></div>
+<div id='write'  class=''><h3 id='纯纯写作桌面版-2'><span>纯纯写作桌面版 2</span></h3><p><span>| </span><a href='/desktop2_en'><span>English · Pure Writer Desktop 2</span></a></p><p><img src="/images/desktop2dark.png" referrerpolicy="no-referrer" alt="Preview"></p><h5 id='旧版纯纯写作桌面版-v190旧版但稳定需与手机实时连接httpswriterdrakeetcomdesktop'><span>旧版纯纯写作桌面版 v1.9.0（旧版，但稳定，需与手机实时连接）：</span><a href='https://writer.drakeet.com/desktop' target='_blank' class='url'>https://writer.drakeet.com/desktop</a></h5><blockquote><p><span>v1.9.0 为非全新版本，但毫无问题，以下的 </span><strong><span>2.0 版本</span></strong><span>为测试版，</span><strong><span>半成品</span></strong></p></blockquote><h4 id='v218-beta-版下载'><span>v2.1.8 Beta 版下载</span></h4><blockquote><p><span>终于，再一次，很高兴见到你。</span></p><p><span>呈现在您眼前的正是全新的纯纯写作桌面版。</span></p><p><span>全新的纯纯写作桌面版是一个巨大工程量的产品，至少需要五年以上的时间才能完成，如今发布的本客户端实际上是一个半成品。目前，它仅支持一些最基础的功能和云备份、云同步，云同步的话仅支持 OneDrive 和</span><strong><span>「阿里云盘」</span></strong><span>，许多功能和 UI 都还未实现或处于初始态，大量的细节缺乏打磨和调整……</span></p><p><span>由于许多用户热切希望尽快见到它，所以即使距离真正成熟的版本还很远，但我们决定发布它了，或许这是一个不错的开端，它已经比 2017 年初次发布的纯纯写作 Android 版来得新进和丰富了。</span></p><p><span>前路漫漫，</span><strong><span>百废待兴</span></strong><span>，艰难且漫长，但我们没有放弃，相信我们终有一天能抵达那个令人满意且最超前的里程碑。在此之前，全新的纯纯写作桌面端将长久保持完全免费。</span></p><p><span>希望您能为一些细节感到欣喜，同时</span><strong><span>给予我们一些理解和更多等待时间</span></strong><span>，将不胜感激，不懈努力。</span></p><p><span>当前版本可能会有许多不足和问题，请多担待！</span></p><p><span>最后，为了避免一些二道打包贩子在安装包里插入风险代码，请确保您从 </span><a href='https://writer.drakeet.com/desktop2' target='_blank' class='url'>https://writer.drakeet.com/desktop2</a><span> 下载和更新本软件。目前它是完全免费的，也无需破解版，请勿轻信任何破解版。</span></p><p><span>更多关于这个桌面版的</span><strong><span>开发故事</span></strong><span>请见：</span></p><p><a href='https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ' target='_blank' class='url'>https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ</a></p></blockquote><p>&nbsp;</p><blockquote><p><span>如果您是 Windows 系统用户，请下载安装 PureWriter2-Windows-x64.exe，</span><strong><span>目前暂时仅支持 Windows 10/11</span></strong></p><p><span>macOS 则使用 PureWriter2-macOS.dmg，下载后</span><strong><span>右键点击该文件选择“打开”</span></strong><span>即可进行安装。</span></p><p><span>⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（</span><code>C:\Program Files\Pure Writer 2</code><span>）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。</span></p></blockquote><p>&nbsp;</p><h4 id='下载'><span>下载</span></h4><p><a href='https://drakeet.lanzouj.com/iu89y29sbx7g'><span>PureWriter2-2.1.8-Windows-x64.exe</span></a></p><p><a href='https://drakeet.lanzouj.com/i3vbq29sbwjc'><span>PureWriter2-2.1.8-macOS.dmg</span></a><span>  用于 </span><strong><span>Intel</span></strong><span> 芯片</span></p><p><a href='https://drakeet.lanzouj.com/iMoGO29sbvna'><span>PureWriter2-2.1.8-macOS-aarch64.dmg</span></a><span>  用于苹果 </span><strong><span>M 系列芯片</span></strong><span> / </span><strong><span>Apple M Silicon</span></strong></p><p><span>⚠️ 若更新，请</span><strong><span>关闭本软件后再安装更新</span></strong><span>，这样可以避免「</span><em><span>需要重启</span></em><span>」问题。</span></p><p><span>⚠️ 请注意，OneDrive 和「阿里云盘」都不是坚果云。目前</span><strong><span>必须在纯纯写作 Android 端切换到与桌面端同一个云备份/云同步网盘方可相互同步：</span></strong></p><p><span class='md-image'><img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/></span></p><p><span>（因为云盘只是一个单向备份的载体，或者云同步的中转，所以没必要迁移云盘数据，直接切换即可）</span></p><p>&nbsp;</p><p><span>v2.1.8 版本要点如下：</span></p><ul><li><p><span>改善「云同步」同步频次</span></p></li></ul><ul><li><p><span>适配「微信输入法」符号自动配对</span></p></li><li><p><span>支持「</span><strong><span>阿里云盘</span></strong><span>」</span></p></li><li><p><span>支持云备份和云同步，但目前仅限 OneDrive 和「阿里云盘」，您必须在 Android 端上也登录</span><strong><span>同一个网盘</span></strong><span>才能与之同步，请在正式使用本软件之前，设置好云备份网盘、开启云同步，看看这方面是否正常，因为 OneDrive 是国外微软公司的服务，</span><strong><span>在部分国家和地区可能无法顺畅连接 OneDrive，若使用 OneDrive 请首先检查此方面</span></strong></p></li><li><p><span>支持 </span><code>ESC</code><span> 键打开文章和书籍搜索，但目前还不能通过上下方向键在搜索结果中移动焦点条目</span></p></li><li><p><span>支持 </span><code>ctrl + f</code><span> 或 </span><code>⌘ + f</code><span> 查找某关键词，也可以选定一个词语后，再按此快捷键对其进行更多查找</span></p></li><li><p><span>支持静态光标</span></p></li><li><p><span>暂不支持折叠卷</span></p></li><li><p><span>暂不支持历史记录，但支持 </span><code>ctrl + z</code><span> 或 </span><code>⌘ + z</code><span> 撤销</span></p></li><li><p><span>支持在右侧侧栏打开文章</span></p></li><li><p><span>不支持 Markdown</span></p></li><li><p><span>不支持每日统计，并且会造成 Android 端当天的每日统计不准确（将不会统计在桌面端书写的内容）</span></p><p><span>……</span></p><p><span>更多内容请自行探索，许多功能和文案目前不够得体，请多担待。如有难以忍受的问题，请致信，我们将竭力为您服务：</span><a href='mailto:drakeet@drakeet.com' target='_blank' class='url'>drakeet@drakeet.com</a></p></li></ul><p>&nbsp;</p><h4 id='发布日期'><span>发布日期</span></h4><p><span>v2.0.0 测试版发布于 2024.06.20 16:43, 周四, 2024 夏至前日</span></p><p><strong><span>v2.0.2</span></strong><span> Beta 版发布于 2024.8.19 8:34, 周一</span></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /><span> </span><a href='https://beian.miit.gov.cn/'><span>闽ICP备2021006387号-1</span></a></p></div></div>
 </body>
 </html>
