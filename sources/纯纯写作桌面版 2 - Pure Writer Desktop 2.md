@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.1.8 Beta 版下载
+#### v2.1.9 Beta 版（全新桌面版）
 
 > 终于，再一次，很高兴见到你。
 >
@@ -42,11 +42,11 @@
 
 #### 下载
 
-[PureWriter2-2.1.8-Windows-x64.exe](https://drakeet.lanzouj.com/iu89y29sbx7g)
+[PureWriter2-2.1.9-Windows-x64.exe](https://drakeet.lanzouj.com/iK6vm2a3j13e)
 
-[PureWriter2-2.1.8-macOS.dmg](https://drakeet.lanzouj.com/i3vbq29sbwjc)  用于 **Intel** 芯片
+[PureWriter2-2.1.9-macOS.dmg](https://drakeet.lanzouj.com/iqcew2a3itcf)  用于 **Intel** 芯片
 
-[PureWriter2-2.1.8-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iMoGO29sbvna)  用于苹果 **M 系列芯片** / **Apple M Silicon**
+[PureWriter2-2.1.9-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iDssj2a3izwb)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -58,7 +58,9 @@
 
 
 
-v2.1.8 版本要点如下：
+v2.1.9 版本要点如下：
+
+* 修复「OneDrive」点击登出时软件无响应
 
 * 改善「云同步」同步频次
 
