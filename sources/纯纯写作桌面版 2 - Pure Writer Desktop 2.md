@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.1.9 Beta 版（全新桌面版）
+#### v2.2.0 Beta 版（全新桌面版）
 
 > 终于，再一次，很高兴见到你。
 >
@@ -42,11 +42,11 @@
 
 #### 下载
 
-[PureWriter2-2.1.9-Windows-x64.exe](https://drakeet.lanzouj.com/iK6vm2a3j13e)
+[PureWriter2-2.2.0-Windows-x64.exe](https://drakeet.lanzouj.com/iKe0e2c1m4qd)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
 
-[PureWriter2-2.1.9-macOS.dmg](https://drakeet.lanzouj.com/iqcew2a3itcf)  用于 **Intel** 芯片
+[PureWriter2-2.2.0-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iEO4L2c1m32d)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
-[PureWriter2-2.1.9-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iDssj2a3izwb)  用于苹果 **M 系列芯片** / **Apple M Silicon**
+[PureWriter2-2.2.0-macOS.dmg](https://drakeet.lanzouj.com/iJoAR2c1m3hi)  用于 **Intel** 芯片
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -54,11 +54,21 @@
 
 <img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/>
 
-（因为云盘只是一个单向备份的载体，或者云同步的中转，所以没必要迁移云盘数据，直接切换即可）
+（因为云盘只是一个单向备份的载体，或者云同步的中转，所以**没必要迁移云盘数据，直接切换即可**）
 
 
 
-v2.1.9 版本要点如下：
+⚠️ **关于 Windows v2.1.9 版本的注意事项：**
+
+在安装 v2.2.0 版本之前，**请先卸载 v2.1.9 版本！**
+
+卸载方式：右键点击「开始」，选择「安装的应用」或「程序与功能」，然后在软件列表中找到「Pure Writer 2」v2.1.9 版本，点击「...」、「卸载」🙏
+
+
+
+v2.2.0 版本要点如下：
+
+* 支持 自动更新，以后一般情况下不需要再手动下载、安装更新了！
 
 * 修复「OneDrive」点击登出时软件无响应
 

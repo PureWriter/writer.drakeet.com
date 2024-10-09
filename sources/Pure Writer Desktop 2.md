@@ -8,7 +8,7 @@ https://writer.drakeet.com/desktop_en
 
 > v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
 
-#### v2.1.9 Beta
+#### v2.2.0 Beta
 
 > Finally, once again, Nice to see you.
 >
@@ -40,11 +40,11 @@ https://writer.drakeet.com/desktop_en
 
 #### Download
 
-[PureWriter2-2.1.9-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.9-Windows-x64.exe)
+[PureWriter2-2.2.0-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.0-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
 
-[PureWriter2-2.1.9-macOS.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.9-macOS-x64.dmg) for Intel Silicon
+[PureWriter2-2.2.0-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.0-macOS-aarch64.dmg) for **Apple M Silicon**
 
-[PureWriter2-2.1.9-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/v2.1.2/PureWriter2-2.1.9-macOS-aarch64.dmg) for **Apple M Silicon**
+[PureWriter2-2.2.0-macOS.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.0-macOS-x64.dmg) for Intel Silicon
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and **log in with the same OneDrive account** on the desktop to enable synchronization between the two.
 
@@ -52,7 +52,17 @@ Currently, you must switch to OneDrive cloud backup on the Pure Writer Android a
 
 
 
-The key points of version 2.1.9 are as follows:
+⚠️ **Important Notes on Windows v2.1.9 Version:**
+
+Before installing version v2.2.0, **please uninstall version v2.1.9 first!**
+
+How to uninstall: Right-click on "Start," select "Installed Apps" or "Programs and Features," then find "Pure Writer 2" version v2.1.9 in the list of software, click on "...", and then "Uninstall." 🙏
+
+
+
+The key points of version 2.2.0 are as follows:
+
+* Supports automatic updates. Generally, you no longer need to download and install updates manually!
 
 * Improve Cloud Sync
 
