@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.2.2 Beta 版（全新桌面版）
+#### v2.2.3 Beta 版（全新桌面版）
 
 > 终于，再一次，很高兴见到你。
 >
@@ -42,11 +42,11 @@
 
 #### 下载
 
-[PureWriter2-2.2.2-Windows-x64.exe](https://drakeet.lanzouj.com/iVrM22cagd0j)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
+[PureWriter2-2.2.3-Windows-x64.exe](https://drakeet.lanzouj.com/idwK52catz3c)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
 
-[PureWriter2-2.2.2-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iAhg02cag1xa)  用于苹果 **M 系列芯片** / **Apple M Silicon**
+[PureWriter2-2.2.3-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iWGVq2catrri)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
-[PureWriter2-2.2.2-macOS-intel.dmg](https://drakeet.lanzouj.com/iUuIE2caeipc)  用于 **Intel** 芯片
+[PureWriter2-2.2.3-macOS-intel.dmg](https://drakeet.lanzouj.com/iHMHf2catwgh)  用于 **Intel** 芯片
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -66,7 +66,7 @@
 
 
 
-v2.2.2 版本要点如下：
+v2.2.3 版本要点如下：
 
 * 加入 霞鹜文楷
 
