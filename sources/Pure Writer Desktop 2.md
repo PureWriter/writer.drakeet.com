@@ -40,7 +40,7 @@ https://writer.drakeet.com/desktop_en
 
 #### Download
 
-[PureWriter2-2.2.3-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.3-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
+[PureWriter2-2.2.5-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.5-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
 
 [PureWriter2-2.2.3-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.3-macOS-aarch64.dmg) for **Apple M Silicon**
 

@@ -42,7 +42,7 @@
 
 #### 下载
 
-[PureWriter2-2.2.3-Windows-x64.exe](https://drakeet.lanzouj.com/idwK52catz3c)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
+[PureWriter2-2.2.5-Windows-x64.exe](https://drakeet.lanzouj.com/iM2Cp2cm7oxg)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
 
 [PureWriter2-2.2.3-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iWGVq2catrri)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
