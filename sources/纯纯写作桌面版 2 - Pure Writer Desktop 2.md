@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.2.3 Beta 版（全新桌面版）
+#### v2.2.6 Beta 版（全新桌面版）
 
 > 终于，再一次，很高兴见到你。
 >
@@ -22,9 +22,11 @@
 >
 > 希望您能为一些细节感到欣喜，同时**给予我们一些理解和更多等待时间**，将不胜感激，不懈努力。
 >
-> 当前版本可能会有许多不足和问题，请多担待！
->
-> 最后，为了避免一些二道打包贩子在安装包里插入风险代码，请确保您从 https://writer.drakeet.com/desktop2 下载和更新本软件。目前它是完全免费的，也无需破解版，请勿轻信任何破解版。
+> 当前版本可能会有许多不足和问题，请多担待！ * 实现 对于“每日统计”的支持，之前这方面是废的，会导致手机上统计不准
+>       * 支持 同步手机上的字数统计模式
+>       * 优化 同名文章显示书名
+>       * 修复一些弹窗报错
+>       * 修復 重影問題最后，为了避免一些二道打包贩子在安装包里插入风险代码，请确保您从 https://writer.drakeet.com/desktop2 下载和更新本软件。目前它是完全免费的，也无需破解版，请勿轻信任何破解版。
 >
 > 更多关于这个桌面版的**开发故事**请见：
 >
@@ -42,11 +44,11 @@
 
 #### 下载
 
-[PureWriter2-2.2.5-Windows-x64.exe](https://drakeet.lanzouj.com/iM2Cp2cm7oxg)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
+[PureWriter2-2.2.6-Windows-x64.exe](https://drakeet.lanzouj.com/ikfnp2cujz1a)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
 
-[PureWriter2-2.2.3-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iWGVq2catrri)  用于苹果 **M 系列芯片** / **Apple M Silicon**
+[PureWriter2-2.2.6-macOS-aarch64.dmg](https://drakeet.lanzouj.com/is5f92cujx3a)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
-[PureWriter2-2.2.3-macOS-intel.dmg](https://drakeet.lanzouj.com/iHMHf2catwgh)  用于 **Intel** 芯片
+[PureWriter2-2.2.6-macOS-intel.dmg](https://drakeet.lanzouj.com/iiyCE2cujxre)  用于 **Intel** 芯片
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -66,7 +68,13 @@
 
 
 
-v2.2.3 版本要点如下：
+v2.2.6 版本要点如下：
+
+ * 实现 对于「每日统计」的支持，之前这方面是废的，会导致手机上统计不准
+ * 支持 同步手机上的字数统计模式
+ * 优化 同名文章显示书名
+ * 修复一些弹窗报错
+ * 修復 重影問題
 
 * 加入 霞鹜文楷
 
