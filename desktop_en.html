@@ -3,11 +3,11 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 
-<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4, h5 { white-space: pre-wrap; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; tab-size: 4; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
 iframe { margin: auto; }
 a.url { word-break: break-all; }
 a:active, a:hover { outline: 0px; }
@@ -27,7 +27,7 @@ body.typora-export { padding-left: 30px; padding-right: 30px; }
 #write li > figure:last-child { margin-bottom: 0.5rem; }
 #write ol, #write ul { position: relative; }
 img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
-button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
 #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
@@ -203,6 +203,20 @@ mark .md-meta { color: rgb(0, 0, 0); }
 .typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
 .md-inline-math-container mjx-container { zoom: 0.95; }
 mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
 
 
 :root {
@@ -210,7 +224,7 @@ mjx-container { break-inside: avoid; }
     --control-text-color: #777;
 }
 
-@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
 /* open-sans-regular - latin-ext_latin */
   /* open-sans-italic - latin-ext_latin */
@@ -558,6 +572,10 @@ header, .context-menu, .megamenu-content, footer{
     background-color: var(--side-bar-bg-color);
 }
 
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
 .md-lang {
     color: #b4654d;
 }
@@ -594,6 +612,6 @@ header, .context-menu, .megamenu-content, footer{
 </style><title>Pure Writer Desktop</title>
 </head>
 <body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><h3 id='pure-writer-desktop'><span>Pure Writer Desktop</span></h3><p><img src="/images/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><blockquote><p><span>Pure Writer Desktop is currently basic, providing only two-directions real-time synchronous editing for your current article. </span><strong><span>If you are going to pay </span><em><span>JUST</span></em><span> for this Desktop, I strongly recommend that you reconsider it.</span></strong></p></blockquote><h4 id='download'><span>Download</span></h4><h6 id='windows'><span>Windows</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Windows-x64.exe'><span>PureWriter-1.9.0-Windows-x64.exe</span></a></p></li></ul><h6 id='macos-x64'><span>macOS x64</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-macOS.dmg'><span>PureWriter-1.9.0-macOS.dmg</span></a></p></li></ul><h6 id='linux'><span>Linux</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Linux-amd64.deb'><span>PureWriter-1.9.0-Linux-amd64.deb</span></a></p></li></ul><p><span>Download from Telegram: </span><a href='https://t.me/PureWriter/1283' target='_blank' class='url'>https://t.me/PureWriter/1283</a></p><p>&nbsp;</p><h4 id='open-source'><span>Open Source</span></h4><p><span>Pure Writer Desktop is open source: </span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4 id='changelog'><span>Changelog</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='so-far-pure-writer-desktop-has-some-known-issues-please-be-sure-to-read-them-all'><span>So far, Pure Writer Desktop has some known issues, please be sure to read them all:</span></h4><ul><li><p><span>Pure Writer Desktop 1.9.0 version must be used with Pure Writer 24.3.0 or above</span></p></li><li><p><span>Pure Writer Desktop must be </span><strong><span>on the same Wi-Fi or hotspot network</span></strong><span> as the phone to connect to each other</span></p></li><li><p><span>During the development of this desktop version, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don&#39;t worry, because Pure Writer for Android supports multiple Backups. You can recover/restore it by using &quot;History&quot; or &quot;Undo&quot;. More about automatic backup and cloud backup: </span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></p></li></ul><h5 id='pure-writer-cloud-backuphttpswriterdrakeetcombackupsen'><span>Pure Writer cloud backup：</span><a href='https://writer.drakeet.com/backups_en' target='_blank' class='url'>https://writer.drakeet.com/backups_en</a></h5></div></div>
+<div id='write'  class=''><h3 id='pure-writer-desktop'><span>Pure Writer Desktop</span></h3><p><img src="/images/115110118-57bb0e00-9fac-11eb-9270-2d83502405a3.png" referrerpolicy="no-referrer" alt="Preview"></p><blockquote><p><span>Pure Writer Desktop is currently basic, providing only two-directions real-time synchronous editing for your current article. </span><strong><span>If you are going to pay </span><em><span>JUST</span></em><span> for this Desktop, I strongly recommend that you reconsider it.</span></strong></p></blockquote><h4 id='download'><span>Download</span></h4><h6 id='windows'><span>Windows</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.1-Windows-x64.exe'><span>PureWriter-1.9.1-Windows-x64.exe</span></a></p></li></ul><h6 id='macos-x64'><span>macOS x64</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-macOS.dmg'><span>PureWriter-1.9.0-macOS.dmg</span></a></p></li></ul><h6 id='linux'><span>Linux</span></h6><ul><li><p><a href='https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Linux-amd64.deb'><span>PureWriter-1.9.0-Linux-amd64.deb</span></a></p></li></ul><p>&nbsp;</p><h4 id='open-source'><span>Open Source</span></h4><p><span>Pure Writer Desktop is open source: </span><a href='https://github.com/PureWriter/desktop' target='_blank' class='url'>https://github.com/PureWriter/desktop</a></p><h4><span>Changelog</span></h4><p><a href='https://github.com/PureWriter/desktop/releases' target='_blank' class='url'>https://github.com/PureWriter/desktop/releases</a></p><h4 id='so-far-pure-writer-desktop-has-some-known-issues-please-be-sure-to-read-them-all'><span>So far, Pure Writer Desktop has some known issues, please be sure to read them all:</span></h4><ul><li><p><span>Pure Writer Desktop 1.9.0 version must be used with Pure Writer 24.3.0 or above</span></p></li><li><p><span>Pure Writer Desktop must be </span><strong><span>on the same Wi-Fi or hotspot network</span></strong><span> as the phone to connect to each other</span></p></li><li><p><span>During the development of this desktop version, I have encountered some situations that will cause the current article on Pure Writer Android to be emptied. Although this problem has been fixed, I am not completely sure if some scenes may trigger this again. But don&#39;t worry, because Pure Writer for Android supports multiple Backups. You can recover/restore it by using &quot;History&quot; or &quot;Undo&quot;. More about automatic backup and cloud backup: </span><a href='https://writer.drakeet.com/backups' target='_blank' class='url'>https://writer.drakeet.com/backups</a></p></li></ul><h5 id='pure-writer-cloud-backuphttpswriterdrakeetcombackupsen'><span>Pure Writer cloud backup：</span><a href='https://writer.drakeet.com/backups_en' target='_blank' class='url'>https://writer.drakeet.com/backups_en</a></h5></div></div>
 </body>
 </html>

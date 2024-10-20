@@ -8,7 +8,7 @@
 
 ###### Windows
 
-* [PureWriter-1.9.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Windows-x64.exe)
+* [PureWriter-1.9.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.1-Windows-x64.exe)
 
 ###### macOS x64
 
@@ -17,8 +17,6 @@
 ###### Linux
 
 * [PureWriter-1.9.0-Linux-amd64.deb](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Linux-amd64.deb)
-
-Download from Telegram: https://t.me/PureWriter/1283
 
 
 

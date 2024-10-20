@@ -14,15 +14,13 @@
 > macOS 则使用 PureWriter-macOS.dmg，下载后右键点击该文件选择“打开”即可进行安装。
 
 - 蓝奏云下载（首要推荐，无限速，国内下载更快）:
-  [PureWriter-1.9.0-Windows-x64.exe](https://drakeet.lanzouj.com/iLsa1111u9be)
+  [PureWriter-1.9.1-Windows-x64.exe](https://drakeet.lanzouj.com/ikTiw2czppmh)
 
   [PureWriter-1.9.0-macOS.dmg](https://drakeet.lanzouj.com/iICHB111ucab)
 
-- 百度云网盘下载: https://pan.baidu.com/s/1Ivc4Ef6CT0aIjDGjMWR07w?pwd=pure 提取码: `pure`
-
 - GitHub 直链下载：
 
-  [PureWriter-1.9.0-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-Windows-x64.exe)
+  [PureWriter-1.9.1-Windows-x64.exe](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.1-Windows-x64.exe)
 
   [PureWriter-1.9.0-macOS.dmg](https://github.com/PureWriter/desktop/releases/download/1.9.0/PureWriter-1.9.0-macOS.dmg)
 
