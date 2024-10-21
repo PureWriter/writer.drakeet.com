@@ -8,7 +8,7 @@
 
 > v1.9.0 为非全新版本，但毫无问题，以下的 **2.0 版本**为测试版，**半成品**
 
-#### v2.2.6 Beta 版（全新桌面版）
+#### v2.2.7 Beta 版（全新桌面版）
 
 > 终于，再一次，很高兴见到你。
 >
@@ -44,11 +44,11 @@
 
 #### 下载
 
-[PureWriter2-2.2.6-Windows-x64.exe](https://drakeet.lanzouj.com/ikfnp2cujz1a)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
+[PureWriter2-2.2.7-Windows-x64.exe](https://drakeet.lanzouj.com/ixJya2d1c0ti)  Windows 版，如果您之前安装过 v2.1.9 版本，请见下面的《关于 Windows v2.1.9 版本的注意事项》
 
-[PureWriter2-2.2.6-macOS-aarch64.dmg](https://drakeet.lanzouj.com/is5f92cujx3a)  用于苹果 **M 系列芯片** / **Apple M Silicon**
+[PureWriter2-2.2.7-macOS-aarch64.dmg](https://drakeet.lanzouj.com/iJvzS2d1bizg)  用于苹果 **M 系列芯片** / **Apple M Silicon**
 
-[PureWriter2-2.2.6-macOS-intel.dmg](https://drakeet.lanzouj.com/iiyCE2cujxre)  用于 **Intel** 芯片
+[PureWriter2-2.2.7-macOS-intel.dmg](https://drakeet.lanzouj.com/igSni2d1bqnc)  用于 **Intel** 芯片
 
 ⚠️ 若更新，请**关闭本软件后再安装更新**，这样可以避免「*需要重启*」问题。
 
@@ -68,7 +68,13 @@
 
 
 
-v2.2.6 版本要点如下：
+v2.2.7 版本要点如下：
+
+* 修复 如果 Windows 系统中没有制定默认浏览器，那么阿里云盘授权页面无法打开，进而导致无法授权且遇到 404 错误
+* 修复 在部分 Windows 屏幕上两侧留白过大，导致一行内容很短
+* 修复 使用「覆盖」进行恢复时，当前文章没有刷新且可能遇到 db 文件被锁定的问题
+* 加深 白色主题字体
+* 修复 在 Windows 上如果浏览器是由纯纯写作打开的那么关闭纯纯写作后浏览器会被一并关闭
 
  * 实现 对于「每日统计」的支持，之前这方面是废的，会导致手机上统计不准
  * 支持 同步手机上的字数统计模式

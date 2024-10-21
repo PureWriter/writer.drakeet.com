@@ -8,7 +8,7 @@ https://writer.drakeet.com/desktop_en
 
 > v1.9.0 is not the latest version, but it is fully functional. The following **v2.0 version** is a beta version and a work in progress.
 
-#### v2.2.6 Beta
+#### v2.2.7 Beta
 
 > Finally, once again, Nice to see you.
 >
@@ -40,11 +40,11 @@ https://writer.drakeet.com/desktop_en
 
 #### Download
 
-[PureWriter2-2.2.6-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.6-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
+[PureWriter2-2.2.7-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.7-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
 
-[PureWriter2-2.2.6-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.6-macOS-aarch64.dmg) for **Apple M Silicon**
+[PureWriter2-2.2.7-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.7-macOS-aarch64.dmg) for **Apple M Silicon**
 
-[PureWriter2-2.2.6-macOS-intel.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.6-macOS-x64.dmg) for Intel Silicon
+[PureWriter2-2.2.7-macOS-intel.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.7-macOS-x64.dmg) for Intel Silicon
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and **log in with the same OneDrive account** on the desktop to enable synchronization between the two.
 
@@ -60,7 +60,18 @@ How to uninstall: Right-click on "Start," select "Installed Apps" or "Programs a
 
 
 
-The key points of version 2.2.3 are as follows:
+The key points of version 2.2.7 are as follows:
+
+* Fixed an issue where the Cloud Drive authorization page could not be opened if no default browser was set in the Windows system, leading to failure to authorize and encountering a 404 error.
+* Fixed an issue where excessive white space on both sides of the screen on some Windows devices caused very short lines of content.
+* Fixed an issue where, when using "Override" for recovery, the current article was not refreshed, and there could be a problem with the db file being locked.
+* Darkened the font in the white theme.
+* Fixed an issue where if the browser was opened by Pure Writer on Windows, closing Pure Writer would also close the browser.
+* Implemented support for "Daily Statistics," which was previously broken and caused inaccurate statistics on the phone.
+* Added support for syncing word count statistics mode on the phone.
+* Optimized the display of the book title for articles with the same name.
+* Fixed some popup errors.
+* Fixed the ghosting issue.
 
 * Supports automatic updates. Generally, you no longer need to download and install updates manually!
 
