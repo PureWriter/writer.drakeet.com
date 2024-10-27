@@ -40,11 +40,11 @@ https://writer.drakeet.com/desktop_en
 
 #### Download
 
-[PureWriter2-2.2.8-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.8-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
+[PureWriter2-2.2.10-Windows-x64.exe](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-Windows-x64.exe) for Windows. If you have previously installed version v2.1.9, please refer to the following "Important Notes on Windows v2.1.9 Version"
 
-[PureWriter2-2.2.8-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.8-macOS-aarch64.dmg) for **Apple M Silicon**
+[PureWriter2-2.2.10-macOS-aarch64.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-macOS-aarch64.dmg) for **Apple M Silicon**
 
-[PureWriter2-2.2.8-macOS-intel.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.8-macOS-x64.dmg) for Intel Silicon
+[PureWriter2-2.2.10-macOS-intel.dmg](https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-macOS-x64.dmg) for Intel Silicon
 
 Currently, you must switch to OneDrive cloud backup on the Pure Writer Android app, and **log in with the same OneDrive account** on the desktop to enable synchronization between the two.
 
