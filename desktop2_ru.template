@@ -1,0 +1,906 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
+.CodeMirror-linenumber { -webkit-user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: medium; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+
+
+.cm-s-inner .cm-variable {
+  color: #fff;
+}
+
+.cm-s-inner .cm-keyword,
+.cm-s-inner .cm-property {
+  color: #6699CC;
+}
+
+.cm-s-inner .cm-tag {
+  color: #EC5F67;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #b8bfc6;
+  z-index: 3;
+}
+
+.cm-s-inner .cm-string {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-comment,
+.cm-s-inner.cm-comment {
+  color: #65737E;
+}
+
+.cm-s-inner .cm-header,
+.cm-s-inner .cm-def,
+.cm-s-inner.cm-header,
+.cm-s-inner.cm-def,
+.cm-s-inner .cm-attribute,
+.cm-s-inner .cm-operator {
+  color: #C594C5;
+}
+
+.cm-s-inner .cm-quote,
+.cm-s-inner.cm-quote {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-hr {
+  color: #d8d5d5;
+}
+
+.cm-s-inner .cm-link {
+  color: #d3d3ef;
+}
+
+.cm-s-inner .cm-negative {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-positive {
+  color: #99C794;
+}
+
+.cm-s-inner .cm-string-2 {
+  color: #EC5F67;
+}
+
+.cm-s-inner .cm-meta,
+.cm-s-inner .cm-qualifier {
+  color: #b7b3b3;
+}
+
+.cm-s-inner .cm-builtin {
+  color: #f3b3f8;
+}
+
+.cm-s-inner .cm-bracket {
+  color: #5FB3B3;
+}
+
+.cm-s-inner .cm-atom,
+.cm-s-inner.cm-atom {
+  color: #84B6CB;
+}
+
+.cm-s-inner .cm-number {
+  color: #F99157;
+}
+
+.cm-s-inner .cm-variable {
+  color: #b8bfc6;
+}
+
+.cm-s-inner .cm-variable-2 {
+  color: #9FBAD5;
+}
+
+.cm-s-inner .cm-variable-3 {
+  color: #1cc685;
+}
+
+.CodeMirror-selectedtext,
+.CodeMirror-selected {
+  background: #4a89dc;
+  color: #fff !important;
+  text-shadow: none;
+}
+
+.CodeMirror-gutters {
+  border-right: none;
+}@import '';
+
+:root {
+  --primary-color: #fcba03;
+  --primary-color-rgb: 252, 186, 3;
+
+  --bg-color: #292929;
+  --bg-color-dark: #1f1f1f;
+  --dark-trait: #141414;
+  --light-trait-100: #3d3d3d;
+  --light-trait-200: #545454;
+  --light-trait-300: #777;
+  --light-trait-400: #8c8c8c;
+
+  --text-color: #f8f8f2;
+  --text-color-secondary: #d2d3d3;
+  --text-highlight-color: #fff;
+  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
+  --select-text-bg-color: rgba(255, 255, 255, 0.2);
+  --search-select-text-color: var(--text-highlight-color);
+  --search-select-bg-color: var(--text-highlight-bg);
+
+  --code-color: #f3b3f8;
+
+  --border-radius: 3px;
+
+  --font-size: 14px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
+
+  --heading-char-color: var(--light-trait-400);
+  --color-popover-bg-color: var(--text-color);
+  --rawblock-edit-panel-bd: var(--bg-color-dark);
+  --control-text-color: var(--text-color);
+  --meta-content-color: var(--primary-color);
+  --primary-btn-border-color: var(--primary-color);
+  --side-bar-bg-color: var(--bg-color-dark);
+  --item-hover-bg-color: var(--bg-color);
+  --item-hover-text-color: var(--text-highlight-color);
+  --active-file-bg-color: var(--bg-color);
+  --active-file-border-color: var(--bg-color);
+  --window-border: 1px solid var(--bg-color);
+  --focus-ring-color: transparent;
+  --table-bg-darker-color: var(--bg-color-dark);
+  --table-bg-color: var(--bg-color);
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+#write {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px;
+  padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+  #write {
+    max-width: 1024px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #write {
+    max-width: 1200px;
+  }
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+  margin-top: 30px;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.4;
+  cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt,
+h1 code,
+h2 tt,
+h2 code,
+h3 tt,
+h3 code,
+h4 tt,
+h4 code,
+h5 tt,
+h5 code,
+h6 tt,
+h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.2em;
+  line-height: 1.3;
+}
+
+h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+}
+
+h3 {
+  font-size: 1.4em;
+  line-height: 1.43;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 1em;
+  color: var(--light-trait-300);
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+  margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+  margin: 0 0;
+}
+
+hr {
+  height: 2px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: var(--light-trait-100);
+  border: 0 none;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+
+sup.md-footnote {
+  background-color: var(--light-trait-400);
+  color: var(--light-trait-100);
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul,
+ol {
+  padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+  margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+mark,
+.ty-file-search-match-text,
+.md-search-hit {
+  background: var(--search-select-bg-color);
+  color: var(--search-select-text-color);
+}
+.md-search-hit * {
+  color: var(--search-select-text-color);
+}
+.cm-search-hit.CodeMirror-selectedtext,
+.md-search-hit.md-search-select,
+.md-search-select {
+  outline: 2px solid var(--primary-color);
+}
+.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
+  outline-width: 2px;
+}
+.outline-item.select {
+  outline-offset: 0px;
+}
+
+blockquote {
+  margin-left: -14px;
+  margin-right: -14px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--light-trait-300);
+  background-color: var(--light-trait-100);
+  padding: 7px 14px 7px 10px;
+}
+
+blockquote blockquote {
+  padding-right: 0;
+}
+
+table {
+  padding: 0;
+  word-break: initial;
+}
+
+table tr {
+  border-top: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+  background-color: var(--side-bar-bg-color);
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid var(--dark-trait);
+  border-bottom: 0;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid var(--dark-trait);
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+  margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+  margin-bottom: 0;
+}
+
+kbd {
+  font-size: 0.875rem;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  box-shadow: 0 2px 0 var(--dark-trait);
+  color: var(--text-color-secondary);
+}
+
+.md-fences,
+code,
+tt {
+  border: 1px solid var(--dark-trait);
+  background-color: var(--bg-color-dark);
+  border-radius: var(--border-radius);
+  padding: 2px 4px 0px 4px;
+  font-size: 0.9em;
+  font-family: var(--monospace);
+}
+
+.md-fences {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  background-color: var(--side-bar-bg-color);
+}
+
+#write pre.md-meta-block {
+  padding: 1rem;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--bg-color-dark);
+  border: 0;
+  border-radius: var(--border-radius);
+  color: var(--light-trait-400);
+  margin-top: 0 !important;
+}
+
+#write .mathjax-block .md-rawblock-tooltip {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+#write .mathjax-block .md-math-container {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+#write .md-mathblock-panel .md-rawblock-control:first-of-type {
+  border-top-left-radius: var(--border-radius);
+}
+
+.md-mathjax-midline {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.md-inline-math script {
+  color: var(--code-color);
+}
+
+code {
+  padding: 0 2px 0 2px;
+}
+
+.CodeMirror-lines {
+  padding-left: 4px;
+}
+
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+}
+
+#write .code-tooltip {
+  bottom: initial;
+  top: 100%;
+  left: initial;
+  right: -1px;
+  background: var(--bg-color-dark);
+  border: 1px solid var(--dark-trait);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+  font-family: var(--monospace);
+}
+
+#write .md-mathblock-panel .code-tooltip {
+  right: 0;
+  border: none;
+}
+
+#write .md-task-list-item > input {
+  -webkit-appearance: initial;
+  display: block;
+  position: absolute;
+  border: 1px solid var(--light-trait-200);
+  border-radius: 50%;
+  margin-left: -1.8rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  transition: background 0.3s;
+}
+
+#write .md-task-list-item > input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#write .md-task-list-item > input[checked] {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#write .md-task-list-item > input[checked]::before {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: var(--dark-trait);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.md-image > .md-meta {
+  border-radius: var(--border-radius);
+  padding: 2px 0px 0px 4px;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+.md-toc {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Source mode */
+.CodeMirror.cm-s-typora-default *,
+.cm-s-typora-default * {
+  background: inherit;
+  color: var(--text-color);
+  font-family: var(--monospace);
+  font-size: var(--font-size) !important;
+  font-style: normal;
+  font-weight: normal;
+}
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+  border-left: 2px solid var(--light-trait-400);
+}
+
+.sidebar-tabs {
+  border-bottom: none;
+}
+
+.outline-expander {
+  width: 1.5rem;
+  vertical-align: initial;
+}
+.outline-expander:before,
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before,
+.outline-item-open > .outline-item > .outline-expander:hover:before {
+  content: "\f125";
+  transition: transform 125ms ease-in-out;
+}
+.outline-item-open > .outline-item > .outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+  transform: rotate(90deg);
+}
+.outline-label:hover {
+  text-decoration: none;
+}
+
+#toc-dropmenu {
+  background: var(--bg-color-dark);
+}
+#toc-dropmenu .outline-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.dropdown-menu .divider {
+  display: none;
+}
+
+.context-menu {
+  background-color: var(--bg-color-dark);
+}
+
+.file-node-background {
+  height: 31px;
+}
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+  visibility: visible;
+}
+.file-node-icon {
+  margin-right: 8px;
+}
+.file-library-node:not(.file-node-root):focus>.file-node-content {
+  outline: none;
+}
+
+/* New file animation */
+.blink-area {
+  animation: none;
+}
+
+.file-list-item-summary {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+#md-searchpanel input {
+  border-radius: var(--border-radius);
+  box-shadow: none;
+}
+#md-searchpanel input:focus {
+  box-shadow: none;
+  border-color: var(--meta-content-color);
+}
+#md-searchpanel .search-type-selection {
+  width: auto;
+}
+#md-searchpanel .btn:not(.close-btn):hover {
+  box-shadow: none;
+}
+
+.mac-seamless-mode #typora-sidebar {
+  background-color: var(--side-bar-bg-color);
+}
+
+#md-notification .btn {
+  border: 0;
+}
+
+.megamenu-menu {
+  background-color: var(--bg-color-dark);
+}
+
+.megamenu-opened header {
+  background-image: none;
+}
+
+/* mega menu */
+.megamenu-content,
+.megamenu-opened header {
+    background: var(--bg-color);
+}
+
+.megamenu-opened .megamenu-content {
+  visibility: visible;
+  opacity: 1;
+  animation: none;
+  background-color: inherit;
+}
+
+#recent-file-panel tbody tr:nth-child(2n) {
+  background-color: var(--table-bg-darker-color);
+}
+
+#recent-file-panel tbody tr:nth-child(2n + 1) {
+  background-color: var(--table-bg-color);
+}
+
+#recent-file-panel-action-btn {
+  background-color: var(--bg-color);
+}
+
+.long-btn:hover {
+  background-color: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color) !important;
+}
+
+#recent-file-panel-action-btn:hover{
+  background-color: var(--item-hover-bg-color);
+  color: var(--item-hover-text-color) !important;
+}
+
+.mouse-entered #top-titlebar .toolbar-icon.btn:hover,
+.mouse-entered #top-titlebar .toolbar-icon.btn.hover {
+    background-color: var(--item-hover-bg-color);
+}
+
+#m-import-local:hover .preference-item-hint {
+  color: var(--item-hover-text-color);
+}
+
+.typora-sourceview-on #toggle-sourceview-btn {
+  background-color: var(--bg-color-dark);
+}
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>Pure Writer Desktop 2 RU</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h3 id='pure-writer-desktop-2'><span>Pure Writer Desktop 2</span></h3><p><img src="/images/desktop2dark_en.png" referrerpolicy="no-referrer" alt="Предпросмотр"></p><h4 id='v228-beta'><span>v2.2.8 Beta</span></h4><blockquote><p><span>Наконец-то, снова рады видеть вас.</span></p><p><span>То, что вы видите перед собой, — это совершенно новый Pure Writer Desktop.</span></p><p><span>Совершенно новый Pure Writer Desktop — это огромный проект, на полное завершение которого потребуется не менее пяти лет. Клиент, который мы выпускаем сегодня, по сути, является наполовину готовым продуктом. </span><strong><span>В настоящее время он поддерживает только некоторые из самых базовых функций, а также облачное резервное копирование и облачную синхронизацию — облачная синхронизация пока работает только с OneDrive.</span></strong><span> Многие функции и элементы интерфейса еще не реализованы или находятся на начальной стадии, и многие детали все еще требуют доработки и настройки…</span></p><p><span>Поскольку многие пользователи с нетерпением ждали этого, мы решили выпустить его, даже несмотря на то, что он далек от полностью зрелой версии. Это хорошая отправная точка, и она уже более продвинута и богата, чем первый выпуск Pure Writer для Android в 2017 году.</span></p><p><span>Дорога впереди длинная, трудная и извилистая, но мы не сдаемся. Мы верим, что однажды достигнем этого удовлетворяющего и революционного рубежа. До тех пор совершенно новый Pure Writer Desktop останется полностью бесплатным на длительный период.</span></p><p><span>Мы надеемся, что вы найдете радость в некоторых деталях и проявите понимание и терпение, пока мы продолжаем наши неустанные усилия. Ваша поддержка будет высоко оценена.</span></p><p><span>Текущая версия может иметь много недостатков и проблем, поэтому мы просим вашего терпения и понимания!</span></p><p><span>Для получения дополнительной информации о </span><strong><span>истории разработки</span></strong><span> этой десктопной версии, пожалуйста, посетите:</span></p><p><a href='https://writer.drakeet.com/blog/NewDesktopDevStory' target='_blank' class='url'>https://writer.drakeet.com/blog/NewDesktopDevStory</a></p></blockquote><blockquote><p><span>Если вы пользователь Windows, пожалуйста, скачайте и установите PureWriter2-Windows-x64.exe. </span><strong><span>В настоящее время поддерживаются только Windows 10/11</span></strong><span>.</span>
+<span>Для macOS используйте PureWriter2-macOS.dmg. После загрузки </span><strong><span>щелкните правой кнопкой мыши на файле и выберите &quot;Открыть&quot; для установки.</span></strong></p><p><span>⚠️ В системах Windows могут возникать ложные срабатывания антивирусного ПО. Пожалуйста, будьте уверены и просто добавьте установщик и установленные файлы (</span><code>C:\Program Files\Pure Writer 2</code><span>) в белый список. Мы — проверенный разработчик и компания, поэтому мы не можем создавать вредоносное ПО, так как это не только испортит нашу репутацию, но и приведет к тюремному заключению и банкротству. Антивирусное ПО в Windows по умолчанию может помечать неподписанные исполняемые файлы, и мы решим эту проблему в будущем.</span></p></blockquote><h4 id='загрузка'><span>Загрузка</span></h4><p><a href='https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-Windows-x64.exe'><span>PureWriter2-2.2.10-Windows-x64.exe</span></a><span> для Windows.</span></p><p><a href='https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-macOS-aarch64.dmg'><span>PureWriter2-2.2.10-macOS-aarch64.dmg</span></a><span> для </span><strong><span>Apple M Silicon</span></strong></p><p><a href='https://github.com/drakeet/PureWriterDesktop/releases/download/2.2.0/PureWriter2-2.2.10-macOS-x64.dmg'><span>PureWriter2-2.2.10-macOS-intel.dmg</span></a><span> для Intel Silicon</span></p><p><span>В настоящее время вы должны переключиться на облачное резервное копирование OneDrive в приложении Pure Writer на Android и </span><strong><span>войти с той же учетной записью OneDrive</span></strong><span> на рабочем столе, чтобы включить синхронизацию между ними.</span></p><p><span>⚠️ При обновлении, пожалуйста, </span><strong><span>закройте программу перед установкой</span></strong><span> обновления, чтобы избежать проблемы с &quot;перезапуском&quot;.</span></p><p>&nbsp;</p><p><span>Основные моменты версии 2.2.7 следующие:</span></p><ul><li><p><span>Исправлена проблема, когда страница авторизации облачного диска не открывалась, если в системе Windows не был установлен браузер по умолчанию, что приводило к ошибке 404 при попытке авторизации.</span></p></li><li><p><span>Исправлена проблема с избыточным пустым пространством по бокам экрана на некоторых устройствах Windows, из-за чего строки текста были слишком короткими.</span></p></li><li><p><span>Исправлена проблема, когда при использовании функции &quot;Перезаписать&quot; для восстановления текущая статья не обновлялась, и могла возникнуть проблема с блокировкой файла базы данных.</span></p></li><li><p><span>Затемнен шрифт в светлой теме.</span></p></li><li><p><span>Исправлена проблема, когда при открытии браузера через Pure Writer в Windows закрытие Pure Writer также закрывало браузер.</span></p></li><li><p><span>Реализована поддержка &quot;Ежедневной статистики&quot;, которая ранее не работала и вызывала неточные данные на телефоне.</span></p></li><li><p><span>Добавлена поддержка синхронизации режима подсчета слов на телефоне.</span></p></li><li><p><span>Оптимизировано отображение названия книги для статей с одинаковым именем.</span></p></li><li><p><span>Исправлены некоторые ошибки всплывающих окон.</span></p></li><li><p><span>Исправлена проблема с наложением изображений.</span></p></li><li><p><span>Поддерживаются автоматические обновления. В общем, вам больше не нужно скачивать и устанавливать обновления вручную!</span></p></li><li><p><span>Улучшена облачная синхронизация.</span></p></li><li><p><span>Поддержка облачного резервного копирования и облачной синхронизации, но в настоящее время поддерживаются только OneDrive и AliyunDrive. Вы также должны войти в </span><strong><span>то же самое облачное хранилище</span></strong><span> в версии для Android, чтобы синхронизировать данные.</span></p></li><li><p><span>Поддержка клавиши </span><code>ESC</code><span> для открытия поиска по текстам и книгам, но в настоящее время вы не можете перемещаться по результатам поиска с помощью клавиш со стрелками вверх и вниз.</span></p></li><li><p><span>Поддержка </span><code>ctrl + f</code><span> или </span><code>⌘ + f</code><span> для поиска ключевых слов; вы также можете выделить слово и затем нажать эту комбинацию клавиш для дальнейшего поиска.</span></p></li><li><p><span>Поддержка статического курсора.</span></p></li><li><p><span>В настоящее время свертывание папок не поддерживается.</span></p></li><li><p><span>История пока не поддерживается, но </span><code>ctrl + z</code><span> или </span><code>⌘ + z</code><span> доступны для отмены действий.</span></p></li><li><p><span>Поддержка открытия текстов в правой боковой панели.</span></p></li></ul></div></div>
+</body>
+</html>
