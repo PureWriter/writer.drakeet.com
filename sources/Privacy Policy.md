@@ -47,7 +47,7 @@ We may modify and update this privacy policy from time to time. You can visit th
 
 #### Contact Us
 
-If you have any questions about this policy, or encounter any problems and suggestions while using Pure Writer, you can send an email to drakeet@drakeet.com. We will do our best to serve you.
+If you have any questions about this policy, or encounter any problems and suggestions while using Pure Writer, you can send an email to writer@drakeet.com. We will do our best to serve you.
 
 
 

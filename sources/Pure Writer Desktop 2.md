@@ -85,7 +85,7 @@ The key points of version 2.2.7 are as follows:
 * History is not supported for now, but `ctrl + z` or `⌘ + z` is supported for undo. 
 * Support Open texts in the right sidebar. 
 ...
-Please explore more by yourself. Many features and text may not be appropriate at present, please bear with us. If you have any unbearable problems, please email us, we will do our best to serve you: drakeet@drakeet.com
+Please explore more by yourself. Many features and text may not be appropriate at present, please bear with us. If you have any unbearable problems, please email us, we will do our best to serve you: writer@drakeet.com
 
 
 

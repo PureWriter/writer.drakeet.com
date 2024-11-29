@@ -26,4 +26,4 @@ You can reach the inspiration page at super fast speed, and you can interrupt an
 
 
 * [Privacy Policy](https://writer.drakeet.com/privacy_en)
-* If you find any issues with Pure Writer, or have any requests or suggestions, you can send an email to: drakeet@drakeet.com
+* If you find any issues with Pure Writer, or have any requests or suggestions, you can send an email to: writer@drakeet.com
