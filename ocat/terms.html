@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <title>Terms of Use - DeepOCAT</title>
   <style>
     body {
@@ -12,6 +13,7 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      background-color: #fff;
     }
     .logo {
       text-align: center;
@@ -39,6 +41,29 @@
       font-style: italic;
       margin-bottom: 30px;
     }
+    
+    /* 暗色模式样式 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+      }
+      h1, h2 {
+        color: #9bbce3;
+      }
+      h2 {
+        border-bottom-color: #333;
+      }
+      .divider {
+        background-color: #333;
+      }
+      .date {
+        color: #aaa;
+      }
+      a {
+        color: #64b5f6;
+      }
+    }
   </style>
 </head>
 <body>
@@ -59,11 +84,11 @@
   <h2>Free Usage Plan</h2>
   <p>New users automatically receive free access to basic features, including:</p>
   <ul>
-    <li>Three daily AI conversation interactions</li>
-    <li>Twelve daily text-to-speech audio conversions</li>
+    <li>A total of 20 AI conversation interactions (trial limit)</li>
+    <li>A total of 40 text-to-speech audio conversions (trial limit)</li>
   </ul>
   
-  <p>This free plan allows you to experience our service before deciding on a paid subscription. We may occasionally adjust these free offerings to maintain service quality.</p>
+  <p>This free plan allows you to experience our service before deciding on a paid subscription. These trial limits will not be replenished unless you subscribe to our paid service. We may occasionally adjust these free offerings to maintain service quality.</p>
   
   <h2>Pricing Changes</h2>
   <p>If pricing adjustments occur, your current subscription fee will remain unchanged until your next billing cycle.</p>
@@ -107,11 +132,11 @@
   <h2>免费使用计划</h2>
   <p>新用户自动获得基础功能的免费使用权限，包括：</p>
   <ul>
-    <li>每日 3 次 AI 对话互动</li>
-    <li>每日 12 次文本转语音转换</li>
+    <li>总共 20 次 AI 对话互动（试用额度）</li>
+    <li>总共 40 次文本转语音转换（试用额度）</li>
   </ul>
   
-  <p>此免费计划让您在决定付费前先体验服务。我们可能会不时调整免费功能，以确保服务质量。</p>
+  <p>此免费计划让您在决定付费前先体验服务。这些试用额度不会增加，除非您订阅我们的付费服务。我们可能会不时调整免费功能，以确保服务质量。</p>
   
   <h2>价格变动政策</h2>
   <p>若价格发生调整，您当前的订阅费用将在下一个计费周期前保持不变。</p>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <title>Privacy Policy - DeepOCAT</title>
   <style>
     body {
@@ -12,6 +13,7 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      background-color: #fff;
     }
     .logo {
       text-align: center;
@@ -38,6 +40,29 @@
       color: #666;
       font-style: italic;
       margin-bottom: 30px;
+    }
+    
+    /* 暗色模式样式 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+      }
+      h1, h2 {
+        color: #9bbce3;
+      }
+      h2 {
+        border-bottom-color: #333;
+      }
+      .divider {
+        background-color: #333;
+      }
+      .date {
+        color: #aaa;
+      }
+      a {
+        color: #64b5f6;
+      }
     }
   </style>
 </head>
