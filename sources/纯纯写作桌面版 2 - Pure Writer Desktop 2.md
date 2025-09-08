@@ -70,7 +70,7 @@ v2.2.7 版本要点如下：
 
 ```
 * 修复 云同步有时未能将最后一次修改内容同步到云端，请同时将 Android 版更新到 v25.7.0：
-https://www.coolapk.com/apk/148884
+https://m.malink.cn/s/QVnqEf
 
 * 避免 SQLiteException: [SQLITE_CORRUPT] 问题
 * 支持 恢复文章滚动停留位置
