@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'><meta name='keywords' content='纯纯写作桌面版, 纯纯写作电脑版, 纯纯写作桌面版 2, Pure Writer Desktop 2'><meta name='description' content='纯纯写作桌面版 2 是全新的纯纯写作电脑版，支持 Windows 和 macOS，目前完全免费。'>
 
 <style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
 .mac-os-11 { --title-bar-height: 28px; }
