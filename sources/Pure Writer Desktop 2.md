@@ -32,13 +32,6 @@ Finally, to avoid repackaged installers that may have risky code inserted by thi
 
 ⚠️ When updating, please **close the app before installing the update**. This helps avoid the “*restart required*” issue.
 
-⚠️ Please note that OneDrive and Aliyun Drive are not Nutstore. At the moment, you **must switch Pure Writer for Android to the same cloud backup / cloud sync provider used by the desktop app before they can sync with each other:**
-
-<img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/>
-
-(Because a cloud drive is only a one-way backup carrier, or a relay for cloud sync, **there is no need to migrate the cloud drive data; just switch providers directly**.)
-
-
 
 ⚠️ **Important note about Windows v2.1.9:**
 
