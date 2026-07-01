@@ -57,5 +57,3 @@ v2.0.0 測試版發佈於 2024.06.20 16:43，週四，2024 夏至前日
 ##### 舊版純純寫作桌面版 v1.9.0（舊版，但穩定，需與手機實時連接）：[https://writer.drakeet.com/desktop](https://writer.drakeet.com/desktop)
 
 v1.9.0 為非全新版本，功能比較有限，必須實時與手機相互連接，有的用戶所處的網路可能連接不上。因此我們推出了以上的 **3.1.2 版本**，其為全新桌面版，不需要實時連接。
-
-<img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /> [閩 ICP 備 2021006387 號-1](https://beian.miit.gov.cn/)

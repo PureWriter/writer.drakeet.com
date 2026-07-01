@@ -62,5 +62,3 @@ v2.0.0 Beta was released at 16:43 on 2024.06.20, Thursday, the day before the 20
 ##### Pure Writer Desktop v1.9.0 (old version, but stable; requires a real-time connection to your phone): https://writer.drakeet.com/desktop_en
 
 v1.9.0 is not the all-new desktop version. Its features are relatively limited, and it must stay connected to your phone in real time; on some networks, users may not be able to connect. That is why we released the v3.1.2 version above: it is the all-new desktop version and does not require a real-time phone connection.
-
-<img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /> [Min ICP No. 2021006387-1](https://beian.miit.gov.cn/)
