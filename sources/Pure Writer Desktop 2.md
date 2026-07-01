@@ -1,4 +1,4 @@
-### Pure Writer Desktop 2
+### 🦋 Pure Writer Desktop 2
 
 | [Simplified Chinese](/desktop2) | [Traditional Chinese](/desktop2_zh) | [Русский](/desktop2_ru)
 

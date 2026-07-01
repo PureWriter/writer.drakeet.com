@@ -1,4 +1,4 @@
-### 纯纯写作桌面版 2
+### 🦋 纯纯写作桌面版 2
 
 | [繁體中文](/desktop2_zh) | [English](/desktop2_en) | [Русский](/desktop2_ru)
 

@@ -1,4 +1,4 @@
-### Pure Writer Desktop 2
+### 🦋 Pure Writer Desktop 2
 
 | [Китайский (упрощённый)](/desktop2) | [Китайский (традиционный)](/desktop2_zh) | [English](/desktop2_en)
 
