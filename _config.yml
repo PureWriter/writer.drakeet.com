@@ -8,3 +8,12 @@ show_downloads: true
 google_play: https://play.google.com/store/apps/details?id=com.drakeet.purewriter
 coolapk: https://m.app.mi.com/details?id=com.drakeet.purewriter
 direct: https://github.com/PureWriter/resources/releases/download/v6.3.6/PureWriter-6.3.6.apk
+
+# Jekyll 默认会忽略以点开头的目录，不把它们输出到站点里；这里显式包含 .well-known。
+# 其中的 apple-app-site-association 是 Apple 的「关联域名」文件：纯纯写作 iOS 版登录纯纯写作账号后，
+# 系统凭它确认 App（9MKUN97L6J.com.drakeet.writer）与本域名的关联，才会询问是否保存密码，
+# 并在下次登录时自动填充。这个文件必须能通过
+# https://writer.drakeet.com/.well-known/apple-app-site-association 直接访问：
+# HTTPS、不经重定向、文件名不带扩展名、内容是不含注释的纯 JSON。请不要移动、改名或给它加 front matter。
+include:
+  - .well-known
