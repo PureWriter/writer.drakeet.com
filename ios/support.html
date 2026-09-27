@@ -1,0 +1,453 @@
+<!doctype html>
+<!--
+  纯纯写作 iOS 版支持页（五种语言：简体中文、繁体中文（台湾）、繁体中文（香港）、英文、日文）。
+  App Store 的「技术支持网址」指向本页。页面结构、语言判定与切换脚本和同目录的 privacy.html 一致，
+  修改其中一页的脚本或样式时请同步另一页。文中提到的界面名称须与 App 内的实际文案一致，五种语言同步修改。
+  页面不依赖站点模板与外部资源，直接作为静态文件发布。
+-->
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support · Pure Writer for iOS</title>
+<script>
+  // 在正文渲染之前决定显示哪种语言，避免打开时先闪出另一种语言。
+  // 优先级：链接参数 ?lang= ＞ 用户上次手动选择的语言（与隐私政策页共用）＞ 浏览器语言 ＞ 英文。
+  (function () {
+    var titles = {
+      "zh-Hans": "纯纯写作 iOS 版支持",
+      "zh-Hant": "純純寫作 iOS 版支援",
+      "zh-HK": "純純寫作 iOS 版支援",
+      "en": "Pure Writer for iOS Support",
+      "ja": "純純執筆 iOS 版 サポート"
+    };
+    // 页面语言代码与 HTML lang 属性的对应，lang 属性影响中日文字形与字体回退。
+    var htmlLangs = {
+      "zh-Hans": "zh-Hans",
+      "zh-Hant": "zh-Hant-TW",
+      "zh-HK": "zh-Hant-HK",
+      "en": "en",
+      "ja": "ja"
+    };
+
+    // 把任意语言标签（如 zh-TW、zh-Hant-HK、ja-JP）归到本页支持的五种之一；不支持的返回 null。
+    function normalize(tag) {
+      if (!tag) return null;
+      var t = String(tag).toLowerCase().replace(/_/g, "-");
+      if (t.indexOf("zh") === 0) {
+        if (/-hans(-|$)/.test(t)) return "zh-Hans";
+        if (/-(hk|mo)(-|$)/.test(t)) return "zh-HK";
+        if (/-(hant|tw)(-|$)/.test(t)) return "zh-Hant";
+        return "zh-Hans";
+      }
+      if (t.indexOf("ja") === 0) return "ja";
+      if (t.indexOf("en") === 0) return "en";
+      return null;
+    }
+
+    function fromQuery() {
+      var match = /[?&]lang=([^&#]+)/.exec(location.search);
+      return match ? normalize(decodeURIComponent(match[1])) : null;
+    }
+
+    // 隐私模式等情况下读取本地存储可能抛错，此时视为没有保存过选择。
+    function fromStorage() {
+      try {
+        return normalize(localStorage.getItem("ios-page-locale"));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // 按浏览器的语言偏好顺序，取第一个本页支持的语言。
+    function fromBrowser() {
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < list.length; i++) {
+        var locale = normalize(list[i]);
+        if (locale) return locale;
+      }
+      return null;
+    }
+
+    // 供页面底部的语言切换脚本复用。
+    window.privacyPage = {
+      titles: titles,
+      htmlLangs: htmlLangs,
+      apply: function (locale) {
+        var root = document.documentElement;
+        root.setAttribute("data-locale", locale);
+        root.setAttribute("lang", htmlLangs[locale]);
+        document.title = titles[locale];
+      }
+    };
+
+    window.privacyPage.apply(fromQuery() || fromStorage() || fromBrowser() || "en");
+  })();
+</script>
+<style>
+  /* 颜色集中定义为变量，深色模式只需覆盖这一组。 */
+  :root {
+    --bg: #ffffff;
+    --text: #2b2b2b;
+    --secondary: #6e6e73;
+    --link: #0a64d6;
+    --rule: #e5e5ea;
+    --control-bg: #f2f2f7;
+    /* 语言下拉框的箭头。数据 URI 里的 SVG 无法跟随 currentColor，因此深浅色各写一份，颜色同 --secondary。 */
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236e6e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1e;
+      --text: #e5e5e7;
+      --secondary: #98989d;
+      --link: #4da3ff;
+      --rule: #38383a;
+      --control-bg: #2c2c2e;
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2398989d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+  }
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* 各语言选用对应地区的字体，繁体与日文不借用简体中文字形。 */
+  article:lang(zh-Hant) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(zh-Hant-HK) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(ja) {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  }
+  body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  /* 正文限制行宽便于阅读；窄屏时两侧保留 20px 边距。 */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 64px;
+  }
+
+  /* 语言切换：没有脚本时无法切换，也就不显示，此时五种语言依次全部显示。 */
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  html:not([data-locale]) .toolbar {
+    display: none;
+  }
+  /* 不用系统原生外观：原生箭头在 iOS Safari 上紧贴右边框。改为自绘箭头，并为它留出右侧空间。 */
+  .toolbar select {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    /* 不小于 16px：iOS Safari 点按字号更小的表单控件时会自动放大页面。 */
+    font-size: 16px;
+    color: var(--text);
+    background-color: var(--control-bg);
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px 6px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 6px 34px 6px 12px;
+    cursor: pointer;
+  }
+
+  /* 有脚本时只显示选中的语言。 */
+  html[data-locale] article {
+    display: none;
+  }
+  html[data-locale="zh-Hans"] article[data-locale="zh-Hans"],
+  html[data-locale="zh-Hant"] article[data-locale="zh-Hant"],
+  html[data-locale="zh-HK"] article[data-locale="zh-HK"],
+  html[data-locale="en"] article[data-locale="en"],
+  html[data-locale="ja"] article[data-locale="ja"] {
+    display: block;
+  }
+  /* 没有脚本、五种语言依次显示时，用分隔线隔开。 */
+  html:not([data-locale]) article + article {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 2px solid var(--rule);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+    margin: 0 0 8px;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 40px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 24px 0 8px;
+  }
+  p, ul {
+    margin: 0 0 12px;
+  }
+  ul {
+    padding-left: 1.4em;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .meta {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+  .company {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="toolbar">
+  <select id="language-select" aria-label="Language">
+    <option value="zh-Hans">简体中文</option>
+    <option value="zh-Hant">繁體中文（台灣）</option>
+    <option value="zh-HK">繁體中文（香港）</option>
+    <option value="en">English</option>
+    <option value="ja">日本語</option>
+  </select>
+</div>
+
+<!-- ═══════════════════════════ 简体中文 ═══════════════════════════ -->
+<article data-locale="zh-Hans" lang="zh-Hans">
+
+<h1>纯纯写作 iOS 版支持</h1>
+<p>使用中遇到问题，或有任何建议，欢迎与我们联系。</p>
+
+<h2>联系我们</h2>
+<p>请发送邮件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。为便于我们尽快定位问题，请尽量附上：</p>
+<ul>
+  <li>设备型号与系统版本；</li>
+  <li>App 版本（「设置 › 关于」）；</li>
+  <li>问题出现前的操作步骤，以及相关截图。</li>
+</ul>
+
+<h2>常见问题</h2>
+
+<h3>如何恢复已购买的 Pro？</h3>
+<p>点编辑器右上角的「…」，再点「Pro」，然后点「恢复购买」。请确认当前登录的是购买时使用的 Apple 账户。</p>
+
+<h3>如何管理或取消订阅？</h3>
+<p>订阅由 Apple 管理：打开系统「设置」，点您的名字，再点「订阅」。</p>
+
+<h3>如何找回误删或改错的内容？</h3>
+<p>单篇文章的旧版本可以在编辑器右上角「…」中的「历史记录」里找回；整个书库可以在「设置 › 备份与云同步」中从备份恢复。</p>
+
+<h3>如何删除纯纯写作账号？</h3>
+<p>请发送邮件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a> 申请，我们会在核实身份后处理。</p>
+
+<h2>相关文档</h2>
+<ul>
+  <li><a href="/ios/privacy?lang=zh-Hans">隐私政策</a></li>
+  <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">用户协议（Apple 标准许可协议）</a></li>
+</ul>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（台灣） ═══════════════════════════ -->
+<article data-locale="zh-Hant" lang="zh-Hant-TW">
+
+<h1>純純寫作 iOS 版支援</h1>
+<p>使用時遇到問題，或有任何建議，歡迎與我們聯絡。</p>
+
+<h2>聯絡我們</h2>
+<p>請寄送電子郵件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。為了讓我們盡快找出問題，請盡量附上：</p>
+<ul>
+  <li>裝置型號與系統版本；</li>
+  <li>App 版本（「設定 › 關於」）；</li>
+  <li>問題出現前的操作步驟，以及相關截圖。</li>
+</ul>
+
+<h2>常見問題</h2>
+
+<h3>如何還原已購買的 Pro？</h3>
+<p>點一下編輯器右上角的「…」，再點「Pro」，然後點「還原購買項目」。請確認目前登入的是購買時使用的 Apple 帳號。</p>
+
+<h3>如何管理或取消訂閱？</h3>
+<p>訂閱由 Apple 管理：打開系統「設定」，點一下您的名稱，再點「訂閱項目」。</p>
+
+<h3>如何找回誤刪或改錯的內容？</h3>
+<p>單篇文章的舊版本可以在編輯器右上角「…」中的「歷史記錄」裡找回；整個書庫可以在「設定 › 備份與雲同步」中從備份還原。</p>
+
+<h3>如何刪除純純寫作帳號？</h3>
+<p>請寄送電子郵件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a> 提出申請，我們會在確認身分後處理。</p>
+
+<h2>相關文件</h2>
+<ul>
+  <li><a href="/ios/privacy?lang=zh-Hant">隱私權政策</a></li>
+  <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">使用條款（Apple 標準授權合約）</a></li>
+</ul>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（香港） ═══════════════════════════ -->
+<article data-locale="zh-HK" lang="zh-Hant-HK">
+
+<h1>純純寫作 iOS 版支援</h1>
+<p>使用時遇到問題，或有任何建議，歡迎與我們聯絡。</p>
+
+<h2>聯絡我們</h2>
+<p>請發送電郵至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。為了讓我們盡快找出問題，請盡量附上：</p>
+<ul>
+  <li>裝置型號與系統版本；</li>
+  <li>App 版本（「設定 › 關於」）；</li>
+  <li>問題出現前的操作步驟，以及相關截圖。</li>
+</ul>
+
+<h2>常見問題</h2>
+
+<h3>如何還原已購買的 Pro？</h3>
+<p>點一下編輯器右上角的「…」，再點「Pro」，然後點「還原購買項目」。請確認目前登入的是購買時使用的 Apple 帳戶。</p>
+
+<h3>如何管理或取消訂閱？</h3>
+<p>訂閱由 Apple 管理：開啟系統「設定」，點一下您的名稱，再點「訂閱項目」。</p>
+
+<h3>如何找回誤刪或改錯的內容？</h3>
+<p>單篇文章的舊版本可以在編輯器右上角「…」中的「歷史記錄」裏找回；整個書庫可以在「設定 › 備份與雲同步」中從備份還原。</p>
+
+<h3>如何刪除純純寫作帳戶？</h3>
+<p>請發送電郵至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a> 提出申請，我們會在核實身份後處理。</p>
+
+<h2>相關文件</h2>
+<ul>
+  <li><a href="/ios/privacy?lang=zh-HK">私隱政策</a></li>
+  <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">使用條款（Apple 標準授權協議）</a></li>
+</ul>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ English ═══════════════════════════ -->
+<article data-locale="en" lang="en">
+
+<h1>Pure Writer for iOS Support</h1>
+<p>If you run into a problem or have a suggestion, we’d love to hear from you.</p>
+
+<h2>Contact us</h2>
+<p>Email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>. To help us look into the problem quickly, please include:</p>
+<ul>
+  <li>your device model and OS version;</li>
+  <li>the app version (Settings › About);</li>
+  <li>the steps that led to the problem, and any screenshots.</li>
+</ul>
+
+<h2>Frequently asked questions</h2>
+
+<h3>How do I restore a Pro purchase?</h3>
+<p>Tap “…” in the top-right corner of the editor, tap Pro, then tap Restore Purchases. Make sure you’re signed in with the Apple Account you used to make the purchase.</p>
+
+<h3>How do I manage or cancel a subscription?</h3>
+<p>Subscriptions are managed by Apple: open the Settings app, tap your name, then tap Subscriptions.</p>
+
+<h3>How do I get back something I deleted or changed by mistake?</h3>
+<p>Earlier versions of a document are available in History, under “…” in the top-right corner of the editor. To restore your whole library, go to Settings › Backup &amp; Cloud Sync and restore from a backup.</p>
+
+<h3>How do I delete my Pure Writer account?</h3>
+<p>Email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a> to request it. We’ll handle the request after verifying your identity.</p>
+
+<h2>Documents</h2>
+<ul>
+  <li><a href="/ios/privacy?lang=en">Privacy Policy</a></li>
+  <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use (Apple Standard EULA)</a></li>
+</ul>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 日本語 ═══════════════════════════ -->
+<article data-locale="ja" lang="ja">
+
+<h1>純純執筆 iOS 版 サポート</h1>
+<p>ご利用中に問題が起きたときや、ご意見・ご要望がありましたら、お気軽にお問い合わせください。</p>
+
+<h2>お問い合わせ</h2>
+<p><a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までメールでご連絡ください。原因を早く突き止められるよう、できるだけ次の情報を添えてください。</p>
+<ul>
+  <li>デバイスの機種と OS のバージョン</li>
+  <li>アプリのバージョン（「設定 › このアプリについて」）</li>
+  <li>問題が起きるまでの操作手順と、関連するスクリーンショット</li>
+</ul>
+
+<h2>よくある質問</h2>
+
+<h3>購入済みの Pro を復元するには？</h3>
+<p>エディタ右上の「…」をタップし、「Pro」をタップしてから「購入を復元」をタップしてください。購入時と同じ Apple アカウントでサインインしていることをご確認ください。</p>
+
+<h3>サブスクリプションを管理・解約するには？</h3>
+<p>サブスクリプションは Apple が管理しています。「設定」App を開き、ご自分の名前をタップしてから「サブスクリプション」をタップしてください。</p>
+
+<h3>誤って削除・変更した内容を取り戻すには？</h3>
+<p>文章ごとの以前の版は、エディタ右上の「…」にある「履歴」から取り戻せます。書庫全体を戻すには、「設定 › バックアップとクラウド同期」でバックアップから復元してください。</p>
+
+<h3>純純執筆アカウントを削除するには？</h3>
+<p><a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までメールでご依頼ください。ご本人であることを確認したうえで対応します。</p>
+
+<h2>関連ドキュメント</h2>
+<ul>
+  <li><a href="/ios/privacy?lang=ja">プライバシーポリシー</a></li>
+  <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">利用規約（Apple 標準 EULA）</a></li>
+</ul>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+</main>
+<script>
+  // 语言切换：下拉框初始值跟随已决定的语言；切换后记住选择，并把 ?lang= 写入地址栏，便于分享当前语言的链接。
+  (function () {
+    var select = document.getElementById("language-select");
+    var current = document.documentElement.getAttribute("data-locale");
+    if (!select || !current) return;
+    select.value = current;
+    select.addEventListener("change", function () {
+      var locale = select.value;
+      window.privacyPage.apply(locale);
+      try {
+        localStorage.setItem("ios-page-locale", locale);
+      } catch (e) {
+        // 无法保存时只影响下次打开的默认语言，本次切换照常生效。
+      }
+      if (window.history && history.replaceState) {
+        history.replaceState(null, "", location.pathname + "?lang=" + encodeURIComponent(locale) + location.hash);
+      }
+      window.scrollTo(0, 0);
+    });
+  })();
+</script>
+</body>
+</html>

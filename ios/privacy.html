@@ -12,7 +12,7 @@
 <title>Privacy Policy · Pure Writer for iOS</title>
 <script>
   // 在正文渲染之前决定显示哪种语言，避免打开时先闪出另一种语言。
-  // 优先级：链接参数 ?lang= ＞ 用户上次在本页手动选择的语言 ＞ 浏览器语言 ＞ 英文。
+  // 优先级：链接参数 ?lang= ＞ 用户上次手动选择的语言（与支持页共用）＞ 浏览器语言 ＞ 英文。
   (function () {
     var titles = {
       "zh-Hans": "纯纯写作 iOS 版隐私政策",
@@ -53,7 +53,7 @@
     // 隐私模式等情况下读取本地存储可能抛错，此时视为没有保存过选择。
     function fromStorage() {
       try {
-        return normalize(localStorage.getItem("privacy-locale"));
+        return normalize(localStorage.getItem("ios-page-locale"));
       } catch (e) {
         return null;
       }
@@ -748,7 +748,7 @@
       var locale = select.value;
       window.privacyPage.apply(locale);
       try {
-        localStorage.setItem("privacy-locale", locale);
+        localStorage.setItem("ios-page-locale", locale);
       } catch (e) {
         // 无法保存时只影响下次打开的默认语言，本次切换照常生效。
       }
