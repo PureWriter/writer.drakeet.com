@@ -1,0 +1,751 @@
+<!doctype html>
+<!--
+  纯纯写作 iOS 版隐私政策（五种语言：简体中文、繁体中文（台湾）、繁体中文（香港）、英文、日文）。
+  App 内的「隐私政策」链接与 App Store 的隐私政策网址都指向本页。
+  修改正文时，五种语言须同步修改，并与 App 的实际行为及 App Store 中的「App 隐私」信息保持一致，同时更新各语言的更新日期。
+  页面不依赖站点模板与外部资源，直接作为静态文件发布。
+-->
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · Pure Writer for iOS</title>
+<script>
+  // 在正文渲染之前决定显示哪种语言，避免打开时先闪出另一种语言。
+  // 优先级：链接参数 ?lang= ＞ 用户上次在本页手动选择的语言 ＞ 浏览器语言 ＞ 英文。
+  (function () {
+    var titles = {
+      "zh-Hans": "纯纯写作 iOS 版隐私政策",
+      "zh-Hant": "純純寫作 iOS 版隱私權政策",
+      "zh-HK": "純純寫作 iOS 版私隱政策",
+      "en": "Pure Writer for iOS Privacy Policy",
+      "ja": "純純執筆 iOS 版 プライバシーポリシー"
+    };
+    // 页面语言代码与 HTML lang 属性的对应，lang 属性影响中日文字形与字体回退。
+    var htmlLangs = {
+      "zh-Hans": "zh-Hans",
+      "zh-Hant": "zh-Hant-TW",
+      "zh-HK": "zh-Hant-HK",
+      "en": "en",
+      "ja": "ja"
+    };
+
+    // 把任意语言标签（如 zh-TW、zh-Hant-HK、ja-JP）归到本页支持的五种之一；不支持的返回 null。
+    function normalize(tag) {
+      if (!tag) return null;
+      var t = String(tag).toLowerCase().replace(/_/g, "-");
+      if (t.indexOf("zh") === 0) {
+        if (/-hans(-|$)/.test(t)) return "zh-Hans";
+        if (/-(hk|mo)(-|$)/.test(t)) return "zh-HK";
+        if (/-(hant|tw)(-|$)/.test(t)) return "zh-Hant";
+        return "zh-Hans";
+      }
+      if (t.indexOf("ja") === 0) return "ja";
+      if (t.indexOf("en") === 0) return "en";
+      return null;
+    }
+
+    function fromQuery() {
+      var match = /[?&]lang=([^&#]+)/.exec(location.search);
+      return match ? normalize(decodeURIComponent(match[1])) : null;
+    }
+
+    // 隐私模式等情况下读取本地存储可能抛错，此时视为没有保存过选择。
+    function fromStorage() {
+      try {
+        return normalize(localStorage.getItem("privacy-locale"));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // 按浏览器的语言偏好顺序，取第一个本页支持的语言。
+    function fromBrowser() {
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < list.length; i++) {
+        var locale = normalize(list[i]);
+        if (locale) return locale;
+      }
+      return null;
+    }
+
+    // 供页面底部的语言切换脚本复用。
+    window.privacyPage = {
+      titles: titles,
+      htmlLangs: htmlLangs,
+      apply: function (locale) {
+        var root = document.documentElement;
+        root.setAttribute("data-locale", locale);
+        root.setAttribute("lang", htmlLangs[locale]);
+        document.title = titles[locale];
+      }
+    };
+
+    window.privacyPage.apply(fromQuery() || fromStorage() || fromBrowser() || "en");
+  })();
+</script>
+<style>
+  /* 颜色集中定义为变量，深色模式只需覆盖这一组。 */
+  :root {
+    --bg: #ffffff;
+    --text: #2b2b2b;
+    --secondary: #6e6e73;
+    --link: #0a64d6;
+    --rule: #e5e5ea;
+    --control-bg: #f2f2f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1e;
+      --text: #e5e5e7;
+      --secondary: #98989d;
+      --link: #4da3ff;
+      --rule: #38383a;
+      --control-bg: #2c2c2e;
+    }
+  }
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* 各语言选用对应地区的字体，繁体与日文不借用简体中文字形。 */
+  article:lang(zh-Hant) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(zh-Hant-HK) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(ja) {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  }
+  body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  /* 正文限制行宽便于阅读；窄屏时两侧保留 20px 边距。 */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 64px;
+  }
+
+  /* 语言切换：没有脚本时无法切换，也就不显示，此时五种语言依次全部显示。 */
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  html:not([data-locale]) .toolbar {
+    display: none;
+  }
+  .toolbar select {
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--control-bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 6px 10px;
+  }
+
+  /* 有脚本时只显示选中的语言。 */
+  html[data-locale] article {
+    display: none;
+  }
+  html[data-locale="zh-Hans"] article[data-locale="zh-Hans"],
+  html[data-locale="zh-Hant"] article[data-locale="zh-Hant"],
+  html[data-locale="zh-HK"] article[data-locale="zh-HK"],
+  html[data-locale="en"] article[data-locale="en"],
+  html[data-locale="ja"] article[data-locale="ja"] {
+    display: block;
+  }
+  /* 没有脚本、五种语言依次显示时，用分隔线隔开。 */
+  html:not([data-locale]) article + article {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 2px solid var(--rule);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+    margin: 0 0 8px;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 40px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 24px 0 8px;
+  }
+  p, ul {
+    margin: 0 0 12px;
+  }
+  ul {
+    padding-left: 1.4em;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .meta {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+  .company {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="toolbar">
+  <select id="language-select" aria-label="Language">
+    <option value="zh-Hans">简体中文</option>
+    <option value="zh-Hant">繁體中文（台灣）</option>
+    <option value="zh-HK">繁體中文（香港）</option>
+    <option value="en">English</option>
+    <option value="ja">日本語</option>
+  </select>
+</div>
+
+<!-- ═══════════════════════════ 简体中文 ═══════════════════════════ -->
+<article data-locale="zh-Hans" lang="zh-Hans">
+
+<h1>纯纯写作 iOS 版隐私政策</h1>
+<p class="meta">更新日期：2026 年 9 月 27 日　生效日期：2026 年 9 月 27 日</p>
+
+<p>纯纯写作 iOS 版（以下简称“本 App”，适用于 iPhone 与 iPad）由 Drakeet Co., Ltd.（以下简称“我们”）开发和运营。本政策说明本 App 会处理哪些信息、为何处理、与谁共享、保存多久，以及您可以如何管理这些信息。</p>
+
+<h2>一、您的文章保存在您的设备上</h2>
+<p>您在本 App 中创作的文章、书籍、历史版本与设置保存在您的设备上。我们没有保存您文章的服务器，也无法读取您的文章。只有在第三节所述、由您开启或同意的功能中，文章内容才会离开您的设备，并直接发送给您选择的服务。</p>
+<p>本 App 不含广告，不进行跨 App 或跨网站的追踪，不收集广告标识符，也不出售您的个人信息。</p>
+
+<h2>二、我们收集的信息</h2>
+
+<h3>1. 错误报告与使用统计</h3>
+<p>为了发现问题并改进产品，本 App 通过 Google 提供的 Firebase 服务收集以下信息：</p>
+<ul>
+  <li><strong>错误报告</strong>：崩溃或错误发生时的 App 运行状态、设备型号、系统版本与 App 版本。</li>
+  <li><strong>使用统计</strong>：功能的使用情况、设置偏好（如主题、导出格式、所用网盘类型）、试用与购买情况（如所购商品与金额），以及 Firebase 根据 IP 地址推断的大致地区。</li>
+</ul>
+<p>这些信息关联 Firebase 为本次安装随机生成的标识符，不与您的纯纯写作账号关联，也不包含您的文章、标题、搜索内容或账号信息。</p>
+<p>两项默认开启。您可以随时在「设置 › 少数派选项」中分别关闭「发送错误报告」与「发送使用统计」。关闭后本 App 不再发送对应信息（错误报告的更改在下次启动后完全生效）；关闭使用统计时，本 App 还会清除设备上的统计数据。已经发送的信息无法撤回。</p>
+
+<h3>2. 纯纯写作账号（可选）</h3>
+<p>本 App 不提供注册账号的功能，登录也不是使用本 App 的前提。纯纯写作账号只用于确认会员状态，不保存您的文章。如果您已有纯纯写作账号，可以登录以继续使用账号中已有的会员权益。</p>
+<p>在您登录、获取验证码、重置密码以及保持登录状态时，本 App 会向我们的服务器发送：您的邮箱、密码或验证码、本 App 在您设备上随机生成的设备标识、设备型号、系统版本、App 版本、界面语言与试用状态。</p>
+<p>我们的服务器保存您的邮箱、经过摘要处理的密码（不保存密码原文）以及已登录的设备和设备型号，用于验证身份、确认会员权益和管理登录设备。本 App 本身不保存您的密码。</p>
+
+<h3>3. 通知检查</h3>
+<p>为了向您提示重要通知与版本更新，本 App 会定期（最多每 12 小时一次）向我们的服务器查询通知。请求只包含 App 版本、系统版本、界面语言、设备型号、系统地区是否为中国大陆以及所用网盘类型，不包含账号、设备标识等可识别您身份的信息。</p>
+
+<h3>4. 使用阿里云盘时</h3>
+<p>如果您连接阿里云盘，授权凭据会经我们的服务器转交以完成授权，我们的服务器不保存这些凭据。</p>
+<p>连接后，为了协调多台设备间的同步，并避免清理仍被其他设备使用的备份，本 App 会向我们的服务器发送您的阿里云盘用户 ID 与相关备份文件名。开启云同步后，我们的服务器会保存您的阿里云盘用户 ID 与同步记录（包括备份文件名、设备型号与同步时间），不包含您的文章内容或阿里云盘登录凭据。</p>
+
+<h3>5. 服务器访问日志</h3>
+<p>与大多数网络服务一样，我们的服务器在处理上述请求时会记录 IP 地址与访问时间等访问日志，仅用于保障服务运行与安全。</p>
+
+<h2>三、由您开启、直接发送给第三方服务的内容</h2>
+
+<h3>1. 备份到 iCloud</h3>
+<p>系统 iCloud 可用时，本 App 默认把自动备份的副本保存到您自己的 iCloud 中，以便换机或重装后恢复。备份经 Apple 的 iCloud 服务直接存入您的 Apple 账户，不经过我们的服务器，我们无法读取。您可以在「设置 › 备份与云同步 › 备份到 iCloud」中关闭此功能，或删除 iCloud 中的全部备份。</p>
+<p>如果您的 Apple 账户所在国家或地区为中国大陆，iCloud 服务由云上贵州大数据产业发展有限公司运营。</p>
+
+<h3>2. 网盘备份与云同步</h3>
+<p>只有在您于「设置 › 备份与云同步 › 网盘」中连接自己的 Dropbox、OneDrive 或阿里云盘账号后，本 App 才会把自动备份以及您选择上传的手动备份上传到该网盘；开启云同步后，本 App 还会下载并合并您其他设备上传的备份。</p>
+<p>备份文件经 HTTPS 直接在您的设备与网盘之间传输，不经过我们的服务器。备份文件本身不另行加密，保存在网盘中的内容适用该服务商的隐私政策。网盘的登录凭据只保存在您的设备上；断开网盘连接即停止上传。</p>
+
+<h3>3. 在线繁简转换</h3>
+<p>在中文界面下，如果您选择使用「繁化姬」进行繁简转换，本 App 会在首次使用前征得您的同意，然后把当前文章的正文发送给第三方服务<a href="https://zhconvert.org">繁化姬</a>进行转换。请求不包含您的账号或设备标识。不使用该功能时，不会发送任何内容。</p>
+
+<h3>4. Markdown 中的网络图片</h3>
+<p>如果您在 Markdown 正文中引用了网络图片地址，预览或导出时本 App 会直接从该地址下载图片，对应网站可以获得您的 IP 地址等网络请求信息。</p>
+
+<h3>5. 购买</h3>
+<p>本 App 的购买与订阅由 Apple 通过 App Store 处理，我们不会获得您的支付信息。</p>
+
+<h2>四、系统权限</h2>
+<p>本 App 只在您把图片存入照片图库时请求“添加照片”权限，不读取您已有的照片。选择图片时使用系统提供的选择器，只有您选中的图片才会交给本 App。本 App 不请求位置、通讯录、相机或麦克风权限。</p>
+
+<h2>五、第三方服务商</h2>
+<p>本 App 涉及的第三方服务如下：</p>
+<ul>
+  <li>Google（Firebase）：错误报告与使用统计。<a href="https://policies.google.com/privacy">隐私政策</a></li>
+  <li>Apple：iCloud 备份与 App Store 购买。<a href="https://www.apple.com/legal/privacy/">隐私政策</a></li>
+  <li>Dropbox：您连接的网盘。<a href="https://www.dropbox.com/privacy">隐私政策</a></li>
+  <li>Microsoft（OneDrive）：您连接的网盘。<a href="https://privacy.microsoft.com/privacystatement">隐私声明</a></li>
+  <li>阿里云盘：您连接的网盘，适用其隐私政策。</li>
+  <li>繁化姬：在线繁简转换。</li>
+</ul>
+<p>我们仅为本政策所述目的与上述服务商共享必要的信息，并确认与我们共享用户数据的第三方会为这些数据提供与本政策同等或更高水平的保护。您自行连接的服务（如您的网盘账号）同时适用其自身的隐私政策。</p>
+
+<h2>六、保存期限与删除</h2>
+<ul>
+  <li><strong>设备上的数据</strong>：删除本 App 时一并删除；设备系统备份（如 iCloud 云备份）中的副本由系统与您的设置管理。</li>
+  <li><strong>错误报告与使用统计</strong>：由 Firebase 按其保留期限自动删除。</li>
+  <li><strong>账号信息</strong>：保存至您注销账号为止。</li>
+  <li><strong>阿里云盘同步记录</strong>：保存至您申请删除为止。</li>
+  <li><strong>iCloud 与网盘中的备份</strong>：保存在您自己的账户中，由您管理；iCloud 中的备份也可以在本 App 内删除。</li>
+</ul>
+<p>如需注销纯纯写作账号，或删除我们服务器上与您有关的信息，请发送邮件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。我们会在核实您的身份后尽快处理，并告知您处理结果。</p>
+
+<h2>七、您的选择与权利</h2>
+<ul>
+  <li>随时关闭错误报告或使用统计；</li>
+  <li>随时退出纯纯写作账号；</li>
+  <li>关闭「备份到 iCloud」、断开网盘或关闭云同步；</li>
+  <li>通过邮件查询、更正或删除我们服务器上与您有关的信息，或注销账号。</li>
+</ul>
+
+<h2>八、本政策的更新</h2>
+<p>我们可能适时更新本政策。更新后的政策将发布在本页面并注明更新日期；如有重大变化，我们会以适当方式通知您。</p>
+
+<h2>九、联系我们</h2>
+<p>如您对本政策有任何疑问，请发送邮件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（台灣） ═══════════════════════════ -->
+<article data-locale="zh-Hant" lang="zh-Hant-TW">
+
+<h1>純純寫作 iOS 版隱私權政策</h1>
+<p class="meta">更新日期：2026 年 9 月 27 日　生效日期：2026 年 9 月 27 日</p>
+
+<p>純純寫作 iOS 版（以下簡稱「本 App」，適用於 iPhone 與 iPad）由 Drakeet Co., Ltd.（以下簡稱「我們」）開發與營運。本政策說明本 App 會處理哪些資訊、為何處理、與誰共享、保存多久，以及您可以如何管理這些資訊。</p>
+
+<h2>一、您的文章保存在您的裝置上</h2>
+<p>您在本 App 中創作的文章、書籍、歷史版本與設定都保存在您的裝置上。我們沒有保存您文章的伺服器，也無法讀取您的文章。只有在第三節所述、由您開啟或同意的功能中，文章內容才會離開您的裝置，並直接傳送給您選擇的服務。</p>
+<p>本 App 不含廣告，不進行跨 App 或跨網站的追蹤，不收集廣告識別碼，也不販售您的個人資料。</p>
+
+<h2>二、我們收集的資訊</h2>
+
+<h3>1. 錯誤報告與使用統計</h3>
+<p>為了發現問題並改進產品，本 App 透過 Google 提供的 Firebase 服務收集以下資訊：</p>
+<ul>
+  <li><strong>錯誤報告</strong>：當機或發生錯誤時的 App 執行狀態、裝置型號、系統版本與 App 版本。</li>
+  <li><strong>使用統計</strong>：功能的使用情況、設定偏好（例如主題、匯出格式、所用雲端硬碟類型）、試用與購買情況（例如所購項目與金額），以及 Firebase 依 IP 位址推估的大略地區。</li>
+</ul>
+<p>這些資訊會關聯 Firebase 為本次安裝隨機產生的識別碼，不會與您的純純寫作帳號關聯，也不包含您的文章、標題、搜尋內容或帳號資訊。</p>
+<p>兩項預設為開啟。您可以隨時在「設定 › 少數派選項」中分別關閉「傳送錯誤報告」與「傳送使用統計」。關閉後本 App 不再傳送對應資訊（錯誤報告的變更將於下次啟動後完全生效）；關閉使用統計時，本 App 也會清除裝置上的統計資料。已經傳送的資訊無法撤回。</p>
+
+<h3>2. 純純寫作帳號（選用）</h3>
+<p>本 App 不提供註冊帳號的功能，登入也不是使用本 App 的前提。純純寫作帳號只用於確認會員狀態，不保存您的文章。如果您已有純純寫作帳號，可以登入以繼續使用帳號中既有的會員權益。</p>
+<p>在您登入、取得驗證碼、重設密碼以及維持登入狀態時，本 App 會向我們的伺服器傳送：您的電子郵件地址、密碼或驗證碼、本 App 在您裝置上隨機產生的裝置識別碼、裝置型號、系統版本、App 版本、介面語言與試用狀態。</p>
+<p>我們的伺服器保存您的電子郵件地址、經過雜湊處理的密碼（不保存密碼原文）以及已登入的裝置與裝置型號，用於驗證身分、確認會員權益與管理登入裝置。本 App 本身不保存您的密碼。</p>
+
+<h3>3. 通知檢查</h3>
+<p>為了提示您重要通知與版本更新，本 App 會定期（最多每 12 小時一次）向我們的伺服器查詢通知。請求只包含 App 版本、系統版本、介面語言、裝置型號、系統地區是否為中國大陸，以及所用雲端硬碟類型，不包含帳號、裝置識別碼等可識別您身分的資訊。</p>
+
+<h3>4. 使用阿里雲盤時</h3>
+<p>如果您連接阿里雲盤，授權憑證會經由我們的伺服器轉交以完成授權，我們的伺服器不保存這些憑證。</p>
+<p>連接後，為了協調多台裝置之間的同步，並避免清理仍在其他裝置上使用的備份，本 App 會將您的阿里雲盤使用者 ID 與相關備份檔名傳送到我們的伺服器。開啟雲同步後，我們的伺服器會保存您的阿里雲盤使用者 ID 與同步紀錄（包括備份檔名、裝置型號與同步時間），不包含您的文章內容或阿里雲盤登入憑證。</p>
+
+<h3>5. 伺服器存取紀錄</h3>
+<p>與大多數網路服務一樣，我們的伺服器在處理上述請求時，會記錄 IP 位址與存取時間等存取紀錄，僅用於維持服務運作與安全。</p>
+
+<h2>三、由您開啟、直接傳送給第三方服務的內容</h2>
+
+<h3>1. 備份到 iCloud</h3>
+<p>系統 iCloud 可用時，本 App 預設會將自動備份的副本儲存到您自己的 iCloud，以便換機或重新安裝後還原。備份透過 Apple 的 iCloud 服務直接存入您的 Apple 帳號，不經過我們的伺服器，我們也無法讀取。您可以在「設定 › 備份與雲同步 › 備份到 iCloud」中關閉此功能，或刪除 iCloud 中的全部備份。</p>
+<p>如果您的 Apple 帳號所在國家或地區為中國大陸，iCloud 服務由雲上貴州大數據產業發展有限公司營運。</p>
+
+<h3>2. 雲端硬碟備份與雲同步</h3>
+<p>只有在您於「設定 › 備份與雲同步 › 雲端硬碟」中連接自己的 Dropbox、OneDrive 或阿里雲盤帳號後，本 App 才會將自動備份以及您選擇上傳的手動備份上傳到該雲端硬碟；開啟雲同步後，本 App 也會下載並合併您其他裝置上傳的備份。</p>
+<p>備份檔案透過 HTTPS 直接在您的裝置與雲端硬碟之間傳輸，不經過我們的伺服器。備份檔案本身不另行加密，儲存在雲端硬碟中的內容適用該服務供應商的隱私權政策。雲端硬碟的登入憑證只保存在您的裝置上；中斷連接即停止上傳。</p>
+
+<h3>3. 線上繁簡轉換</h3>
+<p>在中文介面下，如果您選擇使用「繁化姬」進行繁簡轉換，本 App 會在首次使用前徵求您的同意，再將目前文章的正文傳送給第三方服務<a href="https://zhconvert.org">繁化姬</a>進行轉換。請求不包含您的帳號或裝置識別碼。不使用此功能時，不會傳送任何內容。</p>
+
+<h3>4. Markdown 中的網路圖片</h3>
+<p>如果您在 Markdown 正文中引用了網路圖片網址，預覽或匯出時本 App 會直接從該網址下載圖片，對應網站可以取得您的 IP 位址等網路請求資訊。</p>
+
+<h3>5. 購買</h3>
+<p>本 App 的購買與訂閱由 Apple 透過 App Store 處理，我們不會取得您的付款資訊。</p>
+
+<h2>四、系統權限</h2>
+<p>本 App 只在您將圖片存入照片圖庫時請求「加入照片」權限，不讀取您既有的照片。選取圖片時使用系統提供的選擇器，只有您選取的圖片才會交給本 App。本 App 不請求位置、聯絡人、相機或麥克風權限。</p>
+
+<h2>五、第三方服務供應商</h2>
+<p>本 App 涉及的第三方服務如下：</p>
+<ul>
+  <li>Google（Firebase）：錯誤報告與使用統計。<a href="https://policies.google.com/privacy">隱私權政策</a></li>
+  <li>Apple：iCloud 備份與 App Store 購買。<a href="https://www.apple.com/legal/privacy/">隱私權政策</a></li>
+  <li>Dropbox：您連接的雲端硬碟。<a href="https://www.dropbox.com/privacy">隱私權政策</a></li>
+  <li>Microsoft（OneDrive）：您連接的雲端硬碟。<a href="https://privacy.microsoft.com/privacystatement">隱私權聲明</a></li>
+  <li>阿里雲盤：您連接的雲端硬碟，適用其隱私權政策。</li>
+  <li>繁化姬：線上繁簡轉換。</li>
+</ul>
+<p>我們僅為本政策所述目的與上述服務供應商共享必要的資訊，並確認與我們共享使用者資料的第三方，會為這些資料提供與本政策同等或更高程度的保護。您自行連接的服務（例如您的雲端硬碟帳號）也同時適用其本身的隱私權政策。</p>
+
+<h2>六、保存期限與刪除</h2>
+<ul>
+  <li><strong>裝置上的資料</strong>：刪除本 App 時一併刪除；裝置系統備份（例如 iCloud 雲端備份）中的副本由系統與您的設定管理。</li>
+  <li><strong>錯誤報告與使用統計</strong>：由 Firebase 依其保存期限自動刪除。</li>
+  <li><strong>帳號資訊</strong>：保存至您刪除帳號為止。</li>
+  <li><strong>阿里雲盤同步紀錄</strong>：保存至您要求刪除為止。</li>
+  <li><strong>iCloud 與雲端硬碟中的備份</strong>：保存在您自己的帳號中，由您管理；iCloud 中的備份也可以在本 App 內刪除。</li>
+</ul>
+<p>如需刪除純純寫作帳號，或刪除我們伺服器上與您有關的資訊，請寄送電子郵件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。我們會在確認您的身分後盡快處理，並告知您處理結果。</p>
+
+<h2>七、您的選擇與權利</h2>
+<ul>
+  <li>隨時關閉錯誤報告或使用統計；</li>
+  <li>隨時登出純純寫作帳號；</li>
+  <li>關閉「備份到 iCloud」、中斷雲端硬碟連接或關閉雲同步；</li>
+  <li>透過電子郵件查詢、更正或刪除我們伺服器上與您有關的資訊，或刪除帳號。</li>
+</ul>
+
+<h2>八、本政策的更新</h2>
+<p>我們可能適時更新本政策。更新後的政策會公布在本頁面並註明更新日期；如有重大變更，我們會以適當方式通知您。</p>
+
+<h2>九、聯絡我們</h2>
+<p>如您對本政策有任何疑問，請寄送電子郵件至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（香港） ═══════════════════════════ -->
+<article data-locale="zh-HK" lang="zh-Hant-HK">
+
+<h1>純純寫作 iOS 版私隱政策</h1>
+<p class="meta">更新日期：2026 年 9 月 27 日　生效日期：2026 年 9 月 27 日</p>
+
+<p>純純寫作 iOS 版（以下簡稱「本 App」，適用於 iPhone 與 iPad）由 Drakeet Co., Ltd.（以下簡稱「我們」）開發及營運。本政策說明本 App 會處理哪些資料、為何處理、與誰共享、保存多久，以及您可以如何管理這些資料。</p>
+
+<h2>一、您的文章保存在您的裝置上</h2>
+<p>您在本 App 中創作的文章、書籍、歷史版本與設定都保存在您的裝置上。我們沒有保存您文章的伺服器，也無法讀取您的文章。只有在第三節所述、由您開啟或同意的功能中，文章內容才會離開您的裝置，並直接傳送給您選擇的服務。</p>
+<p>本 App 不含廣告，不進行跨 App 或跨網站的追蹤，不收集廣告識別碼，也不出售您的個人資料。</p>
+
+<h2>二、我們收集的資料</h2>
+
+<h3>1. 錯誤報告與使用統計</h3>
+<p>為了發現問題並改進產品，本 App 透過 Google 提供的 Firebase 服務收集以下資料：</p>
+<ul>
+  <li><strong>錯誤報告</strong>：閃退或發生錯誤時的 App 運行狀態、裝置型號、系統版本與 App 版本。</li>
+  <li><strong>使用統計</strong>：功能的使用情況、設定偏好（例如主題、匯出格式、所用雲端硬碟類型）、試用與購買情況（例如所購項目與金額），以及 Firebase 根據 IP 地址推斷的大概地區。</li>
+</ul>
+<p>這些資料會關聯 Firebase 為本次安裝隨機生成的識別碼，不會與您的純純寫作帳戶關聯，也不包含您的文章、標題、搜尋內容或帳戶資料。</p>
+<p>兩項預設開啟。您可以隨時在「設定 › 少數派選項」中分別關閉「傳送錯誤報告」與「傳送使用統計」。關閉後本 App 不再傳送對應資料（錯誤報告的更改將於下次啟動後完全生效）；關閉使用統計時，本 App 亦會清除裝置上的統計數據。已經傳送的資料無法撤回。</p>
+
+<h3>2. 純純寫作帳戶（可選）</h3>
+<p>本 App 不提供註冊帳戶的功能，登入亦不是使用本 App 的前提。純純寫作帳戶只用於確認會員狀態，不保存您的文章。如果您已有純純寫作帳戶，可以登入以繼續使用帳戶中現有的會員權益。</p>
+<p>在您登入、取得驗證碼、重設密碼以及維持登入狀態時，本 App 會向我們的伺服器傳送：您的電郵地址、密碼或驗證碼、本 App 在您裝置上隨機生成的裝置識別碼、裝置型號、系統版本、App 版本、介面語言與試用狀態。</p>
+<p>我們的伺服器保存您的電郵地址、經過雜湊處理的密碼（不保存密碼原文）以及已登入的裝置與裝置型號，用於驗證身份、確認會員權益及管理登入裝置。本 App 本身不保存您的密碼。</p>
+
+<h3>3. 通知檢查</h3>
+<p>為了提示您重要通知與版本更新，本 App 會定期（最多每 12 小時一次）向我們的伺服器查詢通知。請求只包含 App 版本、系統版本、介面語言、裝置型號、系統地區是否為中國內地，以及所用雲端硬碟類型，不包含帳戶、裝置識別碼等可識別您身份的資料。</p>
+
+<h3>4. 使用阿里雲盤時</h3>
+<p>如果您連接阿里雲盤，授權憑證會經我們的伺服器轉交以完成授權，我們的伺服器不保存這些憑證。</p>
+<p>連接後，為了協調多部裝置之間的同步，並避免清理仍在其他裝置上使用的備份，本 App 會將您的阿里雲盤用戶 ID 與相關備份檔案名稱傳送到我們的伺服器。開啟雲同步後，我們的伺服器會保存您的阿里雲盤用戶 ID 與同步記錄（包括備份檔案名稱、裝置型號與同步時間），不包含您的文章內容或阿里雲盤登入憑證。</p>
+
+<h3>5. 伺服器存取記錄</h3>
+<p>與大多數網絡服務一樣，我們的伺服器在處理上述請求時，會記錄 IP 地址與存取時間等存取記錄，僅用於維持服務運作與安全。</p>
+
+<h2>三、由您開啟、直接傳送給第三方服務的內容</h2>
+
+<h3>1. 備份到 iCloud</h3>
+<p>系統 iCloud 可用時，本 App 預設會將自動備份的副本儲存到您自己的 iCloud，以便換機或重新安裝後還原。備份透過 Apple 的 iCloud 服務直接存入您的 Apple 帳戶，不經過我們的伺服器，我們亦無法讀取。您可以在「設定 › 備份與雲同步 › 備份到 iCloud」中關閉此功能，或刪除 iCloud 中的全部備份。</p>
+<p>如果您的 Apple 帳戶所在國家或地區為中國內地，iCloud 服務由雲上貴州大數據產業發展有限公司營運。</p>
+
+<h3>2. 雲端硬碟備份與雲同步</h3>
+<p>只有在您於「設定 › 備份與雲同步 › 雲端硬碟」中連接自己的 Dropbox、OneDrive 或阿里雲盤帳戶後，本 App 才會將自動備份以及您選擇上傳的手動備份上傳到該雲端硬碟；開啟雲同步後，本 App 亦會下載並合併您其他裝置上傳的備份。</p>
+<p>備份檔案透過 HTTPS 直接在您的裝置與雲端硬碟之間傳輸，不經過我們的伺服器。備份檔案本身不另行加密，儲存在雲端硬碟中的內容適用該服務供應商的私隱政策。雲端硬碟的登入憑證只保存在您的裝置上；中斷連接即停止上傳。</p>
+
+<h3>3. 網上繁簡轉換</h3>
+<p>在中文介面下，如果您選擇使用「繁化姬」進行繁簡轉換，本 App 會在首次使用前徵求您的同意，再將目前文章的正文傳送給第三方服務<a href="https://zhconvert.org">繁化姬</a>進行轉換。請求不包含您的帳戶或裝置識別碼。不使用此功能時，不會傳送任何內容。</p>
+
+<h3>4. Markdown 中的網絡圖片</h3>
+<p>如果您在 Markdown 正文中引用了網絡圖片網址，預覽或匯出時本 App 會直接從該網址下載圖片，對應網站可以取得您的 IP 地址等網絡請求資料。</p>
+
+<h3>5. 購買</h3>
+<p>本 App 的購買與訂閱由 Apple 透過 App Store 處理，我們不會取得您的付款資料。</p>
+
+<h2>四、系統權限</h2>
+<p>本 App 只在您將圖片存入相片圖庫時請求「加入相片」權限，不讀取您已有的相片。選取圖片時使用系統提供的選擇器，只有您選取的圖片才會交給本 App。本 App 不請求位置、通訊錄、相機或麥克風權限。</p>
+
+<h2>五、第三方服務供應商</h2>
+<p>本 App 涉及的第三方服務如下：</p>
+<ul>
+  <li>Google（Firebase）：錯誤報告與使用統計。<a href="https://policies.google.com/privacy">私隱政策</a></li>
+  <li>Apple：iCloud 備份與 App Store 購買。<a href="https://www.apple.com/legal/privacy/">私隱政策</a></li>
+  <li>Dropbox：您連接的雲端硬碟。<a href="https://www.dropbox.com/privacy">私隱政策</a></li>
+  <li>Microsoft（OneDrive）：您連接的雲端硬碟。<a href="https://privacy.microsoft.com/privacystatement">私隱聲明</a></li>
+  <li>阿里雲盤：您連接的雲端硬碟，適用其私隱政策。</li>
+  <li>繁化姬：網上繁簡轉換。</li>
+</ul>
+<p>我們僅為本政策所述目的與上述服務供應商共享必要的資料，並確認與我們共享用戶資料的第三方，會為這些資料提供與本政策同等或更高水平的保護。您自行連接的服務（例如您的雲端硬碟帳戶）亦同時適用其本身的私隱政策。</p>
+
+<h2>六、保存期限與刪除</h2>
+<ul>
+  <li><strong>裝置上的數據</strong>：刪除本 App 時一併刪除；裝置系統備份（例如 iCloud 雲端備份）中的副本由系統與您的設定管理。</li>
+  <li><strong>錯誤報告與使用統計</strong>：由 Firebase 按其保存期限自動刪除。</li>
+  <li><strong>帳戶資料</strong>：保存至您刪除帳戶為止。</li>
+  <li><strong>阿里雲盤同步記錄</strong>：保存至您要求刪除為止。</li>
+  <li><strong>iCloud 與雲端硬碟中的備份</strong>：保存在您自己的帳戶中，由您管理；iCloud 中的備份亦可以在本 App 內刪除。</li>
+</ul>
+<p>如需刪除純純寫作帳戶，或刪除我們伺服器上與您有關的資料，請發送電郵至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。我們會在核實您的身份後盡快處理，並通知您處理結果。</p>
+
+<h2>七、您的選擇與權利</h2>
+<ul>
+  <li>隨時關閉錯誤報告或使用統計；</li>
+  <li>隨時登出純純寫作帳戶；</li>
+  <li>關閉「備份到 iCloud」、中斷雲端硬碟連接或關閉雲同步；</li>
+  <li>透過電郵查閱、更正或刪除我們伺服器上與您有關的資料，或刪除帳戶。</li>
+</ul>
+
+<h2>八、本政策的更新</h2>
+<p>我們可能適時更新本政策。更新後的政策會公佈在本頁面並註明更新日期；如有重大更改，我們會以適當方式通知您。</p>
+
+<h2>九、聯絡我們</h2>
+<p>如您對本政策有任何疑問，請發送電郵至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ English ═══════════════════════════ -->
+<article data-locale="en" lang="en">
+
+<h1>Pure Writer for iOS Privacy Policy</h1>
+<p class="meta">Last updated: September 27, 2026 · Effective: September 27, 2026</p>
+
+<p>Pure Writer for iOS (the “App”, for iPhone and iPad) is developed and operated by Drakeet Co., Ltd. (“we” or “us”). This policy explains what information the App handles, why, who it is shared with, how long it is kept, and how you can manage it.</p>
+
+<h2>1. Your writing stays on your device</h2>
+<p>The documents, books, version history, and settings you create in the App are stored on your device. We have no server that stores your writing, and we cannot read it. Your writing leaves your device only through the features described in Section 3 that you turn on or agree to, and it is sent directly to the service you choose.</p>
+<p>The App contains no ads, does not track you across apps or websites, does not collect the advertising identifier, and does not sell your personal information.</p>
+
+<h2>2. Information we collect</h2>
+
+<h3>2.1 Error reports and usage statistics</h3>
+<p>To find problems and improve the App, we use Firebase, a service provided by Google, to collect:</p>
+<ul>
+  <li><strong>Error reports</strong>: the App’s state when a crash or error occurs, device model, OS version, and app version.</li>
+  <li><strong>Usage statistics</strong>: how features are used, settings preferences (such as theme, export format, and the type of cloud drive in use), trial and purchase information (such as the product purchased and its price), and an approximate region that Firebase infers from your IP address.</li>
+</ul>
+<p>This information is associated with a random identifier that Firebase generates for this installation. It is not linked to your Pure Writer account and does not include your writing, titles, search text, or account details.</p>
+<p>Both are on by default. You can turn off Send Error Reports and Send Usage Statistics separately at any time in Settings › Advanced Options. Once turned off, the App stops sending that information (a change to error reports takes full effect the next time the App starts); turning off usage statistics also clears statistics data on your device. Information that has already been sent cannot be recalled.</p>
+
+<h3>2.2 Pure Writer account (optional)</h3>
+<p>The App does not offer account registration, and you don’t need to sign in to use it. A Pure Writer account is used only to confirm membership status and does not store your writing. If you already have a Pure Writer account, you can sign in to keep using the membership benefits it already has.</p>
+<p>When you sign in, request a verification code, reset your password, or stay signed in, the App sends the following to our server: your email address, your password or verification code, a device identifier that the App generates randomly on your device, device model, OS version, app version, app language, and trial status.</p>
+<p>Our server stores your email address, your password in hashed form (never the original password), and your signed-in devices and their models, in order to verify your identity, confirm membership benefits, and manage signed-in devices. The App itself does not store your password.</p>
+
+<h3>2.3 Notice checks</h3>
+<p>To let you know about important notices and updates, the App periodically (at most once every 12 hours) checks our server for notices. The request contains only the app version, OS version, app language, device model, whether the system region is mainland China, and the type of cloud drive in use. It contains no account, device identifier, or other information that identifies you.</p>
+
+<h3>2.4 When you use AliyunDrive</h3>
+<p>If you connect AliyunDrive, your authorization credentials pass through our server to complete authorization. Our server does not store them.</p>
+<p>Once connected, to coordinate sync across your devices and to avoid cleaning up backups that your other devices still use, the App sends your AliyunDrive user ID and the relevant backup file names to our server. If you turn on Cloud Sync, our server stores your AliyunDrive user ID and sync records (including backup file names, device models, and sync times). These do not include your writing or your AliyunDrive sign-in credentials.</p>
+
+<h3>2.5 Server access logs</h3>
+<p>Like most online services, our servers keep access logs, such as IP addresses and access times, when handling the requests above. These logs are used only to keep the service running and secure.</p>
+
+<h2>3. Content sent directly to third-party services at your choice</h2>
+
+<h3>3.1 Back Up to iCloud</h3>
+<p>When iCloud is available, the App by default saves a copy of its automatic backups to your own iCloud so you can restore after switching devices or reinstalling. Backups are stored directly in your Apple Account through Apple’s iCloud service, do not pass through our servers, and cannot be read by us. You can turn this off, or delete all backups in iCloud, in Settings › Backup &amp; Cloud Sync › Back Up to iCloud.</p>
+<p>If your Apple Account’s country or region is mainland China, iCloud is operated by Guizhou-Cloud Big Data Industry Co., Ltd. (GCBD).</p>
+
+<h3>3.2 Cloud drive backup and Cloud Sync</h3>
+<p>Only after you connect your own Dropbox, OneDrive, or AliyunDrive account in Settings › Backup &amp; Cloud Sync › Cloud Drive does the App upload automatic backups, along with any manual backups you choose to upload, to that drive. If you turn on Cloud Sync, the App also downloads and merges backups uploaded by your other devices.</p>
+<p>Backup files travel directly between your device and your cloud drive over HTTPS and do not pass through our servers. The backup files themselves are not additionally encrypted, and content stored in your cloud drive is subject to that provider’s privacy policy. Cloud drive sign-in credentials are stored only on your device, and disconnecting the drive stops uploads.</p>
+
+<h3>3.3 Online Chinese conversion</h3>
+<p>When the App is displayed in Chinese, you can convert text between Simplified and Traditional Chinese with <a href="https://zhconvert.org">Fanhuaji</a>, a third-party service. The App asks for your consent before first use, then sends the text of the current document to Fanhuaji for conversion. The request contains no account or device identifier. Nothing is sent unless you use this feature.</p>
+
+<h3>3.4 Web images in Markdown</h3>
+<p>If your Markdown text refers to an image on the web, the App downloads the image directly from that address when you preview or export, and that website can see network request information such as your IP address.</p>
+
+<h3>3.5 Purchases</h3>
+<p>Purchases and subscriptions in the App are processed by Apple through the App Store. We do not receive your payment information.</p>
+
+<h2>4. System permissions</h2>
+<p>The App asks for permission to add photos only when you save images to your photo library, and it does not read your existing photos. When you choose an image, the App uses the system picker, so only the image you select is shared with the App. The App does not request access to your location, contacts, camera, or microphone.</p>
+
+<h2>5. Third-party services</h2>
+<p>The App involves the following third-party services:</p>
+<ul>
+  <li>Google (Firebase): error reports and usage statistics. <a href="https://policies.google.com/privacy">Privacy Policy</a></li>
+  <li>Apple: iCloud backup and App Store purchases. <a href="https://www.apple.com/legal/privacy/">Privacy Policy</a></li>
+  <li>Dropbox: your connected cloud drive. <a href="https://www.dropbox.com/privacy">Privacy Policy</a></li>
+  <li>Microsoft (OneDrive): your connected cloud drive. <a href="https://privacy.microsoft.com/privacystatement">Privacy Statement</a></li>
+  <li>AliyunDrive: your connected cloud drive, subject to its own privacy policy.</li>
+  <li>Fanhuaji: online Chinese conversion.</li>
+</ul>
+<p>We share only the information necessary for the purposes described in this policy, and we confirm that third parties with whom we share user data provide the same or equal protection of that data as described in this policy. Services you connect yourself, such as your cloud drive account, are also subject to their own privacy policies.</p>
+
+<h2>6. Retention and deletion</h2>
+<ul>
+  <li><strong>Data on your device</strong>: deleted when you delete the App. Copies in device backups (such as iCloud Backup) are managed by the system and your settings.</li>
+  <li><strong>Error reports and usage statistics</strong>: deleted automatically by Firebase according to its retention periods.</li>
+  <li><strong>Account information</strong>: kept until you delete your account.</li>
+  <li><strong>AliyunDrive sync records</strong>: kept until you ask us to delete them.</li>
+  <li><strong>Backups in iCloud and cloud drives</strong>: kept in your own accounts and managed by you. Backups in iCloud can also be deleted from within the App.</li>
+</ul>
+<p>To delete your Pure Writer account, or to delete information about you on our servers, email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>. We will handle your request promptly after verifying your identity and let you know the result.</p>
+
+<h2>7. Your choices and rights</h2>
+<ul>
+  <li>Turn off error reports or usage statistics at any time.</li>
+  <li>Sign out of your Pure Writer account at any time.</li>
+  <li>Turn off Back Up to iCloud, disconnect a cloud drive, or turn off Cloud Sync.</li>
+  <li>Email us to access, correct, or delete information about you on our servers, or to delete your account.</li>
+</ul>
+
+<h2>8. Changes to this policy</h2>
+<p>We may update this policy from time to time. The updated policy will be posted on this page with its update date. If there are significant changes, we will notify you in an appropriate way.</p>
+
+<h2>9. Contact us</h2>
+<p>If you have any questions about this policy, email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+<!-- ═══════════════════════════ 日本語 ═══════════════════════════ -->
+<article data-locale="ja" lang="ja">
+
+<h1>純純執筆 iOS 版 プライバシーポリシー</h1>
+<p class="meta">最終更新日：2026年9月27日　施行日：2026年9月27日</p>
+
+<p>純純執筆 iOS 版（以下「本アプリ」。iPhone および iPad 向け）は、Drakeet Co., Ltd.（以下「当社」）が開発・運営しています。本ポリシーでは、本アプリが取り扱う情報の種類と目的、共有先、保存期間、およびお客様による管理の方法について説明します。</p>
+
+<h2>1. 文章はお客様のデバイスに保存されます</h2>
+<p>本アプリで作成した文章、書籍、履歴、設定は、お客様のデバイスに保存されます。当社には文章を保存するサーバーがなく、当社が文章を読むこともできません。文章がデバイスの外に送信されるのは、第 3 項に記載した機能をお客様がオンにした場合、または利用に同意した場合に限られ、お客様が選んだサービスへ直接送信されます。</p>
+<p>本アプリには広告がなく、アプリやウェブサイトをまたいだトラッキングを行わず、広告識別子を収集せず、お客様の個人情報を販売することもありません。</p>
+
+<h2>2. 当社が収集する情報</h2>
+
+<h3>2.1 エラーレポートと利用統計</h3>
+<p>問題の発見と製品の改善のため、本アプリは Google が提供する Firebase を通じて次の情報を収集します。</p>
+<ul>
+  <li><strong>エラーレポート</strong>：クラッシュやエラーが発生したときのアプリの状態、デバイスの機種、OS のバージョン、アプリのバージョン。</li>
+  <li><strong>利用統計</strong>：機能の利用状況、設定の好み（テーマ、書き出し形式、利用中のクラウドドライブの種類など）、試用と購入の状況（購入した商品と金額など）、および Firebase が IP アドレスから推定するおおよその地域。</li>
+</ul>
+<p>これらの情報は、Firebase がこのインストールごとにランダムに生成する識別子に関連付けられます。純純執筆アカウントには関連付けられず、文章、タイトル、検索内容、アカウント情報は含まれません。</p>
+<p>いずれも初期設定でオンになっています。「設定 › 詳細オプション」で「エラーレポートを送信」と「利用統計を送信」をそれぞれいつでもオフにできます。オフにすると、本アプリは該当する情報を送信しなくなります（エラーレポートの変更は次回の起動後に完全に反映されます）。利用統計をオフにすると、デバイス上の統計データも消去されます。すでに送信された情報は取り消せません。</p>
+
+<h3>2.2 純純執筆アカウント（任意）</h3>
+<p>本アプリではアカウントを新規登録できず、ログインしなくても本アプリを利用できます。純純執筆アカウントは会員の状態を確認するためだけに使われ、文章は保存されません。すでに純純執筆アカウントをお持ちの場合は、ログインして、そのアカウントの会員特典を引き続き利用できます。</p>
+<p>ログイン、確認コードの取得、パスワードの再設定、ログイン状態の維持の際に、本アプリは当社のサーバーに次の情報を送信します：メールアドレス、パスワードまたは確認コード、本アプリがデバイス上でランダムに生成するデバイス識別子、デバイスの機種、OS のバージョン、アプリのバージョン、表示言語、試用の状況。</p>
+<p>当社のサーバーは、本人確認、会員特典の確認、ログイン中のデバイスの管理のため、メールアドレス、ハッシュ化したパスワード（元のパスワードは保存しません）、ログイン中のデバイスとその機種を保存します。本アプリ自体はパスワードを保存しません。</p>
+
+<h3>2.3 お知らせの確認</h3>
+<p>重要なお知らせやアップデートをお伝えするため、本アプリは定期的に（最大で 12 時間に 1 回）当社のサーバーにお知らせを確認します。リクエストに含まれるのは、アプリのバージョン、OS のバージョン、表示言語、デバイスの機種、システムの地域が中国本土かどうか、利用中のクラウドドライブの種類のみで、アカウントやデバイス識別子など、お客様を特定できる情報は含まれません。</p>
+
+<h3>2.4 AliyunDrive を利用する場合</h3>
+<p>AliyunDrive を連携すると、認可を完了するため、認可情報が当社のサーバーを経由して受け渡されます。当社のサーバーはこれを保存しません。</p>
+<p>連携後は、複数のデバイス間の同期を調整し、ほかのデバイスがまだ使っているバックアップを整理の対象にしないよう、本アプリは AliyunDrive のユーザー ID と関連するバックアップのファイル名を当社のサーバーに送信します。クラウド同期をオンにすると、当社のサーバーは AliyunDrive のユーザー ID と同期記録（バックアップのファイル名、デバイスの機種、同期日時など）を保存します。文章の内容や AliyunDrive のログイン情報は含まれません。</p>
+
+<h3>2.5 サーバーのアクセスログ</h3>
+<p>一般的なオンラインサービスと同様に、当社のサーバーは上記のリクエストを処理する際、IP アドレスやアクセス日時などのアクセスログを記録します。これらはサービスの運用と安全の確保のためにのみ使用します。</p>
+
+<h2>3. お客様の選択により第三者のサービスへ直接送信される内容</h2>
+
+<h3>3.1 iCloud にバックアップ</h3>
+<p>iCloud が利用できるときは、機種変更や再インストールのあとに復元できるよう、本アプリは初期設定で自動バックアップのコピーをお客様ご自身の iCloud に保存します。バックアップは Apple の iCloud サービスを通じてお客様の Apple アカウントに直接保存され、当社のサーバーを経由せず、当社が読むこともできません。「設定 › バックアップとクラウド同期 › iCloud にバックアップ」で、この機能をオフにしたり、iCloud 内のバックアップをすべて削除したりできます。</p>
+<p>Apple アカウントの国または地域が中国本土の場合、iCloud は Guizhou-Cloud Big Data Industry Co., Ltd.（GCBD）が運営しています。</p>
+
+<h3>3.2 クラウドドライブへのバックアップとクラウド同期</h3>
+<p>「設定 › バックアップとクラウド同期 › クラウドドライブ」でお客様ご自身の Dropbox、OneDrive、AliyunDrive のアカウントを連携した場合にのみ、本アプリは自動バックアップと、お客様がアップロードを選んだ手動バックアップをそのクラウドドライブにアップロードします。クラウド同期をオンにすると、ほかのデバイスがアップロードしたバックアップのダウンロードと統合も行います。</p>
+<p>バックアップファイルは HTTPS でお客様のデバイスとクラウドドライブの間で直接やり取りされ、当社のサーバーを経由しません。バックアップファイル自体には追加の暗号化を行っておらず、クラウドドライブに保存された内容には各サービス提供者のプライバシーポリシーが適用されます。クラウドドライブのログイン情報はお客様のデバイスにのみ保存され、連携を解除するとアップロードは停止します。</p>
+
+<h3>3.3 オンラインでの中国語変換</h3>
+<p>表示言語が中国語のときに<a href="https://zhconvert.org">繁化姬</a>による簡体字・繁体字の変換を選ぶと、本アプリは初回の利用前にお客様の同意を得たうえで、現在の文章の本文を第三者サービス「繁化姬」に送信して変換します。リクエストにはアカウントやデバイスの識別子は含まれません。この機能を使わない限り、何も送信されません。</p>
+
+<h3>3.4 Markdown 内のウェブ画像</h3>
+<p>Markdown の本文でウェブ上の画像を参照している場合、プレビューや書き出しの際に、本アプリはそのアドレスから画像を直接ダウンロードします。その際、画像のあるウェブサイトは、お客様の IP アドレスなどのネットワークリクエストの情報を取得できます。</p>
+
+<h3>3.5 購入</h3>
+<p>本アプリでの購入とサブスクリプションは、Apple が App Store を通じて処理します。当社がお客様の支払い情報を受け取ることはありません。</p>
+
+<h2>4. システムの権限</h2>
+<p>本アプリが「写真の追加」の許可を求めるのは、画像を写真ライブラリに保存するときのみで、既存の写真は読み取りません。画像を選ぶときはシステムのピッカーを使うため、お客様が選んだ画像だけが本アプリに渡されます。本アプリは位置情報、連絡先、カメラ、マイクへのアクセスを求めません。</p>
+
+<h2>5. 第三者のサービス</h2>
+<p>本アプリに関わる第三者のサービスは次のとおりです。</p>
+<ul>
+  <li>Google（Firebase）：エラーレポートと利用統計。<a href="https://policies.google.com/privacy">プライバシーポリシー</a></li>
+  <li>Apple：iCloud バックアップと App Store での購入。<a href="https://www.apple.com/legal/privacy/">プライバシーポリシー</a></li>
+  <li>Dropbox：お客様が連携したクラウドドライブ。<a href="https://www.dropbox.com/privacy">プライバシーポリシー</a></li>
+  <li>Microsoft（OneDrive）：お客様が連携したクラウドドライブ。<a href="https://privacy.microsoft.com/privacystatement">プライバシーに関する声明</a></li>
+  <li>AliyunDrive：お客様が連携したクラウドドライブ。同社のプライバシーポリシーが適用されます。</li>
+  <li>繁化姬：オンラインでの中国語変換。</li>
+</ul>
+<p>当社は、本ポリシーに記載した目的に必要な範囲でのみ上記のサービス提供者と情報を共有し、ユーザーデータを共有する第三者が本ポリシーと同等以上の保護を提供することを確認しています。お客様がご自身で連携したサービス（クラウドドライブのアカウントなど）には、各サービスのプライバシーポリシーも適用されます。</p>
+
+<h2>6. 保存期間と削除</h2>
+<ul>
+  <li><strong>デバイス上のデータ</strong>：本アプリを削除すると一緒に削除されます。デバイスのバックアップ（iCloud バックアップなど）に含まれるコピーは、システムとお客様の設定によって管理されます。</li>
+  <li><strong>エラーレポートと利用統計</strong>：Firebase の保存期間に従って自動的に削除されます。</li>
+  <li><strong>アカウント情報</strong>：アカウントを削除するまで保存します。</li>
+  <li><strong>AliyunDrive の同期記録</strong>：削除のご依頼があるまで保存します。</li>
+  <li><strong>iCloud とクラウドドライブ内のバックアップ</strong>：お客様ご自身のアカウントに保存され、お客様が管理します。iCloud 内のバックアップは本アプリ内からも削除できます。</li>
+</ul>
+<p>純純執筆アカウントの削除、または当社のサーバー上にあるお客様に関する情報の削除をご希望の場合は、<a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までメールでご連絡ください。ご本人であることを確認したうえで速やかに対応し、結果をお知らせします。</p>
+
+<h2>7. お客様の選択と権利</h2>
+<ul>
+  <li>エラーレポートや利用統計はいつでもオフにできます。</li>
+  <li>純純執筆アカウントからはいつでもログアウトできます。</li>
+  <li>「iCloud にバックアップ」のオフ、クラウドドライブの連携解除、クラウド同期のオフができます。</li>
+  <li>メールで、当社のサーバー上にあるお客様に関する情報の開示、訂正、削除、またはアカウントの削除を依頼できます。</li>
+</ul>
+
+<h2>8. 本ポリシーの変更</h2>
+<p>当社は本ポリシーを適宜更新することがあります。更新後のポリシーは、更新日とともに本ページに掲載します。重要な変更がある場合は、適切な方法でお知らせします。</p>
+
+<h2>9. お問い合わせ</h2>
+<p>本ポリシーに関するご質問は、<a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までメールでご連絡ください。</p>
+
+<p class="company">Drakeet Co., Ltd.</p>
+</article>
+
+</main>
+<script>
+  // 语言切换：下拉框初始值跟随已决定的语言；切换后记住选择，并把 ?lang= 写入地址栏，便于分享当前语言的链接。
+  (function () {
+    var select = document.getElementById("language-select");
+    var current = document.documentElement.getAttribute("data-locale");
+    if (!select || !current) return;
+    select.value = current;
+    select.addEventListener("change", function () {
+      var locale = select.value;
+      window.privacyPage.apply(locale);
+      try {
+        localStorage.setItem("privacy-locale", locale);
+      } catch (e) {
+        // 无法保存时只影响下次打开的默认语言，本次切换照常生效。
+      }
+      if (window.history && history.replaceState) {
+        history.replaceState(null, "", location.pathname + "?lang=" + encodeURIComponent(locale) + location.hash);
+      }
+      window.scrollTo(0, 0);
+    });
+  })();
+</script>
+</body>
+</html>
