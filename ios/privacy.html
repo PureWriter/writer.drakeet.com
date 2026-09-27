@@ -93,6 +93,8 @@
     --link: #0a64d6;
     --rule: #e5e5ea;
     --control-bg: #f2f2f7;
+    /* 语言下拉框的箭头。数据 URI 里的 SVG 无法跟随 currentColor，因此深浅色各写一份，颜色同 --secondary。 */
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236e6e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -102,6 +104,7 @@
       --link: #4da3ff;
       --rule: #38383a;
       --control-bg: #2c2c2e;
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2398989d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
   }
   html {
@@ -142,14 +145,23 @@
   html:not([data-locale]) .toolbar {
     display: none;
   }
+  /* 不用系统原生外观：原生箭头在 iOS Safari 上紧贴右边框。改为自绘箭头，并为它留出右侧空间。 */
   .toolbar select {
+    -webkit-appearance: none;
+    appearance: none;
     font: inherit;
-    font-size: 0.9rem;
+    /* 不小于 16px：iOS Safari 点按字号更小的表单控件时会自动放大页面。 */
+    font-size: 16px;
     color: var(--text);
-    background: var(--control-bg);
+    background-color: var(--control-bg);
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px 6px;
     border: 1px solid var(--rule);
     border-radius: 8px;
-    padding: 6px 10px;
+    padding: 6px 34px 6px 12px;
+    cursor: pointer;
   }
 
   /* 有脚本时只显示选中的语言。 */
