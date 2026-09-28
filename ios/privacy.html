@@ -152,6 +152,8 @@
     font: inherit;
     /* 不小于 16px：iOS Safari 点按字号更小的表单控件时会自动放大页面。 */
     font-size: 16px;
+    /* font: inherit 会连正文的大行高一起继承，按钮显得高；这里单独收紧，保持紧凑。 */
+    line-height: 1.25;
     color: var(--text);
     background-color: var(--control-bg);
     background-image: var(--chevron);
@@ -160,7 +162,7 @@
     background-size: 10px 6px;
     border: 1px solid var(--rule);
     border-radius: 8px;
-    padding: 6px 34px 6px 12px;
+    padding: 4px 32px 4px 12px;
     cursor: pointer;
   }
 
