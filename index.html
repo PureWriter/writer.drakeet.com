@@ -1,599 +1,1395 @@
 <!doctype html>
-<html>
+<!--
+  纯纯写作官网首页（五种语言：简体中文、繁体中文（台湾）、繁体中文（香港）、英文、日文）。
+  直接维护本 HTML，不再由 Typora 从 Markdown 原稿导出。页面不依赖站点模板与外部资源，作为静态文件发布。
+
+  语言判定与切换沿用 /ios/support.html、/ios/privacy.html 的做法，并共用同一个本地存储键：在任何一页手动选过语言，
+  其它页面也按它显示。与那两页不同的是，没有脚本时首页只显示简体中文，而不是五种语言依次全部显示：首页的主要读者
+  与不执行脚本的搜索引擎都以简体中文为主。
+
+  每种语言一个 <article>，内容各自完整，改动时五种语言同步修改。遵守站点根目录 AGENTS.md 的约定：
+  - 「国内下载」、阿里云盘这类只面向中国大陆用户的内容，只放在简体中文版本；
+  - 版权与备案信息只放在简体中文版本的底部；
+  - 繁体中文分台湾与香港两份，用词按各自习惯（例如 捲動／滾動、帳號／帳戶），与 App 内的译法保持一致。
+  标注「iOS」的功能目前只有 iOS 版提供：增删或改写功能条目时，先核对 Android 版是否已有，再决定是否标注。
+  同一页里各语言的锚点不能重名，简体中文不加后缀，其它语言加语言后缀（例如 download-ios-en）。
+-->
+<html lang="zh-Hans">
 <head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>纯纯写作 - 绝不丢失文本编辑器</title>
+<meta name="description" content="纯纯写作是一个令人感到安心、启动飞快的纯文本编辑器：历史记录、自动备份与多重防丢失保障，支持云同步与许多写作辅助，适用于 Android、iPhone 与 iPad。">
+<link rel="icon" href="images/icon512.png">
+<script>
+  // 在正文渲染之前决定显示哪种语言，避免打开时先闪出另一种语言。
+  // 优先级：链接参数 ?lang= ＞ 用户上次手动选择的语言（与 /ios/ 下的页面共用）＞ 浏览器语言 ＞ 英文。
+  (function () {
+    var titles = {
+      "zh-Hans": "纯纯写作 - 绝不丢失文本编辑器",
+      "zh-Hant": "純純寫作 - 絕不遺失文字的編輯器",
+      "zh-HK": "純純寫作 - 絕不遺失文字的編輯器",
+      "en": "Pure Writer - Write fast. Never lose a word.",
+      "ja": "純純執筆 - 文字を失わないエディタ"
+    };
+    // 页面语言代码与 HTML lang 属性的对应，lang 属性影响中日文字形与字体回退。
+    var htmlLangs = {
+      "zh-Hans": "zh-Hans",
+      "zh-Hant": "zh-Hant-TW",
+      "zh-HK": "zh-Hant-HK",
+      "en": "en",
+      "ja": "ja"
+    };
 
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
-.mac-os-11 { --title-bar-height: 28px; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-h1, h2, h3, h4, h5 { white-space: pre-wrap; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
-iframe { margin: auto; }
-a.url { word-break: break-all; }
-a:active, a:hover { outline: 0px; }
-.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
-#write.first-line-indent p { text-indent: 2em; }
-#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
-#write.first-line-indent li { margin-left: 2em; }
-.for-image #write { padding-left: 8px; padding-right: 8px; }
-body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
-.typora-export .task-list-item input { pointer-events: none; }
-@media screen and (max-width: 500px) {
-  body.typora-export { padding-left: 0px; padding-right: 0px; }
-  #write { padding-left: 20px; padding-right: 20px; }
-}
-#write li > figure:last-child { margin-bottom: 0.5rem; }
-#write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
-button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
-input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
-*, ::after, ::before { box-sizing: border-box; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
-p { orphans: 4; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.4rem; }
-h5 { font-size: 1.2rem; }
-h6 { font-size: 1rem; }
-.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
-.hidden { display: none; }
-.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
-a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
-sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
-#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
-figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px; }
-thead, tr { break-inside: avoid; break-after: auto; }
-thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 32px; }
-.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
-.CodeMirror-linenumber { -webkit-user-select: none; }
-.CodeMirror { text-align: left; }
-.CodeMirror-placeholder { opacity: 0.3; }
-.CodeMirror pre { padding: 0px 4px; }
-.CodeMirror-lines { padding: 0px; }
-div.hr:focus { cursor: none; }
-#write pre { white-space: pre-wrap; }
-#write.fences-no-line-wrapping pre { white-space: pre; }
-#write pre.ty-contain-cm { white-space: normal; }
-.CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
-.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
-#write .md-fences.mock-cm { white-space: pre-wrap; }
-.md-fences.md-fences-with-lineno { padding-left: 0px; }
-#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
-.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { break-inside: avoid; }
-svg { break-inside: avoid; }
-.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
-.footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
-li div { padding-top: 0px; }
-blockquote { margin: 1rem 0px; }
-li .mathjax-block, li p { margin: 0.5rem 0px; }
-li blockquote { margin: 1rem 0px; }
-li { margin: 0px; position: relative; }
-blockquote > :last-child { margin-bottom: 0px; }
-blockquote > :first-child, li > :first-child { margin-top: 0px; }
-.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
-#write .footnote-line { white-space: pre-wrap; }
-@media print {
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
-  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
-  .typora-export * { print-color-adjust: exact; }
-  .typora-export #write { break-after: avoid; }
-  .typora-export #write::after { height: 0px; }
-  .is-mac table { break-inside: avoid; }
-  #write > p:nth-child(1) { margin-top: 0px; }
-  .typora-export-show-outline .typora-export-sidebar { display: none; }
-  figure { overflow-x: visible; }
-}
-.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
-a img, img a { cursor: pointer; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
-p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
-#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
-p > .md-image:only-child { display: inline-block; width: 100%; }
-#write .MathJax_Display { margin: 0.8em 0px 0px; }
-.md-math-block { width: 100%; }
-.md-math-block:not(:empty)::after { display: none; }
-.MathJax_ref { fill: currentcolor; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
-.md-task-list-item { position: relative; list-style-type: none; }
-.task-list-item.md-task-list-item { padding-left: 0px; }
-.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
-.math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
-.md-toc-content { position: relative; margin-left: 0px; }
-.md-toc-content::after, .md-toc::after { display: none; }
-.md-toc-item { display: block; color: rgb(65, 131, 196); }
-.md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { text-decoration: underline; }
-.md-toc-inner { display: inline-block; cursor: pointer; }
-.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
-.md-toc-h2 .md-toc-inner { margin-left: 2em; }
-.md-toc-h3 .md-toc-inner { margin-left: 4em; }
-.md-toc-h4 .md-toc-inner { margin-left: 6em; }
-.md-toc-h5 .md-toc-inner { margin-left: 8em; }
-.md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) {
-  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
-  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
-  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
-  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
-}
-a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
-.footnote-line a:not(.reversefootnote) { color: inherit; }
-.reversefootnote { font-family: ui-monospace, sans-serif; }
-.md-attr { display: none; }
-.md-fn-count::after { content: "."; }
-code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
-.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
-code { text-align: left; vertical-align: initial; }
-a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
-.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
-.md-diagram-panel > svg { max-width: 100%; }
-[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
-[lang="mermaid"] .node text { font-size: 1rem; }
-table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
-video { max-width: 100%; display: block; margin: 0px auto; }
-iframe { max-width: 100%; width: 100%; border: medium; }
-.highlight td, .highlight tr { border: 0px; }
-mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
-.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
-.md-expand mark .md-meta { opacity: 0.3 !important; }
-mark .md-meta { color: rgb(0, 0, 0); }
-@media print {
-  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
-}
-.md-diagram-panel .messageText { stroke: none !important; }
-.md-diagram-panel .start-state { fill: var(--node-fill); }
-.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
-.md-fences.md-fences-math { font-size: 1em; }
-.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
-.md-fences-advanced:not(.md-focus) { background: inherit; }
-.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
-.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
-.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
-.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
-@media screen and (max-width: 1024px) {
-  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
-}
-@media screen and (max-width: 800px) {
-  .typora-export-sidebar { display: none; }
-}
-.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
-.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
-.outline-content strong { font-weight: 400; }
-.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
-.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
-.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
-.outline-expander:hover::before { content: ""; }
-.outline-h1 > .outline-item { padding-left: 0px; }
-.outline-h2 > .outline-item { padding-left: 1em; }
-.outline-h3 > .outline-item { padding-left: 2em; }
-.outline-h4 > .outline-item { padding-left: 3em; }
-.outline-h5 > .outline-item { padding-left: 4em; }
-.outline-h6 > .outline-item { padding-left: 5em; }
-.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
-.outline-label:hover { text-decoration: underline; }
-.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
-.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
-.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
-.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
-.outline-children { display: none; }
-.info-panel-tab-wrapper { display: none; }
-.outline-item-open > .outline-children { display: block; }
-.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
-.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
-.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
-.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
-.typora-export-collapse-outline .outline-children { display: none; }
-.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
-.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
-.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
-.md-inline-math-container mjx-container { zoom: 0.95; }
-mjx-container { break-inside: avoid; }
+    // 把任意语言标签（如 zh-TW、zh-Hant-HK、ja-JP）归到本页支持的五种之一；不支持的返回 null。
+    function normalize(tag) {
+      if (!tag) return null;
+      var t = String(tag).toLowerCase().replace(/_/g, "-");
+      if (t.indexOf("zh") === 0) {
+        if (/-hans(-|$)/.test(t)) return "zh-Hans";
+        if (/-(hk|mo)(-|$)/.test(t)) return "zh-HK";
+        if (/-(hant|tw)(-|$)/.test(t)) return "zh-Hant";
+        return "zh-Hans";
+      }
+      if (t.indexOf("ja") === 0) return "ja";
+      if (t.indexOf("en") === 0) return "en";
+      return null;
+    }
 
+    function fromQuery() {
+      var match = /[?&]lang=([^&#]+)/.exec(location.search);
+      return match ? normalize(decodeURIComponent(match[1])) : null;
+    }
 
-:root {
-    --side-bar-bg-color: #fafafa;
-    --control-text-color: #777;
-}
+    // 隐私模式等情况下读取本地存储可能抛错，此时视为没有保存过选择。
+    function fromStorage() {
+      try {
+        return normalize(localStorage.getItem("ios-page-locale"));
+      } catch (e) {
+        return null;
+      }
+    }
 
-@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+    // 按浏览器的语言偏好顺序，取第一个本页支持的语言。
+    function fromBrowser() {
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < list.length; i++) {
+        var locale = normalize(list[i]);
+        if (locale) return locale;
+      }
+      return null;
+    }
 
-/* open-sans-regular - latin-ext_latin */
-  /* open-sans-italic - latin-ext_latin */
-    /* open-sans-700 - latin-ext_latin */
-    /* open-sans-700italic - latin-ext_latin */
+    // 供页面底部的语言切换脚本复用。
+    window.homePage = {
+      apply: function (locale) {
+        var root = document.documentElement;
+        root.setAttribute("data-locale", locale);
+        root.setAttribute("lang", htmlLangs[locale]);
+        document.title = titles[locale];
+      }
+    };
+
+    window.homePage.apply(fromQuery() || fromStorage() || fromBrowser() || "en");
+  })();
+</script>
+<style>
+  /* 颜色集中定义为变量，深色模式只需覆盖这一组。与 /ios/ 下的支持页、隐私政策页保持同一套配色。 */
+  :root {
+    --bg: #ffffff;
+    --text: #2b2b2b;
+    --secondary: #6e6e73;
+    --link: #0a64d6;
+    --rule: #e5e5ea;
+    --panel: #f5f5f7;
+    /* 语言下拉框的箭头。数据 URI 里的 SVG 无法跟随 currentColor，因此深浅色各写一份，颜色同 --secondary。 */
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236e6e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1e;
+      --text: #e5e5e7;
+      --secondary: #98989d;
+      --link: #4da3ff;
+      --rule: #38383a;
+      --panel: #2c2c2e;
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2398989d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+  }
   html {
-    font-size: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-}
+    -webkit-text-size-adjust: 100%;
+  }
+  /* 各语言选用对应地区的字体，繁体与日文不借用简体中文字形。 */
+  article:lang(zh-Hant) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(zh-Hant-HK) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  article:lang(ja) {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  }
+  article:lang(en) {
+    line-height: 1.65;
+  }
+  body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  /* 正文限制行宽便于阅读；窄屏时两侧保留 20px 边距。 */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 20px 48px;
+  }
 
-body {
-    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
-    color: rgb(51, 51, 51);
-    line-height: 1.6;
-}
+  /* 语言切换：没有脚本时无法切换，也就不显示。 */
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
+  html:not([data-locale]) .toolbar {
+    display: none;
+  }
+  /* 不用系统原生外观：原生箭头在 iOS Safari 上紧贴右边框。改为自绘箭头，并为它留出右侧空间。 */
+  .toolbar select {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    /* 不小于 16px：iOS Safari 点按字号更小的表单控件时会自动放大页面。 */
+    font-size: 16px;
+    /* font: inherit 会连正文的大行高一起继承，按钮显得高；这里单独收紧，保持紧凑。 */
+    line-height: 1.25;
+    color: var(--text);
+    background-color: var(--panel);
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px 6px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 4px 32px 4px 12px;
+    cursor: pointer;
+  }
 
-#write {
-    max-width: 860px;
-  	margin: 0 auto;
-  	padding: 30px;
-    padding-bottom: 100px;
-}
+  /* 有脚本时只显示选中的语言；没有脚本时只显示简体中文。 */
+  article {
+    display: none;
+  }
+  html:not([data-locale]) article[data-locale="zh-Hans"],
+  html[data-locale="zh-Hans"] article[data-locale="zh-Hans"],
+  html[data-locale="zh-Hant"] article[data-locale="zh-Hant"],
+  html[data-locale="zh-HK"] article[data-locale="zh-HK"],
+  html[data-locale="en"] article[data-locale="en"],
+  html[data-locale="ja"] article[data-locale="ja"] {
+    display: block;
+  }
 
-@media only screen and (min-width: 1400px) {
-	#write {
-		max-width: 1024px;
-	}
-}
-
-@media only screen and (min-width: 1800px) {
-	#write {
-		max-width: 1200px;
-	}
-}
-
-#write > ul:first-child,
-#write > ol:first-child{
-    margin-top: 30px;
-}
-
-a {
-    color: #4183C4;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    line-height: 1.4;
-    cursor: text;
-}
-h1:hover a.anchor,
-h2:hover a.anchor,
-h3:hover a.anchor,
-h4:hover a.anchor,
-h5:hover a.anchor,
-h6:hover a.anchor {
-    text-decoration: none;
-}
-h1 tt,
-h1 code {
-    font-size: inherit;
-}
-h2 tt,
-h2 code {
-    font-size: inherit;
-}
-h3 tt,
-h3 code {
-    font-size: inherit;
-}
-h4 tt,
-h4 code {
-    font-size: inherit;
-}
-h5 tt,
-h5 code {
-    font-size: inherit;
-}
-h6 tt,
-h6 code {
-    font-size: inherit;
-}
-h1 {
-    font-size: 2.25em;
-    line-height: 1.2;
-    border-bottom: 1px solid #eee;
-}
-h2 {
-    font-size: 1.75em;
-    line-height: 1.225;
-    border-bottom: 1px solid #eee;
-}
-
-/*@media print {
-    .typora-export h1,
-    .typora-export h2 {
-        border-bottom: none;
-        padding-bottom: initial;
-    }
-
-    .typora-export h1::after,
-    .typora-export h2::after {
-        content: "";
-        display: block;
-        height: 100px;
-        margin-top: -96px;
-        border-top: 1px solid #eee;
-    }
-}*/
-
-h3 {
-    font-size: 1.5em;
-    line-height: 1.43;
-}
-h4 {
-    font-size: 1.25em;
-}
-h5 {
-    font-size: 1em;
-}
-h6 {
-   font-size: 1em;
-    color: #777;
-}
-p,
-blockquote,
-ul,
-ol,
-dl,
-table{
-    margin: 0.8em 0;
-}
-li>ol,
-li>ul {
-    margin: 0 0;
-}
-hr {
-    height: 2px;
+  /* 页头：图标、名称、一句话介绍与两个平台的下载入口。 */
+  .masthead {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .masthead img {
+    width: 72px;
+    height: 72px;
+    flex: none;
+  }
+  h1 {
+    font-size: 1.9rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .tagline {
+    margin: 2px 0 0;
+    color: var(--secondary);
+  }
+  .summary {
+    margin: 20px 0 16px;
+  }
+  /* 页头的下载入口：两个并排的圆角按钮，窄屏时自动换行。 */
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 28px;
     padding: 0;
-    margin: 16px 0;
-    background-color: #e7e7e7;
-    border: 0 none;
-    overflow: hidden;
-    box-sizing: content-box;
-}
-
-li p.first {
+    list-style: none;
+  }
+  .platforms li {
+    margin: 0;
+  }
+  .platforms a {
     display: inline-block;
-}
-ul,
-ol {
-    padding-left: 30px;
-}
-ul:first-child,
-ol:first-child {
-    margin-top: 0;
-}
-ul:last-child,
-ol:last-child {
-    margin-bottom: 0;
-}
-blockquote {
-    border-left: 4px solid #dfe2e5;
-    padding: 0 15px;
-    color: #777777;
-}
-blockquote blockquote {
-    padding-right: 0;
-}
-table {
-    padding: 0;
-    word-break: initial;
-}
-table tr {
-    border: 1px solid #dfe2e5;
+    padding: 6px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--panel);
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .platforms a:hover {
+    text-decoration: none;
+    border-color: var(--secondary);
+  }
+  .banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 36px;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 48px 0 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 28px 0 8px;
+  }
+  p, ul {
+    margin: 0 0 12px;
+  }
+  ul {
+    padding-left: 1.4em;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  /* 中文正文段落沿用原首页的两个全角空格缩进，写在文字里而不是用 text-indent，复制出去仍保留。 */
+  .prose p {
+    margin-bottom: 16px;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  /* iOS 独有功能的标注：小号上标，颜色取次要色，不喧宾夺主。说明写在功能一览的末尾。 */
+  sup.ios {
+    font-size: 0.68em;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-left: 3px;
+  }
+  /* 次要的说明文字：功能标注的说明、下载链接的状态提示等。 */
+  .note {
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--secondary);
+    font-size: 0.85rem;
+    line-height: 1.9;
+  }
+  footer p {
     margin: 0;
-    padding: 0;
-}
-table tr:nth-child(2n),
-thead {
-    background-color: #f8f8f8;
-}
-table th {
-    font-weight: bold;
-    border: 1px solid #dfe2e5;
-    border-bottom: 0;
-    margin: 0;
-    padding: 6px 13px;
-}
-table td {
-    border: 1px solid #dfe2e5;
-    margin: 0;
-    padding: 6px 13px;
-}
-table th:first-child,
-table td:first-child {
-    margin-top: 0;
-}
-table th:last-child,
-table td:last-child {
-    margin-bottom: 0;
-}
-
-.CodeMirror-lines {
-    padding-left: 4px;
-}
-
-.code-tooltip {
-    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
-    border-top: 1px solid #eef2f2;
-}
-
-.md-fences,
-code,
-tt {
-    border: 1px solid #e7eaed;
-    background-color: #f8f8f8;
-    border-radius: 3px;
-    padding: 0;
-    padding: 2px 4px 0px 4px;
-    font-size: 0.9em;
-}
-
-code {
-    background-color: #f3f4f4;
-    padding: 0 2px 0 2px;
-}
-
-.md-fences {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    padding-top: 8px;
-    padding-bottom: 6px;
-}
-
-
-.md-task-list-item > input {
-  margin-left: -1.3em;
-}
-
-@media print {
-    html {
-        font-size: 13px;
-    }
-    pre {
-        page-break-inside: avoid;
-        word-wrap: break-word;
-    }
-}
-
-.md-fences {
-	background-color: #f8f8f8;
-}
-#write pre.md-meta-block {
-	padding: 1rem;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f7f7f7;
-    border: 0;
-    border-radius: 3px;
-    color: #777777;
-    margin-top: 0 !important;
-}
-
-.mathjax-block>.code-tooltip {
-	bottom: .375rem;
-}
-
-.md-mathjax-midline {
-    background: #fafafa;
-}
-
-#write>h3.md-focus:before{
-	left: -1.5625rem;
-	top: .375rem;
-}
-#write>h4.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h5.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h6.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-.md-image>.md-meta {
-    /*border: 1px solid #ddd;*/
-    border-radius: 3px;
-    padding: 2px 0px 0px 4px;
-    font-size: 0.9em;
-    color: inherit;
-}
-
-.md-tag {
-    color: #a7a7a7;
-    opacity: 1;
-}
-
-.md-toc { 
-    margin-top:20px;
-    padding-bottom:20px;
-}
-
-.sidebar-tabs {
-    border-bottom: none;
-}
-
-#typora-quick-open {
-    border: 1px solid #ddd;
-    background-color: #f8f8f8;
-}
-
-#typora-quick-open-item {
-    background-color: #FAFAFA;
-    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
-    border-style: solid;
-    border-width: 1px;
-}
-
-/** focus mode */
-.on-focus-mode blockquote {
-    border-left-color: rgba(85, 85, 85, 0.12);
-}
-
-header, .context-menu, .megamenu-content, footer{
-    font-family: "Segoe UI", "Arial", sans-serif;
-}
-
-.file-node-content:hover .file-node-icon,
-.file-node-content:hover .file-node-open-state{
-    visibility: visible;
-}
-
-.mac-seamless-mode #typora-sidebar {
-    background-color: #fafafa;
-    background-color: var(--side-bar-bg-color);
-}
-
-.md-lang {
-    color: #b4654d;
-}
-
-/*.html-for-mac {
-    --item-hover-bg-color: #E6F0FE;
-}*/
-
-#md-notification .btn {
-    border: 0;
-}
-
-.dropdown-menu .divider {
-    border-color: #e5e5e5;
-    opacity: 0.4;
-}
-
-.ty-preferences .window-content {
-    background-color: #fafafa;
-}
-
-.ty-preferences .nav-group-item.active {
-    color: white;
-    background: #999;
-}
-
-.menu-item-container a.menu-style-btn {
-    background-color: #f5f8fa;
-    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
-}
-
-
- @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
-</style><title>纯纯写作 - 绝不丢失文本编辑器</title>
+  }
+  footer a {
+    color: var(--secondary);
+  }
+  /* 公安备案图标与文字对齐。 */
+  footer img {
+    width: 16px;
+    height: 16px;
+    vertical-align: -3px;
+    margin-right: 4px;
+  }
+</style>
 </head>
-<body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><h3 id='纯纯写作---不丢失文本编辑器'><span>纯纯写作 - 不丢失文本编辑器</span></h3><p><span>一个令人感到安心、拥有历史记录、支持云同步、云备份、多重防丢失功能，和许多写作辅助的极速编辑器。</span></p><p><img src="/images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" referrerpolicy="no-referrer" alt="PureWriter1024x500.jpg"></p><p>&nbsp;</p><p><span>　　写作，让我们连接过去，遥想未来。然而，您是否经历过一些写作软件：启动不够快导致灵感稍纵即逝？经常出错导致文字付诸东流？缺乏许多写作该有的功能与辅助令人感觉不够顺手？</span></p><p><span>　　纯纯写作能够解决所有这些问题。这是一个极速的纯文本编辑器，我们希望写作能够回到原本的样子：</span><b><span>纯粹、有安全感、随时、不丢失内容、具备良好的写作体验。</span></b></p><p><span>　　</span><strong><span>令人安心</span></strong></p><p><span>　　纯纯写作的图标是一个时光机的投影，寓意着文字能够带我们穿越时空，也照应了纯纯写作特别提供的「历史记录」和「自动备份」功能，通过这些保障，</span><strong><span>即使您误操作将文本删除，或手机瞬间断电关机，您的文章仍然能够被完整保存</span></strong><span>或者在历史记录里找回。多年来，纯纯写作提供了</span><strong><span>令人安心，充满安全感的写作体验</span></strong><span>，做到了难得的无丢失，广受好评。</span></p><p><span>　　</span><strong><span>丝滑流畅</span></strong></p><p><span>　　除了实现最重要的安全保障之外，纯纯写作的 UI 界面和各种写作辅助功能，也能令用户感到这个应用真是赏心悦目又丝滑流畅。纯纯写作</span><strong><span>适配了 Android 11 的软键盘接口，能够让您的手指顺滑地控制软键盘起落</span></strong><span>。同时，它还提供了</span><strong><span>呼吸式的光标</span></strong><span>，光标不再仅仅一闪一闪，而是像人的呼吸一样，渐隐渐显。许多类似这样的细节，纯纯写作都打磨到了极致，与此同时，它又拥有许多写作辅助功能，比如</span><strong><span>「自动补全成对符号」、按删除时删除成对符号</span></strong><span>、在完成对话内容时按回车键跳出引号范围……许多这样的辅助功能，都会令人感到适时和自然，</span><strong><span>当你对比其他编辑器应用时，便会发现纯纯写作做得更加出色、流畅、细致入微。</span></strong></p><p><span>　　</span><strong><span>蕴繁于简</span></strong></p><p><span>　　许多编辑器该有的基本功能，纯纯写作也都没有落下，比如 快捷输入栏、</span><b><span>多设备云同步</span></b><span>、段首缩进、段间距、生成精美的长图片、撤销、字数统计、双编辑器左右对照、一键调整格式、查找替换、Markdown、</span><a href='desktop'><span>电脑版</span></a><span>……还有一些十分有创意的特色功能，比如：使用 TTS 语音引擎实时读出您输入的文字，</span><strong><span>帮您换一种感官方式检查输入的文字</span></strong><span>是否正确。再比如它实现了「</span><strong><span>无限字数</span></strong><span>」，只要您的手机性能允许，没有字数限制。即使这样，纯纯写作仍然保持了简约的设计风格，遵循 Material Design 设计，好用又好看。</span></p><p><span>　　您能够超快速度到达灵感页面，能够随时随地中断和继续写作，这些纯纯写作都已经为您做好了。令人感到安心且流畅的写作体验，这就是纯纯写作，请享受写作吧！</span></p><h3 id='下载'><span>下载</span></h3><p><strong><span>国内下载</span></strong><span>: </span><a href='https://m.malink.cn/s/QVnqEf' target='_blank' class='url'>https://m.malink.cn/s/QVnqEf</a></p><p><strong><span>Google Play</span></strong><span>: </span><a href='https://play.google.com/store/apps/details?id=com.drakeet.purewriter' target='_blank' class='url'>https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></p><p>&nbsp;</p><h3 id='纯纯写作获奖情况'><span>纯纯写作获奖情况</span></h3><ul><li><p><span>小米金米奖</span></p></li><li><p><span>OPPO 至美奖</span></p></li><li><p><span>华为匠心奖、年度最佳应用</span></p></li><li><p><span>少数派年度最佳应用</span></p></li></ul><p>&nbsp;</p><h3 id='其它介绍'><span>其它介绍</span></h3><ul><li><p><a href='backups'><strong><span>《纯纯写作自动备份与云备份教程》</span></strong></a></p></li><li><p><a href='protections'><span>《纯纯写作保护机制》</span></a></p></li><li><p><a href='markdown'><span>《Markdown 简明教程》</span></a></p></li><li><p><a href='desktop'><span>纯纯写作</span><strong><span>桌面版</span></strong></a></p></li><li><p><a href='wiki'><span>《纯纯写作用户手册》</span></a></p></li></ul><p>&nbsp;</p><h3 id='帮助'><span>帮助</span></h3><p><span>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：</span><a href='mailto:writer@drakeet.com' target='_blank' class='url'>writer@drakeet.com</a></p><p><span>如果你喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为你的支持而能够变得更好，非常感谢！</span></p><p>&nbsp;</p><p><span>版权所有：苏州小白迷雾科技有限公司</span></p><p><img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" width=22 /><a href='https://beian.mps.gov.cn/#/query/webSearch'><span>苏公网安备32050602012178号</span></a><span>    </span><a href='https://beian.miit.gov.cn/'><span>闽ICP备2021006387号-1</span></a></p></div></div>
+<body>
+<main>
+
+<div class="toolbar">
+  <select id="language-select" aria-label="Language">
+    <option value="zh-Hans">简体中文</option>
+    <option value="zh-Hant">繁體中文（台灣）</option>
+    <option value="zh-HK">繁體中文（香港）</option>
+    <option value="en">English</option>
+    <option value="ja">日本語</option>
+  </select>
+</div>
+
+<!-- ═══════════════════════════ 简体中文 ═══════════════════════════ -->
+<article data-locale="zh-Hans" lang="zh-Hans">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>纯纯写作</h1>
+      <p class="tagline">绝不丢失文本的极速纯文本编辑器</p>
+    </div>
+  </div>
+  <p class="summary">一个令人感到安心、拥有历史记录、支持云同步、云备份、多重防丢失功能，和许多写作辅助的极速编辑器。适用于 Android、iPhone 与 iPad。</p>
+  <ul class="platforms">
+    <li><a href="#download-android">下载 Android 版</a></li>
+    <li><a href="#download-ios">下载 iOS 版</a></li>
+  </ul>
+  <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="纯纯写作：绝不丢失文本编辑器" loading="lazy">
+</header>
+
+<section class="prose">
+  <p>　　写作，让我们连接过去，遥想未来。然而，您是否经历过一些写作软件：启动不够快，灵感稍纵即逝？经常出错，文字付诸东流？缺乏写作该有的功能与辅助，用起来总不顺手？</p>
+  <p>　　纯纯写作能够解决这些问题。这是一个极速的纯文本编辑器，我们希望写作回到原本的样子：<strong>纯粹、有安全感、随时可写、不丢失内容，并拥有良好的写作体验。</strong></p>
+
+  <h2>令人安心</h2>
+  <p>　　纯纯写作的图标是一台时光机的投影，寓意文字能够带我们穿越时空，也照应着「历史记录」与「自动备份」。通过这些保障，<strong>即使您误删了文字，或手机突然断电关机，您的文章依然会被完整保存</strong>，或者能在历史记录里找回。多年来，纯纯写作提供了<strong>令人安心、充满安全感的写作体验</strong>，做到了难得的无丢失，广受好评。</p>
+
+  <h2>丝滑流畅</h2>
+  <p>　　除了最重要的安全保障，纯纯写作的界面与写作辅助，也让人感到赏心悦目又丝滑流畅。<strong>手指可以顺滑地控制软键盘的起落</strong>，光标像人的呼吸一样渐隐渐显，不再只是一闪一闪。许多这样的细节，纯纯写作都打磨到了极致。写作辅助也处处适时而自然：<strong>空的成对符号一次退格即可一起删除</strong>，写完引号里的对话按回车就跳到引号之后……当您对比其他编辑器时，便会发现纯纯写作做得更加出色、流畅、细致入微。</p>
+
+  <h2>蕴繁于简</h2>
+  <p>　　许多编辑器该有的基本功能，纯纯写作也都没有落下：快捷输入栏、<strong>多设备云同步</strong>、段首缩进、段间距、精美的长图片、撤销、字数统计、双编辑器左右对照、一键排版、查找替换、Markdown、<a href="desktop2">电脑版</a>……还有一些富有创意的特色功能：比如用语音实时读出您刚写下的文字，<strong>帮您换一种感官检查文字</strong>是否正确；再比如「<strong>无限字数</strong>」，只要设备性能允许，就没有字数限制。即使这样，纯纯写作仍然保持简约的设计：Android 版遵循 Material Design，iOS 版遵循 Apple 的设计规范，好用又好看。</p>
+  <p>　　您能够以极快的速度到达灵感页面，随时随地中断和继续写作。令人安心且流畅的写作体验，这就是纯纯写作。请享受写作吧！</p>
+</section>
+
+<section class="prose">
+  <h2 id="ios">iOS 版</h2>
+  <p>　　纯纯写作 iOS 版凝聚了我们十年来对编辑器的理解，按 iOS 原生的设计与交互习惯重新打造，<strong>全面采用液态玻璃（Liquid Glass）设计</strong>。打字机模式聚焦当前段落，其余段落柔和淡去；重新打开文章，回到上次停留的位置，仿佛从未离开。iOS 版共有 178 项用心打磨的功能与细节。</p>
+  <ul>
+    <li>适用于 iPhone 与 iPad，需要 iOS 26 或 iPadOS 26 及以上版本。</li>
+    <li>下载后可以免费试用 7 天，期间全部功能可用，无需订阅，也不会自动扣费。试用结束后，可以选择月度订阅、年度订阅或永久会员。iOS 版不区分免费版与高级版，会员即全部功能。</li>
+    <li>已用纯纯写作账号开通会员的老用户（例如在 Android 版通过支付宝购买），在 iOS 版登录同一账号即可继续使用会员，无需再次付费。通过 Google Play 购买的会员由 Google 账户管理，无法转到 iOS 版。</li>
+    <li>与 Android 版、电脑版连接同一个网盘账号，就能在多台设备之间同步，接续写作。</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="features">功能一览</h2>
+
+  <h3>顺手的编辑体验</h3>
+  <ul>
+    <li>蓝色填字框：在成对符号中填写内容，按回车即可跳到符号之后</li>
+    <li>成对删除符号，智能接续列表与序号，段首缩进自动跟随</li>
+    <li>撤销与重做，支持键盘快捷键</li>
+    <li>标题与正文统一撤销，支持三指手势与摇一摇<sup class="ios">iOS</sup></li>
+    <li>段落上移与下移，也能多段一起调整顺序</li>
+    <li>日期补全，逗号换行自动变句号</li>
+    <li>双编辑器：正文与参考资料各占一处，左右切换</li>
+    <li>无限字数：不人为设定字数上限，短句与长篇都能写</li>
+  </ul>
+
+  <h3>专注写作</h3>
+  <ul>
+    <li>打字机模式，滚动时自动隐藏顶栏</li>
+    <li>沉浸模式：开始输入时自动收起顶栏<sup class="ios">iOS</sup></li>
+    <li>屏幕常亮，跟手收起键盘，重新打开时恢复滚动位置</li>
+    <li>宽屏与横屏下正文保持舒适的阅读列宽</li>
+  </ul>
+
+  <h3>排版与字数</h3>
+  <ul>
+    <li>悬浮字数统计，选中文字单独计数，查看光标前字数</li>
+    <li>字数统计口径可选：是否计入标点、空格与换行</li>
+    <li>行距、边距、段间距与字号自由调整，拖动时即时预览</li>
+    <li>一键排版：整理空行、段首缩进与中英文间距，半角标点转全角</li>
+    <li>简繁转换与台湾化用语</li>
+    <li>多行粘贴时可选择保留或去除空行</li>
+  </ul>
+
+  <h3>赏心悦目的细节</h3>
+  <ul>
+    <li>浅色与深色外观；自定义主题色<sup class="ios">iOS</sup></li>
+    <li>内置霞鹜文楷，也可以导入自己的 TTF、OTF 字体</li>
+    <li>稿纸背景：纯色、预置风景图，或用自己的照片；照片可以双指取景，蒙版浓淡可调<sup class="ios">iOS</sup></li>
+    <li>稿纸横线，实线或虚线、浓淡与位置都可以调整</li>
+    <li>圆润精致的选区高亮<sup class="ios">iOS</sup>，多行填字框融合成连贯的圆角轮廓</li>
+    <li>侧栏三档展开，主内容圆角与屏幕边缘自然呼应<sup class="ios">iOS</sup></li>
+  </ul>
+
+  <h3>快捷输入</h3>
+  <ul>
+    <li>键盘上方的快捷输入栏：常用词句、人物名字与符号一键输入</li>
+    <li>可以设定插入后的光标落点，支持日期与时间模板</li>
+    <li>多行快捷输入栏，每栏独立横向滚动</li>
+    <li>撤销、重做、缩进、排版、搜索、光标左右移动等操作也能放进快捷栏</li>
+  </ul>
+
+  <h3>书籍与文章整理</h3>
+  <ul>
+    <li>书、卷、文章三级整理，从随手记到长篇作品都井井有条</li>
+    <li>书籍标签与组合筛选，书架单列或双列</li>
+    <li>文章与卷拖动排序，卷可展开与收起，卷标题吸顶</li>
+    <li>详细列表显示摘要、时间与字数，一键定位当前文章</li>
+    <li>创建文章副本，文章与整卷跨书移动</li>
+  </ul>
+
+  <h3>查找与替换</h3>
+  <ul>
+    <li>标题与正文查找替换，也可以使用传统的查找模式</li>
+    <li>跨文章、跨书查找，按多个条件搜索，卷名也能搜索</li>
+    <li>区分大小写、正则表达式，结果排序可选</li>
+    <li>跨文章批量替换，替换前先看清涉及多少处</li>
+  </ul>
+
+  <h3>安心保存与找回</h3>
+  <ul>
+    <li>自动保存与历史记录，旧稿与当前版本差异对照，预览后再恢复</li>
+    <li>写作缓存：在历史记录之外，再多一道找回文字的保障</li>
+    <li>废纸篓：误删的文章可以移回书中</li>
+    <li>本地自动备份与手动备份，备份文件也可以另存到别处</li>
+    <li>恢复前自动为现有资料做安全备份；随时查看备份保护状态<sup class="ios">iOS</sup></li>
+    <li>存储空间不足时及时提醒</li>
+  </ul>
+
+  <h3>云端备份与接续</h3>
+  <ul>
+    <li>iCloud 额外备份：换机或重装后，发现已有备份即可恢复<sup class="ios">iOS</sup></li>
+    <li>连接 Dropbox、OneDrive 或阿里云盘，网盘自动备份，可选仅在 Wi‑Fi 下上传（Android 版还支持坚果云等 WebDAV 网盘）</li>
+    <li>多设备云同步：连接同一网盘账号，在 Android、iOS 与电脑版之间接续写作</li>
+  </ul>
+
+  <h3>Markdown</h3>
+  <ul>
+    <li>每篇文章都能在纯文本与 Markdown 之间切换</li>
+    <li>边写边看的语法高亮，标题、强调、代码、引用与链接层次分明<sup class="ios">iOS</sup></li>
+    <li>Markdown 快捷输入面板：插入标题、列表、引用、代码、链接与表格</li>
+    <li>外接键盘快捷键快速加粗、倾斜与插入链接<sup class="ios">iOS</sup></li>
+    <li>支持 LaTeX 数学公式，支持插入图片</li>
+    <li>另存为 .md 文件，保留 Markdown 原文</li>
+  </ul>
+
+  <h3>预览、导出与分享</h3>
+  <ul>
+    <li>全屏预览成品效果，多种预览与导出主题</li>
+    <li>导出为长图片、短图集、PDF、Word（DOCX）、EPUB 电子书与 TXT</li>
+    <li>只导出选中文字，自定义水印与电子书作者署名</li>
+    <li>合并成书导出：EPUB 自动生成章节目录与扉页，Word 保留大纲层级</li>
+  </ul>
+
+  <h3>用耳朵校对</h3>
+  <ul>
+    <li>朗读当前文章，当前句跟随高亮，从光标处开始朗读</li>
+    <li>多档语速，离开应用或锁屏后继续朗读，支持耳机控制</li>
+    <li>输入时读出刚写下的字词或句子，换一种感官检查文字</li>
+  </ul>
+
+  <h3>语言与无障碍</h3>
+  <ul>
+    <li>可以为应用单独选择界面语言，不必跟随系统</li>
+    <li>适配读屏：iOS 版支持 VoiceOver，Android 版支持 TalkBack</li>
+  </ul>
+
+  <p class="note">标有 <sup class="ios">iOS</sup> 的功能目前仅 iOS 版提供。</p>
+</section>
+
+<section>
+  <h2 id="download">下载</h2>
+
+  <h3 id="download-android">Android</h3>
+  <ul>
+    <li>国内下载：<a href="https://m.malink.cn/s/QVnqEf">https://m.malink.cn/s/QVnqEf</a></li>
+    <li>Google Play：<a href="https://play.google.com/store/apps/details?id=com.drakeet.purewriter">https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></li>
+  </ul>
+
+  <h3 id="download-ios">iPhone 与 iPad</h3>
+  <ul>
+    <li>App Store：<a href="https://apps.apple.com/app/id6803257195">https://apps.apple.com/app/id6803257195</a></li>
+  </ul>
+  <!-- 上架后删掉这条提示（五种语言各有一条）。 -->
+  <p class="note">iOS 版正在 App Store 审核中，上架之前这个链接可能暂时打不开，请以 App Store 实际的页面为准。</p>
+
+  <h3>电脑版</h3>
+  <p><a href="desktop2">纯纯写作桌面版 2</a>（目前免费），与手机连接同一网盘账号即可同步。</p>
+</section>
+
+<section>
+  <h2>获奖情况</h2>
+  <ul>
+    <li>小米金米奖</li>
+    <li>OPPO 至美奖</li>
+    <li>华为匠心奖、年度最佳应用</li>
+    <li>少数派年度最佳应用</li>
+  </ul>
+</section>
+
+<section>
+  <h2>其它介绍</h2>
+  <ul>
+    <li><a href="backups"><strong>《纯纯写作自动备份与云备份教程》</strong></a>（Android 版）</li>
+    <li><a href="protections">《纯纯写作保护机制》</a>（Android 版）</li>
+    <li><a href="markdown">《Markdown 简明教程》</a></li>
+    <li><a href="wiki">《纯纯写作用户手册》</a>（Android 版）</li>
+    <li><a href="desktop2">纯纯写作<strong>桌面版</strong></a></li>
+    <li><a href="ios/support?lang=zh-Hans">纯纯写作 iOS 版支持</a></li>
+    <li>隐私政策：<a href="privacy">Android 版</a>、<a href="ios/privacy?lang=zh-Hans">iOS 版</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>帮助</h2>
+  <p>如果您发现纯纯写作存在问题，或者有任何需求建议，可以致信：<a href="mailto:writer@drakeet.com">writer@drakeet.com</a></p>
+  <p>如果您喜欢和支持纯纯写作，请帮忙分享或推荐此页面，纯纯写作因为您的支持而能够变得更好，非常感谢！</p>
+</section>
+
+<!-- 版权与备案信息只放在简体中文版本，其它语言不要带上。 -->
+<footer>
+  <p>版权所有：苏州小白迷雾科技有限公司</p>
+  <p>
+    <a href="https://beian.mps.gov.cn/#/query/webSearch"><img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" alt="">苏公网安备32050602012178号</a>
+    　<a href="https://beian.miit.gov.cn/">闽ICP备2021006387号-1</a>
+  </p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（台灣） ═══════════════════════════ -->
+<article data-locale="zh-Hant" lang="zh-Hant-TW">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純寫作</h1>
+      <p class="tagline">絕不遺失文字的極速純文字編輯器</p>
+    </div>
+  </div>
+  <p class="summary">一個令人安心、擁有歷史記錄、支援雲端同步與雲端備份、多重防遺失功能，以及許多寫作輔助的極速編輯器。適用於 Android、iPhone 與 iPad。</p>
+  <ul class="platforms">
+    <li><a href="#download-android-zh-hant">下載 Android 版</a></li>
+    <li><a href="#download-ios-zh-hant">下載 iOS 版</a></li>
+  </ul>
+  <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="純純寫作：絕不遺失文字的編輯器" loading="lazy">
+</header>
+
+<section class="prose">
+  <p>　　寫作，讓我們連接過去，遙想未來。然而，您是否經歷過一些寫作軟體：啟動不夠快，靈感稍縱即逝？經常出錯，文字付諸東流？缺乏寫作該有的功能與輔助，用起來總是不順手？</p>
+  <p>　　純純寫作能夠解決這些問題。這是一個極速的純文字編輯器，我們希望寫作回到原本的樣子：<strong>純粹、有安全感、隨時可寫、不遺失內容，並擁有良好的寫作體驗。</strong></p>
+
+  <h2>令人安心</h2>
+  <p>　　純純寫作的圖示是一台時光機的投影，寓意文字能夠帶我們穿越時空，也呼應著「歷史記錄」與「自動備份」。透過這些保障，<strong>即使您誤刪了文字，或手機突然斷電關機，您的文章依然會被完整保存</strong>，或者能在歷史記錄裡找回。多年來，純純寫作提供了<strong>令人安心、充滿安全感的寫作體驗</strong>，做到了難得的無遺失，廣受好評。</p>
+
+  <h2>絲滑流暢</h2>
+  <p>　　除了最重要的安全保障，純純寫作的介面與寫作輔助，也讓人感到賞心悅目又絲滑流暢。<strong>手指可以順滑地控制鍵盤的起落</strong>，游標像人的呼吸一樣漸隱漸顯，不再只是一閃一閃。許多這樣的細節，純純寫作都打磨到了極致。寫作輔助也處處適時而自然：<strong>空的成對符號一次退格即可一起刪除</strong>，寫完引號裡的對話按換行鍵就跳到引號之後……當您比較其他編輯器時，便會發現純純寫作做得更加出色、流暢、細緻入微。</p>
+
+  <h2>蘊繁於簡</h2>
+  <p>　　許多編輯器該有的基本功能，純純寫作也都沒有落下：快捷輸入欄、<strong>多裝置雲端同步</strong>、段首縮排、段落間距、精美的長圖片、復原、字數統計、雙編輯器左右對照、一鍵排版、尋找與取代、Markdown、<a href="desktop2_zh">電腦版</a>……還有一些富有創意的特色功能：例如用語音即時讀出您剛寫下的文字，<strong>幫您換一種感官檢查文字</strong>是否正確；又如「<strong>無限字數</strong>」，只要裝置效能允許，就沒有字數限制。即使如此，純純寫作仍然保持簡約的設計：Android 版遵循 Material Design，iOS 版遵循 Apple 的設計規範，好用又好看。</p>
+  <p>　　您能夠以極快的速度到達靈感頁面，隨時隨地中斷和繼續寫作。令人安心且流暢的寫作體驗，這就是純純寫作。請享受寫作吧！</p>
+</section>
+
+<section class="prose">
+  <h2 id="ios-zh-hant">iOS 版</h2>
+  <p>　　純純寫作 iOS 版凝聚了我們十年來對編輯器的理解，依 iOS 原生的設計與互動習慣重新打造，<strong>全面採用液態玻璃（Liquid Glass）設計</strong>。打字機模式聚焦目前段落，其餘段落柔和淡去；重新開啟文章，回到上次停留的位置，彷彿從未離開。iOS 版共有 178 項用心打磨的功能與細節。</p>
+  <ul>
+    <li>適用於 iPhone 與 iPad，需要 iOS 26 或 iPadOS 26 以上版本。</li>
+    <li>下載後可以免費試用 7 天，期間所有功能都可使用，無需訂閱，也不會自動扣款。試用結束後，可以選擇月訂閱、年訂閱或永久會員。iOS 版不區分免費版與進階版，會員即全部功能。</li>
+    <li>曾以純純寫作帳號開通會員的老使用者，在 iOS 版登入同一個帳號即可繼續享有會員，無需再次付費。透過 Google Play 購買的會員由 Google 帳戶管理，無法轉移到 iOS 版。</li>
+    <li>與 Android 版、電腦版連接同一個雲端硬碟帳號，就能在多台裝置之間同步，接續寫作。</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="features-zh-hant">功能一覽</h2>
+
+  <h3>順手的編輯體驗</h3>
+  <ul>
+    <li>藍色填字框：在成對符號中填寫內容，按換行鍵即可跳到符號之後</li>
+    <li>成對刪除符號，智慧接續列表與序號，段首縮排自動跟隨</li>
+    <li>復原與重做，支援鍵盤快速鍵</li>
+    <li>標題與內文統一復原，支援三指手勢與搖一搖<sup class="ios">iOS</sup></li>
+    <li>段落上移與下移，也能多段一起調整順序</li>
+    <li>日期補全，逗號換行自動變句點</li>
+    <li>雙編輯器：內文與參考資料各佔一處，左右切換</li>
+    <li>無限字數：不人為設定字數上限，短句與長篇都能寫</li>
+  </ul>
+
+  <h3>專注寫作</h3>
+  <ul>
+    <li>打字機模式，捲動時自動隱藏頂部列</li>
+    <li>沉浸模式：開始輸入時自動收起頂部列<sup class="ios">iOS</sup></li>
+    <li>螢幕恆亮，跟手收起鍵盤，重新開啟時還原捲動位置</li>
+    <li>寬螢幕與橫向畫面下，內文保持舒適的閱讀欄寬</li>
+  </ul>
+
+  <h3>排版與字數</h3>
+  <ul>
+    <li>浮動字數統計，選取文字單獨計數，查看游標前字數</li>
+    <li>字數統計方式可選：是否計入標點、空白與換行</li>
+    <li>行距、邊距、段落間距與字級自由調整，拖曳時即時預覽</li>
+    <li>一鍵排版：整理空行、段首縮排與中英文間距，半形標點轉全形</li>
+    <li>簡繁轉換與台灣化用語</li>
+    <li>多行貼上時可選擇保留或去除空行</li>
+  </ul>
+
+  <h3>賞心悅目的細節</h3>
+  <ul>
+    <li>淺色與深色外觀；自訂主題色<sup class="ios">iOS</sup></li>
+    <li>內建霞鶩文楷，也可以匯入自己的 TTF、OTF 字型</li>
+    <li>稿紙背景：純色、預置風景圖，或用自己的照片；照片可以雙指取景，遮罩濃淡可調<sup class="ios">iOS</sup></li>
+    <li>稿紙橫線，實線或虛線、濃淡與位置都可以調整</li>
+    <li>圓潤精緻的選取範圍標示<sup class="ios">iOS</sup>，多行填字框融合成連貫的圓角輪廓</li>
+    <li>側欄三段展開，主內容圓角與螢幕邊緣自然呼應<sup class="ios">iOS</sup></li>
+  </ul>
+
+  <h3>快捷輸入</h3>
+  <ul>
+    <li>鍵盤上方的快捷輸入欄：常用詞句、人物名字與符號一鍵輸入</li>
+    <li>可以設定插入後的游標落點，支援日期與時間範本</li>
+    <li>多行快捷輸入欄，每欄獨立橫向捲動</li>
+    <li>復原、重做、縮排、排版、搜尋、游標左右移動等操作也能放進快捷欄</li>
+  </ul>
+
+  <h3>書籍與文章整理</h3>
+  <ul>
+    <li>書、卷、文章三級整理，從隨手記到長篇作品都井井有條</li>
+    <li>書籍標籤與組合篩選，書架單欄或雙欄</li>
+    <li>文章與卷拖曳排序，卷可展開與收起，卷標題固定在頂部</li>
+    <li>詳細列表顯示摘要、時間與字數，一鍵定位目前文章</li>
+    <li>建立文章副本，文章與整卷跨書移動</li>
+  </ul>
+
+  <h3>尋找與取代</h3>
+  <ul>
+    <li>標題與內文尋找取代，也可以使用傳統的尋找模式</li>
+    <li>跨文章、跨書尋找，依多個條件搜尋，卷名也能搜尋</li>
+    <li>區分大小寫、正規表示式，結果排序可選</li>
+    <li>跨文章批次取代，取代前先看清涉及多少處</li>
+  </ul>
+
+  <h3>安心儲存與找回</h3>
+  <ul>
+    <li>自動儲存與歷史記錄，舊稿與目前版本差異對照，預覽後再還原</li>
+    <li>寫作快取：在歷史記錄之外，再多一道找回文字的保障</li>
+    <li>廢紙簍：誤刪的文章可以移回書中</li>
+    <li>本機自動備份與手動備份，備份檔案也可以另存到別處</li>
+    <li>還原前自動為現有資料做安全備份；隨時查看備份保護狀態<sup class="ios">iOS</sup></li>
+    <li>儲存空間不足時及時提醒</li>
+  </ul>
+
+  <h3>雲端備份與接續</h3>
+  <ul>
+    <li>iCloud 額外備份：換機或重新安裝後，發現既有備份即可還原<sup class="ios">iOS</sup></li>
+    <li>連接 Dropbox 或 OneDrive，雲端硬碟自動備份，可選僅在 Wi‑Fi 下上傳（Android 版另支援 WebDAV）</li>
+    <li>多裝置雲端同步：連接同一個雲端硬碟帳號，在 Android、iOS 與電腦版之間接續寫作</li>
+  </ul>
+
+  <h3>Markdown</h3>
+  <ul>
+    <li>每篇文章都能在純文字與 Markdown 之間切換</li>
+    <li>邊寫邊看的語法醒目提示，標題、強調、程式碼、引用與連結層次分明<sup class="ios">iOS</sup></li>
+    <li>Markdown 快捷輸入面板：插入標題、清單、引用、程式碼、連結與表格</li>
+    <li>外接鍵盤快速鍵快速加粗、斜體與插入連結<sup class="ios">iOS</sup></li>
+    <li>支援 LaTeX 數學公式，支援插入圖片</li>
+    <li>另存為 .md 檔案，保留 Markdown 原文</li>
+  </ul>
+
+  <h3>預覽、匯出與分享</h3>
+  <ul>
+    <li>全螢幕預覽成品效果，多種預覽與匯出主題</li>
+    <li>匯出為長圖片、短圖集、PDF、Word（DOCX）、EPUB 電子書與 TXT</li>
+    <li>只匯出選取文字，自訂浮水印與電子書作者署名</li>
+    <li>合併成書匯出：EPUB 自動產生章節目錄與扉頁，Word 保留大綱層級</li>
+  </ul>
+
+  <h3>用耳朵校對</h3>
+  <ul>
+    <li>朗讀目前文章，目前句跟隨標示，從游標處開始朗讀</li>
+    <li>多段語速，離開 App 或鎖定畫面後繼續朗讀，支援耳機控制</li>
+    <li>輸入時讀出剛寫下的字詞或句子，換一種感官檢查文字</li>
+  </ul>
+
+  <h3>語言與輔助使用</h3>
+  <ul>
+    <li>可以為 App 單獨選擇介面語言，不必跟隨系統</li>
+    <li>支援 iOS 的 VoiceOver 與 Android 的 TalkBack</li>
+  </ul>
+
+  <p class="note">標有 <sup class="ios">iOS</sup> 的功能目前僅 iOS 版提供。</p>
+</section>
+
+<section>
+  <h2 id="download-zh-hant">下載</h2>
+
+  <h3 id="download-android-zh-hant">Android</h3>
+  <ul>
+    <li>Google Play：<a href="https://play.google.com/store/apps/details?id=com.drakeet.purewriter">https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></li>
+  </ul>
+
+  <h3 id="download-ios-zh-hant">iPhone 與 iPad</h3>
+  <ul>
+    <li>App Store：<a href="https://apps.apple.com/app/id6803257195">https://apps.apple.com/app/id6803257195</a></li>
+  </ul>
+  <p class="note">iOS 版正在 App Store 審核中，上架前這個連結可能暫時無法開啟，請以 App Store 實際的頁面為準。</p>
+
+  <h3>電腦版</h3>
+  <p><a href="desktop2_zh">純純寫作桌面版 2</a>（目前免費），與手機連接同一個雲端硬碟帳號即可同步。</p>
+</section>
+
+<section>
+  <h2>獲獎情況</h2>
+  <ul>
+    <li>小米金米獎</li>
+    <li>OPPO 至美獎</li>
+    <li>華為匠心獎、年度最佳應用</li>
+    <li>少數派年度最佳應用</li>
+  </ul>
+</section>
+
+<section>
+  <h2>其他介紹</h2>
+  <ul>
+    <li><a href="backups_zh"><strong>《純純寫作自動備份與雲備份教學》</strong></a>（Android 版）</li>
+    <li><a href="wiki_zh">《純純寫作使用手冊》</a>（Android 版）</li>
+    <li><a href="desktop2_zh">純純寫作<strong>桌面版</strong></a></li>
+    <li><a href="ios/support?lang=zh-Hant">純純寫作 iOS 版支援</a></li>
+    <li>隱私權政策：<a href="privacy">Android 版</a>（簡體中文）、<a href="ios/privacy?lang=zh-Hant">iOS 版</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>協助</h2>
+  <p>如果您發現純純寫作有任何問題，或者有需求與建議，歡迎來信：<a href="mailto:writer@drakeet.com">writer@drakeet.com</a></p>
+  <p>如果您喜歡並支持純純寫作，請幫忙分享或推薦這個頁面，純純寫作會因為您的支持而變得更好，非常感謝！</p>
+</section>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（香港） ═══════════════════════════ -->
+<article data-locale="zh-HK" lang="zh-Hant-HK">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純寫作</h1>
+      <p class="tagline">絕不遺失文字的極速純文字編輯器</p>
+    </div>
+  </div>
+  <p class="summary">一個令人安心、擁有歷史記錄、支援雲端同步與雲端備份、多重防遺失功能，以及許多寫作輔助的極速編輯器。適用於 Android、iPhone 與 iPad。</p>
+  <ul class="platforms">
+    <li><a href="#download-android-zh-hk">下載 Android 版</a></li>
+    <li><a href="#download-ios-zh-hk">下載 iOS 版</a></li>
+  </ul>
+  <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="純純寫作：絕不遺失文字的編輯器" loading="lazy">
+</header>
+
+<section class="prose">
+  <p>　　寫作，讓我們連接過去，遙想未來。然而，您是否經歷過一些寫作軟件：啟動不夠快，靈感稍縱即逝？經常出錯，文字付諸東流？缺乏寫作該有的功能與輔助，用起來總是不順手？</p>
+  <p>　　純純寫作能夠解決這些問題。這是一個極速的純文字編輯器，我們希望寫作回到原本的樣子：<strong>純粹、有安全感、隨時可寫、不遺失內容，並擁有良好的寫作體驗。</strong></p>
+
+  <h2>令人安心</h2>
+  <p>　　純純寫作的圖示是一台時光機的投影，寓意文字能夠帶我們穿越時空，也呼應着「歷史記錄」與「自動備份」。透過這些保障，<strong>即使您誤刪了文字，或手機突然斷電關機，您的文章依然會被完整保存</strong>，或者能在歷史記錄裏找回。多年來，純純寫作提供了<strong>令人安心、充滿安全感的寫作體驗</strong>，做到了難得的無遺失，廣受好評。</p>
+
+  <h2>絲滑流暢</h2>
+  <p>　　除了最重要的安全保障，純純寫作的介面與寫作輔助，也讓人感到賞心悅目又絲滑流暢。<strong>手指可以順滑地控制軟鍵盤的起落</strong>，游標像人的呼吸一樣漸隱漸顯，不再只是一閃一閃。許多這樣的細節，純純寫作都打磨到了極致。寫作輔助也處處適時而自然：<strong>空的成對符號一次退格即可一起刪除</strong>，寫完引號裏的對話按換行鍵就跳到引號之後……當您比較其他編輯器時，便會發現純純寫作做得更加出色、流暢、細緻入微。</p>
+
+  <h2>蘊繁於簡</h2>
+  <p>　　許多編輯器該有的基本功能，純純寫作也都沒有落下：快捷輸入欄、<strong>多裝置雲端同步</strong>、段首縮排、段落間距、精美的長圖片、復原、字數統計、雙編輯器左右對照、一鍵排版、尋找與取代、Markdown、<a href="desktop2_zh">電腦版</a>……還有一些富有創意的特色功能：例如用語音實時讀出您剛寫下的文字，<strong>幫您換一種感官檢查文字</strong>是否正確；又如「<strong>無限字數</strong>」，只要裝置性能允許，就沒有字數限制。即使如此，純純寫作仍然保持簡約的設計：Android 版遵循 Material Design，iOS 版遵循 Apple 的設計規範，好用又好看。</p>
+  <p>　　您能夠以極快的速度到達靈感頁面，隨時隨地中斷和繼續寫作。令人安心且流暢的寫作體驗，這就是純純寫作。請享受寫作吧！</p>
+</section>
+
+<section class="prose">
+  <h2 id="ios-zh-hk">iOS 版</h2>
+  <p>　　純純寫作 iOS 版凝聚了我們十年來對編輯器的理解，按 iOS 原生的設計與互動習慣重新打造，<strong>全面採用液態玻璃（Liquid Glass）設計</strong>。打字機模式聚焦當前段落，其餘段落柔和淡去；重新開啟文章，回到上次停留的位置，彷彿從未離開。iOS 版共有 178 項用心打磨的功能與細節。</p>
+  <ul>
+    <li>適用於 iPhone 與 iPad，需要 iOS 26 或 iPadOS 26 以上版本。</li>
+    <li>下載後可以免費試用 7 天，期間所有功能都可使用，無需訂閱，也不會自動扣款。試用結束後，可以選擇月訂閱、年訂閱或永久會員。iOS 版不區分免費版與高級版，會員即全部功能。</li>
+    <li>曾以純純寫作帳戶開通會員的老用戶，在 iOS 版登入同一個帳戶即可繼續享有會員，無需再次付費。透過 Google Play 購買的會員由 Google 帳戶管理，無法轉移到 iOS 版。</li>
+    <li>與 Android 版、電腦版連接同一個雲端硬碟帳戶，就能在多台裝置之間同步，接續寫作。</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="features-zh-hk">功能一覽</h2>
+
+  <h3>順手的編輯體驗</h3>
+  <ul>
+    <li>藍色填字框：在成對符號中填寫內容，按換行鍵即可跳到符號之後</li>
+    <li>成對刪除符號，智能接續列表與序號，段首縮排自動跟隨</li>
+    <li>復原與重做，支援鍵盤快速鍵</li>
+    <li>標題與內文統一復原，支援三指手勢與搖一搖<sup class="ios">iOS</sup></li>
+    <li>段落上移與下移，也能多段一起調整順序</li>
+    <li>日期補全，逗號換行自動變句號</li>
+    <li>雙編輯器：內文與參考資料各佔一處，左右切換</li>
+    <li>無限字數：不人為設定字數上限，短句與長篇都能寫</li>
+  </ul>
+
+  <h3>專注寫作</h3>
+  <ul>
+    <li>打字機模式，滾動時自動隱藏頂部列</li>
+    <li>沉浸模式：開始輸入時自動收起頂部列<sup class="ios">iOS</sup></li>
+    <li>螢幕恆亮，跟手收起軟鍵盤，重新開啟時還原滾動位置</li>
+    <li>寬螢幕與橫向畫面下，內文保持舒適的閱讀欄寬</li>
+  </ul>
+
+  <h3>排版與字數</h3>
+  <ul>
+    <li>懸浮字數統計，選取文字單獨計數，查看游標前字數</li>
+    <li>字數統計方式可選：是否計入標點、空格與換行</li>
+    <li>行距、邊距、段落間距與字號自由調整，拖動時實時預覽</li>
+    <li>一鍵排版：整理空行、段首縮排與中英文間距，半角標點轉全角</li>
+    <li>簡繁轉換與台灣化用語</li>
+    <li>多行貼上時可選擇保留或去除空行</li>
+  </ul>
+
+  <h3>賞心悅目的細節</h3>
+  <ul>
+    <li>淺色與深色外觀；自訂主題色<sup class="ios">iOS</sup></li>
+    <li>內建霞鶩文楷，也可以匯入自己的 TTF、OTF 字型</li>
+    <li>稿紙背景：純色、預置風景圖，或用自己的照片；照片可以雙指取景，遮罩濃淡可調<sup class="ios">iOS</sup></li>
+    <li>稿紙橫線，實線或虛線、濃淡與位置都可以調整</li>
+    <li>圓潤精緻的選取範圍標示<sup class="ios">iOS</sup>，多行填字框融合成連貫的圓角輪廓</li>
+    <li>側欄三段展開，主內容圓角與螢幕邊緣自然呼應<sup class="ios">iOS</sup></li>
+  </ul>
+
+  <h3>快捷輸入</h3>
+  <ul>
+    <li>軟鍵盤上方的快捷輸入欄：常用詞句、人物名字與符號一鍵輸入</li>
+    <li>可以設定插入後的游標落點，支援日期與時間範本</li>
+    <li>多行快捷輸入欄，每欄獨立橫向滾動</li>
+    <li>復原、重做、縮排、排版、搜尋、游標左右移動等操作也能放進快捷欄</li>
+  </ul>
+
+  <h3>書籍與文章整理</h3>
+  <ul>
+    <li>書、卷、文章三級整理，從隨手記到長篇作品都井井有條</li>
+    <li>書籍標籤與組合篩選，書架單欄或雙欄</li>
+    <li>文章與卷拖動排序，卷可展開與收起，卷標題固定在頂部</li>
+    <li>詳細列表顯示摘要、時間與字數，一鍵定位當前文章</li>
+    <li>建立文章副本，文章與整卷跨書移動</li>
+  </ul>
+
+  <h3>尋找與取代</h3>
+  <ul>
+    <li>標題與內文尋找取代，也可以使用傳統的尋找模式</li>
+    <li>跨文章、跨書尋找，按多個條件搜尋，卷名也能搜尋</li>
+    <li>區分大小寫、正規表達式，結果排序可選</li>
+    <li>跨文章批量取代，取代前先看清涉及多少處</li>
+  </ul>
+
+  <h3>安心儲存與找回</h3>
+  <ul>
+    <li>自動儲存與歷史記錄，舊稿與當前版本差異對照，預覽後再還原</li>
+    <li>寫作緩存：在歷史記錄之外，再多一道找回文字的保障</li>
+    <li>廢紙簍：誤刪的文章可以移回書中</li>
+    <li>本機自動備份與手動備份，備份檔案也可以另存到別處</li>
+    <li>還原前自動為現有資料做安全備份；隨時查看備份保護狀態<sup class="ios">iOS</sup></li>
+    <li>儲存空間不足時及時提醒</li>
+  </ul>
+
+  <h3>雲端備份與接續</h3>
+  <ul>
+    <li>iCloud 額外備份：換機或重新安裝後，發現既有備份即可還原<sup class="ios">iOS</sup></li>
+    <li>連接 Dropbox 或 OneDrive，雲端硬碟自動備份，可選僅在 Wi‑Fi 下上傳（Android 版另支援 WebDAV）</li>
+    <li>多裝置雲端同步：連接同一個雲端硬碟帳戶，在 Android、iOS 與電腦版之間接續寫作</li>
+  </ul>
+
+  <h3>Markdown</h3>
+  <ul>
+    <li>每篇文章都能在純文字與 Markdown 之間切換</li>
+    <li>邊寫邊看的語法高亮，標題、強調、代碼、引用與連結層次分明<sup class="ios">iOS</sup></li>
+    <li>Markdown 快捷輸入面板：插入標題、清單、引用、代碼、連結與表格</li>
+    <li>外接鍵盤快速鍵快速加粗、斜體與插入連結<sup class="ios">iOS</sup></li>
+    <li>支援 LaTeX 數學公式，支援插入圖片</li>
+    <li>另存為 .md 檔案，保留 Markdown 原文</li>
+  </ul>
+
+  <h3>預覽、匯出與分享</h3>
+  <ul>
+    <li>全螢幕預覽成品效果，多種預覽與匯出主題</li>
+    <li>匯出為長圖片、短圖集、PDF、Word（DOCX）、EPUB 電子書與 TXT</li>
+    <li>只匯出選取文字，自訂水印與電子書作者署名</li>
+    <li>合併成書匯出：EPUB 自動生成章節目錄與扉頁，Word 保留大綱層級</li>
+  </ul>
+
+  <h3>用耳朵校對</h3>
+  <ul>
+    <li>朗讀當前文章，當前句跟隨標示，從游標處開始朗讀</li>
+    <li>多段語速，離開 App 或鎖定畫面後繼續朗讀，支援耳機控制</li>
+    <li>輸入時讀出剛寫下的字詞或句子，換一種感官檢查文字</li>
+  </ul>
+
+  <h3>語言與輔助功能</h3>
+  <ul>
+    <li>可以為 App 單獨選擇介面語言，不必跟隨系統</li>
+    <li>支援 iOS 的 VoiceOver 與 Android 的 TalkBack</li>
+  </ul>
+
+  <p class="note">標有 <sup class="ios">iOS</sup> 的功能目前僅 iOS 版提供。</p>
+</section>
+
+<section>
+  <h2 id="download-zh-hk">下載</h2>
+
+  <h3 id="download-android-zh-hk">Android</h3>
+  <ul>
+    <li>Google Play：<a href="https://play.google.com/store/apps/details?id=com.drakeet.purewriter">https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></li>
+  </ul>
+
+  <h3 id="download-ios-zh-hk">iPhone 與 iPad</h3>
+  <ul>
+    <li>App Store：<a href="https://apps.apple.com/app/id6803257195">https://apps.apple.com/app/id6803257195</a></li>
+  </ul>
+  <p class="note">iOS 版正在 App Store 審核中，上架前這個連結可能暫時無法開啟，請以 App Store 實際的頁面為準。</p>
+
+  <h3>電腦版</h3>
+  <p><a href="desktop2_zh">純純寫作桌面版 2</a>（目前免費），與手機連接同一個雲端硬碟帳戶即可同步。</p>
+</section>
+
+<section>
+  <h2>獲獎情況</h2>
+  <ul>
+    <li>小米金米獎</li>
+    <li>OPPO 至美獎</li>
+    <li>華為匠心獎、年度最佳應用</li>
+    <li>少數派年度最佳應用</li>
+  </ul>
+</section>
+
+<section>
+  <h2>其他介紹</h2>
+  <ul>
+    <li><a href="backups_zh"><strong>《純純寫作自動備份與雲備份教學》</strong></a>（Android 版）</li>
+    <li><a href="wiki_zh">《純純寫作使用手冊》</a>（Android 版）</li>
+    <li><a href="desktop2_zh">純純寫作<strong>桌面版</strong></a></li>
+    <li><a href="ios/support?lang=zh-HK">純純寫作 iOS 版支援</a></li>
+    <li>私隱政策：<a href="privacy">Android 版</a>（簡體中文）、<a href="ios/privacy?lang=zh-HK">iOS 版</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>協助</h2>
+  <p>如果您發現純純寫作有任何問題，或者有需求與建議，歡迎來信：<a href="mailto:writer@drakeet.com">writer@drakeet.com</a></p>
+  <p>如果您喜歡並支持純純寫作，請幫忙分享或推薦這個頁面，純純寫作會因為您的支持而變得更好，非常感謝！</p>
+</section>
+</article>
+
+<!-- ═══════════════════════════ English ═══════════════════════════ -->
+<article data-locale="en" lang="en">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>Pure Writer</h1>
+      <p class="tagline">Write fast. Never lose a word.</p>
+    </div>
+  </div>
+  <p class="summary">A fast plain text editor you can trust, with History, cloud sync and backups, layers of protection against losing your work, and many thoughtful writing aids. For Android, iPhone, and iPad.</p>
+  <ul class="platforms">
+    <li><a href="#download-android-en">Download for Android</a></li>
+    <li><a href="#download-ios-en">Download for iOS</a></li>
+  </ul>
+  <img class="banner" src="images/home_en.jpg" alt="Pure Writer on Android" loading="lazy">
+</header>
+
+<section class="prose">
+  <p>Writing connects us with the past and lets us imagine the future. Yet many writing apps get in the way: they launch too slowly and the idea slips away, they fail and your words are gone, or they lack the features and small aids that writing needs.</p>
+  <p>Pure Writer solves these problems. It is a very fast plain text editor, built so writing can go back to what it was meant to be: <strong>pure, safe, always ready, never losing your words, and a pleasure to do.</strong></p>
+
+  <h2>Peace of Mind</h2>
+  <p>The Pure Writer icon is the silhouette of a time machine: words can carry us across time, and the app keeps History and automatic backups for you. <strong>Even if you delete something by mistake, or your phone loses power without warning, your document is still saved in full</strong>, or waiting for you in History. For years, Pure Writer has offered a writing experience people trust, and it is known for not losing words.</p>
+
+  <h2>Smooth and Fluid</h2>
+  <p>Beyond keeping your words safe, Pure Writer is a pleasure to look at and to use. <strong>You can slide the keyboard up and down with your finger</strong>, and the cursor breathes, fading gently in and out instead of simply blinking. We have polished many details like these. Writing aids step in just when you need them: <strong>an empty pair of quotes or brackets disappears with a single backspace</strong>, and when you finish a line of dialogue, pressing Return takes you past the closing quote. Compare it with other editors, and you will feel the difference.</p>
+
+  <h2>Rich, Yet Simple</h2>
+  <p>Everything you expect from an editor is here: a shortcut bar, <strong>cloud sync across devices</strong>, first-line indents, paragraph spacing, beautiful long images, undo, word count, Dual Editors, One-Tap Typesetting, find and replace, Markdown, and a <a href="desktop2_en">desktop version</a>. There are creative touches too: Pure Writer can read aloud the words you just typed, <strong>so you can check your writing with your ears</strong>. And there is <strong>no word limit</strong> beyond what your device can handle. Through it all, the design stays simple: Material Design on Android, and Apple's design language on iOS.</p>
+  <p>Open the app and start writing in an instant; stop anywhere and pick up where you left off. A writing experience that feels safe and runs smooth. This is Pure Writer. Enjoy your writing.</p>
+</section>
+
+<section class="prose">
+  <h2 id="ios-en">Pure Writer for iOS</h2>
+  <p>Pure Writer for iOS draws on ten years of building editors. It is rebuilt from the ground up around native iOS design and interactions, with <strong>Liquid Glass throughout</strong>. Typewriter Mode keeps the paragraph you are writing in focus while the rest softly fades, and reopening a document brings you right back to where you left off. The iOS version includes 178 carefully crafted features and details.</p>
+  <ul>
+    <li>For iPhone and iPad with iOS 26 or iPadOS 26 or later.</li>
+    <li>Try every feature free for 7 days. No subscription is needed during the trial, and you will not be charged automatically. Afterwards, choose a monthly subscription, a yearly subscription, or a lifetime membership. There are no separate free and premium tiers: membership unlocks everything.</li>
+    <li>If your Pure Writer account already has a membership, sign in to the same account on iOS to keep it, with no need to pay again. Memberships purchased through Google Play are managed by your Google account and cannot be transferred to iOS.</li>
+    <li>Connect the same cloud drive account on Android, iOS, and desktop to sync and keep writing across your devices.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="features-en">Features at a Glance</h2>
+
+  <h3>Editing That Flows</h3>
+  <ul>
+    <li>Blue Fill Box: type inside paired symbols, then press Return to jump past them</li>
+    <li>Symbol pairs delete together; lists and numbering continue, and indents follow the previous paragraph</li>
+    <li>Undo and redo, with keyboard shortcuts</li>
+    <li>One undo history for title and body, with three-finger gestures and shake to undo<sup class="ios">iOS</sup></li>
+    <li>Move paragraphs up and down, one or several at a time</li>
+    <li>Date completion</li>
+    <li>Dual Editors: keep your draft and your reference material side by side</li>
+    <li>No word limit, from a single line to a whole novel</li>
+  </ul>
+
+  <h3>Focused Writing</h3>
+  <ul>
+    <li>Typewriter Mode; the top bar hides as you scroll</li>
+    <li>Immersive Mode tucks the top bar away as you start typing<sup class="ios">iOS</sup></li>
+    <li>Keep the screen on, dismiss the keyboard with your finger, and return to your last scroll position</li>
+    <li>Comfortable line lengths on wide screens and in landscape</li>
+  </ul>
+
+  <h3>Layout &amp; Word Count</h3>
+  <ul>
+    <li>Floating word count, a separate count for the selection, and the count before the cursor</li>
+    <li>Choose how words are counted: with or without punctuation, spaces, and line breaks</li>
+    <li>Line spacing, margins, paragraph spacing, and font size, with a live preview as you drag</li>
+    <li>One-Tap Typesetting tidies blank lines and first-line indents</li>
+    <li>Keep or remove blank lines when pasting multiple lines</li>
+  </ul>
+
+  <h3>Details That Delight</h3>
+  <ul>
+    <li>Light and Dark appearance; custom accent color<sup class="ios">iOS</sup></li>
+    <li>Import your own TTF or OTF fonts</li>
+    <li>Paper backgrounds: solid colors, built-in scenery, or your own photos; frame a photo with two fingers and adjust its mask<sup class="ios">iOS</sup></li>
+    <li>Manuscript ruling lines, solid or dashed, with adjustable opacity and position</li>
+    <li>Rounded, refined selection highlights<sup class="ios">iOS</sup>; multi-line Fill Boxes merge into one smooth outline</li>
+    <li>A sidebar with three widths, with corners that match the screen<sup class="ios">iOS</sup></li>
+  </ul>
+
+  <h3>Quick Input</h3>
+  <ul>
+    <li>A shortcut bar above the keyboard for phrases, character names, and symbols</li>
+    <li>Choose where the cursor lands after inserting, with date and time templates</li>
+    <li>A multi-row shortcut bar, with each row scrolling on its own</li>
+    <li>Actions in the bar too: undo, redo, indent, typesetting, search, and moving the cursor</li>
+  </ul>
+
+  <h3>Books &amp; Documents</h3>
+  <ul>
+    <li>Books, Folders, and Documents, from quick notes to novels</li>
+    <li>Book tags and tag filters; one or two columns on the shelf</li>
+    <li>Drag to reorder documents and folders; collapsible folders with sticky headers</li>
+    <li>A detailed list with summaries, times, and word counts; jump to the current document</li>
+    <li>Duplicate documents; move documents and whole folders between books</li>
+  </ul>
+
+  <h3>Find &amp; Replace</h3>
+  <ul>
+    <li>Find and replace in the title and body, or use the classic find mode</li>
+    <li>Search across documents and books, on several conditions, folder names included</li>
+    <li>Match case, regular expressions, and sortable results</li>
+    <li>Replace across documents after seeing how many matches are involved</li>
+  </ul>
+
+  <h3>Saving &amp; Recovery</h3>
+  <ul>
+    <li>Autosave and History, with version comparison and a preview before restoring</li>
+    <li>Writing Cache: one more way to recover text, beyond History</li>
+    <li>Trash: move deleted documents back into their books</li>
+    <li>Automatic and manual local backups, which you can also save elsewhere</li>
+    <li>A safety backup of your current data before every restore; a clear backup protection status<sup class="ios">iOS</sup></li>
+    <li>A warning when storage runs low</li>
+  </ul>
+
+  <h3>Cloud Backup &amp; Continuity</h3>
+  <ul>
+    <li>Extra iCloud backups: after switching phones or reinstalling, restore from a backup the app finds<sup class="ios">iOS</sup></li>
+    <li>Automatic backups to Dropbox or OneDrive, optionally on Wi‑Fi only (Android also supports WebDAV)</li>
+    <li>Cloud sync across devices: connect the same cloud drive account and keep writing on Android, iOS, and desktop</li>
+  </ul>
+
+  <h3>Markdown</h3>
+  <ul>
+    <li>Switch any document between plain text and Markdown</li>
+    <li>Syntax highlighting as you write, with clear headings, emphasis, code, quotes, and links<sup class="ios">iOS</sup></li>
+    <li>A Markdown panel to insert headings, lists, quotes, code, links, and tables</li>
+    <li>Keyboard shortcuts for bold, italic, and links<sup class="ios">iOS</sup></li>
+    <li>LaTeX math and images</li>
+    <li>Save as a .md file, keeping the Markdown source</li>
+  </ul>
+
+  <h3>Preview, Export &amp; Share</h3>
+  <ul>
+    <li>A full-screen preview of the finished look, with several preview and export themes</li>
+    <li>Export as a long image, image sets, PDF, Word (DOCX), EPUB, or plain text</li>
+    <li>Export only the selection; add a custom watermark or an e-book author name</li>
+    <li>Export a whole book: EPUB with chapter navigation and a title page, Word with an outline</li>
+  </ul>
+
+  <h3>Proofread by Ear</h3>
+  <ul>
+    <li>Read the document aloud, highlighting the current sentence, starting from the cursor</li>
+    <li>Several reading speeds; keeps reading in the background and on the lock screen, with headphone controls</li>
+    <li>Hear the words or sentence you just typed, and check your writing with your ears</li>
+  </ul>
+
+  <h3>Language &amp; Accessibility</h3>
+  <ul>
+    <li>Choose a language just for this app, separate from your system language</li>
+    <li>Screen reader support: VoiceOver on iOS, TalkBack on Android</li>
+  </ul>
+
+  <p class="note">Features marked <sup class="ios">iOS</sup> are currently available only in the iOS version.</p>
+</section>
+
+<section>
+  <h2 id="download-en">Download</h2>
+
+  <h3 id="download-android-en">Android</h3>
+  <ul>
+    <li>Google Play: <a href="https://play.google.com/store/apps/details?id=com.drakeet.purewriter">https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></li>
+  </ul>
+
+  <h3 id="download-ios-en">iPhone and iPad</h3>
+  <ul>
+    <li>App Store: <a href="https://apps.apple.com/app/id6803257195">https://apps.apple.com/app/id6803257195</a></li>
+  </ul>
+  <p class="note">Pure Writer for iOS is currently in App Store review. Until it is released, this link may not open yet; please rely on the actual App Store page.</p>
+
+  <h3>Desktop</h3>
+  <p><a href="desktop2_en">Pure Writer Desktop 2</a> (free for now) syncs with your phone through the same cloud drive account.</p>
+</section>
+
+<section>
+  <h2>More</h2>
+  <ul>
+    <li><a href="backups_en"><strong>Cloud Backup Tutorial</strong></a> (Android)</li>
+    <li><a href="wiki_en">User Manual</a> (Android)</li>
+    <li><a href="desktop2_en">Pure Writer <strong>Desktop</strong></a></li>
+    <li><a href="ios/support?lang=en">Pure Writer for iOS Support</a></li>
+    <li>Privacy Policy: <a href="privacy_en">Android</a>, <a href="ios/privacy?lang=en">iOS</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Help</h2>
+  <p>If you run into a problem or have a suggestion, email us at <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+  <p>If you enjoy Pure Writer, please share this page with others. Your support helps Pure Writer keep getting better. Thank you!</p>
+</section>
+</article>
+
+<!-- ═══════════════════════════ 日本語 ═══════════════════════════ -->
+<article data-locale="ja" lang="ja">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純執筆</h1>
+      <p class="tagline">文字を失わない、速く静かな執筆</p>
+    </div>
+  </div>
+  <p class="summary">安心して書ける、とても高速なプレーンテキストエディタです。履歴、クラウド同期とクラウドバックアップ、幾重もの紛失対策、そして数多くの執筆補助を備えています。Android、iPhone、iPad に対応しています。</p>
+  <ul class="platforms">
+    <li><a href="#download-android-ja">Android 版をダウンロード</a></li>
+    <li><a href="#download-ios-ja">iOS 版をダウンロード</a></li>
+  </ul>
+</header>
+
+<section class="prose">
+  <p>書くことは、過去とつながり、未来を思い描くこと。けれども、こんな執筆アプリに出会ったことはありませんか。起動が遅くて、ひらめきが逃げてしまう。よく不具合が起きて、書いた文字が水の泡になる。書くために必要な機能や補助が足りず、どうにも手になじまない。</p>
+  <p>純純執筆は、それらを解決します。とても高速なプレーンテキストエディタとして、執筆が本来の姿に戻ることを願って作られました。<strong>純粋で、安心でき、いつでも書けて、内容を失わず、心地よく書ける</strong>——そんな姿です。</p>
+
+  <h2>安心できること</h2>
+  <p>純純執筆のアイコンはタイムマシンの投影です。文字が時空を越えて私たちを運んでくれるという意味であり、「履歴」と「自動バックアップ」にも呼応しています。<strong>誤って文章を消してしまっても、端末が突然電源を落としても、あなたの文章はまるごと保存されているか、履歴の中で見つかります。</strong>長年にわたり、純純執筆は安心して書ける体験を届け、「失わない」という難しいことを実現して、多くの支持を得てきました。</p>
+
+  <h2>なめらかであること</h2>
+  <p>何より大切な安心に加えて、純純執筆は見た目も書き心地も、なめらかで心地よいものを目指しています。<strong>指先でキーボードの上げ下げをなめらかに操れ</strong>、カーソルはただ点滅するのではなく、呼吸するようにゆっくりと現れては消えます。こうした細部を一つひとつ磨き上げてきました。執筆の補助も、ちょうどよいところで自然に働きます。<strong>空の対の記号は一度のバックスペースでまとめて消え</strong>、会話文を書き終えたら改行キーで閉じかっこの後ろへ進めます。ほかのエディタと比べてみれば、その違いがきっと伝わるはずです。</p>
+
+  <h2>シンプルな中に、豊かさを</h2>
+  <p>エディタに欠かせない機能も、ひととおり揃っています。ショートカットバー、<strong>複数デバイスのクラウド同期</strong>、字下げ、段落の間隔、美しい縦長画像、取り消し、文字数カウント、デュアルエディタ、ワンタップ整形、検索と置換、Markdown、<a href="desktop2_en">パソコン版</a>……。ユニークな機能もあります。たとえば、入力したばかりの言葉を音声で読み上げ、<strong>耳という別の感覚で文字を確かめられます</strong>。また<strong>文字数に上限はなく</strong>、端末の性能が許す限り書き続けられます。それでもデザインはシンプルなまま。Android 版は Material Design に、iOS 版は Apple のデザインガイドラインに沿って、使いやすく美しく仕上げています。</p>
+  <p>ひらめきのページへ最速でたどり着き、いつでもどこでも中断し、また続けられる。安心できて、なめらかな執筆体験。これが純純執筆です。どうぞ、書くことを楽しんでください。</p>
+</section>
+
+<section class="prose">
+  <h2 id="ios-ja">iOS 版</h2>
+  <p>純純執筆 iOS 版は、エディタについて十年かけて積み上げてきた理解をもとに、iOS 本来の設計と操作に沿って一から作り直しました。<strong>デザインは Liquid Glass に全面対応</strong>しています。タイプライターモードでは、いま書いている段落だけがはっきりと見え、ほかの段落は淡く沈みます。文章を開き直すと、前回の位置からそのまま続けられます。iOS 版には、磨き上げた 178 の機能とこだわりが詰まっています。</p>
+  <ul>
+    <li>iOS 26 または iPadOS 26 以降の iPhone と iPad に対応しています。</li>
+    <li>ダウンロード後 7 日間、すべての機能を無料でお試しいただけます。体験期間中は登録不要で、自動で課金されることもありません。体験期間の終了後は、月額プラン、年額プラン、または買い切りの永久メンバーシップを選べます。無料版と上位版の区別はなく、メンバーシップですべての機能が使えます。</li>
+    <li>純純執筆のアカウントでメンバーシップをお持ちの方は、iOS 版で同じアカウントにログインすれば、改めて支払うことなく引き続きご利用いただけます。Google Play で購入したメンバーシップは Google アカウントで管理されているため、iOS 版には引き継げません。</li>
+    <li>Android 版やパソコン版と同じクラウドドライブのアカウントに接続すれば、複数のデバイスで同期し、続きから書けます。</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="features-ja">機能一覧</h2>
+
+  <h3>手になじむ編集体験</h3>
+  <ul>
+    <li>青いフィルボックス：対の記号の中を入力し、改行キーで記号の後ろへ移動</li>
+    <li>対の記号をまとめて削除、リストと番号の自動継続、字下げの引き継ぎ</li>
+    <li>取り消しとやり直し。キーボードショートカットにも対応</li>
+    <li>タイトルと本文をまとめて取り消し。3 本指ジェスチャやシェイクにも対応<sup class="ios">iOS</sup></li>
+    <li>段落を上下に移動、複数の段落もまとめて並べ替え</li>
+    <li>日付の補完</li>
+    <li>デュアルエディタ：本文と資料を左右に切り替えて執筆</li>
+    <li>文字数無制限：短い文章から長編まで、上限を設けていません</li>
+  </ul>
+
+  <h3>執筆に集中</h3>
+  <ul>
+    <li>タイプライターモード、スクロール時にトップバーを自動で隠す</li>
+    <li>没入モード：入力を始めるとトップバーを自動で収める<sup class="ios">iOS</sup></li>
+    <li>画面をスリープさせない設定、指の動きでキーボードを閉じる操作、開き直すと前回のスクロール位置を復元</li>
+    <li>横長の画面でも、本文は読みやすい行の長さを保つ</li>
+  </ul>
+
+  <h3>レイアウトと文字数</h3>
+  <ul>
+    <li>浮かぶ文字数カウント、選択部分の文字数、カーソルまでの文字数</li>
+    <li>句読点や空白、改行を数えるかどうかを選べる</li>
+    <li>行間、余白、段落の間隔、文字サイズを自由に調整、ドラッグ中にすぐ反映</li>
+    <li>ワンタップ整形：空行と字下げを整え、半角記号を全角に</li>
+    <li>複数行をペーストするとき、空行を残すか取り除くかを選べる</li>
+  </ul>
+
+  <h3>目を楽しませる細部</h3>
+  <ul>
+    <li>ライトとダークの外観。アクセントカラーのカスタマイズ<sup class="ios">iOS</sup></li>
+    <li>自分の TTF・OTF フォントを読み込んで使える</li>
+    <li>用紙の背景：単色、内蔵の風景写真、または自分の写真。写真は 2 本指でトリミングでき、マスクの濃さも調整可能<sup class="ios">iOS</sup></li>
+    <li>原稿用紙の罫線。実線か点線か、濃さや位置も調整可能</li>
+    <li>まるく精緻な選択ハイライト<sup class="ios">iOS</sup>、複数行のフィルボックスもひとつながりの角丸に</li>
+    <li>3 段階に広がるサイドバー。画面の角になじむ角丸<sup class="ios">iOS</sup></li>
+  </ul>
+
+  <h3>クイック入力</h3>
+  <ul>
+    <li>キーボードの上のショートカットバーで、よく使う言葉や人物名、記号をワンタップ入力</li>
+    <li>挿入後のカーソル位置を指定でき、日付と時刻のテンプレートにも対応</li>
+    <li>複数行のショートカットバー、各行を個別に横スクロール</li>
+    <li>取り消し、やり直し、字下げ、整形、検索、カーソル移動などの操作も置ける</li>
+  </ul>
+
+  <h3>本と文章の整理</h3>
+  <ul>
+    <li>本・フォルダ・文章の 3 階層で、メモから長編まで整然と</li>
+    <li>本のタグとタグの組み合わせによる絞り込み、本棚は 1 列または 2 列</li>
+    <li>文章とフォルダをドラッグで並べ替え、フォルダの展開と折りたたみ、フォルダ名の固定表示</li>
+    <li>詳細表示で概要・日時・文字数を確認、いまの文章の位置へワンタップで戻る</li>
+    <li>文章の複製、文章やフォルダを別の本へ移動</li>
+  </ul>
+
+  <h3>検索と置換</h3>
+  <ul>
+    <li>タイトルと本文の検索と置換、従来型の検索モードも使える</li>
+    <li>文章や本をまたいだ検索、複数条件での検索、フォルダ名も検索可能</li>
+    <li>大文字と小文字の区別、正規表現、検索結果の並び順を選べる</li>
+    <li>文章をまたいだ一括置換。置換前に対象の箇所数を確認</li>
+  </ul>
+
+  <h3>安心の保存と復元</h3>
+  <ul>
+    <li>自動保存と履歴。以前の原稿と現在の差分を比較し、プレビューしてから復元</li>
+    <li>執筆キャッシュ：履歴とは別に、文字を取り戻すためのもうひとつの備え</li>
+    <li>ゴミ箱：誤って削除した文章を本に戻せる</li>
+    <li>本体への自動バックアップと手動バックアップ。バックアップは別の場所にも保存できる</li>
+    <li>復元の前に現在のデータを自動で安全にバックアップ。バックアップの保護状況をいつでも確認<sup class="ios">iOS</sup></li>
+    <li>空き容量が少なくなるとお知らせ</li>
+  </ul>
+
+  <h3>クラウドバックアップと引き継ぎ</h3>
+  <ul>
+    <li>iCloud への追加バックアップ：機種変更や再インストール後、見つかったバックアップから復元<sup class="ios">iOS</sup></li>
+    <li>Dropbox または OneDrive と連携し、クラウドドライブへ自動バックアップ。Wi‑Fi 接続時のみのアップロードも選べる（Android 版は WebDAV にも対応）</li>
+    <li>複数デバイスのクラウド同期：同じクラウドドライブのアカウントで、Android・iOS・パソコン版の間で続きから書ける</li>
+  </ul>
+
+  <h3>Markdown</h3>
+  <ul>
+    <li>文章ごとにプレーンテキストと Markdown を切り替え</li>
+    <li>書きながら見やすいシンタックスハイライト。見出し・強調・コード・引用・リンクがひと目でわかる<sup class="ios">iOS</sup></li>
+    <li>Markdown 入力パネル：見出し、リスト、引用、コード、リンク、表を挿入</li>
+    <li>外付けキーボードのショートカットで太字、斜体、リンクをすばやく<sup class="ios">iOS</sup></li>
+    <li>LaTeX の数式と画像の挿入に対応</li>
+    <li>.md ファイルとして保存し、Markdown の原文を残せる</li>
+  </ul>
+
+  <h3>プレビュー・書き出し・共有</h3>
+  <ul>
+    <li>全画面プレビューで仕上がりを確認、プレビューと書き出しのテーマを選べる</li>
+    <li>縦長画像、画像セット、PDF、Word（DOCX）、EPUB 電子書籍、TXT に書き出し</li>
+    <li>選択した部分だけ書き出し、透かしの文字や電子書籍の著者名も設定可能</li>
+    <li>まとめて一冊に書き出し：EPUB は章と目次、扉ページを自動生成。Word は見出しの階層を保持</li>
+  </ul>
+
+  <h3>耳で校正する</h3>
+  <ul>
+    <li>この文章を読み上げ、読み上げ中の文をハイライト、カーソル位置から読み上げ</li>
+    <li>読み上げ速度を段階的に調整、アプリを離れてもロック画面でも読み上げを継続、ヘッドフォンで操作</li>
+    <li>入力した言葉や書き終えた文を読み上げ、別の感覚で誤りを確かめる</li>
+  </ul>
+
+  <h3>言語とアクセシビリティ</h3>
+  <ul>
+    <li>システムとは別に、この App だけの言語を選べる</li>
+    <li>スクリーンリーダーに対応：iOS 版は VoiceOver、Android 版は TalkBack</li>
+  </ul>
+
+  <p class="note"><sup class="ios">iOS</sup> の印が付いた機能は、現在 iOS 版だけで利用できます。</p>
+</section>
+
+<section>
+  <h2 id="download-ja">ダウンロード</h2>
+
+  <h3 id="download-android-ja">Android</h3>
+  <ul>
+    <li>Google Play：<a href="https://play.google.com/store/apps/details?id=com.drakeet.purewriter">https://play.google.com/store/apps/details?id=com.drakeet.purewriter</a></li>
+  </ul>
+
+  <h3 id="download-ios-ja">iPhone と iPad</h3>
+  <ul>
+    <li>App Store：<a href="https://apps.apple.com/app/id6803257195">https://apps.apple.com/app/id6803257195</a></li>
+  </ul>
+  <p class="note">iOS 版は現在 App Store の審査中です。公開までは、このリンクを開けない場合があります。実際の App Store のページでご確認ください。</p>
+
+  <h3>パソコン版</h3>
+  <p><a href="desktop2_en">Pure Writer Desktop 2</a>（英語のページ、現在は無料）は、同じクラウドドライブのアカウントでスマートフォンと同期できます。</p>
+</section>
+
+<section>
+  <h2>そのほかの情報</h2>
+  <ul>
+    <li><a href="ios/support?lang=ja">純純執筆 iOS 版 サポート</a></li>
+    <li>プライバシーポリシー：<a href="privacy_en">Android 版</a>（英語）、<a href="ios/privacy?lang=ja">iOS 版</a></li>
+    <li><a href="wiki_en">ユーザーマニュアル</a>（Android 版、英語）</li>
+    <li><a href="desktop2_en">パソコン版</a>（英語）</li>
+  </ul>
+</section>
+
+<section>
+  <h2>お問い合わせ</h2>
+  <p>不具合を見つけたときや、ご要望・ご提案があるときは、<a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までメールでお知らせください。</p>
+  <p>純純執筆を気に入っていただけたら、このページをシェアしたり、周りの方に勧めたりしていただけるとうれしいです。皆さまの応援が、純純執筆をよりよくしていきます。ありがとうございます。</p>
+</section>
+</article>
+
+</main>
+
+<script>
+  // 语言切换：下拉框初始值跟随已决定的语言；切换后记住选择，并把 ?lang= 写入地址栏，便于分享当前语言的链接。
+  (function () {
+    var select = document.getElementById("language-select");
+    var current = document.documentElement.getAttribute("data-locale");
+    if (!select || !current) return;
+    select.value = current;
+    select.addEventListener("change", function () {
+      var locale = select.value;
+      window.homePage.apply(locale);
+      try {
+        localStorage.setItem("ios-page-locale", locale);
+      } catch (e) {
+        // 无法保存时只影响下次打开的默认语言，本次切换照常生效。
+      }
+      // 不带上原来的锚点：各语言的锚点不同名，旧锚点在新语言里找不到。
+      if (window.history && history.replaceState) {
+        history.replaceState(null, "", location.pathname + "?lang=" + encodeURIComponent(locale));
+      }
+      window.scrollTo(0, 0);
+    });
+  })();
+</script>
 </body>
 </html>
