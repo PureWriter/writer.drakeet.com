@@ -379,16 +379,17 @@
     font-size: 0.9rem;
     color: var(--secondary);
   }
+  /* 链接保持行内元素，不用 inline-flex：inline-flex 的基线取自第一个子元素（图标）而不是文字，
+     会让链接文字比前面的「其他安装包：」高出一截。图标改为按文字基线下沉对齐。 */
   .others a {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
     margin-left: 10px;
     white-space: nowrap;
   }
   .others .icon {
     width: 16px;
     height: 16px;
+    margin-right: 5px;
+    vertical-align: -0.2em;
   }
 
   /* 折叠起来的 SHA-256 校验值：文件名一行，校验值一行，长串允许在任意位置换行。 */
@@ -497,7 +498,7 @@
   <p class="others" hidden>其他安装包：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 芯片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 芯片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <noscript><p class="note">需要开启 JavaScript 才能获取最新版本的下载链接。</p></noscript>
   <p class="note" data-error hidden>暂时无法获取最新版本，请稍后刷新页面重试。</p>
-  <p class="note">不确定 Mac 用的是哪种芯片？点屏幕左上角的苹果菜单，选择「关于本机」：显示「芯片 Apple M…」或「芯片 Apple A…」的，选 Apple 芯片版；显示「处理器 … Intel …」的，选 Intel 芯片版。</p>
+  <p class="note" data-chip-hint>不确定 Mac 用的是哪种芯片？点屏幕左上角的苹果菜单，选择「关于本机」：显示「芯片 Apple M…」或「芯片 Apple A…」的，选 Apple 芯片版；显示「处理器 … Intel …」的，选 Intel 芯片版。</p>
   <p class="note">下载缓慢或无法下载？可以试试备用地址：<a href="https://drakeet.lanzouy.com/s/desktop">蓝奏云</a>。</p>
   <p class="note">请只从本页下载和更新纯纯写作桌面版，以免拿到被他人二次打包、植入风险代码的安装包。</p>
   <details class="note" data-checksums hidden>
@@ -570,7 +571,7 @@
   </div>
   <p class="others" hidden>其他安裝檔：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 晶片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 晶片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>暫時無法取得最新版本，請稍後重新整理頁面再試一次。</p>
-  <p class="note">不確定 Mac 用的是哪種晶片？點螢幕左上角的蘋果選單，選擇「關於這台 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
+  <p class="note" data-chip-hint>不確定 Mac 用的是哪種晶片？點螢幕左上角的蘋果選單，選擇「關於這台 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
   <p class="note">請只從本頁下載和更新純純寫作桌面版，以免拿到被他人重新封裝、植入風險程式碼的安裝檔。</p>
   <details class="note" data-checksums hidden>
     <summary>安裝檔的 SHA-256 檢查碼</summary>
@@ -634,7 +635,7 @@
   </div>
   <p class="others" hidden>其他安裝檔：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 晶片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 晶片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>暫時未能取得最新版本，請稍後重新載入頁面再試。</p>
-  <p class="note">不確定 Mac 用的是哪種晶片？按螢幕左上角的 Apple 選單，選擇「關於這部 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
+  <p class="note" data-chip-hint>不確定 Mac 用的是哪種晶片？按螢幕左上角的 Apple 選單，選擇「關於這部 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
   <p class="note">請只從本頁下載和更新純純寫作桌面版，以免下載到被他人重新封裝、植入風險程式碼的安裝檔。</p>
   <details class="note" data-checksums hidden>
     <summary>安裝檔的 SHA-256 檢查碼</summary>
@@ -698,7 +699,7 @@
   </div>
   <p class="others" hidden>Other downloads:<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Apple silicon)</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Intel)</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows (x64)</a></p>
   <p class="note" data-error hidden>Couldn’t load the latest version. Please refresh the page in a moment.</p>
-  <p class="note">Not sure which chip your Mac has? Choose Apple menu › About This Mac. If it shows “Chip Apple M…” or “Chip Apple A…”, download the Apple silicon version; if it shows “Processor … Intel …”, download the Intel version.</p>
+  <p class="note" data-chip-hint>Not sure which chip your Mac has? Choose Apple menu › About This Mac. If it shows “Chip Apple M…” or “Chip Apple A…”, download the Apple silicon version; if it shows “Processor … Intel …”, download the Intel version.</p>
   <p class="note">Please download and update Pure Writer Desktop only from this page, so you don’t end up with an installer that someone else has repackaged with risky code.</p>
   <details class="note" data-checksums hidden>
     <summary>SHA-256 checksums</summary>
@@ -761,7 +762,7 @@
   </div>
   <p class="others" hidden>その他のダウンロード：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple シリコン）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>最新バージョンの情報を取得できませんでした。しばらくしてからページを再読み込みしてください。</p>
-  <p class="note">お使いの Mac のチップがわからないときは、画面左上のアップルメニューから「この Mac について」を開いてください。「チップ Apple M…」または「チップ Apple A…」と表示されていれば Apple シリコン版を、「プロセッサ … Intel …」と表示されていれば Intel 版を選んでください。</p>
+  <p class="note" data-chip-hint>お使いの Mac のチップがわからないときは、画面左上のアップルメニューから「この Mac について」を開いてください。「チップ Apple M…」または「チップ Apple A…」と表示されていれば Apple シリコン版を、「プロセッサ … Intel …」と表示されていれば Intel 版を選んでください。</p>
   <p class="note">第三者が再パッケージして危険なコードを仕込んだインストーラを避けるため、ダウンロードとアップデートは必ずこのページから行ってください。</p>
   <details class="note" data-checksums hidden>
     <summary>インストーラの SHA-256 チェックサム</summary>
@@ -824,7 +825,7 @@
   </div>
   <p class="others" hidden>Другие варианты:<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (чип Apple)</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Intel)</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows (x64)</a></p>
   <p class="note" data-error hidden>Не удалось получить сведения о последней версии. Обновите страницу чуть позже.</p>
-  <p class="note">Не знаете, какой чип в вашем Mac? Откройте меню Apple › «Об этом Mac». Если там указано «Чип Apple M…» или «Чип Apple A…», скачайте версию для чипа Apple; если «Процессор … Intel …» — версию для Intel.</p>
+  <p class="note" data-chip-hint>Не знаете, какой чип в вашем Mac? Откройте меню Apple › «Об этом Mac». Если там указано «Чип Apple M…» или «Чип Apple A…», скачайте версию для чипа Apple; если «Процессор … Intel …» — версию для Intel.</p>
   <p class="note">Скачивайте и обновляйте Pure Writer только с этой страницы, чтобы не получить установщик, который кто-то перепаковал и добавил в него опасный код.</p>
   <details class="note" data-checksums hidden>
     <summary>Контрольные суммы SHA-256</summary>
@@ -991,8 +992,12 @@
     // Mac 上的浏览器大多不透露芯片类型，只有 Chromium 系浏览器能通过 userAgentData 拿到 arm/x86；
     // 拿不到时两个 macOS 版都作为主按钮，由页面上的说明帮用户分辨。手机等判断不出系统时，三个都作为主按钮。
     // iPad 的 Safari 会自称 Macintosh，用触点数排除。
+    // 只剩一个主按钮时说明已经确定了版本（Windows，或识别出芯片的 Mac），芯片的辨别说明不再需要。
     function feature(keys) {
       each(articles, function (article) {
+        each(article.querySelectorAll("[data-chip-hint]"), function (hint) {
+          hint.hidden = keys.length === 1;
+        });
         each(article.querySelectorAll(".downloads [data-file]"), function (link) {
           link.hidden = keys.indexOf(link.getAttribute("data-file")) < 0;
         });
