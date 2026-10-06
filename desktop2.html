@@ -1,988 +1,1019 @@
 <!doctype html>
-<html>
+<!--
+  纯纯写作桌面版下载页（六种语言：简体中文、繁体中文（台湾）、繁体中文（香港）、英文、日文、俄文）。
+  直接维护本 HTML，不再由 Typora 导出、也不再由桌面版工程里的脚本按模板生成。
+
+  版本号、发布日期、下载链接、文件大小、SHA-256 与「最近更新」都不写在这里，而是运行时读取同目录的 desktop2.json。
+  该文件由桌面版工程的 release.sh 在安装包上传到 R2 之后生成并提交，所以发新版时本页不需要任何改动。
+  desktop2.json 的结构：
+    version   当前版本号，如 "4.5.1"
+    released  发布日期，"YYYY-MM-DD"
+    files     平台键（windows-x64、macos-aarch64、macos-x64，与下方 data-file 一致）→ { name, url, size（字节）, sha256 }
+    notes     页面语言（与 data-locale 一致）→ { version, items: [更新内容…] }，取自桌面端各语言更新日志最新的一段
+
+  语言判定与切换沿用首页 index.html 的做法，并共用同一个本地存储键：在任何一页手动选过语言，其它页面也按它显示。
+  没有脚本时只显示简体中文。旧地址 desktop2_zh、desktop2_en、desktop2_ru 已改为跳转到本页的小文件：
+  已安装的旧版桌面端「检查更新」等入口仍指向它们，不能删除。
+
+  每种语言一个 <article>，内容各自完整，改动时六种语言同步修改。遵守站点根目录 AGENTS.md 的约定：
+  - 蓝奏云备用下载、360、阿里云盘与坚果云的切换提示及其截图，只放在简体中文版本；
+  - 版权与备案信息只放在简体中文版本的底部；
+  - 繁体中文分台湾与香港两份，用词按各自习惯；引号内的 Windows、macOS 界面名称照搬系统里的实际写法。
+  同一页里各语言的锚点不能重名，简体中文不加后缀，其它语言加语言后缀（例如 download-en）。
+-->
+<html lang="zh-Hans">
 <head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'><meta name='keywords' content='纯纯写作桌面版, 纯纯写作电脑版, 纯纯写作桌面版 2, Pure Writer Desktop 2'><meta name='description' content='纯纯写作桌面版 2 是全新的纯纯写作电脑版，支持 Windows 和 macOS，目前完全免费。'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>纯纯写作桌面版 - 下载 Windows 与 macOS 版</title>
+<meta name="description" content="纯纯写作桌面版，适用于 Windows 与 macOS。通过网盘与手机上的纯纯写作同步，目前免费。">
+<link rel="icon" href="images/icon512.png">
+<script>
+  // 在正文渲染之前决定显示哪种语言，避免打开时先闪出另一种语言。
+  // 优先级：链接参数 ?lang= ＞ 用户上次手动选择的语言（与首页、/ios/ 下的页面共用）＞ 浏览器语言 ＞ 英文。
+  (function () {
+    var titles = {
+      "zh-Hans": "纯纯写作桌面版 - 下载 Windows 与 macOS 版",
+      "zh-Hant": "純純寫作桌面版 - 下載 Windows 與 macOS 版",
+      "zh-HK": "純純寫作桌面版 - 下載 Windows 與 macOS 版",
+      "en": "Pure Writer Desktop - Download for Windows and macOS",
+      "ja": "純純執筆 パソコン版 - Windows・macOS 版のダウンロード",
+      "ru": "Pure Writer для компьютера — скачать для Windows и macOS"
+    };
+    // 页面语言代码与 HTML lang 属性的对应，lang 属性影响中日文字形与字体回退，也决定日期与文件大小的格式。
+    var htmlLangs = {
+      "zh-Hans": "zh-Hans",
+      "zh-Hant": "zh-Hant-TW",
+      "zh-HK": "zh-Hant-HK",
+      "en": "en",
+      "ja": "ja",
+      "ru": "ru"
+    };
 
-<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
-.mac-os-11 { --title-bar-height: 28px; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-h1, h2, h3, h4, h5 { white-space: pre-wrap; }
-body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
-iframe { margin: auto; }
-a.url { word-break: break-all; }
-a:active, a:hover { outline: 0px; }
-.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
-#write.first-line-indent p { text-indent: 2em; }
-#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
-#write.first-line-indent li { margin-left: 2em; }
-.for-image #write { padding-left: 8px; padding-right: 8px; }
-body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
-.typora-export .task-list-item input { pointer-events: none; }
-@media screen and (max-width: 500px) {
-  body.typora-export { padding-left: 0px; padding-right: 0px; }
-  #write { padding-left: 20px; padding-right: 20px; }
-}
-#write li > figure:last-child { margin-bottom: 0.5rem; }
-#write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
-button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
-input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
-*, ::after, ::before { box-sizing: border-box; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
-p { orphans: 4; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.4rem; }
-h5 { font-size: 1.2rem; }
-h6 { font-size: 1rem; }
-.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
-.hidden { display: none; }
-.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
-a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
-sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
-#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
-figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px; }
-thead, tr { break-inside: avoid; break-after: auto; }
-thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 32px; }
-.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
-.CodeMirror-linenumber { -webkit-user-select: none; }
-.CodeMirror { text-align: left; }
-.CodeMirror-placeholder { opacity: 0.3; }
-.CodeMirror pre { padding: 0px 4px; }
-.CodeMirror-lines { padding: 0px; }
-div.hr:focus { cursor: none; }
-#write pre { white-space: pre-wrap; }
-#write.fences-no-line-wrapping pre { white-space: pre; }
-#write pre.ty-contain-cm { white-space: normal; }
-.CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
-.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
-#write .md-fences.mock-cm { white-space: pre-wrap; }
-.md-fences.md-fences-with-lineno { padding-left: 0px; }
-#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
-.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { break-inside: avoid; }
-svg { break-inside: avoid; }
-.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
-.footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
-li div { padding-top: 0px; }
-blockquote { margin: 1rem 0px; }
-li .mathjax-block, li p { margin: 0.5rem 0px; }
-li blockquote { margin: 1rem 0px; }
-li { margin: 0px; position: relative; }
-blockquote > :last-child { margin-bottom: 0px; }
-blockquote > :first-child, li > :first-child { margin-top: 0px; }
-.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
-#write .footnote-line { white-space: pre-wrap; }
-@media print {
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
-  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
-  .typora-export * { print-color-adjust: exact; }
-  .typora-export #write { break-after: avoid; }
-  .typora-export #write::after { height: 0px; }
-  .is-mac table { break-inside: avoid; }
-  #write > p:nth-child(1) { margin-top: 0px; }
-  .typora-export-show-outline .typora-export-sidebar { display: none; }
-  figure { overflow-x: visible; }
-}
-.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
-a img, img a { cursor: pointer; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
-p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
-#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
-p > .md-image:only-child { display: inline-block; width: 100%; }
-#write .MathJax_Display { margin: 0.8em 0px 0px; }
-.md-math-block { width: 100%; }
-.md-math-block:not(:empty)::after { display: none; }
-.MathJax_ref { fill: currentcolor; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
-.md-task-list-item { position: relative; list-style-type: none; }
-.task-list-item.md-task-list-item { padding-left: 0px; }
-.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
-.math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
-.md-toc-content { position: relative; margin-left: 0px; }
-.md-toc-content::after, .md-toc::after { display: none; }
-.md-toc-item { display: block; color: rgb(65, 131, 196); }
-.md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { text-decoration: underline; }
-.md-toc-inner { display: inline-block; cursor: pointer; }
-.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
-.md-toc-h2 .md-toc-inner { margin-left: 2em; }
-.md-toc-h3 .md-toc-inner { margin-left: 4em; }
-.md-toc-h4 .md-toc-inner { margin-left: 6em; }
-.md-toc-h5 .md-toc-inner { margin-left: 8em; }
-.md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) {
-  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
-  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
-  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
-  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
-}
-a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
-.footnote-line a:not(.reversefootnote) { color: inherit; }
-.reversefootnote { font-family: ui-monospace, sans-serif; }
-.md-attr { display: none; }
-.md-fn-count::after { content: "."; }
-code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
-.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
-code { text-align: left; vertical-align: initial; }
-a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
-.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
-.md-diagram-panel > svg { max-width: 100%; }
-[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
-[lang="mermaid"] .node text { font-size: 1rem; }
-table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
-video { max-width: 100%; display: block; margin: 0px auto; }
-iframe { max-width: 100%; width: 100%; border: medium; }
-.highlight td, .highlight tr { border: 0px; }
-mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
-.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
-.md-expand mark .md-meta { opacity: 0.3 !important; }
-mark .md-meta { color: rgb(0, 0, 0); }
-@media print {
-  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
-}
-.md-diagram-panel .messageText { stroke: none !important; }
-.md-diagram-panel .start-state { fill: var(--node-fill); }
-.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
-.md-fences.md-fences-math { font-size: 1em; }
-.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
-.md-fences-advanced:not(.md-focus) { background: inherit; }
-.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
-.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
-.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
-.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
-@media screen and (max-width: 1024px) {
-  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
-}
-@media screen and (max-width: 800px) {
-  .typora-export-sidebar { display: none; }
-}
-.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
-.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
-.outline-content strong { font-weight: 400; }
-.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
-.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
-.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
-.outline-expander:hover::before { content: ""; }
-.outline-h1 > .outline-item { padding-left: 0px; }
-.outline-h2 > .outline-item { padding-left: 1em; }
-.outline-h3 > .outline-item { padding-left: 2em; }
-.outline-h4 > .outline-item { padding-left: 3em; }
-.outline-h5 > .outline-item { padding-left: 4em; }
-.outline-h6 > .outline-item { padding-left: 5em; }
-.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
-.outline-label:hover { text-decoration: underline; }
-.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
-.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
-.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
-.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
-.outline-children { display: none; }
-.info-panel-tab-wrapper { display: none; }
-.outline-item-open > .outline-children { display: block; }
-.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
-.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
-.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
-.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
-.typora-export-collapse-outline .outline-children { display: none; }
-.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
-.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
-.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
-.md-inline-math-container mjx-container { zoom: 0.95; }
-mjx-container { break-inside: avoid; }
-.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
-.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
-.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
-.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
-.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
-.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
-.md-alert-text-note { color: rgb(9, 105, 218); }
-.md-alert-text-important { color: rgb(130, 80, 223); }
-.md-alert-text-warning { color: rgb(154, 103, 0); }
-.md-alert-text-tip { color: rgb(31, 136, 61); }
-.md-alert-text-caution { color: rgb(207, 34, 46); }
-.md-alert-text { font-size: 0.9rem; font-weight: 700; }
-.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
-.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+    // 把任意语言标签（如 zh-TW、zh-Hant-HK、ja-JP、ru-RU）归到本页支持的六种之一；不支持的返回 null。
+    // 首页没有俄文，在这里选了俄文后，首页读到存储的 ru 会返回 null，转而按浏览器语言显示，不会出错。
+    function normalize(tag) {
+      if (!tag) return null;
+      var t = String(tag).toLowerCase().replace(/_/g, "-");
+      if (t.indexOf("zh") === 0) {
+        if (/-hans(-|$)/.test(t)) return "zh-Hans";
+        if (/-(hk|mo)(-|$)/.test(t)) return "zh-HK";
+        if (/-(hant|tw)(-|$)/.test(t)) return "zh-Hant";
+        return "zh-Hans";
+      }
+      if (t.indexOf("ja") === 0) return "ja";
+      if (t.indexOf("en") === 0) return "en";
+      if (t.indexOf("ru") === 0) return "ru";
+      return null;
+    }
 
+    function fromQuery() {
+      var match = /[?&]lang=([^&#]+)/.exec(location.search);
+      return match ? normalize(decodeURIComponent(match[1])) : null;
+    }
 
-.CodeMirror { height: auto; }
-.CodeMirror.cm-s-inner { background: inherit; }
-.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
-.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
-.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background: inherit; white-space: nowrap; }
-.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
-.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
-.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
-.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
-.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
-.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
-.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
-.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
-.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
-.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
-.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
-.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
-.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
-.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
-.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
-.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
-.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
-.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
-.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
-.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
-.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
-.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
-.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
-.cm-negative { color: rgb(221, 68, 68); }
-.cm-positive { color: rgb(34, 153, 34); }
-.cm-header, .cm-strong { font-weight: 700; }
-.cm-del { text-decoration: line-through; }
-.cm-em { font-style: italic; }
-.cm-link { text-decoration: underline; }
-.cm-error { color: red; }
-.cm-invalidchar { color: red; }
-.cm-constant { color: rgb(38, 139, 210); }
-.cm-defined { color: rgb(181, 137, 0); }
-div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
-div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
-.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
-.CodeMirror { position: relative; overflow: hidden; }
-.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
-.CodeMirror-sizer { position: relative; }
-.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
-.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
-.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
-.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
-.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
-.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
-.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
-.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: medium !important; }
-.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
-.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
-.CodeMirror-lines { cursor: text; }
-.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
-.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
-.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
-.CodeMirror-wrap .CodeMirror-code pre { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: auto; }
-.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
-.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
-.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
-.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
-.CodeMirror-measure pre { position: static; }
-.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: 0px; }
-.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
-.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
-.cm-searching { background: rgba(255, 255, 0, 0.4); }
-span.cm-underlined { text-decoration: underline; }
-span.cm-strikethrough { text-decoration: line-through; }
-.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
-.cm-tw-deleted { text-decoration: line-through; }
-.cm-tw-header5 { font-weight: 700; }
-.cm-tw-listitem:first-child { padding-left: 10px; }
-.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
-.cm-tw-underline { text-decoration: underline; }
-@media print {
-  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
-}
+    // 隐私模式等情况下读取本地存储可能抛错，此时视为没有保存过选择。
+    function fromStorage() {
+      try {
+        return normalize(localStorage.getItem("ios-page-locale"));
+      } catch (e) {
+        return null;
+      }
+    }
 
+    // 按浏览器的语言偏好顺序，取第一个本页支持的语言。
+    function fromBrowser() {
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < list.length; i++) {
+        var locale = normalize(list[i]);
+        if (locale) return locale;
+      }
+      return null;
+    }
 
+    // 供页面底部的脚本复用。
+    window.desktopPage = {
+      apply: function (locale) {
+        var root = document.documentElement;
+        root.setAttribute("data-locale", locale);
+        root.setAttribute("lang", htmlLangs[locale]);
+        document.title = titles[locale];
+      }
+    };
 
-
-.cm-s-inner .cm-variable {
-  color: #fff;
-}
-
-.cm-s-inner .cm-keyword,
-.cm-s-inner .cm-property {
-  color: #6699CC;
-}
-
-.cm-s-inner .cm-tag {
-  color: #EC5F67;
-}
-
-.CodeMirror div.CodeMirror-cursor {
-  border-left: 1px solid #b8bfc6;
-  z-index: 3;
-}
-
-.cm-s-inner .cm-string {
-  color: #99C794;
-}
-
-.cm-s-inner .cm-comment,
-.cm-s-inner.cm-comment {
-  color: #65737E;
-}
-
-.cm-s-inner .cm-header,
-.cm-s-inner .cm-def,
-.cm-s-inner.cm-header,
-.cm-s-inner.cm-def,
-.cm-s-inner .cm-attribute,
-.cm-s-inner .cm-operator {
-  color: #C594C5;
-}
-
-.cm-s-inner .cm-quote,
-.cm-s-inner.cm-quote {
-  color: #99C794;
-}
-
-.cm-s-inner .cm-hr {
-  color: #d8d5d5;
-}
-
-.cm-s-inner .cm-link {
-  color: #d3d3ef;
-}
-
-.cm-s-inner .cm-negative {
-  color: #EC5F67;
-}
-
-.cm-s-inner .cm-positive {
-  color: #99C794;
-}
-
-.cm-s-inner .cm-string-2 {
-  color: #EC5F67;
-}
-
-.cm-s-inner .cm-meta,
-.cm-s-inner .cm-qualifier {
-  color: #b7b3b3;
-}
-
-.cm-s-inner .cm-builtin {
-  color: #f3b3f8;
-}
-
-.cm-s-inner .cm-bracket {
-  color: #5FB3B3;
-}
-
-.cm-s-inner .cm-atom,
-.cm-s-inner.cm-atom {
-  color: #84B6CB;
-}
-
-.cm-s-inner .cm-number {
-  color: #F99157;
-}
-
-.cm-s-inner .cm-variable {
-  color: #b8bfc6;
-}
-
-.cm-s-inner .cm-variable-2 {
-  color: #9FBAD5;
-}
-
-.cm-s-inner .cm-variable-3 {
-  color: #1cc685;
-}
-
-.CodeMirror-selectedtext,
-.CodeMirror-selected {
-  background: #4a89dc;
-  color: #fff !important;
-  text-shadow: none;
-}
-
-.CodeMirror-gutters {
-  border-right: none;
-}@import '';
-
-:root {
-  --primary-color: #fcba03;
-  --primary-color-rgb: 252, 186, 3;
-
-  --bg-color: #292929;
-  --bg-color-dark: #1f1f1f;
-  --dark-trait: #141414;
-  --light-trait-100: #3d3d3d;
-  --light-trait-200: #545454;
-  --light-trait-300: #777;
-  --light-trait-400: #8c8c8c;
-
-  --text-color: #f8f8f2;
-  --text-color-secondary: #d2d3d3;
-  --text-highlight-color: #fff;
-  --text-highlight-bg: rgba(var(--primary-color-rgb), 0.3);
-  --select-text-bg-color: rgba(255, 255, 255, 0.2);
-  --search-select-text-color: var(--text-highlight-color);
-  --search-select-bg-color: var(--text-highlight-bg);
-
-  --code-color: #f3b3f8;
-
-  --border-radius: 3px;
-
-  --font-size: 14px;
-  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
-  --monospace: 'Fira Mono', 'Cousine', 'Consolas', monospace;
-
-  --heading-char-color: var(--light-trait-400);
-  --color-popover-bg-color: var(--text-color);
-  --rawblock-edit-panel-bd: var(--bg-color-dark);
-  --control-text-color: var(--text-color);
-  --meta-content-color: var(--primary-color);
-  --primary-btn-border-color: var(--primary-color);
-  --side-bar-bg-color: var(--bg-color-dark);
-  --item-hover-bg-color: var(--bg-color);
-  --item-hover-text-color: var(--text-highlight-color);
-  --active-file-bg-color: var(--bg-color);
-  --active-file-border-color: var(--bg-color);
-  --window-border: 1px solid var(--bg-color);
-  --focus-ring-color: transparent;
-  --table-bg-darker-color: var(--bg-color-dark);
-  --table-bg-color: var(--bg-color);
-}
-
-html {
-  font-size: var(--font-size);
-}
-
-body {
-  font-family: var(--font-family);
-  -webkit-font-smoothing: antialiased;
-  color: var(--text-color);
-  line-height: 1.6;
-}
-
-#write {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 30px;
-  padding-bottom: 100px;
-}
-
-@media only screen and (min-width: 1400px) {
-  #write {
-    max-width: 1024px;
+    window.desktopPage.apply(fromQuery() || fromStorage() || fromBrowser() || "en");
+  })();
+</script>
+<style>
+  /* 颜色集中定义为变量，深色模式只需覆盖这一组。与首页、/ios/ 下的页面保持同一套配色。 */
+  :root {
+    --bg: #ffffff;
+    --text: #2b2b2b;
+    --secondary: #6e6e73;
+    --link: #0a64d6;
+    --rule: #e5e5ea;
+    --panel: #f5f5f7;
+    /* 突出显示的下载按钮。深色模式沿用同一个蓝色：换成更亮的 --link 后，白字的对比度不够。 */
+    --accent: #0a64d6;
+    --on-accent: #ffffff;
+    /* 语言下拉框的箭头。数据 URI 里的 SVG 无法跟随 currentColor，因此深浅色各写一份，颜色同 --secondary。 */
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236e6e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
-}
-
-@media only screen and (min-width: 1800px) {
-  #write {
-    max-width: 1200px;
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1e;
+      --text: #e5e5e7;
+      --secondary: #98989d;
+      --link: #4da3ff;
+      --rule: #38383a;
+      --panel: #2c2c2e;
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2398989d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
   }
-}
-
-#write > ul:first-child,
-#write > ol:first-child {
-  margin-top: 30px;
-}
-
-a {
-  color: var(--primary-color);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  position: relative;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  line-height: 1.4;
-  cursor: text;
-}
-
-h1:hover a.anchor,
-h2:hover a.anchor,
-h3:hover a.anchor,
-h4:hover a.anchor,
-h5:hover a.anchor,
-h6:hover a.anchor {
-  text-decoration: none;
-}
-
-h1 tt,
-h1 code,
-h2 tt,
-h2 code,
-h3 tt,
-h3 code,
-h4 tt,
-h4 code,
-h5 tt,
-h5 code,
-h6 tt,
-h6 code {
-  font-size: inherit;
-}
-
-h1 {
-  padding-bottom: 0.3em;
-  font-size: 2.2em;
-  line-height: 1.3;
-}
-
-h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-}
-
-h3 {
-  font-size: 1.4em;
-  line-height: 1.43;
-}
-
-h4 {
-  font-size: 1.2em;
-}
-
-h5 {
-  font-size: 1em;
-}
-
-h6 {
-  font-size: 1em;
-  color: var(--light-trait-300);
-}
-
-p,
-blockquote,
-ul,
-ol,
-dl,
-table {
-  margin: 0.8em 0;
-}
-
-li > ol,
-li > ul {
-  margin: 0 0;
-}
-
-hr {
-  height: 2px;
-  padding: 0;
-  margin: 16px 0;
-  background-color: var(--light-trait-100);
-  border: 0 none;
-  overflow: hidden;
-  box-sizing: content-box;
-}
-
-sup.md-footnote {
-  background-color: var(--light-trait-400);
-  color: var(--light-trait-100);
-}
-
-li p.first {
-  display: inline-block;
-}
-
-ul,
-ol {
-  padding-left: 30px;
-}
-
-ul:first-child,
-ol:first-child {
-  margin-top: 0;
-}
-
-ul:last-child,
-ol:last-child {
-  margin-bottom: 0;
-}
-
-mark,
-.ty-file-search-match-text,
-.md-search-hit {
-  background: var(--search-select-bg-color);
-  color: var(--search-select-text-color);
-}
-.md-search-hit * {
-  color: var(--search-select-text-color);
-}
-.cm-search-hit.CodeMirror-selectedtext,
-.md-search-hit.md-search-select,
-.md-search-select {
-  outline: 2px solid var(--primary-color);
-}
-.outline-item.select, .ty-search-item-line.select, .ty-search-item.select {
-  outline-width: 2px;
-}
-.outline-item.select {
-  outline-offset: 0px;
-}
-
-blockquote {
-  margin-left: -14px;
-  margin-right: -14px;
-  border-radius: var(--border-radius);
-  border-left: 4px solid var(--light-trait-300);
-  background-color: var(--light-trait-100);
-  padding: 7px 14px 7px 10px;
-}
-
-blockquote blockquote {
-  padding-right: 0;
-}
-
-table {
-  padding: 0;
-  word-break: initial;
-}
-
-table tr {
-  border-top: 1px solid var(--dark-trait);
-  margin: 0;
-  padding: 0;
-}
-
-table tr:nth-child(2n),
-thead {
-  background-color: var(--side-bar-bg-color);
-}
-
-table tr th {
-  font-weight: bold;
-  border: 1px solid var(--dark-trait);
-  border-bottom: 0;
-  margin: 0;
-  padding: 6px 13px;
-}
-
-table tr td {
-  border: 1px solid var(--dark-trait);
-  margin: 0;
-  padding: 6px 13px;
-}
-
-table tr th:first-child,
-table tr td:first-child {
-  margin-top: 0;
-}
-
-table tr th:last-child,
-table tr td:last-child {
-  margin-bottom: 0;
-}
-
-kbd {
-  font-size: 0.875rem;
-  background: var(--bg-color-dark);
-  border: 1px solid var(--dark-trait);
-  box-shadow: 0 2px 0 var(--dark-trait);
-  color: var(--text-color-secondary);
-}
-
-.md-fences,
-code,
-tt {
-  border: 1px solid var(--dark-trait);
-  background-color: var(--bg-color-dark);
-  border-radius: var(--border-radius);
-  padding: 2px 4px 0px 4px;
-  font-size: 0.9em;
-  font-family: var(--monospace);
-}
-
-.md-fences {
-  margin-bottom: 15px;
-  margin-top: 15px;
-  padding-top: 8px;
-  padding-bottom: 6px;
-  background-color: var(--side-bar-bg-color);
-}
-
-#write pre.md-meta-block {
-  padding: 1rem;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: var(--bg-color-dark);
-  border: 0;
-  border-radius: var(--border-radius);
-  color: var(--light-trait-400);
-  margin-top: 0 !important;
-}
-
-#write .mathjax-block .md-rawblock-tooltip {
-  border-top-left-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius);
-}
-
-#write .mathjax-block .md-math-container {
-  border-top-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
-}
-
-#write .md-mathblock-panel .md-rawblock-control:first-of-type {
-  border-top-left-radius: var(--border-radius);
-}
-
-.md-mathjax-midline {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-.md-inline-math script {
-  color: var(--code-color);
-}
-
-code {
-  padding: 0 2px 0 2px;
-}
-
-.CodeMirror-lines {
-  padding-left: 4px;
-}
-
-.code-tooltip {
-  box-shadow: none;
-  border-radius: var(--border-radius);
-}
-
-#write .code-tooltip {
-  bottom: initial;
-  top: 100%;
-  left: initial;
-  right: -1px;
-  background: var(--bg-color-dark);
-  border: 1px solid var(--dark-trait);
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top: 0;
-  font-family: var(--monospace);
-}
-
-#write .md-mathblock-panel .code-tooltip {
-  right: 0;
-  border: none;
-}
-
-#write .md-task-list-item > input {
-  -webkit-appearance: initial;
-  display: block;
-  position: absolute;
-  border: 1px solid var(--light-trait-200);
-  border-radius: 50%;
-  margin-left: -1.8rem;
-  height: 1.2rem;
-  width: 1.2rem;
-  transition: background 0.3s;
-}
-
-#write .md-task-list-item > input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-#write .md-task-list-item > input[checked] {
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
-}
-
-#write .md-task-list-item > input[checked]::before {
-  content: '✓';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  color: var(--dark-trait);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.md-image > .md-meta {
-  border-radius: var(--border-radius);
-  padding: 2px 0px 0px 4px;
-  font-size: 0.9em;
-  color: inherit;
-}
-
-.md-toc {
-  margin-top: 20px;
-  padding-bottom: 20px;
-}
-
-/* Source mode */
-.CodeMirror.cm-s-typora-default *,
-.cm-s-typora-default * {
-  background: inherit;
-  color: var(--text-color);
-  font-family: var(--monospace);
-  font-size: var(--font-size) !important;
-  font-style: normal;
-  font-weight: normal;
-}
-.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
-  border-left: 2px solid var(--light-trait-400);
-}
-
-.sidebar-tabs {
-  border-bottom: none;
-}
-
-.outline-expander {
-  width: 1.5rem;
-  vertical-align: initial;
-}
-.outline-expander:before,
-.outline-expander:hover:before,
-.outline-item-open > .outline-item > .outline-expander:before,
-.outline-item-open > .outline-item > .outline-expander:hover:before {
-  content: "\f125";
-  transition: transform 125ms ease-in-out;
-}
-.outline-item-open > .outline-item > .outline-expander:hover:before,
-.outline-item-open > .outline-item > .outline-expander:before {
-  transform: rotate(90deg);
-}
-.outline-label:hover {
-  text-decoration: none;
-}
-
-#toc-dropmenu {
-  background: var(--bg-color-dark);
-}
-#toc-dropmenu .outline-title {
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-.dropdown-menu .divider {
-  display: none;
-}
-
-.context-menu {
-  background-color: var(--bg-color-dark);
-}
-
-.file-node-background {
-  height: 31px;
-}
-.file-node-content:hover .file-node-icon,
-.file-node-content:hover .file-node-open-state {
-  visibility: visible;
-}
-.file-node-icon {
-  margin-right: 8px;
-}
-.file-library-node:not(.file-node-root):focus>.file-node-content {
-  outline: none;
-}
-
-/* New file animation */
-.blink-area {
-  animation: none;
-}
-
-.file-list-item-summary {
-  font-size: var(--font-size);
-  font-family: var(--font-family);
-}
-
-#md-searchpanel input {
-  border-radius: var(--border-radius);
-  box-shadow: none;
-}
-#md-searchpanel input:focus {
-  box-shadow: none;
-  border-color: var(--meta-content-color);
-}
-#md-searchpanel .search-type-selection {
-  width: auto;
-}
-#md-searchpanel .btn:not(.close-btn):hover {
-  box-shadow: none;
-}
-
-.mac-seamless-mode #typora-sidebar {
-  background-color: var(--side-bar-bg-color);
-}
-
-#md-notification .btn {
-  border: 0;
-}
-
-.megamenu-menu {
-  background-color: var(--bg-color-dark);
-}
-
-.megamenu-opened header {
-  background-image: none;
-}
-
-/* mega menu */
-.megamenu-content,
-.megamenu-opened header {
-    background: var(--bg-color);
-}
-
-.megamenu-opened .megamenu-content {
-  visibility: visible;
-  opacity: 1;
-  animation: none;
-  background-color: inherit;
-}
-
-#recent-file-panel tbody tr:nth-child(2n) {
-  background-color: var(--table-bg-darker-color);
-}
-
-#recent-file-panel tbody tr:nth-child(2n + 1) {
-  background-color: var(--table-bg-color);
-}
-
-#recent-file-panel-action-btn {
-  background-color: var(--bg-color);
-}
-
-.long-btn:hover {
-  background-color: var(--item-hover-bg-color);
-  color: var(--item-hover-text-color) !important;
-}
-
-#recent-file-panel-action-btn:hover{
-  background-color: var(--item-hover-bg-color);
-  color: var(--item-hover-text-color) !important;
-}
-
-.mouse-entered #top-titlebar .toolbar-icon.btn:hover,
-.mouse-entered #top-titlebar .toolbar-icon.btn.hover {
-    background-color: var(--item-hover-bg-color);
-}
-
-#m-import-local:hover .preference-item-hint {
-  color: var(--item-hover-text-color);
-}
-
-.typora-sourceview-on #toggle-sourceview-btn {
-  background-color: var(--bg-color-dark);
-}
-
- @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
-</style><title>纯纯写作桌面版 2 - Pure Writer Desktop 2</title>
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* 各语言选用对应地区的字体，繁体与日文不借用简体中文字形。 */
+  :lang(zh-Hant) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  :lang(zh-Hant-HK) {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  :lang(ja) {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  }
+  article:lang(en), article:lang(ru) {
+    line-height: 1.65;
+  }
+  body {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  /* 正文限制行宽便于阅读；窄屏时两侧保留 20px 边距。 */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 20px 48px;
+  }
+  [hidden] {
+    display: none !important;
+  }
+
+  /* 有脚本时只显示选中语言的内容（各语言的文章与工具栏里的首页链接）；没有脚本时只显示简体中文。 */
+  .l10n {
+    display: none;
+  }
+  /* 显式写 block，不用 display: revert：一些国内浏览器仍在用不支持 revert 的旧内核，那样会整页空白。
+     工具栏里的首页链接是内联元素，下面单独恢复为 inline。 */
+  html:not([data-locale]) .l10n[data-locale="zh-Hans"],
+  html[data-locale="zh-Hans"] .l10n[data-locale="zh-Hans"],
+  html[data-locale="zh-Hant"] .l10n[data-locale="zh-Hant"],
+  html[data-locale="zh-HK"] .l10n[data-locale="zh-HK"],
+  html[data-locale="en"] .l10n[data-locale="en"],
+  html[data-locale="ja"] .l10n[data-locale="ja"],
+  html[data-locale="ru"] .l10n[data-locale="ru"] {
+    display: block;
+  }
+  html[data-locale] .toolbar a.l10n[data-locale] {
+    display: none;
+  }
+  html[data-locale="zh-Hans"] .toolbar a.l10n[data-locale="zh-Hans"],
+  html[data-locale="zh-Hant"] .toolbar a.l10n[data-locale="zh-Hant"],
+  html[data-locale="zh-HK"] .toolbar a.l10n[data-locale="zh-HK"],
+  html[data-locale="en"] .toolbar a.l10n[data-locale="en"],
+  html[data-locale="ja"] .toolbar a.l10n[data-locale="ja"],
+  html[data-locale="ru"] .toolbar a.l10n[data-locale="ru"] {
+    display: inline;
+  }
+
+  /* 工具栏：左边回首页，右边切换语言。没有脚本时无法切换，也就不显示。 */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  html:not([data-locale]) .toolbar {
+    display: none;
+  }
+  .toolbar a {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  /* 不用系统原生外观：原生箭头在 iOS Safari 上紧贴右边框。改为自绘箭头，并为它留出右侧空间。 */
+  .toolbar select {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    /* 不小于 16px：iOS Safari 点按字号更小的表单控件时会自动放大页面。 */
+    font-size: 16px;
+    /* font: inherit 会连正文的大行高一起继承，按钮显得高；这里单独收紧，保持紧凑。 */
+    line-height: 1.25;
+    color: var(--text);
+    background-color: var(--panel);
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px 6px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 4px 32px 4px 12px;
+    cursor: pointer;
+  }
+
+  /* 页头：图标、名称与一句话介绍，下面是界面截图。 */
+  .masthead {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .masthead img {
+    width: 72px;
+    height: 72px;
+    flex: none;
+  }
+  h1 {
+    font-size: 1.9rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .tagline {
+    margin: 2px 0 0;
+    color: var(--secondary);
+  }
+  /* 手机上收小图标与标题，日文、俄文的长标题不至于在词中间折行。 */
+  @media (max-width: 480px) {
+    .masthead {
+      gap: 12px;
+    }
+    .masthead img {
+      width: 56px;
+      height: 56px;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  /* 截图放在下载区之后：下载页的主要操作要在首屏就能看到。按原图宽高比占位，图片加载前后页面不跳动。 */
+  .shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2624 / 1824;
+    border-radius: 12px;
+    margin: 28px 0 0;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 40px 0 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  /* 下载区紧跟在页头之后，不需要分隔线。 */
+  .release h2 {
+    margin-top: 28px;
+    padding-top: 0;
+    border-top: 0;
+  }
+  /* 标题旁的版本号等次要信息。 */
+  .aside {
+    margin-left: 8px;
+    font-size: 0.95rem;
+    font-weight: normal;
+    color: var(--secondary);
+  }
+  p, ul {
+    margin: 0 0 12px;
+  }
+  ul {
+    padding-left: 1.4em;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--panel);
+    overflow-wrap: anywhere;
+  }
+  /* 次要的说明文字：芯片的辨别方法、下载提示、校验值等。 */
+  .note {
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+
+  /* 三个下载按钮：宽屏并排，窄屏自动换成一列。顺序与突出显示由脚本按访问者的系统调整。 */
+  .downloads {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    margin: 4px 0 16px;
+    padding: 0;
+    list-style: none;
+  }
+  .downloads li {
+    margin: 0;
+  }
+  .download {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .download:hover {
+    text-decoration: none;
+    border-color: var(--secondary);
+  }
+  .download .platform {
+    font-weight: 600;
+  }
+  .download .detail {
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+  .download.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .download.primary .detail {
+    color: var(--on-accent);
+    opacity: 0.85;
+  }
+  /* desktop2.json 读取成功之前（或失败时）按钮还没有链接，显示为不可用。 */
+  .download:not([href]) {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  /* 折叠起来的 SHA-256 校验值：文件名一行，校验值一行，长串允许在任意位置换行。 */
+  details {
+    margin: 0 0 12px;
+  }
+  summary {
+    cursor: pointer;
+  }
+  details dl {
+    margin: 8px 0 0;
+  }
+  details dt {
+    margin-top: 6px;
+  }
+  details dd {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+  }
+  .guide {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--secondary);
+    font-size: 0.85rem;
+    line-height: 1.9;
+  }
+  footer p {
+    margin: 0;
+  }
+  /* 页脚文字是次要色，链接若不加下划线就认不出来；下划线用分隔线的颜色，保持低调。 */
+  footer a {
+    color: var(--secondary);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+  }
+  /* 公安备案图标与文字对齐。 */
+  footer img {
+    width: 16px;
+    height: 16px;
+    vertical-align: -3px;
+    margin-right: 4px;
+  }
+</style>
 </head>
-<body class='typora-export'><div class='typora-export-content'>
-<div id='write'  class=''><h3 id='纯纯写作桌面版-2'><span>🦋 纯纯写作桌面版 2</span></h3><p><span>| </span><a href='/desktop2_zh'><span>繁體中文</span></a><span> | </span><a href='/desktop2_en'><span>English</span></a><span> | </span><a href='/desktop2_ru'><span>Русский</span></a></p><p><img src="/images/desktop2dark.png" referrerpolicy="no-referrer" alt="Preview"></p><blockquote><h4 id='v312-版全新桌面版-目前完全免费'><span>v4.5.1 版（全新桌面版 · 目前完全免费）</span></h4></blockquote><p><span>全新的纯纯写作桌面版是一个巨大工程量的产品，至少需要五年以上的时间才能完成，如今发布的本客户端实际上还是一个 Beta 版本。目前许多功能和 UI 都还未实现或处于初始态，大量的细节缺乏打磨和调整……</span></p><p><span>由于许多用户热切希望尽快见到它，所以即使距离真正成熟的版本还很远，但我们决定发布它了，或许这是一个不错的开端，它已经比 2017 年初次发布的纯纯写作 Android 版来得新颖和丰富了，而且已经支持云同步了，不必要和手机实时连接。</span></p><p><span>前路漫漫，百废待兴，艰难且漫长，但我们没有放弃，马不停蹄，相信我们终有一天能抵达那个令人满意的里程碑。在此之前，全新的纯纯写作桌面端将长久保持完全免费（因此目前它不需要登录纯纯写作 Pro 账号，数据则通过云备份网盘同步）。</span></p><p><span>希望您能为一些细节感到欣喜，同时给予我们一些理解和更多等待时间，将不胜感激，不懈努力。</span></p><p><span>当前版本可能会有许多不足和问题，请多担待！</span></p><p><span>最后，为了避免一些二道打包贩子在安装包里插入风险代码，请确保您从 </span><a href='https://writer.drakeet.com/desktop2' target='_blank' class='url'>https://writer.drakeet.com/desktop2</a><span> 下载和更新本软件。目前它是完全免费的，请勿轻信任何破解版。</span></p><p><span>更多关于这个桌面版的开发故事请见：</span></p><p><a href='https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ' target='_blank' class='url'>https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ</a></p><p>&nbsp;</p><h4 id='下载'><span>下载</span></h4><p><a href='https://kuromi.drakeet.cn/PureWriter2-4.5.1-Windows-x64.exe'><span>PureWriter2-4.5.1-Windows-x64.exe</span></a><span>  Windows 版，目前仅支持 x64 架构</span></p><p><span>⚠️ Windows 系统可能遇到杀毒软件误报，请放心并将桌面版安装包及安装好的文件（</span><code>C:\Users\&lt;您的用户名&gt;\AppData\Local\Pure Writer 2</code><span>）加入白名单即可。我们是实名注册的开发者和公司，不可能做病毒软件的，那样不仅身败名裂而且要进监狱、破产。Windows 上的杀毒软件可能对于没有签名的 exe 默认报毒，我们后续将解决此问题。另外，若遇到打不开的情况，请对本软件关闭 Windows 的「勒索软件防护」或 360 安全防护（360 会阻止没有签名的软件安装，报「没有文件写入权限」错误），有用户反馈这会导致桌面版无法访问文件系统，遇到此情况请试试！</span></p><p><a href='https://kuromi.drakeet.cn/PureWriter2-4.5.1-macOS-aarch64.dmg'><span>PureWriter2-4.5.1-macOS-aarch64.dmg</span></a><span>  用于苹果 M 或 A 系列芯片 / Apple M Silicon / MacBook Neo</span></p><p><a href='https://kuromi.drakeet.cn/PureWriter2-4.5.1-macOS-x64.dmg'><span>PureWriter2-4.5.1-macOS-intel.dmg</span></a><span>  macOS Intel 版</span></p><p><span>上方的下载托管在 Cloudflare，若国内下载不了，可试试此 <b>备用下载地址</b>: </span><a href="https://drakeet.lanzouy.com/s/desktop"><span>蓝奏云下载</span></a></p><p><span>⚠️ 若更新，请</span><strong><span>关闭本软件后再安装更新</span></strong><span>，这样可以避免「</span><em><span>需要重启</span></em><span>」问题。</span></p><p><span>⚠️ 请注意，OneDrive 和「阿里云盘」都不是坚果云。目前</span><strong><span>必须在纯纯写作 Android 端切换到与桌面端同一个云备份/云同步网盘方可相互同步：</span></strong></p><p><span class='md-image'><img src="/images/DriveOnAndroidGuide.jpg" width=480 align="left"/></span></p><p><span>（因为云盘只是一个单向备份的载体，或者云同步的中转，所以</span><strong><span>没必要迁移云盘数据，直接切换即可</span></strong><span>）</span></p><p>&nbsp;</p><p><span>⚠️ </span><strong><span>关于 Windows v2.1.9 版本的注意事项：</span></strong></p><p><span>在安装 v4.5.1 版本之前，</span><strong><span>请先卸载 v2.1.9 版本！</span></strong></p><p><span>卸载方式：右键点击「开始」，选择「安装的应用」或「程序与功能」，然后在软件列表中找到「Pure Writer 2」v2.1.9 版本，点击「...」、「卸载」🙏</span></p><p>&nbsp;</p>
+<body>
+<main>
 
-<h4 id='发布日期'><span>发布日期</span></h4><p><span>v2.0.0 测试版发布于 2024.06.20 16:43, 周四, 2024 夏至前日</span></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h5 id='旧版纯纯写作桌面版-v190旧版但稳定需与手机实时连接httpswriterdrakeetcomdesktop'><span>旧版纯纯写作桌面版 v1.9.0（旧版，但稳定，需与手机实时连接）：</span><a href='https://writer.drakeet.com/desktop' target='_blank' class='url'>https://writer.drakeet.com/desktop</a></h5><p><span>v1.9.0 为非全新版本，功能比较有限，必须实时与手机相互连接，有的用户所处的网络可能连接不上。因此我们推出了以上的 </span><strong><span>4.5.1 版本</span></strong><span>，其为全新桌面版，不需要实时连接。</span></p><p><img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" width=22 /><span> </span><a href='https://beian.miit.gov.cn/'><span>闽ICP备2021006387号-1</span></a></p></div></div>
+<div class="toolbar">
+  <span>
+    <a class="l10n" data-locale="zh-Hans" href="/?lang=zh-Hans">← 纯纯写作首页</a>
+    <a class="l10n" data-locale="zh-Hant" href="/?lang=zh-Hant">← 純純寫作首頁</a>
+    <a class="l10n" data-locale="zh-HK" href="/?lang=zh-HK">← 純純寫作首頁</a>
+    <a class="l10n" data-locale="en" href="/?lang=en">← Pure Writer home</a>
+    <a class="l10n" data-locale="ja" href="/?lang=ja">← 純純執筆 ホーム</a>
+    <!-- 首页没有俄文，不带 ?lang=，由首页按浏览器语言显示（多半是英文）。 -->
+    <a class="l10n" data-locale="ru" href="/">← На главную</a>
+  </span>
+  <select id="language-select" aria-label="Language">
+    <option value="zh-Hans">简体中文</option>
+    <option value="zh-Hant">繁體中文（台灣）</option>
+    <option value="zh-HK">繁體中文（香港）</option>
+    <option value="en">English</option>
+    <option value="ja">日本語</option>
+    <option value="ru">Русский</option>
+  </select>
+</div>
+
+<!-- ═══════════════════════════ 简体中文 ═══════════════════════════ -->
+<!-- 截图一律 loading="lazy"：没选中的语言处于隐藏状态，这样不会去下载它们的截图。 -->
+<article class="l10n" data-locale="zh-Hans" lang="zh-Hans">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>纯纯写作桌面版</h1>
+      <p class="tagline">Windows 与 macOS · 目前免费</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download">下载<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 芯片<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 芯片<span data-size></span></span></a></li>
+  </ul>
+  <noscript><p class="note">需要开启 JavaScript 才能获取最新版本的下载链接。</p></noscript>
+  <p class="note" data-error hidden>暂时无法获取最新版本，请稍后刷新页面重试。</p>
+  <p class="note">不确定 Mac 用的是哪种芯片？点屏幕左上角的苹果菜单，选择「关于本机」：显示「芯片 Apple M…」或「芯片 Apple A…」的，选 Apple 芯片版；显示「处理器 … Intel …」的，选 Intel 芯片版。</p>
+  <p class="note">下载缓慢或无法下载？可以试试备用地址：<a href="https://drakeet.lanzouy.com/s/desktop">蓝奏云</a>。</p>
+  <p class="note">请只从本页下载和更新纯纯写作桌面版，以免拿到被他人二次打包、植入风险代码的安装包。</p>
+  <details class="note" data-checksums hidden>
+    <summary>安装包的 SHA-256 校验值</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark.png" alt="纯纯写作桌面版的写作界面" loading="lazy">
+
+<section data-notes hidden>
+  <h2>最近更新<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>安装与更新</h2>
+  <ul>
+    <li>更新前请先退出纯纯写作桌面版，再运行新的安装包，这样安装后不会提示「需要重启」。</li>
+    <li>Windows 上，部分杀毒软件会误报没有数字签名的安装包。纯纯写作由实名注册的开发者与公司出品，请放心将安装包和安装目录 <code>C:\Users\&lt;用户名&gt;\AppData\Local\Pure Writer 2</code> 加入信任名单。</li>
+    <li>如果安装后打不开，请试着在 Windows 安全中心的「勒索软件防护」里允许纯纯写作访问文件夹；如果 360 提示「没有文件写入权限」，请暂时关闭 360 的防护后重新安装。</li>
+    <li>电脑上如果还装着 Windows 版 v2.1.9，请先在「设置 › 应用 › 安装的应用」里卸载它，再安装新版。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>与手机同步</h2>
+  <p>桌面版通过网盘同步，不需要登录纯纯写作账号，也不需要手机与电脑同时在线：在手机上的纯纯写作里选择与电脑相同的网盘，登录同一个网盘账号，两边就能互相同步。请把手机上的纯纯写作也更新到最新版。</p>
+  <p>注意，OneDrive、阿里云盘、坚果云是不同的网盘，手机与电脑必须选同一个。网盘只是同步的中转站，切换网盘时不必迁移数据。以 Android 版为例，在「备份、云备份、云同步」里点按「云连接类型」即可切换：</p>
+  <img class="guide" src="images/DriveOnAndroidGuide.jpg" alt="纯纯写作 Android 版的「备份、云备份、云同步」页面：点按「云连接类型」可切换网盘" loading="lazy">
+</section>
+
+<section>
+  <h2>反馈</h2>
+  <p>桌面版仍在持续打磨。遇到问题或有任何建议，欢迎写信到 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+  <p>想知道这个桌面版是怎么做出来的，可以读读<a href="https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ">它的开发故事</a>。</p>
+</section>
+
+<!-- 版权与备案信息只放在简体中文版本，其它语言不要带上。 -->
+<footer>
+  <p>全新的纯纯写作桌面版首次发布于 2024 年 6 月 20 日，夏至前一天。</p>
+  <p>旧版桌面版 v1.9.0（需与手机实时连接）仍可在<a href="desktop">这里</a>下载。</p>
+  <p>版权所有：苏州小白迷雾科技有限公司</p>
+  <p>
+    <a href="https://beian.mps.gov.cn/#/query/webSearch"><img src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png" alt="">苏公网安备32050602012178号</a>
+    　<a href="https://beian.miit.gov.cn/">闽ICP备2021006387号-1</a>
+  </p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（台灣） ═══════════════════════════ -->
+<article class="l10n" data-locale="zh-Hant" lang="zh-Hant-TW">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純寫作桌面版</h1>
+      <p class="tagline">Windows 與 macOS · 目前免費</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-zh-Hant">下載<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 晶片<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 晶片<span data-size></span></span></a></li>
+  </ul>
+  <p class="note" data-error hidden>暫時無法取得最新版本，請稍後重新整理頁面再試一次。</p>
+  <p class="note">不確定 Mac 用的是哪種晶片？點螢幕左上角的蘋果選單，選擇「關於這台 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
+  <p class="note">請只從本頁下載和更新純純寫作桌面版，以免拿到被他人重新封裝、植入風險程式碼的安裝檔。</p>
+  <details class="note" data-checksums hidden>
+    <summary>安裝檔的 SHA-256 檢查碼</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark.png" alt="純純寫作桌面版的寫作介面" loading="lazy">
+
+<section data-notes hidden>
+  <h2>最近更新<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>安裝與更新</h2>
+  <ul>
+    <li>更新前請先結束純純寫作桌面版，再執行新的安裝檔，這樣安裝後就不會出現「需要重新啟動」的提示。</li>
+    <li>在 Windows 上，部分防毒軟體會誤判沒有數位簽章的安裝檔。純純寫作由實名註冊的開發者與公司推出，請放心將安裝檔和安裝資料夾 <code>C:\Users\&lt;使用者名稱&gt;\AppData\Local\Pure Writer 2</code> 加入信任清單。</li>
+    <li>若安裝後無法開啟，請試著在 Windows 安全性的「勒索軟體防護」中允許純純寫作存取資料夾。</li>
+    <li>若電腦上還裝著 Windows 版 v2.1.9，請先到「設定 › 應用程式 › 已安裝的應用程式」解除安裝，再安裝新版。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>與手機同步</h2>
+  <p>桌面版透過雲端硬碟同步，不需要登入純純寫作帳號，也不需要手機和電腦同時在線：在手機上的純純寫作中選擇與電腦相同的雲端硬碟，登入同一個帳號，兩邊就能互相同步。請把手機上的純純寫作也更新到最新版。</p>
+</section>
+
+<section>
+  <h2>意見回饋</h2>
+  <p>桌面版仍在持續打磨。遇到問題或有任何建議，歡迎來信 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+  <p>想知道這個桌面版是怎麼做出來的，可以讀讀<a href="https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ">它的開發故事</a>（簡體中文）。</p>
+</section>
+
+<footer>
+  <p>全新的純純寫作桌面版首次發布於 2024 年 6 月 20 日，夏至前一天。</p>
+  <p>舊版桌面版 v1.9.0（需與手機即時連線）仍可在<a href="desktop_zh">這裡</a>下載。</p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ 繁體中文（香港） ═══════════════════════════ -->
+<article class="l10n" data-locale="zh-HK" lang="zh-Hant-HK">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純寫作桌面版</h1>
+      <p class="tagline">Windows 與 macOS · 目前免費</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-zh-HK">下載<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 晶片<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 晶片<span data-size></span></span></a></li>
+  </ul>
+  <p class="note" data-error hidden>暫時未能取得最新版本，請稍後重新載入頁面再試。</p>
+  <p class="note">不確定 Mac 用的是哪種晶片？按螢幕左上角的 Apple 選單，選擇「關於這部 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
+  <p class="note">請只從本頁下載和更新純純寫作桌面版，以免下載到被他人重新封裝、植入風險程式碼的安裝檔。</p>
+  <details class="note" data-checksums hidden>
+    <summary>安裝檔的 SHA-256 檢查碼</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark.png" alt="純純寫作桌面版的寫作介面" loading="lazy">
+
+<section data-notes hidden>
+  <h2>最近更新<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>安裝與更新</h2>
+  <ul>
+    <li>更新前請先完全關閉純純寫作桌面版，再執行新的安裝檔，這樣安裝後就不會出現「需要重新啟動」的提示。</li>
+    <li>在 Windows 上，部分防毒軟件會誤報沒有數碼簽署的安裝檔。純純寫作由實名註冊的開發者與公司推出，請放心將安裝檔和安裝資料夾 <code>C:\Users\&lt;使用者名稱&gt;\AppData\Local\Pure Writer 2</code> 加入信任清單。</li>
+    <li>如安裝後無法開啟，請試試在 Windows 安全性的「勒索軟體防護」中允許純純寫作存取資料夾。</li>
+    <li>如電腦上仍裝有 Windows 版 v2.1.9，請先到「設定 › 應用程式 › 已安裝的應用程式」解除安裝，再安裝新版。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>與手機同步</h2>
+  <p>桌面版透過雲端硬碟同步，不需要登入純純寫作帳戶，也不需要手機和電腦同時在線：在手機上的純純寫作中選擇與電腦相同的雲端硬碟，登入同一個帳戶，兩邊就能互相同步。請把手機上的純純寫作也更新到最新版本。</p>
+</section>
+
+<section>
+  <h2>意見回饋</h2>
+  <p>桌面版仍在持續打磨。遇到問題或有任何建議，歡迎電郵至 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+  <p>想知道這個桌面版是怎樣做出來的，可以讀讀<a href="https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ">它的開發故事</a>（簡體中文）。</p>
+</section>
+
+<footer>
+  <p>全新的純純寫作桌面版首次發佈於 2024 年 6 月 20 日，夏至前一天。</p>
+  <p>舊版桌面版 v1.9.0（需與手機即時連線）仍可在<a href="desktop_zh">這裏</a>下載。</p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ English ═══════════════════════════ -->
+<article class="l10n" data-locale="en" lang="en">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>Pure Writer Desktop</h1>
+      <p class="tagline">For Windows and macOS · Free for now</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-en">Download<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple silicon<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
+  </ul>
+  <p class="note" data-error hidden>Couldn’t load the latest version. Please refresh the page in a moment.</p>
+  <p class="note">Not sure which chip your Mac has? Choose Apple menu › About This Mac. If it shows “Chip Apple M…” or “Chip Apple A…”, download the Apple silicon version; if it shows “Processor … Intel …”, download the Intel version.</p>
+  <p class="note">Please download and update Pure Writer Desktop only from this page, so you don’t end up with an installer that someone else has repackaged with risky code.</p>
+  <details class="note" data-checksums hidden>
+    <summary>SHA-256 checksums</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark_en.png" alt="The Pure Writer Desktop editor" loading="lazy">
+
+<section data-notes hidden>
+  <h2>What’s New<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>Installing and Updating</h2>
+  <ul>
+    <li>Before updating, quit Pure Writer Desktop, then run the new installer. This way you won’t be asked to restart after installing.</li>
+    <li>On Windows, some antivirus software flags installers that don’t have a digital signature. Pure Writer is made by a registered company, so you can safely add the installer and the install folder <code>C:\Users\&lt;username&gt;\AppData\Local\Pure Writer 2</code> to your allowlist.</li>
+    <li>If Pure Writer doesn’t open after installing, try allowing it through “Ransomware protection” (Controlled folder access) in Windows Security.</li>
+    <li>If Pure Writer for Windows v2.1.9 is still on your computer, uninstall it first in Settings › Apps › Installed apps, then install the new version.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Syncing with Your Phone</h2>
+  <p>Pure Writer Desktop syncs through a cloud drive. You don’t need a Pure Writer account, and your phone doesn’t need to be online at the same time. In Pure Writer on your phone, choose the same cloud drive as on your computer and sign in to the same account, and the two will stay in sync. Please keep Pure Writer on your phone up to date, too.</p>
+</section>
+
+<section>
+  <h2>Feedback</h2>
+  <p>We’re still polishing Pure Writer Desktop. If you run into a problem or have a suggestion, please email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+</section>
+
+<footer>
+  <p>The all-new Pure Writer Desktop was first released on June 20, 2024, the day before the summer solstice.</p>
+  <p>The old Pure Writer Desktop v1.9.0, which needs a live connection to your phone, is still available <a href="desktop_en">here</a>.</p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ 日本語 ═══════════════════════════ -->
+<article class="l10n" data-locale="ja" lang="ja">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>純純執筆 パソコン版</h1>
+      <p class="tagline">Windows・macOS 対応 · 現在は無料</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-ja">ダウンロード<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple シリコン<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
+  </ul>
+  <p class="note" data-error hidden>最新バージョンの情報を取得できませんでした。しばらくしてからページを再読み込みしてください。</p>
+  <p class="note">お使いの Mac のチップがわからないときは、画面左上のアップルメニューから「この Mac について」を開いてください。「チップ Apple M…」または「チップ Apple A…」と表示されていれば Apple シリコン版を、「プロセッサ … Intel …」と表示されていれば Intel 版を選んでください。</p>
+  <p class="note">第三者が再パッケージして危険なコードを仕込んだインストーラを避けるため、ダウンロードとアップデートは必ずこのページから行ってください。</p>
+  <details class="note" data-checksums hidden>
+    <summary>インストーラの SHA-256 チェックサム</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark_en.png" alt="純純執筆 パソコン版の執筆画面（英語表示）" loading="lazy">
+
+<section data-notes hidden>
+  <h2>最近のアップデート<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>インストールとアップデート</h2>
+  <ul>
+    <li>アップデートの前に純純執筆を終了してから、新しいインストーラを実行してください。インストール後に再起動を求められずに済みます。</li>
+    <li>Windows では、一部のウイルス対策ソフトがデジタル署名のないインストーラを誤って検出することがあります。純純執筆は登記された会社が開発しています。安心してインストーラとインストール先のフォルダ <code>C:\Users\&lt;ユーザー名&gt;\AppData\Local\Pure Writer 2</code> を許可リストに追加してください。</li>
+    <li>インストール後に起動できない場合は、Windows セキュリティの「ランサムウェア防止」（コントロールされたフォルダー アクセス）で純純執筆を許可してみてください。</li>
+    <li>Windows 版 v2.1.9 がまだインストールされている場合は、先に「設定 › アプリ › インストールされているアプリ」からアンインストールしてから、新しいバージョンをインストールしてください。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>スマートフォンとの同期</h2>
+  <p>パソコン版はクラウドドライブを通じて同期します。純純執筆のアカウントは不要で、スマートフォンとパソコンを同時にオンラインにしておく必要もありません。スマートフォンの純純執筆でパソコンと同じクラウドドライブを選び、同じアカウントでサインインすれば、互いに同期されます。スマートフォンの純純執筆も最新版にアップデートしておいてください。</p>
+</section>
+
+<section>
+  <h2>フィードバック</h2>
+  <p>パソコン版は今も磨きをかけ続けています。不具合やご要望があれば、<a href="mailto:writer@drakeet.com">writer@drakeet.com</a> までお気軽にお知らせください。</p>
+</section>
+
+<footer>
+  <p>まったく新しい純純執筆 パソコン版は、2024 年 6 月 20 日、夏至の前日に初めて公開されました。</p>
+  <p>スマートフォンとのリアルタイム接続が必要な旧パソコン版 v1.9.0 は、<a href="desktop_en">こちら</a>（英語）から引き続きダウンロードできます。</p>
+</footer>
+</article>
+
+<!-- ═══════════════════════════ Русский ═══════════════════════════ -->
+<article class="l10n" data-locale="ru" lang="ru">
+
+<header>
+  <div class="masthead">
+    <img src="images/icon512.png" alt="">
+    <div>
+      <h1>Pure Writer для компьютера</h1>
+      <p class="tagline">Windows и macOS · пока бесплатно</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-ru">Скачать<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
+  <ul class="downloads">
+    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">чип Apple<span data-size></span></span></a></li>
+    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
+  </ul>
+  <p class="note" data-error hidden>Не удалось получить сведения о последней версии. Обновите страницу чуть позже.</p>
+  <p class="note">Не знаете, какой чип в вашем Mac? Откройте меню Apple › «Об этом Mac». Если там указано «Чип Apple M…» или «Чип Apple A…», скачайте версию для чипа Apple; если «Процессор … Intel …» — версию для Intel.</p>
+  <p class="note">Скачивайте и обновляйте Pure Writer только с этой страницы, чтобы не получить установщик, который кто-то перепаковал и добавил в него опасный код.</p>
+  <details class="note" data-checksums hidden>
+    <summary>Контрольные суммы SHA-256</summary>
+    <dl></dl>
+  </details>
+</section>
+
+<img class="shot" src="images/desktop2dark_en.png" alt="Окно редактора Pure Writer для компьютера (интерфейс на английском)" loading="lazy">
+
+<section data-notes hidden>
+  <h2>Что нового<span class="aside">v<span data-notes-version></span></span></h2>
+  <ul data-notes-list></ul>
+</section>
+
+<section>
+  <h2>Установка и обновление</h2>
+  <ul>
+    <li>Перед обновлением закройте Pure Writer, а затем запустите новый установщик — тогда после установки не появится запрос на перезагрузку.</li>
+    <li>В Windows некоторые антивирусы ошибочно считают опасными установщики без цифровой подписи. Pure Writer выпускает официально зарегистрированная компания, поэтому установщик и папку установки <code>C:\Users\&lt;имя пользователя&gt;\AppData\Local\Pure Writer 2</code> можно спокойно добавить в список исключений.</li>
+    <li>Если после установки Pure Writer не запускается, попробуйте разрешить ему доступ в разделе «Защита от программ-шантажистов» (контролируемый доступ к папкам) приложения «Безопасность Windows».</li>
+    <li>Если на компьютере всё ещё установлена версия для Windows v2.1.9, сначала удалите её в разделе «Параметры › Приложения › Установленные приложения», а затем установите новую версию.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Синхронизация с телефоном</h2>
+  <p>Pure Writer для компьютера синхронизируется через облачный диск. Аккаунт Pure Writer не нужен, и телефону не обязательно быть в сети одновременно с компьютером. Выберите в Pure Writer на телефоне тот же облачный диск, что и на компьютере, и войдите в тот же аккаунт — после этого данные будут синхронизироваться в обе стороны. Не забудьте обновить Pure Writer на телефоне до последней версии.</p>
+</section>
+
+<section>
+  <h2>Обратная связь</h2>
+  <p>Мы продолжаем совершенствовать Pure Writer для компьютера. Если вы столкнулись с проблемой или хотите что-то предложить, напишите нам: <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+</section>
+
+<footer>
+  <p>Новый Pure Writer для компьютера впервые вышел 20 июня 2024 года, накануне летнего солнцестояния.</p>
+  <p>Старая версия v1.9.0, которой нужно постоянное подключение к телефону, по-прежнему доступна <a href="desktop_en">здесь</a> (на английском).</p>
+</footer>
+</article>
+
+</main>
+
+<script>
+  // 语言切换：下拉框初始值跟随已决定的语言；切换后记住选择，并把 ?lang= 写入地址栏，便于分享当前语言的链接。
+  (function () {
+    var select = document.getElementById("language-select");
+    var current = document.documentElement.getAttribute("data-locale");
+    if (!select || !current) return;
+    select.value = current;
+    select.addEventListener("change", function () {
+      var locale = select.value;
+      window.desktopPage.apply(locale);
+      try {
+        localStorage.setItem("ios-page-locale", locale);
+      } catch (e) {
+        // 无法保存时只影响下次打开的默认语言，本次切换照常生效。
+      }
+      // 不带上原来的锚点：各语言的锚点不同名，旧锚点在新语言里找不到。
+      if (window.history && history.replaceState) {
+        history.replaceState(null, "", location.pathname + "?lang=" + encodeURIComponent(locale));
+      }
+      window.scrollTo(0, 0);
+    });
+  })();
+
+  // 读取 desktop2.json，把版本、下载链接、文件大小、校验值与最近更新填进六种语言的文章。
+  // 一次填好全部语言，之后切换语言不必重新读取。
+  (function () {
+    var articles = document.querySelectorAll("article[data-locale]");
+
+    function each(list, fn) {
+      for (var i = 0; i < list.length; i++) fn(list[i]);
+    }
+
+    function setText(article, selector, text) {
+      each(article.querySelectorAll(selector), function (node) {
+        node.textContent = text;
+      });
+    }
+
+    function reveal(article, selector) {
+      each(article.querySelectorAll(selector), function (node) {
+        node.hidden = false;
+      });
+    }
+
+    // 按十进制 MB 取整，与 macOS 访达的显示方式一致；旧浏览器不支持单位格式时退回固定写法。
+    function formatSize(bytes, lang) {
+      var megabytes = Math.round(bytes / 1e6);
+      try {
+        return new Intl.NumberFormat(lang, { style: "unit", unit: "megabyte", maximumFractionDigits: 0 }).format(megabytes);
+      } catch (e) {
+        return megabytes + " MB";
+      }
+    }
+
+    // desktop2.json 里的日期是不带时区的 YYYY-MM-DD，按本地日期构造，免得在 UTC 以西的时区显示成前一天。
+    function formatDate(text, lang) {
+      var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text || "");
+      if (!match) return text || "";
+      var date = new Date(+match[1], +match[2] - 1, +match[3]);
+      try {
+        return new Intl.DateTimeFormat(lang, { year: "numeric", month: "long", day: "numeric" }).format(date);
+      } catch (e) {
+        return text;
+      }
+    }
+
+    function render(release) {
+      each(articles, function (article) {
+        var lang = article.getAttribute("lang");
+        var files = release.files || {};
+
+        setText(article, "[data-version]", release.version);
+        setText(article, "[data-released]", formatDate(release.released, lang));
+        reveal(article, "[data-release]");
+
+        each(article.querySelectorAll("[data-file]"), function (link) {
+          var file = files[link.getAttribute("data-file")];
+          if (!file) return;
+          link.href = file.url;
+          link.querySelector("[data-size]").textContent = " · " + formatSize(file.size, lang);
+        });
+
+        var checksums = article.querySelector("[data-checksums] dl");
+        if (checksums) {
+          checksums.textContent = "";
+          for (var key in files) {
+            if (!files.hasOwnProperty(key) || !files[key].sha256) continue;
+            var name = document.createElement("dt");
+            var hash = document.createElement("dd");
+            name.textContent = files[key].name;
+            hash.textContent = files[key].sha256;
+            checksums.appendChild(name);
+            checksums.appendChild(hash);
+          }
+          if (checksums.firstChild) reveal(article, "[data-checksums]");
+        }
+
+        // 更新内容来自桌面端的更新日志，按纯文本放进列表，不解析其中的任何标记。
+        var notes = release.notes && release.notes[article.getAttribute("data-locale")];
+        var list = article.querySelector("[data-notes-list]");
+        if (notes && notes.items && notes.items.length && list) {
+          setText(article, "[data-notes-version]", notes.version);
+          list.textContent = "";
+          each(notes.items, function (text) {
+            var item = document.createElement("li");
+            item.textContent = text;
+            list.appendChild(item);
+          });
+          reveal(article, "[data-notes]");
+        }
+      });
+    }
+
+    function showError() {
+      each(articles, function (article) {
+        reveal(article, "[data-error]");
+      });
+    }
+
+    // 按访问者的系统调整三个下载按钮的顺序，并突出显示对应的按钮。
+    // 直接移动列表项而不是改 CSS order，这样 Tab 键与读屏的顺序和看到的一致。
+    // Mac 上的浏览器大多不透露芯片类型，只有 Chromium 系浏览器能通过 userAgentData 拿到 arm/x86；
+    // 拿不到时两个 macOS 按钮都突出显示，由页面上的说明帮用户分辨。iPad 的 Safari 会自称 Macintosh，用触点数排除。
+    function arrange(order, primary) {
+      each(articles, function (article) {
+        each(order, function (key) {
+          var link = article.querySelector('[data-file="' + key + '"]');
+          if (!link) return;
+          link.parentNode.parentNode.appendChild(link.parentNode);
+          if (primary.indexOf(key) >= 0) link.className += " primary";
+        });
+      });
+    }
+
+    function detectPlatform() {
+      var data = navigator.userAgentData;
+      var platform = (data && data.platform) || navigator.platform || "";
+      var agent = navigator.userAgent || "";
+      if (/win/i.test(platform) || /Windows/.test(agent)) {
+        arrange(["windows-x64", "macos-aarch64", "macos-x64"], ["windows-x64"]);
+        return;
+      }
+      if (!(/mac/i.test(platform) || /Macintosh/.test(agent)) || navigator.maxTouchPoints > 1) return;
+      var bothMacs = function () {
+        arrange(["macos-aarch64", "macos-x64", "windows-x64"], ["macos-aarch64", "macos-x64"]);
+      };
+      if (!data || !data.getHighEntropyValues) {
+        bothMacs();
+        return;
+      }
+      data.getHighEntropyValues(["architecture"]).then(function (values) {
+        if (values.architecture === "arm") {
+          arrange(["macos-aarch64", "macos-x64", "windows-x64"], ["macos-aarch64"]);
+        } else if (values.architecture === "x86") {
+          arrange(["macos-x64", "macos-aarch64", "windows-x64"], ["macos-x64"]);
+        } else {
+          bothMacs();
+        }
+      }, bothMacs);
+    }
+
+    detectPlatform();
+
+    if (!window.fetch) {
+      showError();
+      return;
+    }
+    // no-cache：每次都向服务器确认是否有新版本（文件没变时只返回 304），发版后不会被浏览器缓存挡住。
+    fetch("desktop2.json", { cache: "no-cache" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      })
+      .then(render)
+      .catch(showError);
+  })();
+</script>
 </body>
 </html>

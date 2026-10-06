@@ -1,0 +1,68 @@
+{
+  "version": "4.5.1",
+  "released": "2026-10-06",
+  "files": {
+    "windows-x64": {
+      "name": "PureWriter2-4.5.1-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.1-Windows-x64.exe",
+      "size": 77910528,
+      "sha256": "085818812aab1fd2da49f7cee385b290a01734bcb900a34a792c05b2e0be5a61"
+    },
+    "macos-aarch64": {
+      "name": "PureWriter2-4.5.1-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.1-macOS-aarch64.dmg",
+      "size": 69757184,
+      "sha256": "6d4bfcedc09ca3c58c4993bb70f08a76d7c9583d5fad6d3d1816724707277b4e"
+    },
+    "macos-x64": {
+      "name": "PureWriter2-4.5.1-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.1-macOS-x64.dmg",
+      "size": 71411844,
+      "sha256": "b14bd993dde58e2c83d5dc6017de2eb4750969c63b052e47f0b8259acdeada0e"
+    }
+  },
+  "notes": {
+    "zh-Hans": {
+      "version": "4.5.0",
+      "items": [
+        "新增「每日统计」与「年度回顾」：点击右上角搜索按钮旁的统计图标即可打开，查看每天与全年的写作字数、写作时间和热力图；多台设备的统计分别记录，不再互相覆盖。",
+        "自动章节名升级为新版：编号不再写进标题，而是在侧栏、搜索结果和复制的标题中显示；所有语言均可使用，可设置编号格式与起始编号，文章和卷可不参与编号；旧版的书可转换为新版。"
+      ]
+    },
+    "zh-Hant": {
+      "version": "4.5.0",
+      "items": [
+        "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，檢視每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
+        "自動章節名升級為新版：編號不再寫進標題，而是在側欄、搜尋結果和複製的標題中顯示；所有語言皆可使用，可設定編號格式與起始編號，文章和卷可不參與編號；舊版的書可轉換為新版。"
+      ]
+    },
+    "zh-HK": {
+      "version": "4.5.0",
+      "items": [
+        "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，查看每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
+        "自動章節名升級為新版：編號不再寫進標題，而是在側欄、搜尋結果和複製的標題中顯示；所有語言均可使用，可設定編號格式與起始編號，文章和卷可不參與編號；舊版的書可轉換為新版。"
+      ]
+    },
+    "en": {
+      "version": "4.5.0",
+      "items": [
+        "Added “Daily Statistics” and “Year in Review”: click the chart icon next to the search button at the top right to see daily and yearly word counts, writing time, and a heatmap. Statistics from different devices are now recorded separately and no longer overwrite each other.",
+        "Chapter numbering is now v2: numbers are no longer written into titles and appear in the sidebar, search results, and copied titles instead. Available in every language, with custom formats and start numbers; documents and folders can be left out; books that use the earlier version can be converted."
+      ]
+    },
+    "ja": {
+      "version": "4.5.0",
+      "items": [
+        "「日次統計」と「年間レビュー」を追加しました。右上の検索ボタンの横にある統計アイコンをクリックすると開き、日ごと・年間の文字数、執筆時間、ヒートマップを確認できます。複数のデバイスの統計は別々に記録され、互いに上書きされなくなりました。",
+        "章番号が新しくなりました。番号はタイトルに書き込まれず、サイドバー、検索結果、コピーしたタイトルに表示されます。すべての言語で使え、番号の書式と開始番号を設定でき、文章やフォルダを番号の対象から外せます。旧バージョンの本は新しいバージョンに変換できます。"
+      ]
+    },
+    "ru": {
+      "version": "4.5.0",
+      "items": [
+        "Добавлены разделы «Ежедневная статистика» и «Итоги года»: нажмите значок статистики рядом с кнопкой поиска в правом верхнем углу, чтобы увидеть количество слов и время набора по дням и за год, а также тепловую карту. Статистика с разных устройств теперь записывается отдельно и больше не перезаписывается.",
+        "Новая нумерация глав (v2): номера больше не записываются в заголовки, а показываются на боковой панели, в результатах поиска и в скопированных заголовках. Доступна на всех языках, формат и начальный номер настраиваются; документы и папки можно исключить; книги с прежней версией можно перевести на новую."
+      ]
+    }
+  }
+}
