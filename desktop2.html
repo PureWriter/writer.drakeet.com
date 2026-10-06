@@ -113,9 +113,6 @@
     --link: #0a64d6;
     --rule: #e5e5ea;
     --panel: #f5f5f7;
-    /* 突出显示的下载按钮。深色模式沿用同一个蓝色：换成更亮的 --link 后，白字的对比度不够。 */
-    --accent: #0a64d6;
-    --on-accent: #ffffff;
     /* 语言下拉框的箭头。数据 URI 里的 SVG 无法跟随 currentColor，因此深浅色各写一份，颜色同 --secondary。 */
     --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236e6e73' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
@@ -323,54 +320,75 @@
     font-size: 0.9rem;
   }
 
-  /* 三个下载按钮：宽屏并排，窄屏自动换成一列。顺序与突出显示由脚本按访问者的系统调整。 */
-  .downloads {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 10px;
-    margin: 4px 0 16px;
-    padding: 0;
-    list-style: none;
+  /* 下载区：适合这台电脑的版本是主按钮，其余收进下面一行「其他安装包」（由底部脚本按访问者的系统决定）。
+     主按钮用与页面其他区块相同的灰底，只把图标染成链接蓝来点题，醒目而不喧宾夺主。 */
+  .icon {
+    flex: none;
   }
-  .downloads li {
-    margin: 0;
+  .downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 4px 0 12px;
   }
   .download {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 12px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 25px 10px 17px;
     border: 1px solid var(--rule);
-    border-radius: 12px;
+    border-radius: 14px;
     background: var(--panel);
     color: var(--text);
-    line-height: 1.45;
+    line-height: 1.35;
   }
   .download:hover {
     text-decoration: none;
     border-color: var(--secondary);
   }
-  .download .platform {
+  .download .icon {
+    width: 24px;
+    height: 24px;
+    color: var(--link);
+  }
+  .download .name {
+    display: block;
     font-weight: 600;
   }
   .download .detail {
+    display: block;
+    font-size: 0.85rem;
     color: var(--secondary);
-    font-size: 0.9rem;
-  }
-  .download.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-  }
-  .download.primary .detail {
-    color: var(--on-accent);
-    opacity: 0.85;
   }
   /* desktop2.json 读取成功之前（或失败时）按钮还没有链接，显示为不可用。 */
   .download:not([href]) {
     opacity: 0.5;
     cursor: default;
+  }
+  .download:not([href]):hover {
+    border-color: var(--rule);
+  }
+  /* 手机上主按钮占满一行，几个并列时整齐地上下排开。 */
+  @media (max-width: 480px) {
+    .download {
+      flex: 1 1 100%;
+    }
+  }
+  .others {
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+    color: var(--secondary);
+  }
+  .others a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+  .others .icon {
+    width: 16px;
+    height: 16px;
   }
 
   /* 折叠起来的 SHA-256 校验值：文件名一行，校验值一行，长串允许在任意位置换行。 */
@@ -428,6 +446,11 @@
 </style>
 </head>
 <body>
+<!-- 下载按钮用的图标，只定义一次，按钮里用 <use> 引用。线条图标，颜色跟随 currentColor。 -->
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <symbol id="icon-apple" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 5.75C12 3.75 13.5 1.75 15.5 1.75C15.5 3.75 14 5.75 12 5.75Z"/><path d="M12.5 8.09001C11.9851 8.09001 11.5867 7.92646 11.1414 7.74368C10.5776 7.51225 9.93875 7.25 8.89334 7.25C7.02235 7.25 4 8.74945 4 12.7495C4 17.4016 7.10471 22.25 9.10471 22.25C9.77426 22.25 10.3775 21.9871 10.954 21.7359C11.4815 21.5059 11.9868 21.2857 12.5 21.2857C13.0132 21.2857 13.5185 21.5059 14.046 21.7359C14.6225 21.9871 15.2257 22.25 15.8953 22.25C17.2879 22.25 18.9573 19.8992 20 16.9008C18.3793 16.2202 17.338 14.618 17.338 12.75C17.338 11.121 18.2036 10.0398 19.5 9.25C18.5 7.75 17.0134 7.25 15.9447 7.25C14.8993 7.25 14.2604 7.51225 13.6966 7.74368C13.2514 7.92646 13.0149 8.09001 12.5 8.09001Z"/></g></symbol>
+  <symbol id="icon-windows" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.0136 3.99538L8.01361 4.99036C5.61912 5.38744 4.42188 5.58597 3.71094 6.421C3 7.25602 3 8.46368 3 10.879L3 13.121C3 15.5363 3 16.744 3.71094 17.579C4.42188 18.414 5.61913 18.6126 8.01361 19.0096L14.0136 20.0046C17.2567 20.5424 18.8782 20.8113 19.9391 19.9171C21 19.023 21 17.3873 21 14.116V9.88402C21 6.6127 21 4.97704 19.9391 4.08286C18.8782 3.18868 17.2567 3.45758 14.0136 3.99538Z"/><path d="M11 4.5V19.5M3 12H21"/></g></symbol>
+</svg>
 <main>
 
 <div class="toolbar">
@@ -466,11 +489,12 @@
 
 <section class="release">
   <h2 id="download">下载<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 芯片<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 芯片<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">下载 Windows 版</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下载 macOS 版</span><span class="detail">Apple 芯片<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下载 macOS 版</span><span class="detail">Intel 芯片<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>其他安装包：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 芯片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 芯片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <noscript><p class="note">需要开启 JavaScript 才能获取最新版本的下载链接。</p></noscript>
   <p class="note" data-error hidden>暂时无法获取最新版本，请稍后刷新页面重试。</p>
   <p class="note">不确定 Mac 用的是哪种芯片？点屏幕左上角的苹果菜单，选择「关于本机」：显示「芯片 Apple M…」或「芯片 Apple A…」的，选 Apple 芯片版；显示「处理器 … Intel …」的，选 Intel 芯片版。</p>
@@ -539,11 +563,12 @@
 
 <section class="release">
   <h2 id="download-zh-Hant">下載<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 晶片<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 晶片<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">下載 Windows 版</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下載 macOS 版</span><span class="detail">Apple 晶片<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下載 macOS 版</span><span class="detail">Intel 晶片<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>其他安裝檔：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 晶片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 晶片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>暫時無法取得最新版本，請稍後重新整理頁面再試一次。</p>
   <p class="note">不確定 Mac 用的是哪種晶片？點螢幕左上角的蘋果選單，選擇「關於這台 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
   <p class="note">請只從本頁下載和更新純純寫作桌面版，以免拿到被他人重新封裝、植入風險程式碼的安裝檔。</p>
@@ -602,11 +627,12 @@
 
 <section class="release">
   <h2 id="download-zh-HK">下載<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple 晶片<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel 晶片<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">下載 Windows 版</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下載 macOS 版</span><span class="detail">Apple 晶片<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">下載 macOS 版</span><span class="detail">Intel 晶片<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>其他安裝檔：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple 晶片）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel 晶片）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>暫時未能取得最新版本，請稍後重新載入頁面再試。</p>
   <p class="note">不確定 Mac 用的是哪種晶片？按螢幕左上角的 Apple 選單，選擇「關於這部 Mac」：顯示「晶片 Apple M…」或「晶片 Apple A…」的，請選 Apple 晶片版；顯示「處理器 … Intel …」的，請選 Intel 晶片版。</p>
   <p class="note">請只從本頁下載和更新純純寫作桌面版，以免下載到被他人重新封裝、植入風險程式碼的安裝檔。</p>
@@ -665,11 +691,12 @@
 
 <section class="release">
   <h2 id="download-en">Download<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple silicon<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">Download for Windows</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">Download for macOS</span><span class="detail">Apple silicon<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">Download for macOS</span><span class="detail">Intel<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>Other downloads:<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Apple silicon)</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Intel)</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows (x64)</a></p>
   <p class="note" data-error hidden>Couldn’t load the latest version. Please refresh the page in a moment.</p>
   <p class="note">Not sure which chip your Mac has? Choose Apple menu › About This Mac. If it shows “Chip Apple M…” or “Chip Apple A…”, download the Apple silicon version; if it shows “Processor … Intel …”, download the Intel version.</p>
   <p class="note">Please download and update Pure Writer Desktop only from this page, so you don’t end up with an installer that someone else has repackaged with risky code.</p>
@@ -727,11 +754,12 @@
 
 <section class="release">
   <h2 id="download-ja">ダウンロード<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">Apple シリコン<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">Windows 版をダウンロード</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">macOS 版をダウンロード</span><span class="detail">Apple シリコン<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">macOS 版をダウンロード</span><span class="detail">Intel<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>その他のダウンロード：<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Apple シリコン）</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS（Intel）</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows（x64）</a></p>
   <p class="note" data-error hidden>最新バージョンの情報を取得できませんでした。しばらくしてからページを再読み込みしてください。</p>
   <p class="note">お使いの Mac のチップがわからないときは、画面左上のアップルメニューから「この Mac について」を開いてください。「チップ Apple M…」または「チップ Apple A…」と表示されていれば Apple シリコン版を、「プロセッサ … Intel …」と表示されていれば Intel 版を選んでください。</p>
   <p class="note">第三者が再パッケージして危険なコードを仕込んだインストーラを避けるため、ダウンロードとアップデートは必ずこのページから行ってください。</p>
@@ -789,11 +817,12 @@
 
 <section class="release">
   <h2 id="download-ru">Скачать<span class="aside" data-release hidden>v<span data-version></span> · <span data-released></span></span></h2>
-  <ul class="downloads">
-    <li><a class="download" data-file="windows-x64"><span class="platform">Windows</span><span class="detail">x64<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-aarch64"><span class="platform">macOS</span><span class="detail">чип Apple<span data-size></span></span></a></li>
-    <li><a class="download" data-file="macos-x64"><span class="platform">macOS</span><span class="detail">Intel<span data-size></span></span></a></li>
-  </ul>
+  <div class="downloads">
+    <a class="download" data-file="windows-x64"><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg><span><span class="name">Скачать для Windows</span><span class="detail">x64<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-aarch64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">Скачать для macOS</span><span class="detail">чип Apple<span data-size></span></span></span></a>
+    <a class="download" data-file="macos-x64"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg><span><span class="name">Скачать для macOS</span><span class="detail">Intel<span data-size></span></span></span></a>
+  </div>
+  <p class="others" hidden>Другие варианты:<a data-file="macos-aarch64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (чип Apple)</a><a data-file="macos-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>macOS (Intel)</a><a data-file="windows-x64" hidden><svg class="icon" aria-hidden="true"><use href="#icon-windows"/></svg>Windows (x64)</a></p>
   <p class="note" data-error hidden>Не удалось получить сведения о последней версии. Обновите страницу чуть позже.</p>
   <p class="note">Не знаете, какой чип в вашем Mac? Откройте меню Apple › «Об этом Mac». Если там указано «Чип Apple M…» или «Чип Apple A…», скачайте версию для чипа Apple; если «Процессор … Intel …» — версию для Intel.</p>
   <p class="note">Скачивайте и обновляйте Pure Writer только с этой страницы, чтобы не получить установщик, который кто-то перепаковал и добавил в него опасный код.</p>
@@ -917,7 +946,8 @@
           var file = files[link.getAttribute("data-file")];
           if (!file) return;
           link.href = file.url;
-          link.querySelector("[data-size]").textContent = " · " + formatSize(file.size, lang);
+          var size = link.querySelector("[data-size]");
+          if (size) size.textContent = " · " + formatSize(file.size, lang);
         });
 
         var checksums = article.querySelector("[data-checksums] dl");
@@ -957,18 +987,19 @@
       });
     }
 
-    // 按访问者的系统调整三个下载按钮的顺序，并突出显示对应的按钮。
-    // 直接移动列表项而不是改 CSS order，这样 Tab 键与读屏的顺序和看到的一致。
+    // 按访问者的系统决定主按钮：适合这台电脑的版本留作主按钮，其余收进下面一行「其他安装包」。
     // Mac 上的浏览器大多不透露芯片类型，只有 Chromium 系浏览器能通过 userAgentData 拿到 arm/x86；
-    // 拿不到时两个 macOS 按钮都突出显示，由页面上的说明帮用户分辨。iPad 的 Safari 会自称 Macintosh，用触点数排除。
-    function arrange(order, primary) {
+    // 拿不到时两个 macOS 版都作为主按钮，由页面上的说明帮用户分辨。手机等判断不出系统时，三个都作为主按钮。
+    // iPad 的 Safari 会自称 Macintosh，用触点数排除。
+    function feature(keys) {
       each(articles, function (article) {
-        each(order, function (key) {
-          var link = article.querySelector('[data-file="' + key + '"]');
-          if (!link) return;
-          link.parentNode.parentNode.appendChild(link.parentNode);
-          if (primary.indexOf(key) >= 0) link.className += " primary";
+        each(article.querySelectorAll(".downloads [data-file]"), function (link) {
+          link.hidden = keys.indexOf(link.getAttribute("data-file")) < 0;
         });
+        each(article.querySelectorAll(".others [data-file]"), function (link) {
+          link.hidden = keys.indexOf(link.getAttribute("data-file")) >= 0;
+        });
+        reveal(article, ".others");
       });
     }
 
@@ -977,12 +1008,12 @@
       var platform = (data && data.platform) || navigator.platform || "";
       var agent = navigator.userAgent || "";
       if (/win/i.test(platform) || /Windows/.test(agent)) {
-        arrange(["windows-x64", "macos-aarch64", "macos-x64"], ["windows-x64"]);
+        feature(["windows-x64"]);
         return;
       }
       if (!(/mac/i.test(platform) || /Macintosh/.test(agent)) || navigator.maxTouchPoints > 1) return;
       var bothMacs = function () {
-        arrange(["macos-aarch64", "macos-x64", "windows-x64"], ["macos-aarch64", "macos-x64"]);
+        feature(["macos-aarch64", "macos-x64"]);
       };
       if (!data || !data.getHighEntropyValues) {
         bothMacs();
@@ -990,9 +1021,9 @@
       }
       data.getHighEntropyValues(["architecture"]).then(function (values) {
         if (values.architecture === "arm") {
-          arrange(["macos-aarch64", "macos-x64", "windows-x64"], ["macos-aarch64"]);
+          feature(["macos-aarch64"]);
         } else if (values.architecture === "x86") {
-          arrange(["macos-x64", "macos-aarch64", "windows-x64"], ["macos-x64"]);
+          feature(["macos-x64"]);
         } else {
           bothMacs();
         }

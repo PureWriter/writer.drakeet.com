@@ -227,13 +227,20 @@
     margin: 0;
   }
   .platforms a {
-    display: inline-block;
-    padding: 6px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 16px 6px 13px;
     border: 1px solid var(--rule);
     border-radius: 999px;
     background: var(--panel);
     color: var(--text);
     font-size: 0.95rem;
+  }
+  .platforms .icon {
+    flex: none;
+    width: 19px;
+    height: 19px;
   }
   .platforms a:hover {
     text-decoration: none;
@@ -315,6 +322,12 @@
 </style>
 </head>
 <body>
+<!-- 页头下载入口用的图标，只定义一次，入口里用 <use> 引用。线条图标，颜色跟随 currentColor。 -->
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <symbol id="icon-android" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 9.5C6.5 6.46243 8.96243 4 12 4C15.0376 4 17.5 6.46243 17.5 9.5V16C17.5 17.4142 17.5 18.1213 17.0607 18.5607C16.6213 19 15.9142 19 14.5 19H9.5C8.08579 19 7.37868 19 6.93934 18.5607C6.5 18.1213 6.5 17.4142 6.5 16V9.5Z"/><path d="M20 11V17M15 19V22M9 19V22M4 11V17M10 4L8.5 2M14 4L15.5 2M6.5 10H17.5"/></g></symbol>
+  <symbol id="icon-apple" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 5.75C12 3.75 13.5 1.75 15.5 1.75C15.5 3.75 14 5.75 12 5.75Z"/><path d="M12.5 8.09001C11.9851 8.09001 11.5867 7.92646 11.1414 7.74368C10.5776 7.51225 9.93875 7.25 8.89334 7.25C7.02235 7.25 4 8.74945 4 12.7495C4 17.4016 7.10471 22.25 9.10471 22.25C9.77426 22.25 10.3775 21.9871 10.954 21.7359C11.4815 21.5059 11.9868 21.2857 12.5 21.2857C13.0132 21.2857 13.5185 21.5059 14.046 21.7359C14.6225 21.9871 15.2257 22.25 15.8953 22.25C17.2879 22.25 18.9573 19.8992 20 16.9008C18.3793 16.2202 17.338 14.618 17.338 12.75C17.338 11.121 18.2036 10.0398 19.5 9.25C18.5 7.75 17.0134 7.25 15.9447 7.25C14.8993 7.25 14.2604 7.51225 13.6966 7.74368C13.2514 7.92646 13.0149 8.09001 12.5 8.09001Z"/></g></symbol>
+  <symbol id="icon-desktop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H10C6.22876 3 4.34315 3 3.17157 4.17157C2 5.34315 2 7.22876 2 11C2 13.8284 2 15.2426 2.87868 16.1213C3.75736 17 5.17157 17 8 17H16C18.8284 17 20.2426 17 21.1213 16.1213C22 15.2426 22 13.8284 22 11C22 7.22876 22 5.34315 20.8284 4.17157C19.6569 3 17.7712 3 14 3Z"/><path d="M12 17V21M8 21H16"/></g></symbol>
+</svg>
 <main>
 
 <div class="toolbar">
@@ -340,9 +353,9 @@
   </div>
   <p class="summary">一个令人感到安心、拥有历史记录、支持云同步、云备份、多重防丢失功能，和许多写作辅助的极速编辑器。适用于 Android、iPhone 与 iPad。</p>
   <ul class="platforms">
-    <li><a href="#download-android">下载 Android 版</a></li>
-    <li><a href="#download-ios">下载 iOS 版</a></li>
-    <li><a href="desktop2?lang=zh-Hans">下载桌面版</a></li>
+    <li><a href="#download-android"><svg class="icon" aria-hidden="true"><use href="#icon-android"/></svg>下载 Android 版</a></li>
+    <li><a href="#download-ios"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>下载 iOS 版</a></li>
+    <li><a href="desktop2?lang=zh-Hans"><svg class="icon" aria-hidden="true"><use href="#icon-desktop"/></svg>下载桌面版</a></li>
   </ul>
   <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="纯纯写作：绝不丢失文本编辑器" loading="lazy">
 </header>
@@ -567,9 +580,9 @@
   </div>
   <p class="summary">一個令人安心、擁有歷史記錄、支援雲端同步與雲端備份、多重防遺失功能，以及許多寫作輔助的極速編輯器。適用於 Android、iPhone 與 iPad。</p>
   <ul class="platforms">
-    <li><a href="#download-android-zh-hant">下載 Android 版</a></li>
-    <li><a href="#download-ios-zh-hant">下載 iOS 版</a></li>
-    <li><a href="desktop2?lang=zh-Hant">下載桌面版</a></li>
+    <li><a href="#download-android-zh-hant"><svg class="icon" aria-hidden="true"><use href="#icon-android"/></svg>下載 Android 版</a></li>
+    <li><a href="#download-ios-zh-hant"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>下載 iOS 版</a></li>
+    <li><a href="desktop2?lang=zh-Hant"><svg class="icon" aria-hidden="true"><use href="#icon-desktop"/></svg>下載桌面版</a></li>
   </ul>
   <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="純純寫作：絕不遺失文字的編輯器" loading="lazy">
 </header>
@@ -781,9 +794,9 @@
   </div>
   <p class="summary">一個令人安心、擁有歷史記錄、支援雲端同步與雲端備份、多重防遺失功能，以及許多寫作輔助的極速編輯器。適用於 Android、iPhone 與 iPad。</p>
   <ul class="platforms">
-    <li><a href="#download-android-zh-hk">下載 Android 版</a></li>
-    <li><a href="#download-ios-zh-hk">下載 iOS 版</a></li>
-    <li><a href="desktop2?lang=zh-HK">下載桌面版</a></li>
+    <li><a href="#download-android-zh-hk"><svg class="icon" aria-hidden="true"><use href="#icon-android"/></svg>下載 Android 版</a></li>
+    <li><a href="#download-ios-zh-hk"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>下載 iOS 版</a></li>
+    <li><a href="desktop2?lang=zh-HK"><svg class="icon" aria-hidden="true"><use href="#icon-desktop"/></svg>下載桌面版</a></li>
   </ul>
   <img class="banner" src="images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg" alt="純純寫作：絕不遺失文字的編輯器" loading="lazy">
 </header>
@@ -995,9 +1008,9 @@
   </div>
   <p class="summary">A fast plain text editor you can trust, with History, cloud sync and backups, layers of protection against losing your work, and many thoughtful writing aids. For Android, iPhone, and iPad.</p>
   <ul class="platforms">
-    <li><a href="#download-android-en">Download for Android</a></li>
-    <li><a href="#download-ios-en">Download for iOS</a></li>
-    <li><a href="desktop2?lang=en">Download for Desktop</a></li>
+    <li><a href="#download-android-en"><svg class="icon" aria-hidden="true"><use href="#icon-android"/></svg>Download for Android</a></li>
+    <li><a href="#download-ios-en"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>Download for iOS</a></li>
+    <li><a href="desktop2?lang=en"><svg class="icon" aria-hidden="true"><use href="#icon-desktop"/></svg>Download for Desktop</a></li>
   </ul>
   <img class="banner" src="images/home_en.jpg" alt="Pure Writer on Android" loading="lazy">
 </header>
@@ -1198,9 +1211,9 @@
   </div>
   <p class="summary">安心して書ける、とても高速なプレーンテキストエディタです。履歴、クラウド同期とクラウドバックアップ、幾重もの紛失対策、そして数多くの執筆補助を備えています。Android、iPhone、iPad に対応しています。</p>
   <ul class="platforms">
-    <li><a href="#download-android-ja">Android 版をダウンロード</a></li>
-    <li><a href="#download-ios-ja">iOS 版をダウンロード</a></li>
-    <li><a href="desktop2?lang=ja">パソコン版をダウンロード</a></li>
+    <li><a href="#download-android-ja"><svg class="icon" aria-hidden="true"><use href="#icon-android"/></svg>Android 版をダウンロード</a></li>
+    <li><a href="#download-ios-ja"><svg class="icon" aria-hidden="true"><use href="#icon-apple"/></svg>iOS 版をダウンロード</a></li>
+    <li><a href="desktop2?lang=ja"><svg class="icon" aria-hidden="true"><use href="#icon-desktop"/></svg>パソコン版をダウンロード</a></li>
   </ul>
 </header>
 
