@@ -1,30 +1,32 @@
 {
-  "version": "4.5.3",
-  "released": "2026-10-08",
+  "version": "4.5.4",
+  "released": "2026-10-09",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.5.3-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.3-Windows-x64.exe",
-      "size": 78090752,
-      "sha256": "437ba2db5f70047ed1173e54260cbc01860373fdc81a070bc84259764ff4102b"
+      "name": "PureWriter2-4.5.4-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-Windows-x64.exe",
+      "size": 78135808,
+      "sha256": "17946ca0c4f33d31c2dd2878c136ca83bb43b5e94c8fa6bddcf754da0278f904"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.5.3-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.3-macOS-aarch64.dmg",
-      "size": 69965346,
-      "sha256": "58f37e716ff8859242fa59a6a8c973eb5473e27a0d4f73e3c6e29e6b10deb620"
+      "name": "PureWriter2-4.5.4-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-macOS-aarch64.dmg",
+      "size": 69987698,
+      "sha256": "684ea701bbcad516c62d28fee7f7b3502b38101bbb0f09ee7d7a67b7b627e1a3"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.5.3-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.3-macOS-x64.dmg",
-      "size": 71638977,
-      "sha256": "d88a37b89b19a373863aa3a7d0c102a9657099adb3ef1b60998dab9e7cb492ed"
+      "name": "PureWriter2-4.5.4-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-macOS-x64.dmg",
+      "size": 71624689,
+      "sha256": "e4aee5b8eae1fa8755b98eda2f5f3fbb07f2680efba43c2fcd4c434335b91dd1"
     }
   },
   "notes": {
     "zh-Hans": {
       "version": "4.5.0",
       "items": [
+        "修复使用输入法输入后连续撤销可能让正文错乱、再输入时报错的问题；输入法还在拼写、候选字尚未上屏时，撤销会等上屏或取消后再响应。",
+        "「从其他 App 导入」TXT 时新增「章节标题开头」：以这段文字开头的行作为章节标题拆分，泰语「บทที่ 1」、俄语「Глава 1」等写法也能按章拆开。",
         "新增「每日统计」与「年度回顾」：点击右上角搜索按钮旁的统计图标即可打开，查看每天与全年的写作字数、写作时间和热力图；多台设备的统计分别记录，不再互相覆盖。",
         "自动章节名升级为新版：编号不再写进标题，而是在侧栏、搜索结果和复制的标题中显示；所有语言均可使用，可设置编号格式与起始编号，文章和卷可不参与编号；旧版的书可转换为新版。"
       ]
@@ -32,6 +34,8 @@
     "zh-Hant": {
       "version": "4.5.0",
       "items": [
+        "修正使用輸入法輸入後連續復原可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，復原會等送出或取消後再回應。",
+        "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
         "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，檢視每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
         "自動章節名升級為新版：編號不再寫進標題，而是在側欄、搜尋結果和複製的標題中顯示；所有語言皆可使用，可設定編號格式與起始編號，文章和卷可不參與編號；舊版的書可轉換為新版。"
       ]
@@ -39,6 +43,8 @@
     "zh-HK": {
       "version": "4.5.0",
       "items": [
+        "修正使用輸入法輸入後連續撤銷可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，撤銷會等送出或取消後再回應。",
+        "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
         "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，查看每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
         "自動章節名升級為新版：編號不再寫進標題，而是在側欄、搜尋結果和複製的標題中顯示；所有語言均可使用，可設定編號格式與起始編號，文章和卷可不參與編號；舊版的書可轉換為新版。"
       ]
@@ -46,6 +52,8 @@
     "en": {
       "version": "4.5.0",
       "items": [
+        "Fixed an issue where undoing repeatedly after typing with an input method could scramble the text and cause an error on the next input. While the input method is still composing, Undo now waits until the text is committed or the composition is cancelled.",
+        "Import from other apps: for TXT files, you can now enter the text chapter titles start with, such as “Chapter” or “บทที่”, to split chapters written in any language.",
         "Added “Daily Statistics” and “Year in Review”: click the chart icon next to the search button at the top right to see daily and yearly word counts, writing time, and a heatmap. Statistics from different devices are now recorded separately and no longer overwrite each other.",
         "Chapter numbering is now v2: numbers are no longer written into titles and appear in the sidebar, search results, and copied titles instead. Available in every language, with custom formats and start numbers; documents and folders can be left out; books that use the earlier version can be converted."
       ]
@@ -53,6 +61,8 @@
     "ja": {
       "version": "4.5.0",
       "items": [
+        "入力メソッドで入力したあとに「元に戻す」を繰り返すと、本文が乱れたり次の入力でエラーになったりする問題を修正しました。変換中で未確定の文字がある間は、確定または取り消しのあとに「元に戻す」が反映されます。",
+        "「ほかの App から読み込む」で TXT を読み込むとき、「章タイトルの先頭」を指定できるようになりました。この文字で始まる行を章のタイトルとして分割するので、タイ語の「บทที่ 1」やロシア語の「Глава 1」なども章ごとに分けられます。",
         "「日次統計」と「年間レビュー」を追加しました。右上の検索ボタンの横にある統計アイコンをクリックすると開き、日ごと・年間の文字数、執筆時間、ヒートマップを確認できます。複数のデバイスの統計は別々に記録され、互いに上書きされなくなりました。",
         "章番号が新しくなりました。番号はタイトルに書き込まれず、サイドバー、検索結果、コピーしたタイトルに表示されます。すべての言語で使え、番号の書式と開始番号を設定でき、文章やフォルダを番号の対象から外せます。旧バージョンの本は新しいバージョンに変換できます。"
       ]
@@ -60,6 +70,8 @@
     "ru": {
       "version": "4.5.0",
       "items": [
+        "Исправлено: после ввода через метод ввода многократная отмена могла перепутать текст и вызвать ошибку при следующем вводе. Пока метод ввода ещё набирает текст, «Отменить» теперь ждёт, когда текст будет подтверждён или ввод отменён.",
+        "Импорт из других приложений: для TXT-файлов теперь можно указать «Начало заголовка главы», например «Глава» или «บทที่», чтобы делить текст на главы на любом языке.",
         "Добавлены разделы «Ежедневная статистика» и «Итоги года»: нажмите значок статистики рядом с кнопкой поиска в правом верхнем углу, чтобы увидеть количество слов и время набора по дням и за год, а также тепловую карту. Статистика с разных устройств теперь записывается отдельно и больше не перезаписывается.",
         "Новая нумерация глав (v2): номера больше не записываются в заголовки, а показываются на боковой панели, в результатах поиска и в скопированных заголовках. Доступна на всех языках, формат и начальный номер настраиваются; документы и папки можно исключить; книги с прежней версией можно перевести на новую."
       ]
