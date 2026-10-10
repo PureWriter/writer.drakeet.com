@@ -1,30 +1,31 @@
 {
-  "version": "4.5.4",
-  "released": "2026-10-09",
+  "version": "4.5.5",
+  "released": "2026-10-10",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.5.4-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-Windows-x64.exe",
+      "name": "PureWriter2-4.5.5-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-Windows-x64.exe",
       "size": 78135808,
-      "sha256": "17946ca0c4f33d31c2dd2878c136ca83bb43b5e94c8fa6bddcf754da0278f904"
+      "sha256": "64de5a8f8552a7cd0c96a6fd75a88a3f75dcda6f81f25818df554c6f033f5ae8"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.5.4-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-macOS-aarch64.dmg",
-      "size": 69987698,
-      "sha256": "684ea701bbcad516c62d28fee7f7b3502b38101bbb0f09ee7d7a67b7b627e1a3"
+      "name": "PureWriter2-4.5.5-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-macOS-aarch64.dmg",
+      "size": 69986642,
+      "sha256": "ec486cb53f4d06d9fcba8ea5f00c80f7a5134b9797051051533b97083f07ffb0"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.5.4-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.4-macOS-x64.dmg",
-      "size": 71624689,
-      "sha256": "e4aee5b8eae1fa8755b98eda2f5f3fbb07f2680efba43c2fcd4c434335b91dd1"
+      "name": "PureWriter2-4.5.5-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-macOS-x64.dmg",
+      "size": 71624996,
+      "sha256": "ad569b5859f2230ed4ce8ad4e414c5d76ff83136aa44891298a82a629aa91ae2"
     }
   },
   "notes": {
     "zh-Hans": {
       "version": "4.5.0",
       "items": [
+        "修复云同步所需的备份文件在云盘上被删除或清理后，各设备都无法再完成云同步的问题；现在会自动重新发布并恢复同步。",
         "修复使用输入法输入后连续撤销可能让正文错乱、再输入时报错的问题；输入法还在拼写、候选字尚未上屏时，撤销会等上屏或取消后再响应。",
         "「从其他 App 导入」TXT 时新增「章节标题开头」：以这段文字开头的行作为章节标题拆分，泰语「บทที่ 1」、俄语「Глава 1」等写法也能按章拆开。",
         "新增「每日统计」与「年度回顾」：点击右上角搜索按钮旁的统计图标即可打开，查看每天与全年的写作字数、写作时间和热力图；多台设备的统计分别记录，不再互相覆盖。",
@@ -34,6 +35,7 @@
     "zh-Hant": {
       "version": "4.5.0",
       "items": [
+        "修正雲端同步所需的備份檔案在雲端硬碟上被刪除或清理後，各裝置都無法再完成雲端同步的問題；現在會自動重新發布並恢復同步。",
         "修正使用輸入法輸入後連續復原可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，復原會等送出或取消後再回應。",
         "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
         "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，檢視每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
@@ -43,6 +45,7 @@
     "zh-HK": {
       "version": "4.5.0",
       "items": [
+        "修正雲端同步所需的備份檔案在雲端硬碟上被刪除或清理後，各裝置都無法再完成雲端同步的問題；現在會自動重新發佈並恢復同步。",
         "修正使用輸入法輸入後連續撤銷可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，撤銷會等送出或取消後再回應。",
         "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
         "新增「每日統計」與「年度回顧」：點擊右上角搜尋按鈕旁的統計圖示即可開啟，查看每天與全年的寫作字數、寫作時間和熱力圖；不同裝置的統計分別記錄，不再互相覆蓋。",
@@ -52,6 +55,7 @@
     "en": {
       "version": "4.5.0",
       "items": [
+        "Fixed an issue where cloud sync could no longer complete on any device after the backup file it needed had been deleted or cleaned up from the cloud drive. Sync now republishes automatically and resumes.",
         "Fixed an issue where undoing repeatedly after typing with an input method could scramble the text and cause an error on the next input. While the input method is still composing, Undo now waits until the text is committed or the composition is cancelled.",
         "Import from other apps: for TXT files, you can now enter the text chapter titles start with, such as “Chapter” or “บทที่”, to split chapters written in any language.",
         "Added “Daily Statistics” and “Year in Review”: click the chart icon next to the search button at the top right to see daily and yearly word counts, writing time, and a heatmap. Statistics from different devices are now recorded separately and no longer overwrite each other.",
@@ -61,6 +65,7 @@
     "ja": {
       "version": "4.5.0",
       "items": [
+        "クラウド同期に必要なバックアップファイルがクラウドドライブ上で削除または整理されると、どの端末でもクラウド同期が完了しなくなる問題を修正しました。今後は自動的に再発行して同期を再開します。",
         "入力メソッドで入力したあとに「元に戻す」を繰り返すと、本文が乱れたり次の入力でエラーになったりする問題を修正しました。変換中で未確定の文字がある間は、確定または取り消しのあとに「元に戻す」が反映されます。",
         "「ほかの App から読み込む」で TXT を読み込むとき、「章タイトルの先頭」を指定できるようになりました。この文字で始まる行を章のタイトルとして分割するので、タイ語の「บทที่ 1」やロシア語の「Глава 1」なども章ごとに分けられます。",
         "「日次統計」と「年間レビュー」を追加しました。右上の検索ボタンの横にある統計アイコンをクリックすると開き、日ごと・年間の文字数、執筆時間、ヒートマップを確認できます。複数のデバイスの統計は別々に記録され、互いに上書きされなくなりました。",
@@ -70,6 +75,7 @@
     "ru": {
       "version": "4.5.0",
       "items": [
+        "Исправлена ошибка, из-за которой облачная синхронизация не могла завершиться ни на одном устройстве после того, как нужный ей файл резервной копии был удалён или очищен из облачного хранилища. Теперь синхронизация автоматически публикуется заново и продолжается.",
         "Исправлено: после ввода через метод ввода многократная отмена могла перепутать текст и вызвать ошибку при следующем вводе. Пока метод ввода ещё набирает текст, «Отменить» теперь ждёт, когда текст будет подтверждён или ввод отменён.",
         "Импорт из других приложений: для TXT-файлов теперь можно указать «Начало заголовка главы», например «Глава» или «บทที่», чтобы делить текст на главы на любом языке.",
         "Добавлены разделы «Ежедневная статистика» и «Итоги года»: нажмите значок статистики рядом с кнопкой поиска в правом верхнем углу, чтобы увидеть количество слов и время набора по дням и за год, а также тепловую карту. Статистика с разных устройств теперь записывается отдельно и больше не перезаписывается.",
