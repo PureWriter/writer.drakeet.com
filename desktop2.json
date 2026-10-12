@@ -1,24 +1,24 @@
 {
-  "version": "4.5.5",
-  "released": "2026-10-10",
+  "version": "4.5.6",
+  "released": "2026-10-12",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.5.5-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-Windows-x64.exe",
-      "size": 78135808,
-      "sha256": "64de5a8f8552a7cd0c96a6fd75a88a3f75dcda6f81f25818df554c6f033f5ae8"
+      "name": "PureWriter2-4.5.6-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.6-Windows-x64.exe",
+      "size": 78139904,
+      "sha256": "90de2b8c44b40de0787b933ab27ef792197619eb8259db0312cc1ca09c582bbb"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.5.5-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-macOS-aarch64.dmg",
-      "size": 69986642,
-      "sha256": "ec486cb53f4d06d9fcba8ea5f00c80f7a5134b9797051051533b97083f07ffb0"
+      "name": "PureWriter2-4.5.6-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.6-macOS-aarch64.dmg",
+      "size": 69989884,
+      "sha256": "67222d885a1742cc0fc1e639a52cda7dcecd2ab129f3983bfe1e19b3dc9552b5"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.5.5-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.5-macOS-x64.dmg",
-      "size": 71624996,
-      "sha256": "ad569b5859f2230ed4ce8ad4e414c5d76ff83136aa44891298a82a629aa91ae2"
+      "name": "PureWriter2-4.5.6-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.6-macOS-x64.dmg",
+      "size": 71627517,
+      "sha256": "eb33d31ae7b3d2b78d0a60adfcd679621389f51b4be8a36d118d46adf7c7f808"
     }
   },
   "notes": {
