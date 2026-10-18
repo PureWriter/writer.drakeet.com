@@ -1,30 +1,31 @@
 {
-  "version": "4.5.7",
-  "released": "2026-10-16",
+  "version": "4.5.8",
+  "released": "2026-10-19",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.5.7-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.7-Windows-x64.exe",
-      "size": 78156288,
-      "sha256": "4332abe496e70d77fc229486dc1b5998b30228770ec2c1c038d5bfbc0d693fbb"
+      "name": "PureWriter2-4.5.8-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.8-Windows-x64.exe",
+      "size": 78217728,
+      "sha256": "d809c2b68c673af87433105b922fc1290404432b5c42f88a47c466b03fcab23d"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.5.7-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.7-macOS-aarch64.dmg",
-      "size": 70032778,
-      "sha256": "669ed5bffc6543cd3c2a341cb823e1ff280e4007583f8ac6492a230e5f9ede7f"
+      "name": "PureWriter2-4.5.8-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.8-macOS-aarch64.dmg",
+      "size": 70092387,
+      "sha256": "58e0b2c42b6cb431c56eab20522ac67475606d14513046643861ee9fc07b2090"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.5.7-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.7-macOS-x64.dmg",
-      "size": 71662487,
-      "sha256": "76430c980109a4f270e53a5ac9668c297975e7b909cb46035044c94b1f5c5f0b"
+      "name": "PureWriter2-4.5.8-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.5.8-macOS-x64.dmg",
+      "size": 71715068,
+      "sha256": "0283fc9364aab06a8ab0c47fb7d5d29abc11760dedbe8f9d6e251366d3bc640b"
     }
   },
   "notes": {
     "zh-Hans": {
       "version": "4.5.0",
       "items": [
+        "减少上传到云盘的备份文件数量与上传流量；阿里云盘上堆积的旧备份文件会更快清理。",
         "修复云同步所需的备份文件在云盘上被删除或清理后，各设备都无法再完成云同步的问题；现在会自动重新发布并恢复同步。",
         "修复使用输入法输入后连续撤销可能让正文错乱、再输入时报错的问题；输入法还在拼写、候选字尚未上屏时，撤销会等上屏或取消后再响应。",
         "「从其他 App 导入」TXT 时新增「章节标题开头」：以这段文字开头的行作为章节标题拆分，泰语「บทที่ 1」、俄语「Глава 1」等写法也能按章拆开。",
@@ -36,6 +37,7 @@
     "zh-Hant": {
       "version": "4.5.0",
       "items": [
+        "減少上傳到雲端硬碟的備份檔案數量與上傳流量；阿里雲盤上堆積的舊備份檔案會更快清理。",
         "修正雲端同步所需的備份檔案在雲端硬碟上被刪除或清理後，各裝置都無法再完成雲端同步的問題；現在會自動重新發布並恢復同步。",
         "修正使用輸入法輸入後連續復原可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，復原會等送出或取消後再回應。",
         "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
@@ -47,6 +49,7 @@
     "zh-HK": {
       "version": "4.5.0",
       "items": [
+        "減少上傳到雲端硬碟的備份檔案數量與上傳流量；阿里雲盤上堆積的舊備份檔案會更快清理。",
         "修正雲端同步所需的備份檔案在雲端硬碟上被刪除或清理後，各裝置都無法再完成雲端同步的問題；現在會自動重新發佈並恢復同步。",
         "修正使用輸入法輸入後連續撤銷可能讓正文錯亂、再輸入時出錯的問題；輸入法還在組字、文字尚未送出時，撤銷會等送出或取消後再回應。",
         "「從其他 App 匯入」TXT 時新增「章節標題開頭」：以這段文字開頭的行作為章節標題拆分，泰語「บทที่ 1」、俄語「Глава 1」等寫法也能按章拆開。",
@@ -58,6 +61,7 @@
     "en": {
       "version": "4.5.0",
       "items": [
+        "Reduced the number of backup files uploaded to cloud drives and the upload traffic. Old backups piled up on AliyunDrive are now cleaned up faster.",
         "Fixed an issue where cloud sync could no longer complete on any device after the backup file it needed had been deleted or cleaned up from the cloud drive. Sync now republishes automatically and resumes.",
         "Fixed an issue where undoing repeatedly after typing with an input method could scramble the text and cause an error on the next input. While the input method is still composing, Undo now waits until the text is committed or the composition is cancelled.",
         "Import from other apps: for TXT files, you can now enter the text chapter titles start with, such as “Chapter” or “บทที่”, to split chapters written in any language.",
@@ -69,6 +73,7 @@
     "ja": {
       "version": "4.5.0",
       "items": [
+        "クラウドドライブにアップロードするバックアップファイルの数とアップロードの通信量を減らしました。AliyunDrive にたまった古いバックアップファイルは、より早く整理されるようになりました。",
         "クラウド同期に必要なバックアップファイルがクラウドドライブ上で削除または整理されると、どの端末でもクラウド同期が完了しなくなる問題を修正しました。今後は自動的に再発行して同期を再開します。",
         "入力メソッドで入力したあとに「元に戻す」を繰り返すと、本文が乱れたり次の入力でエラーになったりする問題を修正しました。変換中で未確定の文字がある間は、確定または取り消しのあとに「元に戻す」が反映されます。",
         "「ほかの App から読み込む」で TXT を読み込むとき、「章タイトルの先頭」を指定できるようになりました。この文字で始まる行を章のタイトルとして分割するので、タイ語の「บทที่ 1」やロシア語の「Глава 1」なども章ごとに分けられます。",
@@ -80,6 +85,7 @@
     "ru": {
       "version": "4.5.0",
       "items": [
+        "Сокращено количество файлов резервных копий, отправляемых в облачное хранилище, и объём передаваемых данных. Старые резервные копии, накопившиеся в AliyunDrive, теперь удаляются быстрее.",
         "Исправлена ошибка, из-за которой облачная синхронизация не могла завершиться ни на одном устройстве после того, как нужный ей файл резервной копии был удалён или очищен из облачного хранилища. Теперь синхронизация автоматически публикуется заново и продолжается.",
         "Исправлено: после ввода через метод ввода многократная отмена могла перепутать текст и вызвать ошибку при следующем вводе. Пока метод ввода ещё набирает текст, «Отменить» теперь ждёт, когда текст будет подтверждён или ввод отменён.",
         "Импорт из других приложений: для TXT-файлов теперь можно указать «Начало заголовка главы», например «Глава» или «บทที่», чтобы делить текст на главы на любом языке.",
