@@ -1,67 +1,61 @@
 {
-  "version": "4.6.2",
-  "released": "2026-10-20",
+  "version": "4.7.0",
+  "released": "2026-10-22",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.6.2-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.6.2-Windows-x64.exe",
-      "size": 78313472,
-      "sha256": "27a4658c9c42d691aaf7e3cc79f8b9a60921ffa38b6646d4e91dbe062995d491"
+      "name": "PureWriter2-4.7.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.0-Windows-x64.exe",
+      "size": 78379008,
+      "sha256": "10be3ea6c7f23f0b566c9a9e3a743acd6b560422ebad4f18c203d4ff35e13fc6"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.6.2-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.6.2-macOS-aarch64.dmg",
-      "size": 70139237,
-      "sha256": "9c2139de3c37e8b6762fc4b0eab8c8e312a17da7c648b5e3c7415b2dff11e7c2"
+      "name": "PureWriter2-4.7.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.0-macOS-aarch64.dmg",
+      "size": 70166728,
+      "sha256": "1881e5e20d995e201aba6045a4e42951a910a8c8530ef36af6a91173ba10eeaf"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.6.2-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.6.2-macOS-x64.dmg",
-      "size": 71818370,
-      "sha256": "97c77476a9c5d21177cfe813e3fb1295917c89699e3e55534d28a7fb697b3fab"
+      "name": "PureWriter2-4.7.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.0-macOS-x64.dmg",
+      "size": 71835848,
+      "sha256": "23252fb11d91e4dcdc40ef3a69344a016e6b9922c12ee6e091e17cc8a6a72ec0"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "本地自动备份改为按时间分层保留，较早的版本留得更久；覆盖恢复与移除章节前缀之前的备份单独保留，不再被新备份挤掉。",
-        "使用局域网同步时，切换窗口不再生成新的备份。"
+        "新增 Markdown 格式：点击状态栏右侧的「纯文本」即可把文章切换为 Markdown，也可在标签或侧栏的右键菜单中切换；新建文章时可在标题框右端选择格式；Markdown 文章标有 M↓，不使用段间距。桌面版暂不渲染 Markdown。"
       ]
     },
     "zh-Hant": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "本機自動備份改為依時間分層保留，較早的版本留得更久；覆蓋恢復與移除章節前綴之前的備份單獨保留，不再被新備份擠掉。",
-        "使用區域網路同步時，切換視窗不再產生新的備份。"
+        "新增 Markdown 格式：點擊狀態列右側的「純文字」即可把文章切換為 Markdown，也可在分頁或側欄的右鍵選單中切換；新建文章時可在標題框右端選擇格式；Markdown 文章標有 M↓，不使用段間距。桌面版暫不顯示 Markdown 的排版效果。"
       ]
     },
     "zh-HK": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "本機自動備份改為按時間分層保留，較早的版本留得更久；覆蓋恢復及移除章節前綴之前的備份單獨保留，不再被新備份擠掉。",
-        "使用區域網絡同步時，切換視窗不再生成新的備份。"
+        "新增 Markdown 格式：點擊狀態欄右側的「純文字」即可把文章切換為 Markdown，也可在分頁或側欄的右鍵選單中切換；新建文章時可在標題框右端選擇格式；Markdown 文章標有 M↓，不使用段間距。桌面版暫不顯示 Markdown 的排版效果。"
       ]
     },
     "en": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "Local automatic backups are now kept in time-based tiers, so older versions stay around longer. Backups made before restoring over the library or removing chapter prefixes are kept separately and are no longer pushed out by newer backups.",
-        "With local network sync, switching windows no longer creates new backups."
+        "Added Markdown format: click “Plain text” on the right of the status bar to switch a document to Markdown, or use the right-click menu of its tab or of the sidebar. When creating a document, you can choose its format at the right end of the title field. Markdown documents are marked with M↓ and don’t use paragraph spacing. The desktop app doesn’t render Markdown yet."
       ]
     },
     "ja": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "端末内の自動バックアップを時間に応じて段階的に残すようにし、古いバージョンがこれまでより長く残るようになりました。上書きで復元する前と章番号を取り除く前のバックアップは別枠で保持し、新しいバックアップに押し出されなくなりました。",
-        "ローカルネットワーク同期の使用中は、ウィンドウを切り替えても新しいバックアップを作成しなくなりました。"
+        "Markdown 形式を追加しました。ステータスバー右側の「プレーンテキスト」をクリックすると文章を Markdown に切り替えられます。タブやサイドバーの右クリックメニューからも切り替えられます。文章を新しく作成するときは、タイトル欄の右端で形式を選べます。Markdown の文章には M↓ が付き、段落間隔は使われません。デスクトップ版はまだ Markdown を描画しません。"
       ]
     },
     "ru": {
-      "version": "4.6.0",
+      "version": "4.7.0",
       "items": [
-        "Локальные автоматические резервные копии теперь хранятся по уровням в зависимости от давности, поэтому старые версии остаются доступными дольше. Копии, созданные перед восстановлением с перезаписью локального содержимого или перед удалением префиксов глав, хранятся отдельно и больше не вытесняются новыми.",
-        "При синхронизации по локальной сети переключение между окнами больше не создаёт новых резервных копий."
+        "Новый формат Markdown: нажмите «Обычный текст» справа в строке состояния, чтобы переключить документ на Markdown, или воспользуйтесь контекстным меню вкладки или боковой панели. При создании документа формат можно выбрать у правого края поля заголовка. Документы Markdown отмечены значком M↓, межабзацный интервал в них не используется. Настольная версия пока не отображает Markdown в оформленном виде."
       ]
     }
   }
