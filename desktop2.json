@@ -1,61 +1,97 @@
 {
-  "version": "4.7.3",
-  "released": "2026-10-24",
+  "version": "4.8.0",
+  "released": "2026-10-25",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.7.3-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.3-Windows-x64.exe",
-      "size": 79525888,
-      "sha256": "16021a9c7e440e82c0ca688c47d768d925f5ae12308fe4cf73faf5d0fa5b6679"
+      "name": "PureWriter2-4.8.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.8.0-Windows-x64.exe",
+      "size": 82810880,
+      "sha256": "a277deb60e1b4a0b933dd880b6495aba5edb0eddb97fbcd12143f55b6d74c888"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.7.3-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.3-macOS-aarch64.dmg",
-      "size": 71366188,
-      "sha256": "c1272e06c8fefe480dca962a71ad94088a88c1f01fd67bd6a5856528134600b5"
+      "name": "PureWriter2-4.8.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.8.0-macOS-aarch64.dmg",
+      "size": 74642871,
+      "sha256": "b68f110217c800026e610c8808add0c4844cad7ac9273f9f2d63b77676c6ad37"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.7.3-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.7.3-macOS-x64.dmg",
-      "size": 73013017,
-      "sha256": "07a0d67e68792edd7537a6f18cb7dcbbb523fc7d4a49eefb0b4c601b2cefff3d"
+      "name": "PureWriter2-4.8.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.8.0-macOS-x64.dmg",
+      "size": 76324757,
+      "sha256": "9c134971356ceee5977935df230d8a31c3ff5168e1c205ff4941711d1dfe1fe6"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "新增 Markdown 格式：点击状态栏右侧的「纯文本」即可把文章切换为 Markdown，也可在标签或侧栏的右键菜单中切换；新建文章时可在标题框右端选择格式；Markdown 文章标有 M↓，不使用段间距。桌面版暂不渲染 Markdown。"
+        "新增图片资源：在 Markdown 文章中右键选择「插入图片…」，或直接拖放、粘贴图片即可插入；连接网盘后，图片会随备份与云同步上传，并可在其他设备上取回。",
+        "在「设置 → 图片资源」中可以浏览、下载、删除和恢复图片，查看传输状态，还能导入与导出图片资源。桌面版暂不在正文中显示图片，正文里是图片的 Markdown 写法。",
+        "云同步更快、更省流量：合并时跳过没有变化的文章，收到其他设备的内容后不再整包传回。",
+        "同步耗时较长时，底栏按钮会显示当前步骤；设置中新增「导出诊断信息…」，方便反馈同步问题。",
+        "快捷输入栏新增「删除当前段落」：清空当前段落的文字，保留换行。",
+        "修复 Dropbox 使用一段时间后可能被自动退出登录的问题；同一类同步错误的提示不再频繁重复。",
+        "修复切换主题后侧栏仍是旧主题的颜色、选中的文字拖不动的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "新增 Markdown 格式：點擊狀態列右側的「純文字」即可把文章切換為 Markdown，也可在分頁或側欄的右鍵選單中切換；新建文章時可在標題框右端選擇格式；Markdown 文章標有 M↓，不使用段間距。桌面版暫不顯示 Markdown 的排版效果。"
+        "新增圖片資源：在 Markdown 文章中按右鍵選擇「插入圖片…」，或直接拖放、貼上圖片即可插入；連接雲端硬碟後，圖片會隨備份與雲端同步上傳，並可在其他裝置上取回。",
+        "在「設定 → 圖片資源」中可以瀏覽、下載、刪除和復原圖片，查看傳輸狀態，還能匯入與匯出圖片資源。桌面版暫不在正文中顯示圖片，正文裡是圖片的 Markdown 寫法。",
+        "雲端同步更快、更省流量：合併時跳過沒有變化的文章，收到其他裝置的內容後不再整包傳回。",
+        "同步耗時較長時，底欄按鈕會顯示目前步驟；設定中新增「匯出診斷資訊…」，方便回報同步問題。",
+        "快捷輸入欄新增「刪除目前段落」：清空目前段落的文字，保留換行。",
+        "修正 Dropbox 使用一段時間後可能被自動登出的問題；同一類同步錯誤的提示不再頻繁重複。",
+        "修正切換主題後側欄仍是舊主題的顏色、選取的文字無法拖曳的問題。"
       ]
     },
     "zh-HK": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "新增 Markdown 格式：點擊狀態欄右側的「純文字」即可把文章切換為 Markdown，也可在分頁或側欄的右鍵選單中切換；新建文章時可在標題框右端選擇格式；Markdown 文章標有 M↓，不使用段間距。桌面版暫不顯示 Markdown 的排版效果。"
+        "新增圖片資源：在 Markdown 文章中按右鍵選擇「插入圖片…」，或直接拖放、貼上圖片即可插入；連接雲端硬碟後，圖片會隨備份與雲端同步上傳，並可在其他裝置上取回。",
+        "在「設置 → 圖片資源」中可以瀏覽、下載、刪除和復原圖片，查看傳輸狀態，還能匯入與匯出圖片資源。桌面版暫不在正文中顯示圖片，正文裡是圖片的 Markdown 寫法。",
+        "雲端同步更快、更省流量：合併時跳過沒有變化的文章，收到其他裝置的內容後不再整包傳回。",
+        "同步耗時較長時，底欄按鈕會顯示當前步驟；設置裡新增「匯出診斷資料…」，方便反饋同步問題。",
+        "快捷輸入欄新增「刪除當前段落」：清空當前段落的文字，保留換行。",
+        "修正 Dropbox 使用一段時間後可能被自動登出的問題；同一類同步錯誤的提示不再頻繁重複。",
+        "修正切換主題後側欄仍是舊主題的顏色、選取的文字無法拖動的問題。"
       ]
     },
     "en": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "Added Markdown format: click “Plain text” on the right of the status bar to switch a document to Markdown, or use the right-click menu of its tab or of the sidebar. When creating a document, you can choose its format at the right end of the title field. Markdown documents are marked with M↓ and don’t use paragraph spacing. The desktop app doesn’t render Markdown yet."
+        "Added Image Assets: in a Markdown document, right-click and choose “Insert image…”, or drag and drop or paste images. After you connect a cloud drive, images are uploaded with backups and cloud sync, and you can get them on your other devices.",
+        "In Settings → Image Assets, you can browse, download, delete and recover images, check the transfer status, and import or export your image assets. The desktop app doesn’t show images in documents yet; documents show each image’s Markdown.",
+        "Cloud sync is faster and uses less data: unchanged documents are skipped when merging, and content received from other devices is no longer uploaded back in full.",
+        "When sync takes a while, the button in the status bar shows the current step. Settings now has “Export Diagnostics…” to help you report sync problems.",
+        "The shortcut bar adds “Delete current paragraph”, which clears the paragraph’s text and keeps the line break.",
+        "Fixed an issue where Dropbox could sign you out after a while. Alerts for the same kind of sync error no longer repeat so often.",
+        "Fixed the sidebar keeping the previous theme’s colors, and selected text not being draggable, after switching themes."
       ]
     },
     "ja": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "Markdown 形式を追加しました。ステータスバー右側の「プレーンテキスト」をクリックすると文章を Markdown に切り替えられます。タブやサイドバーの右クリックメニューからも切り替えられます。文章を新しく作成するときは、タイトル欄の右端で形式を選べます。Markdown の文章には M↓ が付き、段落間隔は使われません。デスクトップ版はまだ Markdown を描画しません。"
+        "画像アセットを追加しました。Markdown の文章で右クリックして「画像を挿入…」を選ぶか、画像をドラッグ＆ドロップまたは貼り付けると挿入できます。クラウドドライブを接続すると、画像はバックアップとクラウド同期でアップロードされ、ほかのデバイスでも取得できます。",
+        "「設定 → 画像アセット」で、画像の閲覧、ダウンロード、削除、復元、転送状況の確認、画像アセットの読み込みと書き出しができます。デスクトップ版ではまだ本文に画像を表示せず、本文には画像の Markdown 記法が表示されます。",
+        "クラウド同期が速くなり、通信量も減りました。統合時は変更のない文章をスキップし、ほかのデバイスから受け取った内容をまるごと送り返さなくなりました。",
+        "同期に時間がかかっているときは、ステータスバーのボタンに現在の処理段階が表示されます。同期の問題を報告しやすいよう、設定に「診断情報を書き出す…」を追加しました。",
+        "ショートカットバーに「現在の段落を削除」を追加しました。段落の文字を消去し、改行は残します。",
+        "Dropbox をしばらく使っているとログアウトされることがある問題を修正しました。同じ種類の同期エラーの通知が何度も繰り返し表示されなくなりました。",
+        "テーマを切り替えたあと、サイドバーが前のテーマの色のままになる問題と、選択した文字をドラッグできなくなる問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "4.7.0",
+      "version": "4.8.0",
       "items": [
-        "Новый формат Markdown: нажмите «Обычный текст» справа в строке состояния, чтобы переключить документ на Markdown, или воспользуйтесь контекстным меню вкладки или боковой панели. При создании документа формат можно выбрать у правого края поля заголовка. Документы Markdown отмечены значком M↓, межабзацный интервал в них не используется. Настольная версия пока не отображает Markdown в оформленном виде."
+        "Добавлена библиотека изображений: в документе Markdown щёлкните правой кнопкой и выберите «Вставить изображение…» или просто перетащите либо вставьте изображения. После подключения облачного хранилища изображения загружаются в него при резервном копировании и облачной синхронизации, и их можно получить на других устройствах.",
+        "В разделе «Настройки → Библиотека изображений» можно просматривать, скачивать, удалять и восстанавливать изображения, следить за состоянием передачи, а также импортировать и экспортировать библиотеку изображений. Настольная версия пока не показывает изображения в документах: в тексте вместо каждого изображения видна его разметка Markdown.",
+        "Облачная синхронизация стала быстрее и расходует меньше трафика: при объединении пропускаются неизменённые документы, а содержимое, полученное с других устройств, больше не отправляется обратно целиком.",
+        "Если синхронизация идёт долго, кнопка в строке состояния показывает текущий этап. В настройках появился пункт «Экспорт диагностических данных…», чтобы было проще сообщать о проблемах с синхронизацией.",
+        "На панель быстрого ввода добавлено действие «Удалить текущий абзац»: оно очищает текст абзаца и сохраняет перевод строки.",
+        "Исправлена ошибка, из-за которой Dropbox через некоторое время мог выходить из учётной записи. Уведомления об однотипных ошибках синхронизации больше не повторяются так часто.",
+        "Исправлено: после смены темы боковая панель сохраняла цвета прежней темы, а выделенный текст нельзя было перетащить."
       ]
     }
   }
