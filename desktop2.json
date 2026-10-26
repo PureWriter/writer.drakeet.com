@@ -1,97 +1,79 @@
 {
-  "version": "4.9.0",
+  "version": "4.9.1",
   "released": "2026-10-26",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-4.9.0-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.0-Windows-x64.exe",
-      "size": 82171904,
-      "sha256": "c7cae308ba7d1482c0a3a4d392d6852b41c0497ee3fcde6fd484e4c1b267a6fa"
+      "name": "PureWriter2-4.9.1-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.1-Windows-x64.exe",
+      "size": 82233344,
+      "sha256": "876acf9273059f3bd4223e70aa4a16c545420f9164173b9357eedc31dbe34e18"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-4.9.0-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.0-macOS-aarch64.dmg",
-      "size": 75731182,
-      "sha256": "17d5de8707d96b593d0eb402726a613ec43ce18737d37e0925efd63bfe547054"
+      "name": "PureWriter2-4.9.1-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.1-macOS-aarch64.dmg",
+      "size": 75790435,
+      "sha256": "bde3f28fc45784117fca45fa97c7d95b866bbe6ca7096e057e9d771d248a1b4f"
     },
     "macos-x64": {
-      "name": "PureWriter2-4.9.0-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.0-macOS-x64.dmg",
-      "size": 77369423,
-      "sha256": "b9358b95c4d7114ddc39dae2f68470dd7cd9b8e42d39539b32e04be40be25849"
+      "name": "PureWriter2-4.9.1-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-4.9.1-macOS-x64.dmg",
+      "size": 77403861,
+      "sha256": "cdec42f56eca024582203a43951097b2be7744be79ed43163c5ad530aed9858e"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "新增图片资源：在 Markdown 文章中右键选择「插入图片…」，或直接拖放、粘贴图片即可插入；连接网盘后，图片会随备份与云同步上传，并可在其他设备上取回。",
-        "在「设置 → 图片资源」中可以浏览、下载、删除和恢复图片，查看传输状态，还能导入与导出图片资源。桌面版暂不在正文中显示图片，正文里是图片的 Markdown 写法。",
-        "云同步更快、更省流量：合并时跳过没有变化的文章，收到其他设备的内容后不再整包传回。",
-        "同步耗时较长时，底栏按钮会显示当前步骤；设置中新增「导出诊断信息…」，方便反馈同步问题。",
-        "快捷输入栏新增「删除当前段落」：清空当前段落的文字，保留换行。",
-        "修复 Dropbox 使用一段时间后可能被自动退出登录的问题；同一类同步错误的提示不再频繁重复。",
-        "修复切换主题后侧栏仍是旧主题的颜色、选中的文字拖不动的问题。"
+        "插入图片时可以先压缩：图片超过设定大小时会提示，可对比预览后再插入；可在「设置 → Markdown 选项 → 插入时提示压缩」中调整或关闭。",
+        "备份与同步时打包更快，占用的内存更少。",
+        "修复局域网同步中途断开后，云同步可能一直停在「正在核对云端」的问题；同步在等待其他操作完成时，底栏会如实显示。",
+        "修复同步未完成时退出，App 可能仍留在后台、再次打开时提示「已在运行」的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "新增圖片資源：在 Markdown 文章中按右鍵選擇「插入圖片…」，或直接拖放、貼上圖片即可插入；連接雲端硬碟後，圖片會隨備份與雲端同步上傳，並可在其他裝置上取回。",
-        "在「設定 → 圖片資源」中可以瀏覽、下載、刪除和復原圖片，查看傳輸狀態，還能匯入與匯出圖片資源。桌面版暫不在正文中顯示圖片，正文裡是圖片的 Markdown 寫法。",
-        "雲端同步更快、更省流量：合併時跳過沒有變化的文章，收到其他裝置的內容後不再整包傳回。",
-        "同步耗時較長時，底欄按鈕會顯示目前步驟；設定中新增「匯出診斷資訊…」，方便回報同步問題。",
-        "快捷輸入欄新增「刪除目前段落」：清空目前段落的文字，保留換行。",
-        "修正 Dropbox 使用一段時間後可能被自動登出的問題；同一類同步錯誤的提示不再頻繁重複。",
-        "修正切換主題後側欄仍是舊主題的顏色、選取的文字無法拖曳的問題。"
+        "插入圖片時可以先壓縮：圖片超過設定大小時會提示，可對比預覽後再插入；可在「設定 → Markdown 選項 → 插入時提示壓縮」中調整或關閉。",
+        "備份與同步時打包更快，佔用的記憶體更少。",
+        "修正區域網路同步中途中斷後，雲端同步可能一直停在「正在核對雲端」的問題；同步在等待其他作業完成時，底欄會如實顯示。",
+        "修正同步未完成時結束，App 可能仍留在背景、再次開啟時提示「已在執行」的問題。"
       ]
     },
     "zh-HK": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "新增圖片資源：在 Markdown 文章中按右鍵選擇「插入圖片…」，或直接拖放、貼上圖片即可插入；連接雲端硬碟後，圖片會隨備份與雲端同步上傳，並可在其他裝置上取回。",
-        "在「設置 → 圖片資源」中可以瀏覽、下載、刪除和復原圖片，查看傳輸狀態，還能匯入與匯出圖片資源。桌面版暫不在正文中顯示圖片，正文裡是圖片的 Markdown 寫法。",
-        "雲端同步更快、更省流量：合併時跳過沒有變化的文章，收到其他裝置的內容後不再整包傳回。",
-        "同步耗時較長時，底欄按鈕會顯示當前步驟；設置裡新增「匯出診斷資料…」，方便反饋同步問題。",
-        "快捷輸入欄新增「刪除當前段落」：清空當前段落的文字，保留換行。",
-        "修正 Dropbox 使用一段時間後可能被自動登出的問題；同一類同步錯誤的提示不再頻繁重複。",
-        "修正切換主題後側欄仍是舊主題的顏色、選取的文字無法拖動的問題。"
+        "插入圖片時可以先壓縮：圖片超過設定大小時會提示，可對比預覽後再插入；可在「設置 → Markdown 選項 → 插入時提示壓縮」中調整或關閉。",
+        "備份與同步時打包更快，佔用的記憶體更少。",
+        "修正區域網絡同步中途斷開後，雲端同步可能一直停在「正在核對雲端」的問題；同步在等待其他操作完成時，底欄會如實顯示。",
+        "修正同步未完成時退出，App 可能仍留在背景、再次開啟時提示「已在運行」的問題。"
       ]
     },
     "en": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "Added Image Assets: in a Markdown document, right-click and choose “Insert image…”, or drag and drop or paste images. After you connect a cloud drive, images are uploaded with backups and cloud sync, and you can get them on your other devices.",
-        "In Settings → Image Assets, you can browse, download, delete and recover images, check the transfer status, and import or export your image assets. The desktop app doesn’t show images in documents yet; documents show each image’s Markdown.",
-        "Cloud sync is faster and uses less data: unchanged documents are skipped when merging, and content received from other devices is no longer uploaded back in full.",
-        "When sync takes a while, the button in the status bar shows the current step. Settings now has “Export Diagnostics…” to help you report sync problems.",
-        "The shortcut bar adds “Delete current paragraph”, which clears the paragraph’s text and keeps the line break.",
-        "Fixed an issue where Dropbox could sign you out after a while. Alerts for the same kind of sync error no longer repeat so often.",
-        "Fixed the sidebar keeping the previous theme’s colors, and selected text not being draggable, after switching themes."
+        "You can now compress images before inserting them: when an image is larger than the size you set, you’re asked first and can compare previews before inserting. Change or turn this off in “Settings → Markdown options → Suggest compression when inserting”.",
+        "Backups and sync package faster and use less memory.",
+        "Fixed an issue where cloud sync could stay on “Checking the cloud” after a local network sync was interrupted. While sync is waiting for another operation to finish, the status bar now says so.",
+        "Fixed an issue where quitting before sync finished could leave the app running in the background, so reopening it said it was already running."
       ]
     },
     "ja": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "画像アセットを追加しました。Markdown の文章で右クリックして「画像を挿入…」を選ぶか、画像をドラッグ＆ドロップまたは貼り付けると挿入できます。クラウドドライブを接続すると、画像はバックアップとクラウド同期でアップロードされ、ほかのデバイスでも取得できます。",
-        "「設定 → 画像アセット」で、画像の閲覧、ダウンロード、削除、復元、転送状況の確認、画像アセットの読み込みと書き出しができます。デスクトップ版ではまだ本文に画像を表示せず、本文には画像の Markdown 記法が表示されます。",
-        "クラウド同期が速くなり、通信量も減りました。統合時は変更のない文章をスキップし、ほかのデバイスから受け取った内容をまるごと送り返さなくなりました。",
-        "同期に時間がかかっているときは、ステータスバーのボタンに現在の処理段階が表示されます。同期の問題を報告しやすいよう、設定に「診断情報を書き出す…」を追加しました。",
-        "ショートカットバーに「現在の段落を削除」を追加しました。段落の文字を消去し、改行は残します。",
-        "Dropbox をしばらく使っているとログアウトされることがある問題を修正しました。同じ種類の同期エラーの通知が何度も繰り返し表示されなくなりました。",
-        "テーマを切り替えたあと、サイドバーが前のテーマの色のままになる問題と、選択した文字をドラッグできなくなる問題を修正しました。"
+        "画像を挿入する前に圧縮できるようになりました。設定したサイズを超える画像では確認が表示され、プレビューを比べてから挿入できます。「設定 → Markdown オプション → 挿入時に圧縮を提案」で変更したりオフにしたりできます。",
+        "バックアップと同期でのパッケージ作成が速くなり、使用メモリも減りました。",
+        "ローカルネットワーク同期が途中で切れたあと、クラウド同期が「クラウドを確認中」のまま止まることがある問題を修正しました。同期がほかの処理の完了を待っているときは、ステータスバーにそのとおり表示されます。",
+        "同期が終わる前に終了すると、アプリがバックグラウンドに残り、もう一度開くと「すでに起動しています」と表示されることがある問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "4.8.0",
+      "version": "4.9.1",
       "items": [
-        "Добавлена библиотека изображений: в документе Markdown щёлкните правой кнопкой и выберите «Вставить изображение…» или просто перетащите либо вставьте изображения. После подключения облачного хранилища изображения загружаются в него при резервном копировании и облачной синхронизации, и их можно получить на других устройствах.",
-        "В разделе «Настройки → Библиотека изображений» можно просматривать, скачивать, удалять и восстанавливать изображения, следить за состоянием передачи, а также импортировать и экспортировать библиотеку изображений. Настольная версия пока не показывает изображения в документах: в тексте вместо каждого изображения видна его разметка Markdown.",
-        "Облачная синхронизация стала быстрее и расходует меньше трафика: при объединении пропускаются неизменённые документы, а содержимое, полученное с других устройств, больше не отправляется обратно целиком.",
-        "Если синхронизация идёт долго, кнопка в строке состояния показывает текущий этап. В настройках появился пункт «Экспорт диагностических данных…», чтобы было проще сообщать о проблемах с синхронизацией.",
-        "На панель быстрого ввода добавлено действие «Удалить текущий абзац»: оно очищает текст абзаца и сохраняет перевод строки.",
-        "Исправлена ошибка, из-за которой Dropbox через некоторое время мог выходить из учётной записи. Уведомления об однотипных ошибках синхронизации больше не повторяются так часто.",
-        "Исправлено: после смены темы боковая панель сохраняла цвета прежней темы, а выделенный текст нельзя было перетащить."
+        "Изображения теперь можно сжимать перед вставкой: если изображение больше заданного размера, появится предложение, и перед вставкой можно сравнить превью. Изменить или отключить это можно в разделе «Настройки → Параметры Markdown → Предлагать сжатие при вставке».",
+        "Резервное копирование и синхронизация быстрее упаковывают данные и расходуют меньше памяти.",
+        "Исправлена ошибка, из-за которой облачная синхронизация могла остановиться на этапе «Проверка облака» после обрыва синхронизации по локальной сети. Если синхронизация ждёт завершения другой операции, строка состояния теперь так и показывает.",
+        "Исправлена ошибка, из-за которой после выхода до завершения синхронизации приложение могло оставаться в фоне, а при повторном запуске сообщалось, что оно уже запущено."
       ]
     }
   }
