@@ -138,8 +138,16 @@ ssh drakeet@writer.drakeet.com 'sudo /root/writer-provision/ops/provision.sh web
 | 内存 | 2 GiB swapfile；journald 上限 1 GB | `swapon --show`，`free -m` |
 | 时间 | chrony，阿里云内网 NTP | `chronyc sources` |
 | Caddy 崩溃 | systemd `Restart=on-failure` | `systemctl status caddy` |
+| 外部监控 | GitHub Actions 定时任务（`.github/workflows/monitor.yml`），每 15 分钟从境外检查首页、AASA、`desktop2.json`、该版本的三个镜像 JAR（HEAD）、http 跳转与证书剩余天数；两轮都不通过时这次运行失败，GitHub 发邮件 | GitHub 仓库 PureWriter/writer.drakeet.com 的 Actions 页面；`gh run list --workflow=monitor.yml` |
 
 2026-11-07 做过一次重启检验：网站约 35 秒后恢复，上述服务全部自动起来。
+
+外部监控的几点说明：
+
+- 失败通知发给最后修改 cron 那一行的 GitHub 账号（目前是 drakeet），要在 GitHub 的 Settings → Notifications → Actions 里开着「失败时发邮件」。
+- 公开仓库 60 天没有提交时，GitHub 会停用定时任务（会先发邮件提醒）；平时桌面发版就会产生提交，若被停用，在 Actions 页面重新启用即可。
+- 检查点在境外，GitHub 的调度也常有十几分钟的延迟，所以它只用来发现「挂了」，不用来衡量国内访问速度。
+- 第 C 步换成新站后，首页改为按语言跳转，`monitor.yml` 里的期望要随之更新。
 
 ## 8. 出了问题
 
