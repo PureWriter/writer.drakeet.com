@@ -5,3 +5,6 @@
 
 # macOS
 .DS_Store
+
+# Python 的字节码缓存（以模块方式导入检查脚本时生成）
+__pycache__/
