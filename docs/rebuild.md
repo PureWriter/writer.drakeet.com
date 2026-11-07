@@ -14,7 +14,7 @@
   - 第 E 步（SEO 与 AI 可发现性）：站长平台的验证需要 Drakeet 的账号；
   - 第 F 步剩下的两份教程：2026-11-07 已按三端现行版本重写并上线（fc0b13d），GPT 复审未发现事实错误；
   - 第 D 步在上线一周后（11-14 前后）核对；
-  - 原计划完成后，紧接着做第九节 H（出口分流）；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
+  - 原计划完成后，紧接着做第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md) 已经两轮 GPT 复审，待 Drakeet 定 iMac 与 m4 的部署方式，以及是否只由 api.drakeet.com 下发；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
 - **仓库**：
   - 主目录 `/Users/drakeet/GitHub/writer.drakeet.com` 在 `master`，就是线上的新站；之后都在 `master` 上改、提交、推送，部署按 operations.md 5.1。
   - 重建期间的 `rebuild` 分支已在第 C 步快进进 `master`，它的工作树随后移除；旧站另有完整副本在本机 `/Users/drakeet/GitHub/writer.drakeet.com.old`。
@@ -764,6 +764,8 @@ scripts/             构建、预览、检查、部署与回滚
 - 收回免密 sudo（5.3 的终态）。
 
 ### H. 出口分流（Drakeet 2026-11-07 定，紧接在原计划之后进行）
+
+设计、合同、任务清单与验收写在专项正本 [egress-offloading.md](egress-offloading.md)；本节保留 Drakeet 定下的方向。
 
 起因见第十一节「出口带宽被 JAR 下载占满」：发版后的高峰里 JAR 占出口的 83%，`/images/` 占 16%，网页只占 0.5%。本站在境内，全世界都能访问；Cloudflare 在中国部分地区连不上，所以不能一刀切，要按情况给不同的来源，本站作为兜底。两头一起做：
 
