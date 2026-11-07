@@ -1,6 +1,6 @@
 # 官网服务器运维手册
 
-writer.drakeet.com 所在服务器的现役事实，以及部署与运维的日常操作。服务器的设计与取舍见重建方案 `docs/rebuild.md` 第五、六节（第 C 步之前它在 `rebuild` 分支，即工作树 `/Users/drakeet/GitHub/writer.drakeet.com-rebuild`）；本文只写「现在是什么样、要做某件事该怎么做」。服务器上的配置都来自本仓库的 `ops/`，改配置先改仓库、提交并推送，再按第 6 节同步过去。
+writer.drakeet.com 所在服务器的现役事实，以及部署与运维的日常操作。服务器的设计与取舍见重建方案 `docs/rebuild.md` 第五、六节；本文只写「现在是什么样、要做某件事该怎么做」。服务器上的配置都来自本仓库的 `ops/`，改配置先改仓库、提交并推送，再按第 6 节同步过去。
 
 ## 1. 概况
 
@@ -68,13 +68,17 @@ ufw 与阿里云安全组保持同一份白名单。改动任何一处，同时�
 在官网仓库主目录（`/Users/drakeet/GitHub/writer.drakeet.com`，`master`）里：
 
 ```bash
-scripts/deploy.sh              # 部署已提交的 HEAD；冒烟检查失败会自动切回上一版
-scripts/deploy.sh --rollback   # 切回上一版；再执行一次就回到刚才的版本
+scripts/deploy.sh              # 部署已提交的 HEAD 到正式站（只接受 master）；切换后跑 URL 合同，不通过自动切回
+scripts/deploy.sh --staging    # 部署到预发站 writer2.drakeet.com（任何分支都可以）
+scripts/deploy.sh --rollback   # 切回上一版；再执行一次就回到刚才的版本（加 --staging 对预发站）
 ```
 
-- 部署只发布已提交的内容，工作区里的草稿不影响部署。
-- 每次部署是服务器上的一个新版本目录；内容没变的文件与上一版共用 inode，实际上传的只有改动。保留最近 5 份。
-- 站点规则 `caddy/site.caddy` 随版本一起发布、一起回滚；Caddy 拒绝新规则时会自动切回原版本。
+- 部署只发布已提交的内容：开头取一次提交号，产物、构建工具与检查配置、站点规则与 URL 合同都取自这个提交，工作区里的草稿和部署期间别人新做的提交都不影响。
+- 每次部署是服务器上的一个新版本目录（`public/`、`caddy/site.caddy`、`checks/`）；内容没变的文件与上一版共用 inode，实际上传的只有改动。保留最近 5 份。
+- 切换之后在服务器上跑这一版附带的 URL 合同（`checks/contract.py --site <主机名>`，连本机 443、按主机名带 SNI，不经公网），正式站另从本机核对线上 `desktop2.json` 的版本；任何一项不通过都自动切回切换前的版本。合同表是 `ops/contract.tsv`，格式写在表头。
+- 站点规则 `caddy/site.caddy` 随版本一起发布、一起回滚；Caddy 拒绝新规则时会自动切回原版本。改了规则或合同，提交之前先在本机运行 `scripts/test-caddy.sh`：它按服务器的目录结构搭测试台，用与服务器同版本的 Caddy 跑整张合同。
+- 同一时间只有一次部署：deploy.sh 在 git 公共目录里加锁（`.git/writer-deploy.lock`），含 `--rollback`。部署进程被强杀或机器死机时锁会遗留，再部署会拒绝并给出移除命令，确认没有部署在进行后照做即可。
+- 出口被 JAR 下载占满时上传很慢：整站上传（预发站第一次部署）用过约 10 分钟，增量部署通常一两分钟。
 - 查看服务器上的版本：`ssh drakeet@writer.drakeet.com writer-release status prod`。
 - 桌面版 `release.sh` 的 deploy 步骤调用的也是这个脚本。
 
@@ -126,19 +130,25 @@ ssh drakeet@writer.drakeet.com 'sudo /root/writer-provision/ops/provision.sh web
 
 `web` 会以 caddy 身份校验配置再重启 Caddy；校验不过就停下，不会重启到坏配置上。
 
+只改了 `ops/bin/` 里的某个脚本时，不必重跑 `web`（它会重启 Caddy，线上短暂中断）：同步 `ops/` 之后，单独安装那个脚本即可，命令与 `web` 里的相同：
+
+```bash
+ssh drakeet@writer.drakeet.com 'sudo install -m 0755 -o root -g root /root/writer-provision/ops/bin/<脚本> /usr/local/bin/<脚本>'
+```
+
 ## 7. 自动维护
 
 | 项目 | 机制 | 核对方法 |
 |---|---|---|
 | 系统安全更新 | unattended-upgrades；需要重启时 04:30（上海时间）自动重启 | `journalctl -u unattended-upgrades`，`ls /var/run/reboot-required` |
-| Caddy 升级 | `writer-caddy-upgrade.timer`，每周一 05:00 左右：先用新版本以 caddy 身份校验现行配置，通过才装，装后自检，失败自动装回原版本 | `journalctl -t writer-caddy-upgrade` |
+| Caddy 升级 | `writer-caddy-upgrade.timer`，每周一 05:00 左右：先用新版本以 caddy 身份校验现行配置，通过才装，装后跑正式站当前版本附带的 URL 合同（当前版本没有附带合同时只查 AASA、首页与一个不存在的路径），失败自动装回原版本 | `journalctl -t writer-caddy-upgrade` |
 | 证书续期 | Caddy 内置 | `/var/log/caddy/caddy.log` |
 | 出口整形 | `writer-shaping.service`：CAKE 整形到 1900 kbit（略低于 2 Mbps），有人下载 JAR 时网页仍然流畅；带宽改了要同步改 `ops/bin/writer-shaping` 的 RATE | `tc -s qdisc show dev eth0` |
 | 拥塞控制 | BBR，默认队列 fq（`/etc/sysctl.d/90-writer.conf`） | `sysctl net.ipv4.tcp_congestion_control` |
 | 内存 | 2 GiB swapfile；journald 上限 1 GB | `swapon --show`，`free -m` |
 | 时间 | chrony，阿里云内网 NTP | `chronyc sources` |
 | Caddy 崩溃 | systemd `Restart=on-failure` | `systemctl status caddy` |
-| 外部监控 | GitHub Actions 定时任务（`.github/workflows/monitor.yml`），每 15 分钟从境外检查首页、AASA、`desktop2.json`、该版本的三个镜像 JAR（HEAD）、http 跳转与证书剩余天数；两轮都不通过时这次运行失败，GitHub 发邮件 | GitHub 仓库 PureWriter/writer.drakeet.com 的 Actions 页面；`gh run list --workflow=monitor.yml` |
+| 外部监控 | GitHub Actions 定时任务（`.github/workflows/monitor.yml`），每 15 分钟从境外检查首页（跟随跳转）、AASA、`desktop2.json`、该版本的三个镜像 JAR（HEAD）、http 跳转与证书剩余天数；两轮都不通过时这次运行失败，GitHub 发邮件 | GitHub 仓库 PureWriter/writer.drakeet.com 的 Actions 页面；`gh run list --workflow=monitor.yml` |
 
 2026-11-07 做过一次重启检验：网站约 35 秒后恢复，上述服务全部自动起来。
 
@@ -147,7 +157,7 @@ ssh drakeet@writer.drakeet.com 'sudo /root/writer-provision/ops/provision.sh web
 - 失败通知发给最后修改 cron 那一行的 GitHub 账号（目前是 drakeet），要在 GitHub 的 Settings → Notifications → Actions 里开着「失败时发邮件」。
 - 公开仓库 60 天没有提交时，GitHub 会停用定时任务（会先发邮件提醒）；平时桌面发版就会产生提交，若被停用，在 Actions 页面重新启用即可。
 - 检查点在境外，GitHub 的调度也常有十几分钟的延迟，所以它只用来发现「挂了」，不用来衡量国内访问速度。
-- 第 C 步换成新站后，首页改为按语言跳转，`monitor.yml` 里的期望要随之更新。
+- 首页按访客语言跳转（不带语言头时 302 到 `/zh-hans/`），监控跟随跳转后检查最终是 200 的网页。
 
 ## 8. 出了问题
 

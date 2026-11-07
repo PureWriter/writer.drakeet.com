@@ -2,7 +2,7 @@
 
 纯纯写作官网（writer.drakeet.com）的仓库约定，供所有参与本仓库的 AI 助手与开发者遵循。
 
-官网正在从零重建：方案、进度、URL 合同与服务器设计都在 [docs/rebuild.md](docs/rebuild.md)，动手前先读它的「当前游标」与第三节「URL 合同」。
+官网已于 2026-11-07 换成从零重建的新站（重建方案第 C 步）。方案、后续步骤、URL 合同与服务器设计都在 [docs/rebuild.md](docs/rebuild.md)，动手前先读它的「当前游标」与第三节「URL 合同」。
 
 ## 不能破坏的地址
 
@@ -27,5 +27,5 @@
 ## 部署与服务器
 
 - 部署与服务器的现役事实与操作（部署、回滚、JAR 镜像、日志、修改服务器配置、外部监控、救援）见 [docs/operations.md](docs/operations.md)。
-- 新站的 `scripts/deploy.sh` 与 `caddy/site.caddy` 已经就位。生产部署只从 `master` 进行（第 C 步的首次切换用 `--first-cutover-from-rebuild`）：`scripts/deploy.sh` 发布已提交的 HEAD，切换后在服务器上跑 URL 合同 `ops/contract.tsv`，失败自动切回上一版；`--rollback` 手动切回，`--staging` 部署到预发站 writer2.drakeet.com。站点的跳转、映射与响应头规则在 `caddy/site.caddy`，随版本一起发布；改了规则或合同，先用 `scripts/test-caddy.sh` 在本机跑一遍整张合同。
-- 服务器配置在 `ops/`，代表线上的那一份以 `master` 为准：改服务器先在 `master` 上改、提交并推送，再按手册同步到服务器，然后合进 `rebuild`，不要只在 `rebuild` 上改。
+- 生产部署只从 `master` 进行：`scripts/deploy.sh` 发布已提交的 HEAD，切换后在服务器上跑 URL 合同 `ops/contract.tsv`，失败自动切回上一版；`--rollback` 手动切回，`--staging` 部署到预发站 writer2.drakeet.com。站点的跳转、映射与响应头规则在 `caddy/site.caddy`，随版本一起发布；改了规则或合同，先用 `scripts/test-caddy.sh` 在本机跑一遍整张合同。
+- 服务器配置在 `ops/`，代表线上的那一份以 `master` 为准：改服务器先在 `master` 上改、提交并推送，再按手册同步到服务器。

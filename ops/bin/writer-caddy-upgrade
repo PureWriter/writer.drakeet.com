@@ -4,7 +4,7 @@
 # Caddy 的补丁版本也可能带破坏性变更（例如 2026-11-04 的 v2.11.8 改动了 try_files 与 handle_errors 的行为），
 # 所以 caddy 包平时 apt-mark hold，不交给 unattended-upgrades 盲目升级。本脚本的做法：
 #   1. 发现新版本后，先解出新版本的二进制，用它校验现行配置（含各站点导入的规则）；
-#   2. 通过才安装，装上后自检关键地址；
+#   2. 通过才安装，装上后跑当前站点版本附带的 URL 合同（见 self_check）；
 #   3. 任何一步失败，都装回原版本并记日志（journalctl -t writer-caddy-upgrade 可查）。
 set -euo pipefail
 
@@ -21,10 +21,20 @@ local_status() {
 	curl -sS --max-time 15 -o /dev/null -w '%{http_code}' --resolve writer.drakeet.com:443:127.0.0.1 "https://writer.drakeet.com$1"
 }
 
-# 自检：服务在运行；Apple 关联域名文件 200，首页 200 或跳转，不存在的路径 404。
-# 最后一项覆盖 try_files 与 handle_errors，这类指令曾在补丁版本里改过行为。
+# 自检：服务在运行，并且正式站当前版本附带的 URL 合同全部通过（docs/rebuild.md 5.5）。合同逐条覆盖地址映射、语言协商、
+# 响应头与错误页，补丁版本改动 try_files、改写或 handle_errors 时都能被发现，比只查几个地址可靠。
+# 当前版本没有附带合同时（例如回滚到了第 C 步之前的旧站版本），退回只查三项：Apple 关联域名文件 200，首页 200 或跳转，
+# 不存在的路径 404。
 self_check() {
 	systemctl is-active --quiet caddy || return 1
+	local contract=/srv/writer.drakeet.com/current/checks/contract.py result
+	if [[ -f "$contract" ]]; then
+		if ! result="$(python3 -I "$contract" --site writer.drakeet.com 2>&1)"; then
+			log "URL 合同不通过：$(grep -m 5 '^不通过' <<<"$result" | tr '\n' ' ')"
+			return 1
+		fi
+		return 0
+	fi
 	[[ "$(local_status /.well-known/apple-app-site-association)" == 200 ]] || return 1
 	[[ "$(local_status /)" =~ ^(200|301|302|308)$ ]] || return 1
 	[[ "$(local_status /writer-caddy-upgrade-self-check)" == 404 ]]

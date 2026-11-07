@@ -3,8 +3,6 @@
 #   scripts/deploy.sh                               部署已提交的 HEAD 到正式站 writer.drakeet.com（只接受 master）
 #   scripts/deploy.sh --staging                     部署已提交的 HEAD 到预发站 writer2.drakeet.com（任何分支都可以）
 #   scripts/deploy.sh --rollback [--staging]        把正式站（或预发站）切回上一版；再执行一次就回到刚才的版本
-#   scripts/deploy.sh --first-cutover-from-rebuild  只用于第 C 步的首次切换：放行从 rebuild 分支部署正式站，要求 master
-#                                                   已经合进 rebuild、而这个提交还不在 master 里。第 C 步完成后删掉这个参数
 #
 # 做法：
 #   1. 开头取一次完整的提交号，之后用到的一切都取自这个提交：git archive 解到临时目录，用解出来的 scripts/build.sh 构建并
@@ -32,22 +30,17 @@ die() {
 	exit 1
 }
 
-usage="用法：scripts/deploy.sh [--staging] [--rollback] | scripts/deploy.sh --first-cutover-from-rebuild"
+usage="用法：scripts/deploy.sh [--staging] [--rollback]"
 staging=0
 rollback=0
-cutover=0
 while (($#)); do
 	case "$1" in
 		--staging) staging=1 ;;
 		--rollback) rollback=1 ;;
-		--first-cutover-from-rebuild) cutover=1 ;;
 		*) die "$usage" ;;
 	esac
 	shift
 done
-if ((cutover && (staging || rollback))); then
-	die "--first-cutover-from-rebuild 只用于部署正式站，不与 --staging、--rollback 合用"
-fi
 
 # 两个环境的差别只在服务器上的目录与主机名（docs/operations.md 第 4 节）。
 if ((staging)); then
@@ -91,8 +84,8 @@ on_signal() {
 trap 'on_signal 130' INT
 trap 'on_signal 143' TERM
 
-# 部署锁。部署都从这台 Mac 发起：桌面版 release.sh 与手动部署，正式站用主目录，预发站用 rebuild 工作树。两次部署交错时，
-# 失败的那次会把后完成的那次一起回滚掉，所以同一时间只许一次。锁放在主目录与工作树共用的 git 公共目录里，用 mkdir 的
+# 部署锁。部署都从这台 Mac 发起：桌面版 release.sh 与手动部署，来自主目录或它的工作树。两次部署交错时，
+# 失败的那次会把后完成的那次一起回滚掉，所以同一时间只许一次。锁放在主目录与各工作树共用的 git 公共目录里，用 mkdir 的
 # 原子性实现（macOS 没有 flock），锁里记下进程号、开始时间与部署内容。
 # 锁已存在时一律拒绝，不自动接管遗留的锁。正常退出、出错与 INT、TERM、HUP 都会经 trap 释放锁，遗留锁只在部署进程被强杀
 # （kill -9）或机器死机后才会出现，手动移除的代价很小。自动接管却要先删掉旧锁再重建：两个进程同时接管同一把遗留锁时，
@@ -130,36 +123,14 @@ if ((rollback)); then
 	exit 0
 fi
 
-# <a> 是 <b> 的祖先时返回 0，不是时返回 1；git 出错（例如没有这个分支）时不当作「不是」，直接拒绝部署。
-is_ancestor() {
-	local status=0
-	git merge-base --is-ancestor "$1" "$2" || status=$?
-	case "$status" in
-		0 | 1) return "$status" ;;
-		*) die "无法判断 $1 是否是 $2 的祖先（git merge-base 退出状态 $status），拒绝部署" ;;
-	esac
-}
-
 # 这次部署的提交，只取这一次；下面的分支判断、构建、规则与合同都用它，不再看 HEAD。
 commit="$(git rev-parse --verify 'HEAD^{commit}')"
 short="$(git rev-parse --short=8 "$commit")"
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
-# 分支要求（第六节）：正式站只接受 master，唯一的例外是第 C 步的首次切换；预发站任何分支都可以。
-if [[ "$env" == prod ]]; then
-	if ((cutover)); then
-		[[ "$branch" == rebuild ]] || die "--first-cutover-from-rebuild 只放行 rebuild 分支（当前在 $branch）"
-		# master 已经包含这个提交，说明首次切换已经完成、master 已快进：之后都从 master 部署。
-		if is_ancestor "$commit" master; then
-			die "这个提交已经在 master 里，首次切换已经完成；请在 master 上运行 scripts/deploy.sh"
-		fi
-		# master 必须已经合进来：桌面版发版会在 master 上更新 desktop2.json，没合进来就会把过时的发版数据部署上线。
-		if ! is_ancestor master "$commit"; then
-			die "master 还没有合进 rebuild（master 不是 $short 的祖先）；先在 rebuild 上 git merge master，提交后再部署"
-		fi
-	elif [[ "$branch" != master ]]; then
-		die "正式站只从 master 部署（当前在 $branch）；预发站用 --staging，第 C 步的首次切换用 --first-cutover-from-rebuild"
-	fi
+# 分支要求（第六节）：正式站只接受 master；预发站任何分支都可以。
+if [[ "$env" == prod && "$branch" != master ]]; then
+	die "正式站只从 master 部署（当前在 $branch）；预发站用 --staging"
 fi
 
 id="$(date -u +%Y%m%dT%H%M%SZ)-$short"
