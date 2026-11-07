@@ -115,7 +115,7 @@
 
 ### 3.2 旧版桌面版：按设备回落
 
-下发旧版更新的只有 `api.drakeet.com`（3.3，待 Drakeet 定）。每台设备（`X-Device-Id`）、每个版本一条记录：所处阶段（Cloudflare 或镜像）、第一次下发的时刻、最近一次给镜像的时刻。每次请求按顺序判断：
+下发更新的只有 `api.drakeet.com`（3.3）。每台设备（`X-Device-Id`）、每个版本一条记录：所处阶段（Cloudflare 或镜像）、第一次下发的时刻、最近一次给镜像的时刻。每次请求按顺序判断：
 
 | # | 情形 | 回复 | 记录 |
 |---|---|---|---|
@@ -330,15 +330,15 @@
 |---|---|---|
 | R1 | `LatestJarVersion` 加 `urls`、`size` 与「暂不下发」的构造；新增 `DesktopJarBuild` | 单元测试：同一个对象经 `Globals.newGson()` 与 `localObjectMapper` 序列化，键名都是 `urls`、`size`；值为 null 时两者都不输出；「暂不下发」的 `code` 是 0 |
 | R2 | 现有的 `JarVersions.kt`（5.1.0）手工改成新格式，各平台字节数经 R2 公开地址的 HEAD 取得 | 测试：三个平台都在；两个地址分别以两个基址开头、以同一个文件名结尾；文件名含 `VERSION_NAME` |
-| R3 | `DesktopJarOffers` 按 3.2、3.3 实现，替换抛硬币与 `kuromiHitMap`；加 `multi_source` 查询参数与应急开关 | 单元测试覆盖 3.2 每一行：首次给 Cloudflare；25 分钟内再来仍给 Cloudflare；满 25 分钟给镜像；给镜像后 25 分钟内再来仍给镜像；25～120 分钟回 `code` 0；满 120 分钟再给镜像；更新后删除记录；换了版本重新开始；GitHub 可达与 `multi_source` 始终给 Cloudflare；超过上限清空。另测：不下发的部署对旧版回 `code` 0、对新版照常；应急开关关闭时不理会 `multi_source`、不输出 `urls` |
+| R3 | `DesktopJarOffers` 按 3.2、3.3 实现，替换抛硬币与 `kuromiHitMap`；加 `multi_source` 查询参数与应急开关 | 单元测试覆盖 3.2 每一行：首次给 Cloudflare；25 分钟内再来仍给 Cloudflare；满 25 分钟给镜像；给镜像后 25 分钟内再来仍给镜像；25～120 分钟回 `code` 0；满 120 分钟再给镜像；更新后删除记录；换了版本重新开始；GitHub 可达与 `multi_source` 始终给 Cloudflare；超过上限清空。另测：不下发的部署对新旧版、对认不出的平台都回 `code` 0；应急开关关闭时不理会 `multi_source`、不输出 `urls` |
 | R4 | `DebugResource` 的统计行 | — |
 | R5 | `RawJsonResourceModelTest` 照常通过 | 按 rebase-server 的 AGENTS.md，在单独的检出里用 JDK 8 与 `pom.xml` 只跑相关测试类 |
 
-部署后（Drakeet 执行）：用 curl 带一个测试用的设备标识与旧版本号、不带 `X-OS-Version`（这样不会写进 `desktopDevices`）。
+部署后（Drakeet 执行）：用 curl 带一个测试用的设备标识（`X-Device-Id`）、较低的 `X-App-Version-Code`，以及 `X-OS`（例如 `Windows 11`）与 `X-Arch`，否则会落到「认不出的平台」回 -1；不带 `X-OS-Version`，这样不会写进 `desktopDevices`。
 
 - `api.drakeet.com`：第一次回 Cloudflare；25 分钟后回镜像；紧接着再请求仍回镜像；再过 30 分钟回 `code` 0；每次都有 `urls` 与 `size`（`code` 0 除外）。
-- `api2.drakeet.cn`：不带 `multi_source` 回 `code` 0；带 `multi_source=true` 回 Cloudflare 与 `urls`。
-- `api.drakeet.cn`（m4，等它按自己的节奏部署之后）：不带 `multi_source` 回 `code` 0。
+- `api2.drakeet.cn`：带不带 `multi_source` 都回 `code` 0。
+- `api.drakeet.cn`（m4，等它按自己的节奏部署之后）：同样一律回 `code` 0。
 
 ### 8.2 桌面版
 
