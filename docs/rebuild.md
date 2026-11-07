@@ -729,7 +729,7 @@ scripts/             构建、预览、检查、部署与回滚
 - **站点名**：定为「纯纯写作」，四个名字同时写进 WebSite 的别名与每页的关键词（4.10）。
 - **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（iOS 是 Drakeet Co., Ltd.，Android 与桌面版的英文隐私政策是 Drakeet, Inc.，Android 简体版是苏州小白迷雾科技有限公司），官方账号属于产品，挂在产品上即可。
 - **分享卡片大图**：各语言做一张 1200×630 的分享图（参照 App Store 的截图与素材），首页与下载页改用大卡片，其余页面仍是图标小卡片。微信不读这些标签，不受影响。
-- **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。
+- **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。2026-11-07 已在阿里云解析添加，权威 DNS 上可查到。
 - **内容打磨**：结构化数据与 `llms.txt` 的内容打磨；各语言标题与描述的质量检查，除首页外统一为「页面名 - 品牌名」；用 Lighthouse 对各语言首页与下载页做一次无障碍与性能体检。
 - **不做**：IPv6（阿里云的 IPv6 公网带宽另外收费，需要付费的一律先不做）；境内的外部监控（GitHub Actions 从境外访问本站是通的，足够）。
 

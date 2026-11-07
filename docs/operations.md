@@ -12,6 +12,7 @@ writer.drakeet.com 所在服务器的现役事实，以及部署与运维的日�
 | Web 服务器 | Caddy 2（官方 Cloudsmith 源，`apt-mark hold`，升级只走第 5 节的受控升级） |
 | 主机名 | `writer.drakeet.com`（正式站）、`writer2.drakeet.com`（预发站）、`drakeet.com` 与 `www.drakeet.com`（旧静态页，去留见 rebuild.md 5.7） |
 | 证书 | Caddy 自动签发与续期：Let's Encrypt 为主，ZeroSSL 兜底；ACME 账户邮箱 writer@drakeet.com |
+| DNS | 阿里云云解析（drakeet.com）。`writer` 与 `writer2` 各有两条 CAA：`0 issue "letsencrypt.org"` 与 `0 issue "sectigo.com"`（ZeroSSL 由 Sectigo 签发），只允许这两家给它们签发证书；改用别家签发前先改 CAA |
 
 **主机密钥指纹**（2026-11-07 经云助手在服务器上读取，与外部扫描一致）：
 
