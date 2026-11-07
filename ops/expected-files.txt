@@ -78,6 +78,10 @@ img/header_zh_hant_hu_<hash>.webp
 img/header_zh_hant_hu_<hash>.webp
 img/home_en_hu_<hash>.webp
 img/home_en_hu_<hash>.webp
+img/og/en.<fingerprint>.jpg
+img/og/ja.<fingerprint>.jpg
+img/og/zh-hans.<fingerprint>.jpg
+img/og/zh-hant.<fingerprint>.jpg
 ja/404.html
 ja/desktop/index.html
 ja/index.html

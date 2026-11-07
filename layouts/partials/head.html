@@ -43,7 +43,24 @@
 <meta name="apple-itunes-app" content="app-id={{ site.Params.iosAppID }}">
 {{- end }}
 {{- if not $noindex }}
-{{- $image := .Params.image | default "images/icon512.png" }}
+{{- /*
+  分享图：img/ 开头的取自 assets/（首页的分享图，由 scripts/og-images.py 生成），加内容指纹、原样发布，不转 WebP，因为不少
+  平台抓取分享图时不认 WebP；其余是 static/ 下的旧图片（下载页的截图），没写就用站点图标。
+*/ -}}
+{{- $imageURL := "images/icon512.png" | absURL }}
+{{- $imageSize := slice }}
+{{- with .Params.image }}
+{{- if hasPrefix . "img/" }}
+{{- with resources.Get . | fingerprint "sha256" }}
+{{- $imageURL = .Permalink }}
+{{- $imageSize = slice .Width .Height }}
+{{- else }}
+{{- errorf "找不到分享图 assets/%s" . }}
+{{- end }}
+{{- else }}
+{{- $imageURL = . | absURL }}
+{{- end }}
+{{- end }}
 <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:title" content="{{ $title }}">
@@ -51,7 +68,12 @@
 <meta property="og:description" content="{{ . }}">
 {{- end }}
 <meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:image" content="{{ $image | absURL }}">
+<meta property="og:image" content="{{ $imageURL }}">
+{{- /* 写明尺寸，各平台不必先下载图片就能按大卡片排版。 */ -}}
+{{- with $imageSize }}
+<meta property="og:image:width" content="{{ index . 0 }}">
+<meta property="og:image:height" content="{{ index . 1 }}">
+{{- end }}
 <meta property="og:locale" content="{{ .Language.Params.ogLocale }}">
 {{- range .Translations }}
 <meta property="og:locale:alternate" content="{{ .Language.Params.ogLocale }}">

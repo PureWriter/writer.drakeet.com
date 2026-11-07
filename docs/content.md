@@ -35,7 +35,7 @@
 | `description` | meta 描述。旧页有就沿用；没有的，从本页开头的正文里摘原话（不新增事实，不写宣传语），中文以 50～120 字为宜；开头没有合适长度的句子时可以短一些，不硬凑 |
 | `lastmod` | 内容最后一次实质修改的日期（YYYY-MM-DD），进 sitemap。迁移时取旧页文件在旧站仓库里最后一次提交的日期 |
 | `url` | 见第一节 |
-| `image` | 分享卡片用的图片，写 `static/` 下的路径（例如 `images/header_zh_hans.jpg`）；不写就用站点图标 |
+| `image` | 分享卡片用的图片，写 `static/` 下的路径；写了就用大卡片，不写就用站点图标的小卡片。首页用 `img/og/<语言>.jpg`（`assets/` 下，1200×630，由 `scripts/og-images.py` 从 App Store 的页头生成，港繁共用 zh-hant；构建时加内容指纹、原样发布为 JPEG），下载页用 `static/` 下的桌面版截图 |
 | `iosBanner: true` | 输出 Safari 的 iOS 智能横幅（首页、iOS 支持页、iOS 隐私政策） |
 | `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页与下载页用 |
 | `jsonld: home` 或 `jsonld: desktop` | 输出结构化数据：首页、下载页 |
