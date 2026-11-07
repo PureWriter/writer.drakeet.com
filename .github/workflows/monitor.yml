@@ -1,0 +1,120 @@
+# 官网外部监控（docs/operations.md 第 7 节）。
+#
+# GitHub 的定时任务每 15 分钟从境外检查一次 writer.drakeet.com：首页、Apple 关联域名文件、下载页的版本信息、
+# 该版本的三个镜像 JAR（只发 HEAD，不占服务器 2 Mbps 的出口）、http 跳转与证书剩余天数。
+# 任何一项不符，这次运行就标为失败，GitHub 按通知设置给最后修改 cron 的人发邮件（Settings → Notifications → Actions）。
+# 境外到上海偶有网络抖动：每个请求自带重试；整轮不通过时隔两分钟再完整查一次，两轮都不通过才算故障。
+#
+# 脚本直接写在这里、不引用任何第三方 Action，定时任务没有外部依赖。
+# 第 C 步换成新站后，首页会改为按语言跳转，这里的期望要随之更新。
+name: 官网监控
+
+on:
+  schedule:
+    # 避开整点与半点：GitHub 在这些时刻负载最高，定时任务容易延迟或被丢弃。
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: monitor
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 检查线上地址
+        env:
+          # 手动排查时可以改成别的主机名；定时任务一律检查正式站。
+          MONITOR_HOST: writer.drakeet.com
+          RETRY_PAUSE_SECONDS: '120'
+        run: |
+          set -uo pipefail
+          host="$MONITOR_HOST"
+          site="https://$host"
+          readonly AASA_APP=9MKUN97L6J.com.drakeet.writer
+          # Caddy 在证书剩约 30 天时续期；剩不到 14 天说明续期已经连续失败了两周以上。
+          readonly MIN_CERT_DAYS=14
+          readonly CURL=(curl -sS --retry 3 --retry-delay 5 --retry-all-errors --connect-timeout 15 --max-time 30)
+
+          failures=()
+
+          # 打印「状态码 Content-Type」，响应体写进第一个参数指定的文件。连不上时 curl 自己会给出 000。
+          get() {
+            local out
+            out="$("${CURL[@]}" -o "$1" -w '%{http_code} %{content_type}' "$2" 2> /dev/null)"
+            echo "${out:-000 -}"
+          }
+
+          check_round() {
+            failures=()
+            local got version platform name size end days
+
+            got="$(get page.html "$site/")"
+            [[ "$got" == "200 text/html"* ]] || failures+=("首页：$got")
+
+            got="$(get aasa.json "$site/.well-known/apple-app-site-association")"
+            if [[ "$got" == "200 application/json"* ]]; then
+              jq -e --arg app "$AASA_APP" '.webcredentials.apps | index($app)' aasa.json > /dev/null \
+                || failures+=("Apple 关联域名文件里没有 $AASA_APP")
+            else
+              failures+=("Apple 关联域名文件：$got")
+            fi
+
+            version=""
+            got="$(get desktop2.json "$site/desktop2.json")"
+            if [[ "$got" == "200 application/json"* ]]; then
+              version="$(jq -r '.version // empty' desktop2.json 2> /dev/null)"
+              [[ "$version" =~ ^[0-9]+(\.[0-9]+)+$ ]] || failures+=("desktop2.json 的版本号不对：${version:-空}")
+            else
+              failures+=("desktop2.json：$got")
+            fi
+
+            if [[ -n "$version" ]]; then
+              for platform in Windows-x64 macOS-x64 macOS-aarch64; do
+                name="PureWriter2-$version-$platform.jar"
+                # 每个平台各用一个响应头文件，免得请求失败时读到上一个平台的大小。
+                got="$("${CURL[@]}" -I -o "headers-$platform.txt" -w '%{http_code}' "$site/ocat/jars/$name" 2> /dev/null)"
+                size="$(tr -d '\r' < "headers-$platform.txt" 2> /dev/null | awk 'tolower($1) == "content-length:" {print $2}' | tail -n 1)"
+                if [[ "$got" != 200 || ! "$size" =~ ^[0-9]+$ ]] || (( size < 1000000 )); then
+                  failures+=("镜像 $name：状态 ${got:-000}，大小 ${size:-未知}")
+                fi
+              done
+            fi
+
+            got="$("${CURL[@]}" -o /dev/null -w '%{http_code} %{redirect_url}' "http://$host/" 2> /dev/null)"
+            [[ "$got" == "308 https://$host/" || "$got" == "301 https://$host/" ]] || failures+=("http 跳转：${got:-000}")
+
+            end="$(echo | timeout 30 openssl s_client -connect "$host:443" -servername "$host" 2> /dev/null \
+              | openssl x509 -noout -enddate 2> /dev/null | cut -d= -f2)"
+            if [[ -n "$end" ]]; then
+              days=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
+              (( days >= MIN_CERT_DAYS )) || failures+=("证书只剩 $days 天，续期可能失败了")
+            else
+              failures+=("读不到证书")
+            fi
+
+            (( ${#failures[@]} == 0 ))
+          }
+
+          if check_round; then
+            echo "全部正常（$host）"
+            exit 0
+          fi
+          echo "第一轮不通过："
+          printf '  %s\n' "${failures[@]}"
+          sleep "$RETRY_PAUSE_SECONDS"
+          if check_round; then
+            echo "第二轮正常，按网络抖动处理"
+            exit 0
+          fi
+          echo "::error::$host 两轮检查都不通过"
+          printf '  %s\n' "${failures[@]}"
+          {
+            echo "## $host 检查不通过"
+            printf -- '- %s\n' "${failures[@]}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1

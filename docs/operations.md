@@ -1,6 +1,6 @@
 # 官网服务器运维手册
 
-writer.drakeet.com 所在服务器的现役事实与日常操作。服务器的设计与取舍见 [rebuild.md](rebuild.md) 第五、六节；本文只写「现在是什么样、要做某件事该怎么做」。服务器上的配置都来自本仓库的 `ops/`，改配置先改仓库，再按第 6 节同步过去。
+writer.drakeet.com 所在服务器的现役事实，以及部署与运维的日常操作。服务器的设计与取舍见重建方案 `docs/rebuild.md` 第五、六节（第 C 步之前它在 `rebuild` 分支，即工作树 `/Users/drakeet/GitHub/writer.drakeet.com-rebuild`）；本文只写「现在是什么样、要做某件事该怎么做」。服务器上的配置都来自本仓库的 `ops/`，改配置先改仓库、提交并推送，再按第 6 节同步过去。
 
 ## 1. 概况
 
@@ -111,11 +111,11 @@ ssh drakeet@writer.drakeet.com "jq -c 'select(.level==\"error\")' /var/log/caddy
 
 流程：
 
-1. 在本仓库改 `ops/` 并提交。
-2. 把 `ops/` 同步到服务器（root 不能 SSH 登录，经 drakeet 与 sudo；第 C 步之后 `ops/` 随新站进入主目录，把路径换成主目录）：
+1. 在本仓库的 `master` 上改 `ops/`，提交并推送（`master` 上未推送的提交会挡住桌面发版的预检）。
+2. 把 `ops/` 同步到服务器（root 不能 SSH 登录，经 drakeet 与 sudo）：
 
 ```bash
-COPYFILE_DISABLE=1 tar --no-mac-metadata --no-xattrs -C /Users/drakeet/GitHub/writer.drakeet.com-rebuild -cf - ops | ssh drakeet@writer.drakeet.com 'sudo rm -rf /root/writer-provision/ops && sudo tar -C /root/writer-provision -xf - --no-same-owner'
+COPYFILE_DISABLE=1 tar --no-mac-metadata --no-xattrs -C /Users/drakeet/GitHub/writer.drakeet.com -cf - ops | ssh drakeet@writer.drakeet.com 'sudo rm -rf /root/writer-provision/ops && sudo tar -C /root/writer-provision -xf - --no-same-owner'
 ```
 
 3. 运行对应的步骤，例如改了 Caddyfile 或 `ops/bin/` 里的脚本：
@@ -138,8 +138,16 @@ ssh drakeet@writer.drakeet.com 'sudo /root/writer-provision/ops/provision.sh web
 | 内存 | 2 GiB swapfile；journald 上限 1 GB | `swapon --show`，`free -m` |
 | 时间 | chrony，阿里云内网 NTP | `chronyc sources` |
 | Caddy 崩溃 | systemd `Restart=on-failure` | `systemctl status caddy` |
+| 外部监控 | GitHub Actions 定时任务（`.github/workflows/monitor.yml`），每 15 分钟从境外检查首页、AASA、`desktop2.json`、该版本的三个镜像 JAR（HEAD）、http 跳转与证书剩余天数；两轮都不通过时这次运行失败，GitHub 发邮件 | GitHub 仓库 PureWriter/writer.drakeet.com 的 Actions 页面；`gh run list --workflow=monitor.yml` |
 
 2026-11-07 做过一次重启检验：网站约 35 秒后恢复，上述服务全部自动起来。
+
+外部监控的几点说明：
+
+- 失败通知发给最后修改 cron 那一行的 GitHub 账号（目前是 drakeet），要在 GitHub 的 Settings → Notifications → Actions 里开着「失败时发邮件」。
+- 公开仓库 60 天没有提交时，GitHub 会停用定时任务（会先发邮件提醒）；平时桌面发版就会产生提交，若被停用，在 Actions 页面重新启用即可。
+- 检查点在境外，GitHub 的调度也常有十几分钟的延迟，所以它只用来发现「挂了」，不用来衡量国内访问速度。
+- 第 C 步换成新站后，首页改为按语言跳转，`monitor.yml` 里的期望要随之更新。
 
 ## 8. 出了问题
 

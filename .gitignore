@@ -1,0 +1,7 @@
+# Hugo 的构建产物与缓存
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# macOS
+.DS_Store
