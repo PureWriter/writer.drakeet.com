@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """构建产物的检查（docs/rebuild.md 第六节），由 scripts/build.sh 调用，只用 Python 标准库。
 
-  python3 scripts/check.py <产物目录> --expected ops/expected-files.txt --market ops/market-rules.toml [--update-expected]
+  python3 scripts/check.py <产物目录> --expected ops/expected-files.txt --market ops/market-rules.toml \
+      --zh-variants ops/zh-variants.toml [--update-expected]
 
-检查三项，任何一项不通过就以非零状态退出：
+检查四项，任何一项不通过就以非零状态退出：
   1. 期望产物清单：产物目录里的文件（不含预压缩的 .br、.gz）与入库的清单逐行比对，多一个、少一个都报错。这样新站的
      地址空间严格等于约定，Hugo 自作主张多生成的页面也能当场暴露。有意增删页面时，用 --update-expected 重写清单。
   2. 站内链接与锚点：每个 HTML 里指向本站的 href、src 都必须能落到产物里的文件；带 #锚点 的，目标页面里必须有
      同名的 id。站内链接一律写新地址，旧地址只给站外的存量链接用，所以指向旧地址也算错。
   3. 市场差异：只适合中国大陆用户的内容（备案号、蓝奏云、国内下载、360、坚果云与网盘切换截图）不得出现在简体中文以外
      的产物里。规则与豁免写在 ops/market-rules.toml；「旧版」名单里的页面只提示、不拦截。
+  4. 台港用词：繁体（台湾）页面不得出现香港用词，繁体（香港）页面不得出现台湾用词，词表在 ops/zh-variants.toml。
 """
 
 import argparse
@@ -192,19 +194,40 @@ def check_market(root, rules_path):
     return problems, warnings
 
 
+def check_zh_variants(root, rules_path):
+    rules = tomllib.loads(rules_path.read_text(encoding="utf-8"))
+    warn_only = rules.get("legacy_warn_only", [])
+    # 台湾页面查香港用词，香港页面查台湾用词。
+    banned = {"/zh-hant/": ("香港", rules["hk"]), "/zh-hk/": ("台湾", rules["tw"])}
+    problems, warnings = [], []
+    for file in sorted(root.rglob("*.html")):
+        path = page_path(root, file)
+        for prefix, (region, words) in banned.items():
+            if not path.startswith(prefix):
+                continue
+            text = file.read_text(encoding="utf-8")
+            hits = [word for word in words if word in text]
+            if hits:
+                message = f"{path}：出现了{region}用词：{'、'.join(hits)}"
+                (warnings if exempted(path, warn_only) else problems).append(message)
+    return problems, warnings
+
+
 def main():
     parser = argparse.ArgumentParser(description="检查构建产物")
     parser.add_argument("root", type=pathlib.Path)
     parser.add_argument("--expected", type=pathlib.Path, required=True)
     parser.add_argument("--market", type=pathlib.Path, required=True)
+    parser.add_argument("--zh-variants", type=pathlib.Path, required=True)
     parser.add_argument("--update-expected", action="store_true")
     args = parser.parse_args()
 
     root = args.root.resolve()
     problems = check_links(root)
     market_problems, market_warnings = check_market(root, args.market)
-    problems += market_problems
-    for warning in market_warnings:
+    variant_problems, variant_warnings = check_zh_variants(root, args.zh_variants)
+    problems += market_problems + variant_problems
+    for warning in market_warnings + variant_warnings:
         print(f"check: 提示（旧版名单，不拦截）：{warning}", file=sys.stderr)
     if not problems:
         problems += check_expected(root, args.expected, args.update_expected)
@@ -213,7 +236,7 @@ def main():
             print(f"check: {problem}", file=sys.stderr)
         print(f"check: 共 {len(problems)} 个问题", file=sys.stderr)
         return 1
-    print("check: 站内链接、锚点、市场差异与期望产物清单都通过")
+    print("check: 站内链接、锚点、市场差异、台港用词与期望产物清单都通过")
     return 0
 
 

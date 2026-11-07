@@ -94,9 +94,10 @@ Preferred-Languages: zh, en
 Canonical: https://writer.drakeet.com/.well-known/security.txt
 EOT
 
-# 5. 检查：站内链接与锚点、市场差异、期望产物清单。
+# 5. 检查：站内链接与锚点、市场差异、台港用词、期望产物清单。
 if ((run_checks)); then
-	check_args=("$out" --expected "$REPO/ops/expected-files.txt" --market "$REPO/ops/market-rules.toml")
+	check_args=("$out" --expected "$REPO/ops/expected-files.txt" --market "$REPO/ops/market-rules.toml" \
+		--zh-variants "$REPO/ops/zh-variants.toml")
 	((update_expected)) && check_args+=(--update-expected)
 	python3 -I "$REPO/scripts/check.py" "${check_args[@]}"
 fi
