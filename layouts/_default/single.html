@@ -1,0 +1,11 @@
+{{- define "main" }}
+<article>
+{{ .Content }}
+</article>
+{{- end }}
+{{- define "scripts" }}
+{{- with .Params.script }}
+{{- $js := resources.Get (printf "js/%s" .) | minify | fingerprint "sha256" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- end }}
+{{- end }}

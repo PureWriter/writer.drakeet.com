@@ -1,0 +1,80 @@
+{
+  "version": "5.1.0",
+  "released": "2026-11-06",
+  "files": {
+    "windows-x64": {
+      "name": "PureWriter2-5.1.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.1.0-Windows-x64.exe",
+      "size": 92365824,
+      "sha256": "4d8f9f54b522c8aaa1d4744b9faead966fe94b6d7fb795e48be89d97f8dc7b26"
+    },
+    "macos-aarch64": {
+      "name": "PureWriter2-5.1.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.1.0-macOS-aarch64.dmg",
+      "size": 88862766,
+      "sha256": "d96308160b166324d99d01a7ec48c0884a9abb19ac58035d4bab9e605c845bc2"
+    },
+    "macos-x64": {
+      "name": "PureWriter2-5.1.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.1.0-macOS-x64.dmg",
+      "size": 90505796,
+      "sha256": "f3c20674eb4444f4147285bcec1e3498186d50f5b7e9e7322d40179ca983ae0a"
+    }
+  },
+  "notes": {
+    "zh-Hans": {
+      "version": "5.1.0",
+      "items": [
+        "光标移动改为平滑滑动，停下后的闪烁也改为呼吸式的渐隐渐现；按住方向键连续移动时是一条连续的轨迹。Windows 上现在也有了。",
+        "在使用连字的字体里，被合并显示的字符之间现在可以放置光标、点选与选中单个字符，例如被合成一条长线的“——”。",
+        "编辑器正文的排版更快，打开长文档时占用的内存更少。",
+        "修复打开备份窗口时会卡住几秒的问题。"
+      ]
+    },
+    "zh-Hant": {
+      "version": "5.1.0",
+      "items": [
+        "游標移動改為平滑滑動，停下後的閃爍也改為呼吸式的漸隱漸現；按住方向鍵連續移動時會是一條連續的軌跡。Windows 上現在也有了。",
+        "在使用連字的字型裡，被合併顯示的字元之間現在可以放置游標、點選與選取單一字元，例如被合成一條長線的「——」。",
+        "編輯器內文的排版更快，開啟長文件時佔用的記憶體更少。",
+        "修正開啟備份視窗時會卡住幾秒的問題。"
+      ]
+    },
+    "zh-HK": {
+      "version": "5.1.0",
+      "items": [
+        "游標移動改為平滑滑動，停下後的閃爍也改為呼吸式的漸隱漸現；按住方向鍵連續移動時會是一條連續的軌跡。Windows 上現在也有了。",
+        "在使用連字的字體裏，被合併顯示的字元之間現在可以放置游標、點選與選取單一字元，例如被合成一條長線的「——」。",
+        "編輯器正文的排版更快，開啟長文件時佔用的記憶體更少。",
+        "修正開啟備份視窗時會卡住幾秒的問題。"
+      ]
+    },
+    "en": {
+      "version": "5.1.0",
+      "items": [
+        "The caret now glides smoothly, and when it stops it fades out and back in like a breath; holding an arrow key draws one continuous path. Both are on Windows now too.",
+        "In fonts that use ligatures, you can now place the caret between characters that are shown merged, and click or select a single one of them, such as one of the two dashes in a joined “——”.",
+        "Text in the editor lays out faster, and long documents use less memory when opened.",
+        "Fixed an issue where opening the backup window could freeze for a few seconds."
+      ]
+    },
+    "ja": {
+      "version": "5.1.0",
+      "items": [
+        "カーソルの移動がなめらかなスライドになり、止まると呼吸するようにゆっくり明滅します。方向キーを押し続けると一本の連続した軌跡で動くようになりました。どちらも Windows で使えるようになりました。",
+        "合字を使うフォントで、まとめて表示された文字の間にもカーソルを置けるようになり、1文字だけをクリックして選択することもできます。たとえば一本線につながった「——」です。",
+        "エディタ本文のレイアウトが速くなり、長い文書を開くときのメモリ使用量も減りました。",
+        "バックアップ画面を開くと数秒間固まることがある問題を修正しました。"
+      ]
+    },
+    "ru": {
+      "version": "5.1.0",
+      "items": [
+        "Курсор теперь перемещается плавно, а когда останавливается, постепенно гаснет и снова проявляется, словно дышит; при удержании клавиши со стрелкой он движется по одной непрерывной траектории. И то и другое теперь есть и в Windows.",
+        "В шрифтах с лигатурами теперь можно ставить курсор между символами, показанными слитно, а также щёлкать и выделять отдельный символ, например одно из двух тире в «——», слитых в одну линию.",
+        "Вёрстка текста в редакторе стала быстрее, а длинные документы при открытии занимают меньше памяти.",
+        "Исправлена проблема, из-за которой окно резервного копирования могло зависать на несколько секунд при открытии."
+      ]
+    }
+  }
+}

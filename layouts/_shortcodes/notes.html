@@ -1,0 +1,17 @@
+{{- /*
+  「最近更新」：桌面端本语言更新日志最新的一段，取自 desktop2.json 的 notes（键是语言参数 dataKey）。
+  {{< notes >}} 输出条目列表，{{< notes version=true >}} 只输出这一段的版本号。条目按纯文本输出，不解析其中的标记。
+*/ -}}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
+{{- $notes := index $release.notes .Page.Language.Params.dataKey -}}
+{{- if not $notes }}{{ errorf "desktop2.json 里没有 %q 的更新日志：%s" .Page.Language.Params.dataKey .Position }}{{ end -}}
+{{- if .Get "version" -}}
+{{ $notes.version }}
+{{- else -}}
+<ul>
+{{- range $notes.items }}
+<li>{{ . }}</li>
+{{- end }}
+</ul>
+{{- end -}}
+{{- /**/ -}}

@@ -1,0 +1,117 @@
+# 纯纯写作官网的 Hugo 配置。设计见 docs/rebuild.md 第四节，写页面的约定见 docs/content.md。
+# Hugo 的版本固定在 scripts/hugo 里；构建一律经 scripts/build.sh，警告即错误。
+
+baseURL = "https://writer.drakeet.com/"
+
+# 所有语言都带前缀（/zh-hans/、/en/……）。根地址与旧的多语言入口由 Caddy 按语言协商（caddy/site.caddy），
+# 所以不要 Hugo 在根目录生成跳到默认语言的 index.html。
+defaultContentLanguage = "zh-hans"
+defaultContentLanguageInSubdir = true
+disableDefaultLanguageRedirect = true
+
+# 只输出页面本身：分类与标签页、RSS、各目录的列表页都用不到（4.2）。俄文只有下载页，它的首页在
+# content/_index.ru.md 里用 build 选项关掉。
+disableKinds = ["taxonomy", "term", "RSS", "section"]
+
+# 页面里不注入生成器的 meta；robots.txt 是 static/ 下的手写文件。
+disableHugoGeneratorInject = true
+enableRobotsTXT = false
+
+timeZone = "Asia/Shanghai"
+
+[security]
+  # Hugo 默认不接受 HTML 内容文件；首页、下载页、iOS 两页是几乎原样迁入的 HTML（4.2「设计型页面」）。
+  allowContent = ["! ^text/org$"]
+
+[markup.goldmark.renderer]
+  # Markdown 里允许原样写 HTML（例如手册里少量的表格与锚点）。内容都由我们自己写，没有用户输入。
+  unsafe = true
+
+[markup.goldmark.extensions.typographer]
+  # 不把直引号、--、... 自动换成弯引号、破折号与省略号：迁移要求正文与旧站逐字一致。
+  disable = true
+
+[markup.goldmark.extensions]
+  # 不把正文里的裸网址自动变成链接，链接一律在源文件里显式写出。
+  linkify = false
+
+[markup.highlight]
+  # 代码块不做语法高亮，保持纯 <pre><code>，与旧站的观感一致，也不往页面里塞内联样式。
+  codeFences = false
+
+[outputs]
+  home = ["html"]
+  page = ["html"]
+
+[params]
+  # iOS App 在 App Store 的 ID：智能横幅与下载链接共用。
+  iosAppID = "6803257195"
+  feedbackEmail = "writer@drakeet.com"
+
+# 语言键沿用 iOS App 与 desktop2.json 已有的那套（4.3 的表）。
+#   locale        Hugo 用来格式化日期等的区域标识，同时也是 html lang 的取值
+#   label         语言切换器里显示的本语言名称
+#   title         站点名
+#   hreflang      hreflang 标注；英文同时作为 x-default
+#   ogLocale      OpenGraph 的 og:locale
+#   dataKey       desktop2.json 里 notes 的键，也是旧站 ?lang= 用的写法
+#   homeURL       顶部「回到首页」的目标；不写就是本语言的首页。俄文没有首页，回到根地址由服务器按浏览器语言协商
+#   icp、gongan   备案号。只有带这两项的语言（简体中文）才输出页脚的版权与备案信息，市场差异由结构保证（4.3）
+[languages]
+  [languages.zh-hans]
+    weight = 1
+    locale = "zh-Hans"
+    label = "简体中文"
+    title = "纯纯写作"
+    [languages.zh-hans.params]
+      hreflang = "zh-Hans"
+      ogLocale = "zh_CN"
+      dataKey = "zh-Hans"
+      icp = "闽ICP备2021006387号-1"
+      gongan = "苏公网安备32050602012178号"
+  [languages.zh-hant]
+    weight = 2
+    locale = "zh-Hant-TW"
+    label = "繁體中文（台灣）"
+    title = "純純寫作"
+    [languages.zh-hant.params]
+      hreflang = "zh-Hant"
+      ogLocale = "zh_TW"
+      dataKey = "zh-Hant"
+  [languages.zh-hk]
+    weight = 3
+    locale = "zh-Hant-HK"
+    label = "繁體中文（香港）"
+    title = "純純寫作"
+    [languages.zh-hk.params]
+      hreflang = "zh-HK"
+      ogLocale = "zh_HK"
+      dataKey = "zh-HK"
+  [languages.en]
+    weight = 4
+    locale = "en"
+    label = "English"
+    title = "Pure Writer"
+    [languages.en.params]
+      hreflang = "en"
+      ogLocale = "en_US"
+      dataKey = "en"
+  [languages.ja]
+    weight = 5
+    locale = "ja"
+    label = "日本語"
+    title = "純純執筆"
+    [languages.ja.params]
+      hreflang = "ja"
+      ogLocale = "ja_JP"
+      dataKey = "ja"
+  [languages.ru]
+    weight = 6
+    locale = "ru"
+    label = "Русский"
+    title = "Pure Writer"
+    [languages.ru.params]
+      hreflang = "ru"
+      ogLocale = "ru_RU"
+      dataKey = "ru"
+      homeURL = "/"

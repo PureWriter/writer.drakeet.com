@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# 固定版本的 Hugo（docs/rebuild.md 第六节）。首次运行时从 GitHub Releases 下载这个版本，按下面写死的 SHA-256 核对，
+# 解出到本机缓存；之后直接运行缓存里的二进制，参数原样传入。升级 Hugo 时同时改 VERSION 与两个校验值，
+# 并按 Hugo 的发布说明检查弃用项（构建把警告当作错误）。
+set -euo pipefail
+
+readonly VERSION=0.169.0
+readonly CACHE="${XDG_CACHE_HOME:-$HOME/Library/Caches}/writer-site/hugo-$VERSION"
+readonly BIN="$CACHE/hugo"
+
+die() {
+	echo "scripts/hugo: $*" >&2
+	exit 1
+}
+
+sha256_of() {
+	if command -v shasum >/dev/null 2>&1; then
+		shasum -a 256 "$1" | cut -d' ' -f1
+	else
+		sha256sum "$1" | cut -d' ' -f1
+	fi
+}
+
+install_hugo() {
+	local asset expected tmp
+	case "$(uname -s)-$(uname -m)" in
+		Darwin-*)
+			# macOS 只提供 .pkg 安装包；用 pkgutil 在本地解开取出二进制，不安装、不需要管理员权限。
+			asset="hugo_${VERSION}_darwin-universal.pkg"
+			expected=9b1170c439b5444e31d4731dd0071fc2b380b8d58050e6cdae80e3e179b4bf52
+			;;
+		Linux-x86_64)
+			asset="hugo_${VERSION}_linux-amd64.tar.gz"
+			expected=2d2f0bfe357d8cb4cec02f6bb28a3bff34978c8dda44b618029c5eb9d66765a7
+			;;
+		*)
+			die "不支持的平台：$(uname -s)-$(uname -m)"
+			;;
+	esac
+	tmp="$(mktemp -d)"
+	echo "scripts/hugo: 首次运行，下载 Hugo $VERSION……" >&2
+	curl -fsSL --retry 3 -o "$tmp/$asset" "https://github.com/gohugoio/hugo/releases/download/v$VERSION/$asset"
+	[[ "$(sha256_of "$tmp/$asset")" == "$expected" ]] || { rm -rf -- "$tmp"; die "$asset 的 SHA-256 不符，拒绝使用"; }
+	mkdir -p "$CACHE"
+	case "$asset" in
+		*.pkg)
+			pkgutil --expand-full "$tmp/$asset" "$tmp/expanded" >/dev/null
+			install -m 0755 "$tmp/expanded/Payload/hugo" "$BIN.new"
+			;;
+		*.tar.gz)
+			tar -xzf "$tmp/$asset" -C "$tmp" hugo
+			install -m 0755 "$tmp/hugo" "$BIN.new"
+			;;
+	esac
+	mv -f "$BIN.new" "$BIN"
+	rm -rf -- "$tmp"
+}
+
+[[ -x "$BIN" ]] || install_hugo
+exec "$BIN" "$@"

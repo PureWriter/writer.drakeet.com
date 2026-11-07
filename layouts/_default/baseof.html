@@ -1,0 +1,27 @@
+{{- /*
+  全站唯一的页面骨架。顶部是「回到首页」与语言切换，正文在 <main>，页脚只在简体中文输出备案信息。
+  layout: bare 的页面（网盘授权完成页、根目录的多语言 404）不要顶部与页脚，只留正文。
+*/ -}}
+<!doctype html>
+<html lang="{{ .Params.htmlLang | default .Language.Locale }}">
+<head>
+{{ partial "head.html" . }}
+</head>
+<body>
+{{- if .Params.icons }}
+{{ partial "icons.html" . }}
+{{- end }}
+<div class="page{{ with .Params.pageClass }} {{ . }}{{ end }}">
+{{- if ne .Layout "bare" }}
+{{ partial "toolbar.html" . }}
+{{- end }}
+<main id="main">
+{{ block "main" . }}{{ end }}
+</main>
+{{- if ne .Layout "bare" }}
+{{ partial "footer.html" . }}
+{{- end }}
+</div>
+{{- block "scripts" . }}{{ end }}
+</body>
+</html>

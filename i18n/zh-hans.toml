@@ -1,0 +1,8 @@
+# 界面文字（简体中文）。页面正文写在 content/ 里，这里只放模板用到的固定文字。
+homeLink = "← 纯纯写作首页"
+languageMenu = "语言"
+notFoundTitle = "找不到这个页面"
+notFoundBody = "这个地址没有对应的页面，可能已经移动或删除。"
+notFoundHome = "回到纯纯写作首页"
+copyright = "版权所有：苏州小白迷雾科技有限公司"
+megabytes = "{{ .Count }} MB"

@@ -1,0 +1,34 @@
+{{- /*
+  顶部一行：左边回到本语言的首页（首页自己不显示），右边是语言切换（4.3）。
+  语言切换固定列出五种核心语言：本页有该语言译文的指向译文，没有的指向该语言的首页；俄文只在本页有俄文译文时列出。
+  用普通链接加 <details>，不需要脚本。404 页面之间不算译文，只留回到首页。
+*/ -}}
+{{- $page := . -}}
+<nav class="toolbar" aria-label="{{ site.Title }}">
+{{- if not .IsHome }}
+<a class="home-link" href="{{ .Language.Params.homeURL | default site.Home.RelPermalink }}">{{ i18n "homeLink" }}</a>
+{{- else }}
+<span></span>
+{{- end }}
+{{- if ne .Kind "404" }}
+<details class="lang-switch">
+<summary aria-label="{{ i18n "languageMenu" }}">{{ .Language.Label }}</summary>
+<ul>
+{{- range hugo.Sites }}
+{{- with .Language }}
+{{- $lang := .Lang }}
+{{- $target := "" }}
+{{- range where $page.AllTranslations "Lang" $lang }}{{ $target = .RelPermalink }}{{ end }}
+{{- if or $target (ne $lang "ru") }}
+{{- if eq $lang $page.Lang }}
+<li><span aria-current="page" lang="{{ .Locale }}">{{ .Label }}</span></li>
+{{- else }}
+<li><a href="{{ $target | default (printf "/%s/" $lang) }}" hreflang="{{ .Params.hreflang }}" lang="{{ .Locale }}">{{ .Label }}</a></li>
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+</ul>
+</details>
+{{- end }}
+</nav>

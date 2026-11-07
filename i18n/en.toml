@@ -1,0 +1,7 @@
+# Interface text (English).
+homeLink = "← Pure Writer home"
+languageMenu = "Language"
+notFoundTitle = "Page not found"
+notFoundBody = "There is no page at this address. It may have been moved or removed."
+notFoundHome = "Go to the Pure Writer home page"
+megabytes = "{{ .Count }} MB"

@@ -1,0 +1,11 @@
+{{- /*
+  不带顶部导航与页脚、内容居中的单页（front matter 写 layout: bare）：
+    - 网盘授权完成页（4.6）：每家网盘一页，五种语言的原话依次并列，各段带自己的 lang；
+    - 根目录的多语言 404 页：不带语言前缀的未知路径用它（4.5）。
+  这类页面不属于任何一种语言，html lang 用 front matter 的 htmlLang（mul）。
+*/ -}}
+{{- define "main" }}
+<article class="bare">
+{{ .Content }}
+</article>
+{{- end }}

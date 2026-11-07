@@ -1,0 +1,7 @@
+# インターフェースの文字列（日本語）。
+homeLink = "← 純純執筆 ホーム"
+languageMenu = "言語"
+notFoundTitle = "ページが見つかりません"
+notFoundBody = "このアドレスのページはありません。移動または削除された可能性があります。"
+notFoundHome = "純純執筆のホームへ"
+megabytes = "{{ .Count }} MB"

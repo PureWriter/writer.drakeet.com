@@ -1,0 +1,56 @@
+{{- /*
+  每页的 <head>：标题与描述、canonical、hreflang、OpenGraph 与 Twitter 卡片、样式表、站点图标、结构化数据（4.10）。
+  不用 Hugo 内置的模板：内置模板会把 html lang 的取值（例如 zh-Hant-TW）原样当作 hreflang，与 4.3 的约定不一致。
+*/ -}}
+{{- $noindex := or .Params.noindex (eq .Kind "404") -}}
+{{- $title := .Title -}}
+{{- if eq .Kind "404" }}{{ $title = printf "%s - %s" (i18n "notFoundTitle") site.Title }}{{ end -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>{{ $title }}</title>
+{{- with .Description }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+{{- if $noindex }}
+<meta name="robots" content="noindex">
+{{- else }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- /* 只有一种语言的页面不输出 hreflang；x-default 指向英文版，没有英文版就不写（4.3）。 */ -}}
+{{- if gt (len .AllTranslations) 1 }}
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Params.hreflang }}" href="{{ .Permalink }}">
+{{- end }}
+{{- range where .AllTranslations "Lang" "en" }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}
+{{- end }}
+{{- end }}
+{{- /*
+  Safari 的智能横幅：iPhone、iPad 的 Safari 打开带 iosBanner 的页面时，顶部显示 iOS 版的横幅，点按前往 App Store，
+  已安装时改为打开 App。横幅是浏览器自己的界面，不占页面排版，其他浏览器不显示（4.10）。
+*/ -}}
+{{- if .Params.iosBanner }}
+<meta name="apple-itunes-app" content="app-id={{ site.Params.iosAppID }}">
+{{- end }}
+{{- if not $noindex }}
+{{- $image := .Params.image | default "images/icon512.png" }}
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+{{- with .Description }}
+<meta property="og:description" content="{{ . }}">
+{{- end }}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $image | absURL }}">
+<meta property="og:locale" content="{{ .Language.Params.ogLocale }}">
+{{- range .Translations }}
+<meta property="og:locale:alternate" content="{{ .Language.Params.ogLocale }}">
+{{- end }}
+<meta name="twitter:card" content="{{ if .Params.image }}summary_large_image{{ else }}summary{{ end }}">
+{{- end }}
+{{- $css := resources.Get "css/main.css" | minify | fingerprint "sha256" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+{{- partial "jsonld.html" . }}

@@ -1,0 +1,11 @@
+{{- /*
+  每种语言目录下的 404.html：未知路径返回 404 状态码，由 Caddy 选用所在语言的这一页（4.5）。
+  根目录另有一份多语言的 static/404.html，给不带语言前缀的未知路径用。
+*/ -}}
+{{- define "main" }}
+<article>
+<h1>{{ i18n "notFoundTitle" }}</h1>
+<p>{{ i18n "notFoundBody" }}</p>
+<p><a href="{{ .Language.Params.homeURL | default site.Home.RelPermalink }}">{{ i18n "notFoundHome" }}</a></p>
+</article>
+{{- end }}

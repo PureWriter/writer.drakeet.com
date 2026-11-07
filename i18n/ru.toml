@@ -1,0 +1,7 @@
+# Тексты интерфейса (русский).
+homeLink = "← На главную"
+languageMenu = "Язык"
+notFoundTitle = "Страница не найдена"
+notFoundBody = "По этому адресу ничего нет. Возможно, страница перемещена или удалена."
+notFoundHome = "Перейти на главную страницу Pure Writer"
+megabytes = "{{ .Count }} МБ"

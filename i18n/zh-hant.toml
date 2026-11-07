@@ -1,0 +1,7 @@
+# 介面文字（繁體中文，台灣）。
+homeLink = "← 純純寫作首頁"
+languageMenu = "語言"
+notFoundTitle = "找不到這個頁面"
+notFoundBody = "這個網址沒有對應的頁面，可能已經移動或刪除。"
+notFoundHome = "回到純純寫作首頁"
+megabytes = "{{ .Count }} MB"

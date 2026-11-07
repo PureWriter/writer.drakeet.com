@@ -1,0 +1,11 @@
+{{- /* 安装包的 SHA-256 校验值，按 Windows、macOS（Apple 芯片）、macOS（Intel 芯片）的顺序列出，取自 desktop2.json。 */ -}}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
+<dl>
+{{- range slice "windows-x64" "macos-aarch64" "macos-x64" }}
+{{- with index $release.files . }}
+<dt>{{ .name }}</dt>
+<dd>{{ .sha256 }}</dd>
+{{- end }}
+{{- end }}
+</dl>
+{{- /**/ -}}

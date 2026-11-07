@@ -1,0 +1,7 @@
+{{- /*
+  下载页标题旁的「v版本 · 发布日期」，取自 desktop2.json。日期是不带时区的 YYYY-MM-DD，按站点时区（上海）解析，
+  再按页面语言格式化，与旧页用浏览器 Intl 显示的写法一致（例如 2026年11月6日、November 6, 2026）。
+*/ -}}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
+<span class="aside">v{{ $release.version }} · {{ time.AsTime $release.released | time.Format ":date_long" }}</span>
+{{- /**/ -}}

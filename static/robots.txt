@@ -1,0 +1,6 @@
+# 爬虫一律放行，包括各家 AI 的检索与训练爬虫：目标就是让更多人知道、搜到纯纯写作。
+# 不想被收录的页面（网盘授权完成页、404）在页面里用 noindex，而不是在这里屏蔽，否则爬虫看不到 noindex。
+User-agent: *
+Allow: /
+
+Sitemap: https://writer.drakeet.com/sitemap.xml

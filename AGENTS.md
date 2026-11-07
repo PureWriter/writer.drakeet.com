@@ -10,6 +10,11 @@
 - `static/images/` 下是旧站图片，按原路径、原字节发布（Android 的稿纸与 Pro 介绍页、ocat.app 等在直接引用），不得改名、移动或重新压缩。
 - `/.well-known/apple-app-site-association` 必须原地返回，不得经过任何跳转。
 
+## 写页面
+
+- 写或改 `content/` 下的页面前，先读 [docs/content.md](docs/content.md)：文件与地址、front matter、迁移时正文逐字一致的要求、链接、图片、下载页的动态部分、市场差异。
+- 构建与自查：`scripts/build.sh --worktree`（构建警告即错误，并检查站内链接、锚点与期望产物清单）；迁移旧页时用 `scripts/compare-text.py` 比对正文与锚点。
+
 ## 文案与本地化
 
 - 新增的代码请添加详细的注释，注释用中文写。

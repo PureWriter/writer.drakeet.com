@@ -1,0 +1,12 @@
+{{- /*
+  下载按钮：{{< download file="windows-x64" icon="windows" name="下载 Windows 版" detail="x64" >}}
+  file 是 desktop2.json 里 files 的平台键（与桌面版 release.sh 的 PLATFORM_KEYS 一致），按钮文字写在内容文件里。
+  地址与大小取自 desktop2.json；大小按十进制 MB 取整，与 macOS 访达的显示方式一致。
+*/ -}}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
+{{- $key := .Get "file" -}}
+{{- $file := index $release.files $key -}}
+{{- if not $file }}{{ errorf "desktop2.json 里没有平台 %q：%s" $key .Position }}{{ end -}}
+{{- $megabytes := math.Round (div (float $file.size) 1e6) | int -}}
+<a class="download" data-file="{{ $key }}" href="{{ $file.url }}"><svg class="icon" aria-hidden="true"><use href="#icon-{{ .Get "icon" }}"/></svg><span><span class="name">{{ .Get "name" }}</span><span class="detail">{{ .Get "detail" }} · {{ i18n "megabytes" $megabytes }}</span></span></a>
+{{- /**/ -}}

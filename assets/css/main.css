@@ -1,0 +1,493 @@
+/*
+  纯纯写作官网全站唯一的样式表（docs/rebuild.md 4.2「视觉」）。
+  沿用 2026-09 以来手写页的风格：系统字体栈、跟随深浅色、配色克制、正文限制行宽；Typora 导出的长文并入同一套样式。
+  不引用任何外部字体与第三方资源。经 Hugo 压缩并带内容指纹发布，可以长期缓存。
+*/
+
+/* ───────────── 颜色：集中定义为变量，深色模式只覆盖这一组 ───────────── */
+:root {
+  --bg: #ffffff;
+  --text: #2b2b2b;
+  --secondary: #6e6e73;
+  --link: #0a64d6;
+  --rule: #e5e5ea;
+  --panel: #f5f5f7;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --text: #e5e5e7;
+    --secondary: #98989d;
+    --link: #4da3ff;
+    --rule: #38383a;
+    --panel: #2c2c2e;
+  }
+}
+
+/* ───────────── 字体与基础排版 ───────────── */
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+/*
+  各语言选用对应地区的字体，繁体与日文不借用简体中文字形。html lang 写成 zh-Hant-TW、zh-Hant-HK，
+  所以 :lang(zh-Hant) 同时匹配台湾与香港，香港再单独优先用 PingFang HK（4.3）。
+  网盘授权页与根目录 404 把几种语言写在同一页，靠各段自己的 lang 选字体。
+  只作用在自身带 lang 属性的元素上（html 与多语言页里的各段），其余元素靠继承：
+  直接写 :lang(ja) 会匹配每个元素，特异性高过 code、pre 的规则，代码就丢了等宽字体。
+*/
+[lang]:lang(zh-Hans) {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+[lang]:lang(zh-Hant) {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+[lang]:lang(zh-Hant-HK) {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+[lang]:lang(ja) {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+}
+[lang]:lang(ko) {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+/* 拉丁文字的行高略小，读起来更紧凑。 */
+html:lang(en) body,
+html:lang(ru) body {
+  line-height: 1.65;
+}
+
+/* 正文限制行宽便于阅读；窄屏时两侧保留 20px 边距。 */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 20px 48px;
+}
+
+h1 {
+  font-size: 1.85rem;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+h2 {
+  font-size: 1.35rem;
+  line-height: 1.4;
+  margin: 44px 0 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+h3 {
+  font-size: 1.05rem;
+  margin: 28px 0 8px;
+}
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  margin: 24px 0 8px;
+}
+p,
+ul,
+ol,
+dl,
+table,
+pre,
+blockquote,
+figure {
+  margin: 0 0 12px;
+}
+ul,
+ol {
+  padding-left: 1.4em;
+}
+li {
+  margin-bottom: 4px;
+}
+li > ul,
+li > ol {
+  margin: 4px 0 0;
+}
+a {
+  color: var(--link);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+a:hover {
+  text-decoration: underline;
+}
+strong {
+  font-weight: 600;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 28px 0;
+}
+blockquote {
+  margin-left: 0;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--rule);
+  color: var(--secondary);
+}
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--panel);
+  overflow-wrap: anywhere;
+}
+pre {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--panel);
+  overflow-x: auto;
+  line-height: 1.6;
+}
+pre code {
+  padding: 0;
+  background: none;
+  font-size: 0.85rem;
+  overflow-wrap: normal;
+}
+table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+th,
+td {
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--panel);
+  font-weight: 600;
+}
+summary {
+  cursor: pointer;
+}
+
+/* 次要的说明文字：功能标注的说明、下载链接的提示、文档的日期等。 */
+.note,
+.meta {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+.meta {
+  margin-bottom: 24px;
+}
+
+/* ───────────── 顶部：回到首页与语言切换 ───────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.toolbar a {
+  color: var(--secondary);
+}
+/* 语言切换用 <details> 做成不需要脚本的小菜单：收起时只显示当前语言，展开后列出其余语言。 */
+.lang-switch {
+  position: relative;
+}
+.lang-switch summary {
+  list-style: none;
+  padding: 4px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  user-select: none;
+}
+.lang-switch summary::-webkit-details-marker {
+  display: none;
+}
+.lang-switch summary::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 2px 3px 10px;
+  border-right: 1.5px solid var(--secondary);
+  border-bottom: 1.5px solid var(--secondary);
+  transform: rotate(45deg);
+}
+.lang-switch[open] summary::after {
+  margin-bottom: -1px;
+  transform: rotate(-135deg);
+}
+.lang-switch ul {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  min-width: 100%;
+  margin: 6px 0 0;
+  padding: 6px 0;
+  list-style: none;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+}
+.lang-switch li {
+  margin: 0;
+}
+.lang-switch li a,
+.lang-switch li span {
+  display: block;
+  padding: 6px 16px;
+}
+.lang-switch li a {
+  color: var(--text);
+}
+.lang-switch li a:hover {
+  background: var(--panel);
+  text-decoration: none;
+}
+.lang-switch li span {
+  color: var(--secondary);
+}
+
+/* ───────────── 页脚：只在简体中文页面出现，版权与备案信息居中 ───────────── */
+.site-footer {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--secondary);
+  font-size: 0.85rem;
+  line-height: 1.9;
+  text-align: center;
+}
+.site-footer p {
+  margin: 0;
+}
+.site-footer a {
+  color: var(--secondary);
+}
+/* 公安备案图标与文字对齐。 */
+.site-footer img {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  margin-right: 4px;
+}
+
+/* ───────────── 首页与下载页的页头 ───────────── */
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.masthead img {
+  width: 72px;
+  height: 72px;
+  flex: none;
+}
+.masthead h1 {
+  margin: 0;
+}
+.tagline {
+  margin: 2px 0 0;
+  color: var(--secondary);
+}
+.summary {
+  margin: 20px 0 16px;
+}
+/* 首页页头的下载入口：几个并排的圆角按钮，窄屏时自动换行。 */
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+.platforms li {
+  margin: 0;
+}
+.platforms a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 16px 6px 13px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.platforms .icon {
+  flex: none;
+  width: 19px;
+  height: 19px;
+}
+.platforms a:hover {
+  text-decoration: none;
+  border-color: var(--secondary);
+}
+.banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 36px;
+}
+/* 中文正文段落沿用原首页的两个全角空格缩进，写在文字里而不是用 text-indent，复制出去仍保留。 */
+.prose p {
+  margin-bottom: 16px;
+}
+/* iOS 独有功能的标注：小号上标，颜色取次要色，不喧宾夺主。 */
+sup.ios {
+  font-size: 0.68em;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-left: 3px;
+}
+
+/* ───────────── 桌面版下载页 ───────────── */
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 28px 0 0;
+}
+.release h2 {
+  margin-top: 28px;
+  padding-top: 0;
+  border-top: 0;
+}
+.aside {
+  margin-left: 8px;
+  font-size: 0.95rem;
+  font-weight: normal;
+  color: var(--secondary);
+}
+.icon {
+  flex: none;
+}
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 12px;
+}
+.download {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 25px 10px 17px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--text);
+  line-height: 1.35;
+}
+.download:hover {
+  text-decoration: none;
+  border-color: var(--secondary);
+}
+.download .icon {
+  width: 24px;
+  height: 24px;
+  color: var(--link);
+}
+.download .name {
+  display: block;
+  font-weight: 600;
+}
+.download .detail {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--secondary);
+}
+.others {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
+.others a {
+  margin-left: 10px;
+  white-space: nowrap;
+}
+.others .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: -0.2em;
+}
+details.note dl {
+  margin: 8px 0 0;
+}
+details.note dt {
+  margin-top: 6px;
+}
+details.note dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+.guide {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* ───────────── iOS 支持页与隐私政策 ───────────── */
+.company {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+/* ───────────── 不带顶部与页脚的居中单页：网盘授权完成页、根目录 404 ───────────── */
+.bare {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.bare p {
+  margin: 0 0 18px;
+}
+.bare .celebrate {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+/* 图标的 SVG 定义只供 <use> 引用，自身不占位置。 */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

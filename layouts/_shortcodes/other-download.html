@@ -1,0 +1,10 @@
+{{- /*
+  「其他安装包」一行里的链接，默认隐藏：{{< other-download file="macos-x64" icon="apple" label="macOS（Intel 芯片）" >}}
+  下载页的脚本识别出访客的系统后，只把适合的版本留作主按钮，其余在这里显示；没有脚本时三个主按钮并列，这一行不出现。
+*/ -}}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
+{{- $key := .Get "file" -}}
+{{- $file := index $release.files $key -}}
+{{- if not $file }}{{ errorf "desktop2.json 里没有平台 %q：%s" $key .Position }}{{ end -}}
+<a data-file="{{ $key }}" href="{{ $file.url }}" hidden><svg class="icon" aria-hidden="true"><use href="#icon-{{ .Get "icon" }}"/></svg>{{ .Get "label" }}</a>
+{{- /**/ -}}

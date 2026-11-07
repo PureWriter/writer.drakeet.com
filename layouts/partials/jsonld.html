@@ -1,0 +1,21 @@
+{{- /*
+  结构化数据（4.10）。页面 front matter 的 jsonld 决定输出哪种：
+    home     各语言首页：同一份 WebSite（控制搜索结果里显示的站点名），加上移动端的 SoftwareApplication
+    desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop2.json
+  站点名暂用「纯纯写作」，正式的站点名与各语言的运营主体写法在第 E 步请 Drakeet 定；价格只在能逐平台写准时才写，所以不写。
+*/ -}}
+{{- $names := slice "纯纯写作" "純純寫作" "Pure Writer" "純純執筆" -}}
+{{- $alternates := slice -}}
+{{- range $names }}{{ if ne . site.Title }}{{ $alternates = $alternates | append . }}{{ end }}{{ end -}}
+{{- if eq .Params.jsonld "home" }}
+{{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" "纯纯写作" "alternateName" (slice "Pure Writer" "純純寫作" "純純執筆") "url" "https://writer.drakeet.com/" }}
+{{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" site.Title "alternateName" $alternates "operatingSystem" "Android, iOS, iPadOS" "applicationCategory" "UtilitiesApplication" "url" .Permalink }}
+<script type="application/ld+json">{{ $website | jsonify | safeJS }}</script>
+<script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{- else if eq .Params.jsonld "desktop" }}
+{{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" }}
+{{- $downloads := slice }}
+{{- range slice "windows-x64" "macos-aarch64" "macos-x64" }}{{ with index $release.files . }}{{ $downloads = $downloads | append .url }}{{ end }}{{ end }}
+{{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" (.Params.appName | default site.Title) "alternateName" $alternates "operatingSystem" "Windows, macOS" "applicationCategory" "UtilitiesApplication" "softwareVersion" $release.version "datePublished" $release.released "downloadUrl" $downloads "url" .Permalink }}
+<script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{- end }}

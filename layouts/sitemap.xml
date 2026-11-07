@@ -1,0 +1,21 @@
+{{- /*
+  每种语言一份 sitemap（根目录的 sitemap.xml 是 Hugo 生成的索引）。只列正式地址与 lastmod，不写 xhtml:link（页头的
+  hreflang 已经足够），带 noindex 的页面不列入（4.10）。下载页的 lastmod 取 desktop2.json 的发布日期（4.7）。
+*/ -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{{- range .Pages }}
+{{- if not .Params.noindex }}
+{{- $lastmod := .Lastmod }}
+{{- if eq .Params.lastmodFrom "desktop2.json" }}
+{{- $lastmod = time.AsTime (partialCached "desktop-release.html" "desktop2" "desktop2").released }}
+{{- end }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+{{- if not $lastmod.IsZero }}
+    <lastmod>{{ $lastmod.Format "2006-01-02" }}</lastmod>
+{{- end }}
+  </url>
+{{- end }}
+{{- end }}
+</urlset>

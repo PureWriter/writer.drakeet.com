@@ -1,0 +1,14 @@
+{{- /*
+  新页面里的图片（docs/rebuild.md 4.8）：{{< img src="img/header_zh_hans.jpg" alt="……" class="banner" width="680" >}}
+  src 是 assets/ 下的原图（旧地址 /images/ 下的原图保持原字节，另放一份在 assets/img/ 供新页面处理）。
+  按显示宽度 width（CSS 像素，默认是正文宽度 680）输出 1x 与 2x 两档 WebP，原图不够宽时不放大；文件名带内容指纹，
+  可以长期缓存。默认 loading="lazy"，首屏的大图（首页横幅）写 loading="eager"。
+*/ -}}
+{{- $path := .Get "src" -}}
+{{- $image := resources.Get $path -}}
+{{- if not $image }}{{ errorf "找不到图片 %q：%s" $path .Position }}{{ end -}}
+{{- $width := int (.Get "width" | default "680") -}}
+{{- $x1 := $image.Process (printf "resize %dx webp q82" (int (math.Min $width $image.Width))) -}}
+{{- $x2 := $image.Process (printf "resize %dx webp q82" (int (math.Min (mul $width 2) $image.Width))) -}}
+<img{{ with .Get "class" }} class="{{ . }}"{{ end }} src="{{ $x1.RelPermalink }}" srcset="{{ $x1.RelPermalink }} 1x, {{ $x2.RelPermalink }} 2x" width="{{ $x1.Width }}" height="{{ $x1.Height }}" alt="{{ .Get "alt" }}" loading="{{ .Get "loading" | default "lazy" }}" decoding="async">
+{{- /**/ -}}
