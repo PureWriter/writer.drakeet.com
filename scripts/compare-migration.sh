@@ -8,6 +8,8 @@
 # 两类差异是预期的，只列出、不算失败，复核时逐条看：
 #   - 下载页：旧页的版本信息由脚本在运行时填入，新页在构建时写入；去掉了不再成立的两句提示；
 #   - 英文 Android 隐私政策：「Links」一节里显示成网址的链接文字换成了新地址 /en/（第 D 步同时更新 OAuth 同意屏幕的登记）。
+#   - 第 F 步重写过的页面（三种语言的使用手册与备份教程、Markdown 教程）：正文与旧页不同，只看锚点是否齐全；
+#     有意删去的坚果云锚点写在各页的维护注释里。
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -51,13 +53,13 @@ pages=(
 	"ios/support.html|article[data-locale=zh-HK]|zh-hk/ios/support/index.html|"
 	"ios/support.html|article[data-locale=en]|en/ios/support/index.html|"
 	"ios/support.html|article[data-locale=ja]|ja/ios/support/index.html|"
-	"wiki.html||zh-hans/manual/index.html|"
-	"wiki_zh.html||zh-hant/manual/index.html|"
-	"wiki_en.html||en/manual/index.html|"
-	"backups.html||zh-hans/backups/index.html|"
-	"backups_zh.html||zh-hant/backups/index.html|"
-	"backups_en.html||en/backups/index.html|"
-	"markdown.html||zh-hans/markdown/index.html|"
+	"wiki.html||zh-hans/manual/index.htmlknown"
+	"wiki_zh.html||zh-hant/manual/index.htmlknown"
+	"wiki_en.html||en/manual/index.htmlknown"
+	"backups.html||zh-hans/backups/index.htmlknown"
+	"backups_zh.html||zh-hant/backups/index.htmlknown"
+	"backups_en.html||en/backups/index.htmlknown"
+	"markdown.html||zh-hans/markdown/index.htmlknown"
 	"protections.html||zh-hans/protections/index.html|"
 	"warning.html||zh-hans/genuine/index.html|"
 	"privacy.html||zh-hans/android/privacy/index.html|"
