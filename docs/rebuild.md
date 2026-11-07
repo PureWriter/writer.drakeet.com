@@ -824,6 +824,7 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
   - AI：服务端在请求入口把最后一条消息的正文连同邮箱与 Android ID 写进运行日志（rebase-server `AIResource.kt` 的 timber 几处），计划改为不记正文；请求的 user 字段带原始 Android ID，自填的第三方服务也会收到。
   - Android 发往我们服务器的请求头（设备标识、型号、MCC、安装来源、网盘类型、邮箱等）与服务器访问日志（IP），Android 与桌面版的政策都没有完整写；Android 英文政策比简体少几段（见本节「滞后的译文」）。敏感词的上报按政策要求不写进隐私政策。
   - 安全：rebase-server 的源码里写死了几把第三方 AI 服务的 API Key，应改用配置文件或环境变量，并更换这些 Key。
+  - 出口分流（第九节 H，egress-offloading.md）：Android 新版本加载官网旧图片时先访问 Cloudflare 上的 kuromi.drakeet.cn，请求不带设备与账号信息，只有 OkHttp 的默认请求头；写进政策时列入第三方 CDN。桌面版的 JAR 下载用到的两个地址与以前相同。
 - **Android 与桌面版的文案问题（手册重写时发现，与手册无关）**：
   - Android「会员须知」仍写 3 台设备，服务端与 iOS 条款是 5 台；
   - Pro 页把已免费的 Material Design 2 列为 Pro 功能；自定义稿纸与批量替换的付费框里，「试用」按钮点了不能继续；
