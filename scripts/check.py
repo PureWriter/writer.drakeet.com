@@ -12,6 +12,7 @@
   3. 市场差异：只适合中国大陆用户的内容（备案号、蓝奏云、国内下载、360、坚果云与网盘切换截图）不得出现在简体中文以外
      的产物里。规则与豁免写在 ops/market-rules.toml；「旧版」名单里的页面只提示、不拦截。
   4. 台港用词：繁体（台湾）页面不得出现香港用词，繁体（香港）页面不得出现台湾用词，词表在 ops/zh-variants.toml。
+     只查文字，不查沿用旧站的锚点 id。
   5. iOS 隐私政策各语言的「更新日期」「生效日期」一致（旧站五种语言同页时天然同步，拆成五个文件后靠这项检查）。
   6. 固定图片的原字节：/images/ 下的每个文件按入库的 sha256 清单（ops/images.sha256）核对，多、少、字节不同都报错。
   7. Apple 关联域名文件 /.well-known/apple-app-site-association 是合法的 JSON，webcredentials.apps 里有本 App。
@@ -214,6 +215,12 @@ def check_market(root, rules_path):
     return problems, warnings
 
 
+# 台港用词只查读者看得到的文字，不查锚点的 id：页面改写后仍保留旧站的锚点 id，站外的旧链接才能落到原来那一条，
+# 而旧 id 来自旧标题，带着当年的用词（例如繁体手册的「實時」「代碼」）。href 里的中文是百分号编码，本来就不会命中。
+# 产物经过压缩，属性值可能不带引号。
+ID_ATTRIBUTE = re.compile(r"""\sid=(?:"[^"]*"|'[^']*'|[^\s>]+)""")
+
+
 def check_zh_variants(root, rules_path):
     rules = tomllib.loads(rules_path.read_text(encoding="utf-8"))
     warn_only = rules.get("legacy_warn_only", [])
@@ -225,7 +232,7 @@ def check_zh_variants(root, rules_path):
         for prefix, (region, words) in banned.items():
             if not path.startswith(prefix):
                 continue
-            text = page_text(file)
+            text = ID_ATTRIBUTE.sub("", page_text(file))
             hits = [word for word in words if word in text]
             if hits:
                 message = f"{path}：出现了{region}用词：{'、'.join(hits)}"
