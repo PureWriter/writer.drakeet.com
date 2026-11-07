@@ -1,0 +1,56 @@
+# 市场差异的构建检查（docs/rebuild.md 4.3「市场差异由结构保证」；约定的出处是根目录 AGENTS.md）。
+#
+# 只适合中国大陆用户的内容只放在简体中文（/zh-hans/）页面里。scripts/check.py 扫描构建产物里简体中文目录以外的
+# HTML 与文本文件（含页面里的 JSON-LD、根目录的 llms.txt），命中下面任何一组就让构建失败。
+# 不扫描：/zh-hans/、/images/（旧图片）、/ocat/（DeepOCAT 旧页，去留另定）、/.well-known/、desktop2.json（发版数据，
+# 里面本来就有各语言的更新日志）。
+#
+# 每组的 exempt 是豁免的页面，写产物里的路径前缀，* 匹配一段语言目录。法律页与网盘授权完成页只豁免「网盘名称」这一组
+# （隐私政策必须完整披露数据去向），其余各组不豁免任何页面。
+
+# 「旧版」名单：原样迁移的旧繁体文本，含大陆专属内容（第十一节），本轮只提示、不拦截。文案批次处理后从这里删掉。
+legacy_warn_only = [
+  "/zh-hant/backups/",
+  "/zh-hant/manual/",
+]
+
+[[group]]
+name = "备案信息"
+pattern = 'beian\.miit\.gov\.cn|beian\.mps\.gov\.cn|ICP备|公[网網]安[备備]'
+why = "ICP 备案号与公安备案只适合面向中国大陆的简体中文页面；由页脚按语言参数输出，正文里不写。"
+exempt = []
+
+[[group]]
+name = "蓝奏云"
+pattern = 'lanzou|[蓝藍]奏'
+why = "蓝奏云是面向中国大陆用户的备用下载，繁体与外文只保留通用的下载说明。"
+exempt = []
+
+[[group]]
+name = "国内下载"
+pattern = 'malink\.cn|[国國][内內]下[载載]'
+why = "「国内下载」与它的下载地址是中国大陆视角的提示，只放在简体中文。"
+exempt = []
+
+[[group]]
+name = "360 安全软件"
+pattern = '360\s*(?:安全|[杀殺]毒|[卫衛]士|的防[护護]|提示)'
+why = "360 及其特有的错误信息是中国本土语境；其他语言用通用的系统或安全软件说法。"
+exempt = []
+
+[[group]]
+name = "网盘切换截图"
+pattern = 'DriveOnAndroidGuide'
+why = "这张截图是中文界面，并且讲的是 OneDrive、阿里云盘、坚果云之间的切换，只用在简体中文页面。"
+exempt = []
+
+[[group]]
+name = "网盘名称"
+pattern = '[坚堅]果[云雲]|nutstore|jianguoyun'
+why = "坚果云只在中国大陆提供，网盘之间的切换提示只放在简体中文；阿里云盘作为支持的网盘之一可以出现在各语言里，不在此列。"
+exempt = [
+  "/*/android/privacy/",
+  "/*/ios/privacy/",
+  "/en/desktop/privacy/",
+  "/drives/oauth/",
+]
