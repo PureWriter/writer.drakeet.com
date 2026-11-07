@@ -12,6 +12,15 @@
 {{- with .Description }}
 <meta name="description" content="{{ . }}">
 {{- end }}
+{{- /*
+  关键词只写产品的四个名字，本语言的写法在前，不堆砌其他词。Google 与 Bing 已明确不看这个标签，百度没有明确的现行说法，
+  个别搜索引擎仍会参考；名字能被搜到，主要靠 WebSite 结构化数据的别名与各语言页面的标题（4.10）。
+*/ -}}
+{{- if not $noindex }}
+{{- $keywords := slice site.Title }}
+{{- range site.Params.siteNames }}{{ if ne . site.Title }}{{ $keywords = $keywords | append . }}{{ end }}{{ end }}
+<meta name="keywords" content="{{ delimit $keywords ", " }}">
+{{- end }}
 {{- if $noindex }}
 <meta name="robots" content="noindex">
 {{- else }}

@@ -47,6 +47,8 @@ timeZone = "Asia/Shanghai"
   # iOS App 在 App Store 的 ID：智能横幅与下载链接共用。
   iosAppID = "6803257195"
   feedbackEmail = "writer@drakeet.com"
+  # 产品的四个名字（4.10）：WebSite 结构化数据与每页的关键词共用。第一个是站点名，其余是别名，按优先顺序排列。
+  siteNames = ["纯纯写作", "Pure Writer", "純純寫作", "純純執筆"]
 
 # 语言键沿用 iOS App 与 desktop2.json 已有的那套（4.3 的表）。
 #   locale        Hugo 用来格式化日期等的区域标识，同时也是 html lang 的取值
