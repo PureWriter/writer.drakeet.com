@@ -732,7 +732,7 @@ Pure Writer’s backup files are ordinary compressed archives without extra encr
 #### When your text is sent over the internet
 
 - **Fanhuaji conversions**: In Formatting options on all three apps, the conversions whose names include “繁化姬” (Fanhuaji), which appear when the app language is Chinese, send the text of the current document to Fanhuaji (zhconvert.org), a third-party service, to be converted. They explain this and ask for your consent before the first use; see [About Formatting options](#about-formatting-tools).
-- **AI features on Android**: Off by default; you need to turn them on in “AI settings”. When you use them, the text used to generate results is sent to an AI service. With “Pure Writer hosted AI” (requires Pure Writer Pro), the text is relayed through Pure Writer’s server to a large language model service; the server doesn’t store it in a database, but for troubleshooting, the server logs record part of the text in each request. With “OpenAI”, the text goes directly to the service address you set up (api.openai.com if you leave it blank), without passing through Pure Writer’s server.
+- **AI features on Android**: Off by default; you need to turn them on in “AI settings”, and the related terms are shown when you do. When you use them, the text used to generate results is sent to an AI service. With “Pure Writer hosted AI” (requires Pure Writer Pro), the text is relayed through Pure Writer’s server to a large language model service. With “OpenAI”, the text goes directly to the service address you set up (api.openai.com if you leave it blank), without passing through Pure Writer’s server.
 
 Please use the genuine Pure Writer. We can’t guarantee the safety of your documents in cracked versions.
 
