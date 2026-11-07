@@ -12,15 +12,16 @@ url: android/privacy/
   「Links」一节列出链接到本页的地方：应用首页（旧地址 /home_en，已改为新的英文首页）与 Google Cloud 控制台的 OAuth 同意屏幕。
   Google 审核 OAuth 应用时会核对首页上有没有隐私政策的链接，所以英文首页要一直保留指向本页的链接。
   「will show a」之后的断段是旧页原样（两个段落），末尾三个日期在旧页里各占一行，这里用行尾的反斜杠写成换行。
+  结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
 
-### Pure Writer Privacy Policy {#pure-writer-privacy-policy}
+# Pure Writer Privacy Policy {#pure-writer-privacy-policy}
 
-#### Software Information {#software-information}
+## Software Information {#software-information}
 
 Pure Writer is a writing app that pursues non-loss and reassurance, featuring extremely fast startup speeds and a smooth writing experience.
 
-#### Basic Statement {#basic-statement}
+## Basic Statement {#basic-statement}
 
 Pure Writer does not collect your private information. It only queries the following contents unrelated to your personal information:
 
@@ -30,29 +31,29 @@ Pure Writer does not collect your private information. It only queries the follo
 
 - Information about other apps installed on the phone: Pure Writer will try to check if Alipay or WeChat is present on your phone to guess if you are a user in mainland China. Alipay cannot provide payment services for overseas user platforms like Google Play, so we need to provide Google Pay for overseas users. Thus, this is necessary content to query. However, rest assured, these information checks are entirely local, and the results will not be uploaded anywhere, **purely local checks, purely local analysis** guesses. No one will know what other apps you have installed on your phone, as we **do not upload or store this information**.
 
-#### Copyright of Works {#copyright-of-works}
+## Copyright of Works {#copyright-of-works}
 
 Pure Writer is merely a creative tool. The works you create in it **completely belong to you personally**, and you also fully own the copyright, authorship, and other rights of the works.
 
-#### Permissions Requested {#permissions-requested}
+## Permissions Requested {#permissions-requested}
 
 To better protect user privacy, starting from Android 11, Pure Writer **no longer needs full disk read and write permissions**. Instead, it lets **users specify a folder directory**, and Pure Writer will only have read and write permissions for that directory. Therefore, **for Android 11 and above systems, Pure Writer will not request any permissions**.
 
 For systems before Android 11, Pure Writer will request read and write permissions to the phone's storage, for functions like automatic backups, exporting articles, long images, etc. We will not read any of your other file contents without your knowledge.
 
-#### Third-party SDKs Used {#third-party-sdks-used}
+## Third-party SDKs Used {#third-party-sdks-used}
 
 - Google Billing SDK: Google's payment method SDK, [Privacy Policy](https://support.google.com/googleplay/android-developer/answer/10281818)
 
 - Dropbox SDK: Dropbox cloud storage SDK, [Privacy Policy](https://www.dropbox.com/privacy)
 
-#### Article Data and Backup
+## Article Data and Backup
 
 By default, Pure Writer does not automatically perform cloud backups. Pure Writer only supports third-party cloud storage as your cloud backup space. Pure Writer does not provide official cloud backup disk services. Therefore, you can set your WebDAV disk (e.g., Nutstore) or Dropbox, Google Drive, etc., in Pure Writer as the cloud backup service space. Pure Writer will strictly encrypt and transmit your article backups to your cloud storage via HTTPS. Due to the security of HTTPS itself, no one can intercept and view the content during transmission, and your content can only be seen by you on your cloud storage, or pulled and viewed in Pure Writer. **Apart from you, including the developers, no one can see your backups and article contents**.
 
 If you register a Pure Writer account in the app (this is not necessary), your password will be stored as a digest on the Pure Writer server. We do not store your password in plain text, and the digest cannot be reverse-engineered to your original password. In other words, no one can know your original password because we have not stored it anywhere. Without storage, there is no possibility of leakage or being viewed by others.
 
-#### How to Cancel Your Account {#how-to-cancel-your-account}
+## How to Cancel Your Account {#how-to-cancel-your-account}
 
 If you need to cancel your Pure Writer account, please enter Pure Writer - Settings - Minority Options - Cancel Pure Writer Account. The "Cancel Pure Writer Account" option is at the bottom of the "Minority Options" page. Clicking on it allows you to self-service cancel your Pure Writer account.
 
@@ -60,22 +61,22 @@ If you need to cancel your Pure Writer account, please enter Pure Writer - Setti
 
 "This page requires the premium version" prompt. You can click the "Try" button in the dialog box to ignore it, then scroll to the bottom of the page to find the cancellation option. **Cancellation does not require a Pure Writer Pro membership, rest assured!**
 
-#### Updates to This Policy {#updates-to-this-policy}
+## Updates to This Policy {#updates-to-this-policy}
 
 We may modify and update this privacy policy from time to time. You can visit this page at any time to check the latest version of the privacy policy.
 
-#### Contact Us {#contact-us}
+## Contact Us {#contact-us}
 
 If you have any questions about this policy, or encounter any problems and suggestions while using Pure Writer, you can send an email to [writer@drakeet.com](mailto:writer@drakeet.com). We will do our best to serve you.
 
-#### Links {#links}
+## Links {#links}
 
 - Linked on the app home page: [https://writer.drakeet.com/en/](/en/)
 
 - Linked to the OAuth consent screen on the [Google Cloud Console](https://console.cloud.google.com/): <https://console.cloud.google.com/apis/credentials/consent?project=purewriter-d64e3>
 
-Published Date: July 1, 2017\
-Effective Date: July 1, 2017\
-Update Date: November 14, 2021
+<p class="meta">Published Date: July 1, 2017<br>
+Effective Date: July 1, 2017<br>
+Update Date: November 14, 2021</p>
 
-Drakeet, Inc.
+<p class="company">Drakeet, Inc.</p>

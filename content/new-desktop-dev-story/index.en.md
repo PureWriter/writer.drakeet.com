@@ -9,9 +9,10 @@ url: blog/new-desktop-dev-story/
   新桌面版的开发故事（旧地址 /blog/NewDesktopDevStory，桌面版非中文界面的菜单链接着它，服务器 301 到这里）。只有英文。
   正文与旧站逐字一致：直引号与弯撇号（' 与 ’）混用、破折号与省略号都是旧页原样，不要统一。
   旧页没有标题元素，开头加粗的一段就是文章标题，保持原样。
+  结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
 
-**"Without a Deadline, I Can't Get Anything Done"**
+# "Without a Deadline, I Can't Get Anything Done"
 
 Yesterday, I wrote a short piece reflecting on how I've been incredibly busy lately, but in a strangely satisfying way. The product that has troubled me for years is finally about to be released in its true 1.0 version. Back in June, I forcefully released a crippled version, humorously naming it "Almost Unusable." Even though it was June, it feels like yesterday—two months have flown by in the blink of an eye. What have I been doing all this time? What did I do to finally reach the point where I’m about to fulfill my mission and overcome this enormous challenge? I feel both terrified and excited.
 

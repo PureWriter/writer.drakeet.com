@@ -7,9 +7,10 @@ lastmod: 2023-06-01
 <!--
   Android 版检测到破解版或盗版时打开的提示页（旧地址 /warning，存量极大，服务器 301 到这里）。
   只有简体中文。正文与旧站逐字一致；标题的 id 沿用旧页（Typora 生成），站外的旧锚点仍然有效。
+  结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
 
-###### **检查到你正在使用破解版或盗版且存在木马程序的纯纯写作！请使用正版！** {#检查到你正在使用破解版或盗版且存在木马程序的纯纯写作请使用正版}
+# 检查到你正在使用破解版或盗版且存在木马程序的纯纯写作！请使用正版！ {#检查到你正在使用破解版或盗版且存在木马程序的纯纯写作请使用正版}
 
 ## 《中华人民共和国刑法》第二百一十七条 {#中华人民共和国刑法第二百一十七条}
 
@@ -37,4 +38,4 @@ lastmod: 2023-06-01
 - 纯纯写作开发故事：[《愿文字带我们穿越时光，连接过去遥想未来》](https://sspai.com/post/43650)
 - 纯纯写作隐私政策：[中文](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md), [English](https://github.com/drakeet/resources/blob/master/PrivacyPolicy.md#pure-writer---privacy-policy)
 
-##### 下载正版：[https://m.app.mi.com/details?id=com.drakeet.purewriter](https://m.app.mi.com/details?id=com.drakeet.purewriter) {#下载正版httpsappmicomdetailsidcomdrakeetpurewriter}
+<p id="下载正版httpsappmicomdetailsidcomdrakeetpurewriter"><strong>下载正版：</strong><a href="https://m.app.mi.com/details?id=com.drakeet.purewriter">https://m.app.mi.com/details?id=com.drakeet.purewriter</a></p>

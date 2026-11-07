@@ -8,9 +8,10 @@ lastmod: 2021-04-28
   Markdown 简明教程（旧地址 /markdown，服务器 301 到这里）。只有简体中文。
   正文与旧站逐字一致；标题的锚点沿用旧页（Typora 生成的 <a name>），站外的旧锚点仍然有效。
   本页讲的就是 Markdown 语法：示例里的 *、_ 等字符一律放在代码块或行内代码里，才能原样显示，不被当成格式。
+  结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
 
-### Markdown 简明教程 {#markdown-简明教程}
+# Markdown 简明教程 {#markdown-简明教程}
 
 Markdown 是一种用纯文本表达富文本内容的标记语言。它简单易学，纯纯写作支持 Markdown(MD)，您可以点击纯纯写作编辑器顶部的 `TXT` 菜单按钮切换到 `MD`（Markdown） 模式 。
 
