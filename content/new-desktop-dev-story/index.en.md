@@ -1,5 +1,5 @@
 ---
-title: New Desktop Dev Story
+title: New Desktop Dev Story - Pure Writer
 description: "Drakeet looks back on more than two years of building the new Pure Writer desktop: the pressure, over 1,400 errors resolved one by one, and why a deadline matters."
 lastmod: 2024-08-18
 url: blog/new-desktop-dev-story/

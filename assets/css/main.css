@@ -124,6 +124,19 @@ a {
 a:hover {
   text-decoration: underline;
 }
+/*
+  正文段落、列表与表格里的链接加一条淡淡的细下划线：只靠颜色区分时，色弱读者与灰度显示下认不出链接（Lighthouse 无障碍检查
+  「链接须能靠颜色以外的方式辨识」）。用 :where() 把优先级压到与 a 相同，平台按钮这类自带样式的链接只需写明 none 就能覆盖。
+*/
+:where(article) :where(p, li, td, dd, blockquote) > a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+:where(article) :where(p, li, td, dd, blockquote) > a:hover {
+  text-decoration-color: currentColor;
+}
 strong {
   font-weight: 600;
 }
@@ -339,6 +352,7 @@ summary {
   margin: 0;
 }
 .platforms a {
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 7px;
