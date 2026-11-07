@@ -6,7 +6,7 @@
 # 境外到上海偶有网络抖动：每个请求自带重试；整轮不通过时隔两分钟再完整查一次，两轮都不通过才算故障。
 #
 # 脚本直接写在这里、不引用任何第三方 Action，定时任务没有外部依赖。
-# 第 C 步换成新站后，首页会改为按语言跳转，这里的期望要随之更新。
+# 首页按访客的语言跳转（不带语言头时 302 到 /zh-hans/），检查时跟随跳转，最终应是 200 的网页；旧站的首页直接是 200，同样通过。
 name: 官网监控
 
 on:
@@ -53,7 +53,8 @@ jobs:
             failures=()
             local got version platform name size end days
 
-            got="$(get page.html "$site/")"
+            got="$("${CURL[@]}" -L -o page.html -w '%{http_code} %{content_type}' "$site/" 2> /dev/null)"
+            got="${got:-000 -}"
             [[ "$got" == "200 text/html"* ]] || failures+=("首页：$got")
 
             got="$(get aasa.json "$site/.well-known/apple-app-site-association")"
