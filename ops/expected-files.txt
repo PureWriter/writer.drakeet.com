@@ -65,12 +65,6 @@ images/pro/en/5.webp
 images/pro/en/6.webp
 images/pro/en/PureWriterDesktop.webp
 images/pro/en/PureWriterDesktopDark.webp
-img/002t9pMVgy1guwmyramybj61pa0vy4a102_hu_<hash>.webp
-img/002t9pMVgy1guwmyramybj61pa0vy4a102_hu_<hash>.webp
-img/002t9pMVgy1guwmytse9hj61f80q6wkt02_hu_<hash>.webp
-img/002t9pMVgy1guwmytse9hj61f80q6wkt02_hu_<hash>.webp
-img/002t9pMVgy1guwmywl4e7j616c0i0n6z02_hu_<hash>.webp
-img/002t9pMVgy1guwmywl4e7j616c0i0n6z02_hu_<hash>.webp
 img/DriveOnAndroidGuide_hu_<hash>.webp
 img/DriveOnAndroidGuide_hu_<hash>.webp
 img/desktop2dark_en_hu_<hash>.webp

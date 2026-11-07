@@ -779,7 +779,7 @@ Apart from the services above, Pure Writer doesn’t support other cloud drives.
 
 ### How do I set up cloud backup? {#cloud-backup-configuration}
 
-- **Android**: On the “Backup & cloud sync” page, tap “Cloud connection type”, choose a cloud drive, and tap “Sign in” (for WebDAV, fill in the “WebDAV URL”, “WebDAV account”, and “WebDAV password”). Then tap “Back up to cloud” to back up right away. For a tutorial with pictures, see the [Cloud Backup Tutorial](/en/backups/).
+- **Android**: On the “Backup & cloud sync” page, tap “Cloud connection type”, choose a cloud drive, and tap “Sign in” (for WebDAV, fill in the “WebDAV URL”, “WebDAV account”, and “WebDAV password”). Then tap “Back up to cloud” to back up right away. For step-by-step instructions, see the [Automatic and Cloud Backup Tutorial](/en/backups/).
 - **iOS**: In “Settings › Backup & Cloud Sync › Cloud Drive”, tap “Connect Dropbox”, “Connect OneDrive”, or “Connect AliyunDrive” and sign in. Once connected, backups are uploaded to your cloud drive automatically; tap “Back Up to Cloud Now” to upload one right away. “Back Up to iCloud” is turned on or off separately in “Settings › Backup & Cloud Sync › Back Up to iCloud”.
 - **Desktop**: In the “Backup and sync” window, click “Sign in to OneDrive”, “Sign in to Dropbox”, or “Sign in to AliyunDrive”. After you sign in and allow access in your browser, return to Pure Writer and click “Continue”.
 
