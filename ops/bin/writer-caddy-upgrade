@@ -16,20 +16,28 @@ log() {
 	echo "$*"
 }
 
-# 自检：服务在运行，首页与 Apple 关联域名文件能从本机按正式主机名取到。
-self_check() {
-	systemctl is-active --quiet caddy || return 1
-	curl -fsS --max-time 15 -o /dev/null --resolve writer.drakeet.com:443:127.0.0.1 \
-		https://writer.drakeet.com/.well-known/apple-app-site-association || return 1
-	local code
-	code="$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' --resolve writer.drakeet.com:443:127.0.0.1 https://writer.drakeet.com/)"
-	[[ "$code" =~ ^(200|301|302|308)$ ]]
+# 从本机按正式主机名请求一个路径，打印状态码（连不上时是 000）。
+local_status() {
+	curl -sS --max-time 15 -o /dev/null -w '%{http_code}' --resolve writer.drakeet.com:443:127.0.0.1 "https://writer.drakeet.com$1"
 }
 
+# 自检：服务在运行；Apple 关联域名文件 200，首页 200 或跳转，不存在的路径 404。
+# 最后一项覆盖 try_files 与 handle_errors，这类指令曾在补丁版本里改过行为。
+self_check() {
+	systemctl is-active --quiet caddy || return 1
+	[[ "$(local_status /.well-known/apple-app-site-association)" == 200 ]] || return 1
+	[[ "$(local_status /)" =~ ^(200|301|302|308)$ ]] || return 1
+	[[ "$(local_status /writer-caddy-upgrade-self-check)" == 404 ]]
+}
+
+# 返回 apt-get 的结果，无论成败都重新 hold，免得 unattended-upgrades 接手。
+# 函数在 if 条件里调用时 set -e 不生效，所以显式记下 apt-get 的退出码。
 install_version() {
+	local status=0
 	apt-mark unhold caddy >/dev/null
-	DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --allow-downgrades "caddy=$1"
+	DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --allow-downgrades "caddy=$1" || status=$?
 	apt-mark hold caddy >/dev/null
+	return "$status"
 }
 
 # 只刷新 Caddy 官方源的索引，不影响系统其余软件源。
@@ -51,20 +59,30 @@ trap 'rm -rf -- "$work"' EXIT
 (cd "$work" && apt-get download -qq "caddy=$candidate")
 dpkg-deb -x "$work"/caddy_*.deb "$work/root"
 
-if ! "$work/root/usr/bin/caddy" validate --config /etc/caddy/Caddyfile --adapter caddyfile >"$work/validate.log" 2>&1; then
+# 以 caddy 身份校验（目录放开为 0755，caddy 用户才能执行解出的二进制）：校验会打开日志文件，
+# 以 root 运行可能把日志文件建成 root 所有，正在运行的 Caddy 重启后就打不开。
+chmod 0755 "$work"
+if ! runuser -u caddy -- "$work/root/usr/bin/caddy" validate --config /etc/caddy/Caddyfile --adapter caddyfile \
+	>"$work/validate.log" 2>&1; then
 	log "新版本 $candidate 拒绝现行配置，不升级：$(tail -n 5 "$work/validate.log" | tr '\n' ' ')"
 	exit 1
 fi
 
-install_version "$candidate"
-sleep 5
-if self_check; then
-	log "Caddy 已从 $installed 升级到 $candidate"
-	exit 0
+if install_version "$candidate"; then
+	sleep 5
+	if self_check; then
+		log "Caddy 已从 $installed 升级到 $candidate"
+		exit 0
+	fi
+	log "升级到 $candidate 后自检失败，装回 $installed"
+else
+	log "安装 $candidate 失败，装回 $installed"
 fi
 
-log "升级到 $candidate 后自检失败，装回 $installed"
-install_version "$installed"
-sleep 5
-self_check || log "装回 $installed 后自检仍失败，需要人工处理"
+if install_version "$installed"; then
+	sleep 5
+	self_check || log "装回 $installed 后自检仍失败，需要人工处理"
+else
+	log "装回 $installed 也失败了，需要人工处理"
+fi
 exit 1

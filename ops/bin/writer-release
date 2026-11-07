@@ -13,7 +13,8 @@ set -euo pipefail
 
 readonly BASE=/srv/writer.drakeet.com
 readonly CADDYFILE=/etc/caddy/Caddyfile
-# 除 current 与 previous 之外再保留的最近版本数；硬链接让每份只多占改动过的文件。
+# 保留按时间最新的 KEEP 份版本（current 与 previous 通常就在其中；它们即使更旧也不清理）。
+# 内容未变的文件在各版本间是硬链接，每份只多占改动过的文件。
 readonly KEEP=5
 
 die() {

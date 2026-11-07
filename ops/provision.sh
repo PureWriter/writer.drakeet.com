@@ -6,12 +6,12 @@
 #   drakeet.com/      drakeet.com 与 www.drakeet.com 的静态页（从旧服务器备份，不入库；没有则跳过）
 #
 # 顺序（防止把自己锁在外面，见 docs/rebuild.md 5.3）：
-#   provision.sh users      建 drakeet 账户、公钥、重建期间的免密 sudo
+#   provision.sh users      建 drakeet 账户（adm、sudo 组）、公钥、重建期间的免密 sudo
 #   —— 另开一个连接确认 ssh -o BatchMode=yes drakeet@writer.drakeet.com true 成功 ——
 #   provision.sh web        装 Caddy，建目录与占位版本，装服务器端脚本，启用防火墙（先放行 22）
 #   provision.sh ssh --drakeet-login-verified
 #                           收紧 SSH：只认公钥、禁止 root、只允许 drakeet
-#   provision.sh harden     系统更新、自动更新、swap、日志上限、BBR、出口整形、Caddy 受控升级的定时器
+#   provision.sh harden     swap、时区、系统更新、自动更新、日志上限、BBR、Caddy 受控升级的定时器、出口整形
 #
 # 前两步加上第一次部署就足以恢复网站；harden 放在网站恢复之后做。
 set -euo pipefail
@@ -54,18 +54,23 @@ cmd_users() {
 	if [[ "$(getent shadow "$ADMIN" | cut -d: -f2)" == '!'* ]]; then
 		usermod -p '*' "$ADMIN"
 	fi
-	usermod -aG adm "$ADMIN"
+	# sudo 组：/etc/sudoers 里的 %sudo 给口令 sudo。收回免密 sudo 之后，root 只能经它取得（root 不能 SSH 登录）。
+	# adm 组：不用 sudo 就能读系统日志与 Caddy 的访问日志。
+	usermod -aG adm,sudo "$ADMIN"
 
 	install -d -m 0700 -o "$ADMIN" -g "$ADMIN" "/home/$ADMIN/.ssh"
 	install -m 0600 -o "$ADMIN" -g "$ADMIN" "$keys" "/home/$ADMIN/.ssh/authorized_keys"
 
-	# 重建期间的免密 sudo。文件名与旧服务器相同，收尾时的收回命令不用改。先校验语法再安装，写错也不会弄坏 sudo。
-	local tmp
-	tmp="$(mktemp)"
-	echo "$ADMIN ALL=(ALL) NOPASSWD:ALL" > "$tmp"
-	visudo -cf "$tmp" >/dev/null
-	install -m 0440 -o root -g root "$tmp" /etc/sudoers.d/90-drakeet-nopasswd
-	rm -f -- "$tmp"
+	# 重建期间的免密 sudo，只在 drakeet 还没有口令时安装：Drakeet 设了口令、收回免密之后，重跑 users 不会再装回来。
+	# 文件名与旧服务器相同，收尾时的收回命令不用改。先校验语法再安装，写错也不会弄坏 sudo。
+	if [[ "$(getent shadow "$ADMIN" | cut -d: -f2)" == '*' ]]; then
+		local tmp
+		tmp="$(mktemp)"
+		echo "$ADMIN ALL=(ALL) NOPASSWD:ALL" > "$tmp"
+		visudo -cf "$tmp" >/dev/null
+		install -m 0440 -o root -g root "$tmp" /etc/sudoers.d/90-drakeet-nopasswd
+		rm -f -- "$tmp"
+	fi
 
 	log "完成。下一步：另开连接确认 ssh -o BatchMode=yes $ADMIN@writer.drakeet.com true 成功，再运行 web"
 }
@@ -109,7 +114,11 @@ cmd_web() {
 	log "安装 Caddy（官方源；平时 hold，升级走 writer-caddy-upgrade）"
 	install_caddy_repo
 	apt-get update -qq
-	apt_install caddy
+	# 只在没装时安装：已装的 caddy 是 hold 住的，官方源出了新版之后再对它 apt-get install 会被拒绝，
+	# 重跑 web（更新 Caddyfile 与服务器端脚本）就会停在这里。版本升级只走 writer-caddy-upgrade。
+	if ! dpkg-query -W -f='${Status}' caddy 2>/dev/null | grep -q 'install ok installed'; then
+		apt_install caddy
+	fi
 	apt-mark hold caddy >/dev/null
 	usermod -aG caddy "$ADMIN"
 	install -d -m 0755 /etc/systemd/system/caddy.service.d
@@ -126,9 +135,9 @@ cmd_web() {
 		find /srv/legacy/drakeet.com -type f -exec chmod 0644 {} +
 	fi
 	# 访问日志目录：属组 adm、setgid，新文件继承 adm 组，drakeet 不用 sudo 就能读。
+	# 日志文件必须属 caddy，否则 Caddy 打不开它们、起不来；这里顺带修正以前以 root 校验时建出的 root 文件。
 	install -d -m 2750 -o caddy -g adm /var/log/caddy
-	chgrp -R adm /var/log/caddy
-	find /var/log/caddy -type f -exec chmod 0640 {} +
+	find /var/log/caddy -type f -exec chown caddy:adm {} + -exec chmod 0640 {} +
 
 	log "服务器端脚本"
 	local f
@@ -138,7 +147,9 @@ cmd_web() {
 
 	log "Caddy 全局配置"
 	install -m 0644 -o root -g root "$OPS/caddy/Caddyfile" /etc/caddy/Caddyfile
-	caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+	# 以 caddy 身份校验：校验会打开（不存在就新建）日志文件，以 root 运行会把它们建成 root 所有，
+	# Caddy 随后就打不开；同时也验证了 caddy 用户读得到各站点导入的规则。
+	runuser -u caddy -- caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
 	systemctl daemon-reload
 	systemctl enable caddy >/dev/null
 	# 改了 systemd 片段（RuntimeDirectory 等）需要重启而不是重载。
@@ -163,8 +174,18 @@ cmd_ssh() {
 	# 要求显式确认已另开连接验证过 drakeet 能用公钥登录：收紧之后 root 就登不进来了。
 	[[ "${1:-}" == --drakeet-login-verified ]] || die "先另开连接确认 drakeet 能用公钥登录，再加 --drakeet-login-verified 运行"
 	[[ -s "/home/$ADMIN/.ssh/authorized_keys" ]] || die "drakeet 没有 authorized_keys"
-	install -m 0644 -o root -g root "$OPS/ssh/00-writer.conf" /etc/ssh/sshd_config.d/00-writer.conf
-	sshd -t
+	# 收紧之后取得 root 只剩「drakeet 登录再 sudo」一条路，先确认它是通的。
+	id -nG "$ADMIN" | grep -qw sudo || die "$ADMIN 不在 sudo 组，先重跑 users"
+	if [[ -f /etc/sudoers.d/90-drakeet-nopasswd ]]; then
+		runuser -u "$ADMIN" -- sudo -n true || die "$ADMIN 的免密 sudo 不可用，先别收紧 SSH"
+	fi
+	local frag=/etc/ssh/sshd_config.d/00-writer.conf
+	install -m 0644 -o root -g root "$OPS/ssh/00-writer.conf" "$frag"
+	# 校验不过就撤回片段：留着坏片段，sshd 下一次重启（升级 openssh、自动重启）会起不来，谁都连不上。
+	if ! sshd -t; then
+		rm -f -- "$frag"
+		die "sshd 配置校验失败，已撤回 $frag"
+	fi
 	systemctl reload ssh
 	log "已收紧。请从外部确认：ssh root@writer.drakeet.com 被拒绝，ssh -v 只剩 publickey"
 }
@@ -185,6 +206,14 @@ ensure_swap() {
 }
 
 cmd_harden() {
+	# swap 先于系统更新：1 GiB 内存跑 full-upgrade（新内核要生成 initramfs）容易内存不足。
+	log "swap 2 GiB"
+	ensure_swap
+
+	# 自动重启（04:30）与 Caddy 受控升级（周一 05:00）都按系统时区解释，显式设定，不依赖镜像的默认值。
+	log "时区"
+	timedatectl set-timezone Asia/Shanghai
+
 	log "系统更新"
 	apt-get update -qq
 	DEBIAN_FRONTEND=noninteractive apt-get -y -qq \
@@ -196,9 +225,6 @@ cmd_harden() {
 	install -m 0644 "$OPS/apt/52writer-unattended-upgrades" /etc/apt/apt.conf.d/52writer-unattended-upgrades
 	systemctl enable --now unattended-upgrades >/dev/null
 
-	log "swap 2 GiB"
-	ensure_swap
-
 	log "journald 上限"
 	install -d -m 0755 /etc/systemd/journald.conf.d
 	install -m 0644 "$OPS/journald/90-writer.conf" /etc/systemd/journald.conf.d/90-writer.conf
@@ -208,13 +234,14 @@ cmd_harden() {
 	install -m 0644 "$OPS/sysctl/90-writer.conf" /etc/sysctl.d/90-writer.conf
 	sysctl --system >/dev/null
 
-	log "出口整形与 Caddy 受控升级的定时器"
+	log "Caddy 受控升级的定时器与出口整形"
 	install -m 0644 "$OPS/systemd/writer-shaping.service" /etc/systemd/system/writer-shaping.service
 	install -m 0644 "$OPS/systemd/writer-caddy-upgrade.service" /etc/systemd/system/writer-caddy-upgrade.service
 	install -m 0644 "$OPS/systemd/writer-caddy-upgrade.timer" /etc/systemd/system/writer-caddy-upgrade.timer
 	systemctl daemon-reload
-	systemctl enable --now writer-shaping.service >/dev/null
+	# 定时器在前：整形依赖内核模块，更可能失败，不要让它连累定时器。
 	systemctl enable --now writer-caddy-upgrade.timer >/dev/null
+	systemctl enable --now writer-shaping.service >/dev/null
 
 	# 镜像若自带 snapd 而没有装任何 snap，就卸掉它，省下内存。
 	if command -v snap >/dev/null 2>&1 && [[ -z "$(snap list 2>/dev/null | tail -n +2)" ]]; then

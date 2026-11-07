@@ -34,12 +34,16 @@ id="$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short=8 HEAD)"
 work="$(mktemp -d)"
 trap 'rm -rf -- "$work"' EXIT
 
-# 1. 从已提交的 HEAD 取出文件。
+# 1. 从已提交的 HEAD 取出文件。冒烟检查要比对的版本号在切换之前就取好：
+#    这一步若在切换之后才失败，set -e 会让脚本直接退出，跳过冒烟检查与回滚。
 mkdir -p "$work/src" "$work/release/public" "$work/release/caddy"
 git archive --format=tar HEAD | tar -x -C "$work/src"
+expected_version="$(jq -r .version "$work/src/desktop2.json")"
+[[ -n "$expected_version" && "$expected_version" != null ]] || die "读不出 desktop2.json 的版本号"
 
 # 2. 只发布网站文件：仓库文件、Jekyll 遗留与本脚本自己都不进网站根目录。
-rsync -a --exclude-from=- "$work/src/" "$work/release/public/" <<'EOF'
+#    排除列表写成文件再传给 rsync：macOS 自带的 openrsync 与 GNU rsync 都认这种写法。
+cat > "$work/excludes" <<'EOF'
 /.gitignore
 /AGENTS.md
 /CLAUDE.md
@@ -57,17 +61,22 @@ rsync -a --exclude-from=- "$work/src/" "$work/release/public/" <<'EOF'
 /scripts/
 /sources/
 EOF
+rsync -rlp --exclude-from="$work/excludes" "$work/src/" "$work/release/public/"
 cp "$work/src/caddy/site.caddy" "$work/release/caddy/site.caddy"
+# 权限在本地统一好再上传（openrsync 不支持 --chmod=D755,F644 这种写法）。
+find "$work/release" -type d -exec chmod 0755 {} +
+find "$work/release" -type f -exec chmod 0644 {} +
 
-# 3. 上传为新版本：未变的文件与当前版本做硬链接，每次实际传输的只有改动。
-rsync -a --delete --chmod=D755,F644 --link-dest="$BASE/current/" \
+# 3. 上传为新版本：内容与当前版本相同的文件直接做硬链接，每次实际传输的只有改动。
+#    按内容比较（--checksum）、不保留修改时间（-rlp，不用 -a）：git archive 把所有文件的时间都设成提交时间，
+#    按时间比较的话每次部署都会整站重传；不保留时间，没改的文件沿用上一版的 inode，ETag 与 Last-Modified 也不变。
+rsync -rlp --checksum --delete --link-dest="$BASE/current/" \
 	"$work/release/" "$HOST:$BASE/releases/$id/"
 
 # 4. 原子切换并重载 Caddy；Caddy 拒绝新规则时 writer-release 会自己切回。
 "${SSH[@]}" "$HOST" writer-release activate prod "$id"
 
 # 5. 冒烟检查：关键地址的状态码与类型；任何一项不符就切回上一版。
-expected_version="$(jq -r .version "$work/src/desktop2.json")"
 failures=()
 check() { # check <路径> <期望状态码> [<期望 Content-Type 前缀>]
 	local path="$1" want="$2" type="${3:-}" got

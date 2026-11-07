@@ -65,7 +65,9 @@ rewrite @oauth /drives/oauth/{oauth_name}{oauth_suffix}.html
 try_files {path} {path}.html {path}/
 file_server
 
+# 出错时前面按路径设好的长缓存头仍在响应里，这里改回 no-cache：JAR 刚同步上来之前的 404 不能被缓存一整天。
 handle_errors 404 {
 	header -Server
+	header Cache-Control "no-cache"
 	respond "404 Not Found" 404
 }
