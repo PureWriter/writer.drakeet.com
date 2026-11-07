@@ -18,7 +18,10 @@
 - **仓库**：
   - 主目录 `/Users/drakeet/GitHub/writer.drakeet.com` 在 `master`，就是线上的新站；之后都在 `master` 上改、提交、推送，部署按 operations.md 5.1。
   - 重建期间的 `rebuild` 分支已在第 C 步快进进 `master`，它的工作树随后移除；旧站另有完整副本在本机 `/Users/drakeet/GitHub/writer.drakeet.com.old`。
-- **收尾时必须做、不论进行到哪一步都不能漏**：请 Drakeet 先给 drakeet 账户设口令，再收回重建期间的免密 sudo（5.3；安全的操作顺序见 operations.md 第 9 节）。
+- **收尾时必须做、不论进行到哪一步都不能漏**（Drakeet 问「所有事情都完成了吗」时逐条提出）：
+  - 请 Drakeet 先给 drakeet 账户设口令，再收回重建期间的免密 sudo（5.3；安全的操作顺序见 operations.md 第 9 节）；
+  - 请 Drakeet 在 Google Search Console 添加站点并提交 sitemap（第九节 E）；
+  - 请 Drakeet 考虑官网上的商店链接是否加来源参数：App Store 的 campaign 参数（pt、ct）与 Google Play 的 referrer，用来在 App Store Connect 与 Play 管理中心看到来自官网的下载，官网本身仍不加统计脚本。
 
 ## 一、目标与原则
 
@@ -721,10 +724,14 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### E. SEO 与 AI 可发现性
 
-- **站长平台**：在 Google Search Console（DNS TXT 验证）、Bing Webmaster Tools（从 Search Console 导入）、百度搜索资源平台（CNAME 或 HTML 标签验证）验证站点并提交 sitemap。需要 Drakeet 的账号；DNS 记录可以由我在他的 Chrome 里添加。
-- **百度**：百度不支持 IndexNow，需要快速收录时另配它的普通收录 API 推送，推送失败不影响部署。上线后看一眼百度收录为首页的是 `/` 还是 `/zh-hans/`。
+- **站长平台**：只在 Google Search Console 添加站点并提交 sitemap，Bing 与百度的站长平台不做。由 Drakeet 在收尾阶段亲自添加，见「当前游标」的收尾清单。
+- **部署后自动推送**：`scripts/deploy.sh` 部署正式站成功后，把这次有变化的地址推送给 IndexNow（Bing、Yandex、Naver 等共用一个接口，凭据是站点根目录的一个密钥文件，不需要账号）；推送失败只提示，不影响部署。Google 不支持 IndexNow，靠 sitemap；百度的推送接口需要它站长平台的凭据，不做。
 - **站点名**：定为「纯纯写作」，四个名字同时写进 WebSite 的别名与每页的关键词（4.10）。
-- **内容打磨**：结构化数据与 `llms.txt` 的内容打磨，以及各语言标题与描述的质量检查。
+- **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（iOS 是 Drakeet Co., Ltd.，Android 与桌面版的英文隐私政策是 Drakeet, Inc.，Android 简体版是苏州小白迷雾科技有限公司），官方账号属于产品，挂在产品上即可。
+- **分享卡片大图**：各语言做一张 1200×630 的分享图（参照 App Store 的截图与素材），首页与下载页改用大卡片，其余页面仍是图标小卡片。微信不读这些标签，不受影响。
+- **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。
+- **内容打磨**：结构化数据与 `llms.txt` 的内容打磨；各语言标题与描述的质量检查，除首页外统一为「页面名 - 品牌名」；用 Lighthouse 对各语言首页与下载页做一次无障碍与性能体检。
+- **不做**：IPv6（阿里云的 IPv6 公网带宽另外收费，需要付费的一律先不做）；境内的外部监控（GitHub Actions 从境外访问本站是通的，足够）。
 
 ### F. 使用手册全面检查与翻新
 

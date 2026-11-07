@@ -5,13 +5,16 @@
   站点名与别名取自 hugo.toml 的 siteNames。Google 每个域名只取一个站点名，不按语言区分，所以所有语言的首页放同一份
   WebSite；根地址按语言 302 到各语言首页，Google 按跳转的目标读取。价格只在能逐平台写准时才写，所以不写；软件应用的
   富媒体结果需要价格与评分，没有它们，写上发行方也不会改变展示，所以也不写。
+  首页的 sameAs 写产品的官方页面：两个应用商店的应用页与 Telegram 频道（第九节 E）。不另写 Organization：各市场的运营主体不同。
 */ -}}
 {{- $names := site.Params.siteNames -}}
 {{- $alternates := slice -}}
 {{- range $names }}{{ if ne . site.Title }}{{ $alternates = $alternates | append . }}{{ end }}{{ end -}}
 {{- if eq .Params.jsonld "home" }}
+{{- $appStore := printf "https://apps.apple.com/app/id%s" site.Params.iosAppID }}
+{{- $sameAs := slice $appStore "https://play.google.com/store/apps/details?id=com.drakeet.purewriter" "https://t.me/PureWriter" }}
 {{- $website := dict "@context" "https://schema.org" "@type" "WebSite" "name" (index $names 0) "alternateName" (after 1 $names) "url" "https://writer.drakeet.com/" }}
-{{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" site.Title "alternateName" $alternates "operatingSystem" "Android, iOS, iPadOS" "applicationCategory" "UtilitiesApplication" "url" .Permalink }}
+{{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" site.Title "alternateName" $alternates "operatingSystem" "Android, iOS, iPadOS" "applicationCategory" "UtilitiesApplication" "url" .Permalink "image" ("images/icon512.png" | absURL) "sameAs" $sameAs }}
 <script type="application/ld+json">{{ $website | jsonify | safeJS }}</script>
 <script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
 {{- else if eq .Params.jsonld "desktop" }}

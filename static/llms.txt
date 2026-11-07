@@ -26,6 +26,8 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 - [Automatic and cloud backup tutorial](https://writer.drakeet.com/en/backups/): also in [简体中文](https://writer.drakeet.com/zh-hans/backups/) and [繁體中文](https://writer.drakeet.com/zh-hant/backups/)
 - [Pure Writer for iOS support](https://writer.drakeet.com/en/ios/support/)
 - Feedback and support: writer@drakeet.com
+- Telegram channel: https://t.me/PureWriter
+- WeChat Official Account: Drakeets
 
 ## Privacy policies
 
