@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
-description: Pure Writer does not collect your private information. This policy covers what the Android app queries, its permissions, third-party SDKs, backups, and account cancellation.
-lastmod: 2024-11-29
+description: Pure Writer does not collect your private information. This policy covers what the Android app queries, its permissions, third-party SDKs, backups, features that send text over the network, and account cancellation.
+lastmod: 2026-11-07
 url: android/privacy/
 ---
 
@@ -9,6 +9,7 @@ url: android/privacy/
   纯纯写作 Android 版隐私政策的英文版（旧地址 /privacy_en，应用商店与 Google OAuth 同意屏幕很可能登记了它，服务器 301 到这里）。
   简体中文版是 index.zh-hans.md，两份各自维护：修改政策时两种语言一起核对。
   正文与旧站逐字一致；标题的 id 沿用旧页（Typora 生成），站外的旧锚点仍然有效。「Article Data and Backup」在旧页里没有 id，这里不显式写，由 Hugo 自动生成。
+  例外：2026-11 新增「Features That Send Text Over the Network」一节（AI 与繁化姬，与简体版同步新增），更新日期随之改动；这一节在旧页里没有，id 按标题写。
   「Links」一节列出链接到本页的地方：应用首页（旧地址 /home_en，已改为新的英文首页）与 Google Cloud 控制台的 OAuth 同意屏幕。
   Google 审核 OAuth 应用时会核对首页上有没有隐私政策的链接，所以英文首页要一直保留指向本页的链接。
   「will show a」之后的断段是旧页原样（两个段落），末尾三个日期在旧页里各占一行，这里用行尾的反斜杠写成换行。
@@ -53,6 +54,20 @@ By default, Pure Writer does not automatically perform cloud backups. Pure Write
 
 If you register a Pure Writer account in the app (this is not necessary), your password will be stored as a digest on the Pure Writer server. We do not store your password in plain text, and the digest cannot be reverse-engineered to your original password. In other words, no one can know your original password because we have not stored it anywhere. Without storage, there is no possibility of leakage or being viewed by others.
 
+## Features That Send Text Over the Network {#features-that-send-text-over-the-network}
+
+Besides the cloud backup described above, the two features below also send text from your documents over the network when you use them. If you don't use them, they send nothing.
+
+- AI features: Off by default. Pure Writer sends text to an AI service only after you choose a service in Pure Writer - Settings - AI settings and turn on the features you want, and only when you use AI+ (text completion in the editor's text selection menu, and "AI+ title" in the title's menu), Pure Writer Copilot (writing suggestions that appear when you pause), or AI chat in Time Machine. Text completion and Copilot send a passage of text before the cursor (up to 1,000 characters); "AI+ title" sends the end of the document (up to 800 characters); with AI chat in Time Machine turned on, each message you send in Time Machine is sent along with the last few messages from the past two hours. Requests also include your device's Android ID as a user identifier.
+
+  - With "Pure Writer hosted AI" (requires Pure Writer Pro), the text is sent over HTTPS to the Pure Writer server (api2.drakeet.com), which forwards it to a large language model service to generate the result. We currently use DeepSeek models on Volcano Engine's Ark platform. The server forwards only the text (plus the user identifier above for Time Machine chats), not your account email. To verify your Pro status and track usage, requests to the Pure Writer server also include your Pure Writer account email (or your Google Play order number if you're not signed in) and device information, and the server keeps track of AI usage and quota by account or order number. The server does not store the text you send or the AI's results in its database, but for troubleshooting, its logs record the last piece of text in each request (such as the passage used for a text completion, or your latest message in Time Machine), together with the account email and user identifier.
+
+  - With "OpenAI", the text and the API key you enter are sent directly to the service address you enter (api.openai.com if you leave it blank), without passing through the Pure Writer server, and are handled under that provider's privacy policy.
+
+  If you don't need AI, you can turn these features off in "AI settings" or choose "Permanently remove AI".
+
+- Fanhuaji conversion: When the app language is Simplified Chinese, Formatting options include "台灣化（繁化姬）". When you use it (or the one-tap "Format" action, if you've added it there), Pure Writer sends the text of the current document over HTTPS to Fanhuaji (<https://zhconvert.org>), a third-party service, to convert it into Traditional Chinese with Taiwanese usage. Pure Writer explains this and asks for your consent before the first use. The request contains no account or device information. The other Chinese conversions in Formatting options run on your device and don't need a connection.
+
 ## How to Cancel Your Account {#how-to-cancel-your-account}
 
 If you need to cancel your Pure Writer account, please enter Pure Writer - Settings - Minority Options - Cancel Pure Writer Account. The "Cancel Pure Writer Account" option is at the bottom of the "Minority Options" page. Clicking on it allows you to self-service cancel your Pure Writer account.
@@ -77,6 +92,6 @@ If you have any questions about this policy, or encounter any problems and sugge
 
 <p class="meta">Published Date: July 1, 2017<br>
 Effective Date: July 1, 2017<br>
-Update Date: November 14, 2021</p>
+Update Date: November 7, 2026</p>
 
 <p class="company">Drakeet, Inc.</p>

@@ -1,13 +1,14 @@
 ---
 title: Desktop Privacy Policy
-description: Pure Writer desktop does not collect your private information. This policy covers the error logs it reports, the folder it creates, cloud backups, and how to contact us.
-lastmod: 2024-12-11
+description: Pure Writer desktop does not collect your private information. This policy covers the error logs it reports, the folder it creates, cloud backups, Fanhuaji conversion, and how to contact us.
+lastmod: 2026-11-07
 url: desktop/privacy/
 ---
 
 <!--
   纯纯写作桌面版的隐私政策（旧地址 /d/privacy 与 2024-12 的 /desktop/privacy，服务器 301 到这里）。只有英文。
   正文与旧站逐字一致；标题的 id 沿用旧页（Typora 生成），站外的旧锚点仍然有效。
+  例外：2026-11 新增「Fanhuaji Conversion」一节（桌面版 3.4.0 起，简体中文界面的台灣化会把正文发给繁化姬），更新日期随之改动；这一节在旧页里没有，id 按标题写。
   末尾三个日期在旧页里各占一行（Typora 导出的段落保留换行），这里用行尾的反斜杠写成换行，保持同样的显示。
   结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
@@ -36,6 +37,10 @@ Pure Writer desktop will automatically create a folder named 'Pure Writer' in yo
 
 By default, Pure Writer desktop does not automatically perform cloud backups. Pure Writer desktop only supports third-party cloud storage as your cloud backup space. Pure Writer desktop does not provide official cloud backup disk services. Therefore, you can set your OneDrive or Dropbox, etc., in Pure Writer desktop as the cloud backup service space. Pure Writer desktop will strictly encrypt and transmit your article backups to your cloud storage via HTTPS. Due to the security of HTTPS itself, no one can intercept and view the content during transmission, and your content can only be seen by you on your cloud storage, or pulled and viewed in Pure Writer desktop. **Apart from you, including the developers, no one can see your backups and article contents**.
 
+## Fanhuaji Conversion {#fanhuaji-conversion}
+
+When the app language is Simplified Chinese, the Formatting options menu includes "台灣化（繁化姬）". Choosing it sends the full text in the current editor over HTTPS to Fanhuaji (<https://zhconvert.org>), a third-party service, to convert it into Traditional Chinese with Taiwanese usage. Pure Writer desktop explains this and asks for your consent before the first use. The request contains no account or device information. Nothing is sent unless you choose this option; the other Chinese conversions run on your computer and don't need a connection.
+
 ## Updates to This Policy {#updates-to-this-policy}
 
 We may modify and update this privacy policy from time to time. You can visit this page at any time to check the latest version of the privacy policy.
@@ -46,6 +51,6 @@ If you have any questions about this policy, or encounter any problems and sugge
 
 <p class="meta">Published Date: Dec 11, 2024<br>
 Effective Date: Dec 11, 2024<br>
-Update Date: Dec 11, 2024</p>
+Update Date: Nov 7, 2026</p>
 
 <p class="company">Drakeet, Inc.</p>

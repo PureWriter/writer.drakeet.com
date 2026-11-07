@@ -9,7 +9,7 @@ lastmod: 2026-11-07
 
   来历：2026-11-07 官网重建的第 F 步，据改写后的简体中文手册（index.zh-hans.md）整份重做，问答与简体一一对应。
   只适合中国大陆、或只在简体中文界面出现的内容不写（docs/content.md 第七节）：
-  - 支付宝付费、激活码与授权经销商：「通过 Google Play 购买与通过支付宝购买有什么区别？」「可以从第三方购买纯纯写作激活码吗？」
+  - 支付宝付费与激活码：「通过 Google Play 购买与通过支付宝购买有什么区别？」「可以从第三方购买纯纯写作激活码吗？」
     「为什么之前囤积的激活码不能使用了？」三条不写，其余问答里提到支付宝与激活码的句子也删去。
   - 纯纯写作账号的登录与找回密码：Android 只在支付宝付费方式下出现账号登录（Pro.kt 的 isChinaMainlandMode），
     iOS 的登录入口只在简体中文界面显示（iOS 仓库 docs/pro-account.md 3.1），所以「为什么重新登录纯纯写作账号后激活状态消失了？」
@@ -43,13 +43,13 @@ lastmod: 2026-11-07
   - 旧英文页没有对应条目的问答（简体新增的，或旧英文页本来就缺的）不写 id，由 Hugo 按标题生成；
     目录与页内链接里的这些 id 取自构建产物，改这些标题时要一并改链接。
   - 删掉的条目，id 不再出现：footnote、connection-between-devices-is-not-stable、auto-connect-doesnt-work、
-    ghosting-effect-of-text-in-pure-writer-desktop。
+    ghosting-effect-of-text-in-pure-writer-desktop、clicking-outline-links-in-time-machine-only-opens-books-list、
+    easter-eggs、easter-eggs-in-pure-writer。
   - 整页一个 h1；各章 h2；每条问答 h3；问答内部再分层用 h4（「About shortcut actions」、WebDAV 一组的各条、
     Markdown 使用指南的各节，与简体相同）。开头的目录是手写的嵌套列表，收各章、各问答与这几类 h4，不收问答内部的小标题。
 
   几处标记的缘由：
   - hugo.toml 关闭了 typographer，弯引号与撇号直接写在源文件里。
-  - 「Easter eggs in Pure Writer」里的 &#xE003; 就是那一节说的私用区字符 U+E003，写成字符引用，免得在编辑器里看不见而被误删。
   - 示例本身含三个反引号的代码块，外层用四个反引号围起来。
 -->
 
@@ -57,7 +57,7 @@ lastmod: 2026-11-07
 
 This manual introduces the features of Pure Writer for Android, iOS, and desktop (Windows and macOS), and helps you troubleshoot and solve problems you run into in everyday use. Features and steps differ between the apps, so the answers cover each app separately where needed; a question that concerns only one app names it at the end of its title.
 
-The manual has five parts: [Pure Writer Q&A](#pure-writer-qa), [Pure Writer Backup & Sync FAQ](#pure-writer-backup--sync-faq), [Pure Writer Markdown User Guide](#pure-writer-markdown-user-guide), [Pure Writer Markdown FAQ](#pure-writer-markdown-faq), and [Pure Writer Desktop FAQ](#pure-writer-desktop-alpha-faq), followed by a short bonus section, [Trivia](#easter-eggs).
+The manual has five parts: [Pure Writer Q&A](#pure-writer-qa), [Pure Writer Backup & Sync FAQ](#pure-writer-backup--sync-faq), [Pure Writer Markdown User Guide](#pure-writer-markdown-user-guide), [Pure Writer Markdown FAQ](#pure-writer-markdown-faq), and [Pure Writer Desktop FAQ](#pure-writer-desktop-alpha-faq).
 
 <p id="table-of-contents---omit-in-toc---">To find a question, use your browser’s find-in-page feature: press Ctrl+F on a computer (Command+F on a Mac); in a mobile browser, look for an option such as “Find in page” in the menu.</p>
 
@@ -95,7 +95,6 @@ The manual has five parts: [Pure Writer Q&A](#pure-writer-qa), [Pure Writer Back
   - [Exported TXT files show garbled text in a reader app](#articles-exported-by-this-app-cannot-be-displayed-correctly-in-other-apps)
   - [Why does the sidebar show only titles or the first line of the text?](#why-does-the-sidebar-show-only-titles-or-the-first-line-of-the-text)
   - [Why can’t I create a folder, or where did my folders go? (Android)](#why-cant-i-create-a-folder-or-where-did-my-folders-go-android)
-  - [Why does “Outlines” in Time Machine open the book list? (Android)](#clicking-outline-links-in-time-machine-only-opens-books-list)
   - [What is typewriter mode?](#typewriter-mode)
   - [What is advanced read-only mode? (Android)](#read-only-mode)
   - [How do I turn on advanced read-only mode? (Android)](#turn-on-read-only-mode)
@@ -124,7 +123,6 @@ The manual has five parts: [Pure Writer Q&A](#pure-writer-qa), [Pure Writer Back
   - [Can I use a membership bought on one platform on another?](#can-i-use-a-membership-bought-on-one-platform-on-another)
   - [Google Play payment won’t start when I try to buy (Android)](#google-play-payment-wont-start-when-i-try-to-buy-android)
   - [Why does Pro sometimes become inactive after I bought it on Google Play? (Android)](#pure-writer-pro-is-lost-but-i-have-paid-for-it-on-google-play)
-  - [I bought Pure Writer on Google Play, but my new device can’t use Google Play (Android)](#i-bought-pure-writer-on-google-play-but-my-new-device-cant-use-google-play-android)
   - [How do I cancel a subscription?](#how-do-i-cancel-a-subscription)
   - [Why can’t I start a new line with Enter on ChromeOS, FydeOS, or some Android x86 devices?](#cannot-use-enter-to-insert-line-breaks-on-chromebooks-or-android-x86-devices)
   - [Text has outlines on an E Ink device (Android)](#text-has-outlines-on-an-e-ink-device-android)
@@ -190,9 +188,6 @@ The manual has five parts: [Pure Writer Q&A](#pure-writer-qa), [Pure Writer Back
   - [How do I update Pure Writer Desktop?](#how-do-i-update-pure-writer-desktop)
   - [Can I write Markdown in Pure Writer Desktop?](#can-i-write-markdown-in-pure-writer-desktop)
   - [Can I still use “Connect to desktop app” in Pure Writer for Android?](#can-i-still-use-connect-to-desktop-app-in-pure-writer-for-android)
-- [Trivia](#easter-eggs)
-  - [Why is the developer Drakeet nicknamed 爪爪?](#why-is-the-developer-drakeet-nicknamed-爪爪)
-  - [Easter eggs in Pure Writer](#easter-eggs-in-pure-writer)
 
 ## Pure Writer Q&A {#pure-writer-qa}
 
@@ -209,7 +204,7 @@ Pure Writer Desktop has no setting for how words are counted.
 
 ### Using Pure Writer in landscape {#about-landscape-mode}
 
-- **Android**: Pure Writer follows the system’s auto-rotate setting. If the screen doesn’t rotate, turn off orientation lock (or turn on auto-rotate) in Quick Settings or in your display settings. Where windows can be resized freely, such as desktop mode on a tablet, you can also drag the edges of the window to make it wider. To keep one orientation, turn on “Always use portrait orientation” or “Always use landscape orientation” in “Settings › Fine-tuning”. In landscape, in split screen, or with an external keyboard, “Tablet settings and guide” appears on the right of the top bar as long as the shortcut bar is on. It contains two settings: “Keyboard shortcuts for text shortcuts” and “Edit in vertical center”.
+- **Android**: Pure Writer follows the system’s auto-rotate setting. If the screen doesn’t rotate, turn off orientation lock (or turn on auto-rotate) in Quick Settings or in your display settings. Where windows can be resized freely, such as desktop mode on a tablet, you can also drag the edges of the window to make it wider. To keep one orientation, turn on “Always use portrait orientation” or “Always use landscape orientation” in “Settings › Fine-tuning” (requires Pure Writer Pro). In landscape, in split screen, or with an external keyboard, “Tablet settings and guide” appears on the right of the top bar as long as the shortcut bar is on. It contains two settings: “Keyboard shortcuts for text shortcuts” and “Edit in vertical center”.
 - **iOS**: Both iPhone and iPad support landscape and follow the orientation of the device. If the screen doesn’t rotate with the device, check whether Orientation Lock is on in Control Center.
 
 With an external keyboard, Pure Writer for Android lets you hold Alt or Ctrl and press a number key to insert one of the first 10 shortcuts on the shortcut bar (1–9 for the first nine, 0 for the tenth). Pure Writer Desktop does the same with Command plus a number key on macOS, or Alt plus a number key on Windows.
@@ -224,7 +219,7 @@ Pure Writer for iOS and Pure Writer Desktop don’t turn off paragraph spacing b
 
 The shortcut bar sits above the keyboard. You can put frequently used text on it, such as the date and time, character names, or punctuation marks, and also shortcut actions.
 
-- **Android**: Tap “⊕ New text shortcut” on the shortcut bar to create a shortcut; touch and hold a shortcut to edit or delete it. To reorder shortcuts, use more than one shortcut bar, or turn the shortcut bar off, go to “Settings › Shortcut bar”: drag a shortcut to reorder it or move it to another bar, and turn off all the bars to hide the shortcut bar. The leftmost button on the shortcut bar opens “Formatting options” in a plain text document and the Markdown panel in a Markdown document (see [About the Markdown panel](#markdown-panel)).
+- **Android**: Tap “⊕ New text shortcut” on the shortcut bar to create a shortcut; touch and hold a shortcut to edit or delete it. To reorder shortcuts, use more than one shortcut bar, or turn the shortcut bar off, go to “Settings › Shortcut bar”: drag a shortcut to reorder it or move it to another bar, and turn off all the bars to hide the shortcut bar. Using more than one shortcut bar at a time requires Pure Writer Pro. The leftmost button on the shortcut bar opens “Formatting options” in a plain text document and the Markdown panel in a Markdown document (see [About the Markdown panel](#markdown-panel)).
 - **iOS**: Tap “+ Shortcut” on the shortcut bar to create a shortcut; touch and hold a shortcut to “Edit”, “Reorder”, or “Delete” it. Each row can be turned on or off in “Settings › Shortcut Bar”; turn off all the rows to hide the shortcut bar. In a Markdown document, the leftmost button on the shortcut bar opens the Markdown Panel.
 - **Desktop**: The “Show/hide shortcut bar” button on the top bar shows or hides the shortcuts below the editor; click a shortcut to insert it. Right-click a shortcut to “Edit title” or “Delete” it. To add shortcuts or change what they insert, do it on your phone, and cloud sync will bring the changes to your computer.
 
@@ -241,7 +236,7 @@ When you create a shortcut in Pure Writer for Android or iOS, you can choose a s
 - Copy: “Copy selection or all text” on Android, “Copy” on iOS;
 - Searching for documents: “Find a document” on Android, “Search Documents” on iOS.
 
-Android also offers “Move cursor”. To add it to the shortcut bar, first choose “In the shortcut bar, drag directly to move” in “Settings › Fine-tuning › Cursor control mode & position”.
+Android also offers “Move cursor”. To add it to the shortcut bar, first choose “In the shortcut bar, drag directly to move” in “Settings › Fine-tuning › Cursor control mode & position” (requires Pure Writer Pro).
 
 Pure Writer Desktop shows and runs the shortcut actions synced from your phone, except “Move cursor”.
 
@@ -310,7 +305,7 @@ Formatting options tidy up the formatting of a whole document at once: keep one 
 
 Formatting rewrites your text. If you’re not happy with the result, you can undo it.
 
-A few of the Chinese conversions need an internet connection: those whose names include “繁化姬” (Fanhuaji) send the text of the current document to Fanhuaji (zhconvert.org), a third-party service, to be converted, and ask for your consent before you use them for the first time. They appear only when the app language is Chinese (on Android and desktop, Simplified Chinese). The other Simplified and Traditional Chinese conversions on Android and desktop run on your device and don’t need a connection.
+A few of the Chinese conversions need an internet connection: those whose names include “繁化姬” (Fanhuaji) send the text of the current document to Fanhuaji (zhconvert.org), a third-party service, to be converted, and ask for your consent before you use them for the first time, including when one-tap formatting runs them. They appear only when the app language is Chinese (on Android and desktop, Simplified Chinese). The other Simplified and Traditional Chinese conversions on Android and desktop run on your device and don’t need a connection.
 
 ### How do I find and replace text? {#find--replace-in-texts}
 
@@ -318,7 +313,7 @@ A few of the Chinese conversions need an internet connection: those whose names 
 - **iOS**: Tap “⋯” on the right of the top bar to open the panel and choose “Find & Replace”. With an external keyboard, you can also press Command+F to find text in the current document.
 - **Desktop**: In the editor, press Ctrl+F (Command+F on macOS), or choose “Find / Replace” from the right-click menu. The find bar works on the current document only. You can check “Regex” or “Match case”, and you can “Replace” or “Replace all”.
 
-The panel works the same way on Android and iOS: type what to find in the field at the top, and the replacement in “Replace with” below; leave it empty if you only want to find. You can search the “Current document”, the “Current book”, or “All books”; “All books” includes the documents in the Trash. Case is ignored by default; check “Match case” if you need it. Every match is listed below. Check the matches to replace (“Select all” and “Invert selection” can help), then tap “Replace”.
+The panel works the same way on Android and iOS: type what to find in the field at the top, and the replacement in “Replace with” below; leave it empty if you only want to find. You can search the “Current document”, the “Current book”, or “All books”; “All books” includes the documents in the Trash. Case is ignored by default; check “Match case” if you need it. Every match is listed below. Check the matches to replace (“Select all” and “Invert selection” can help), then tap “Replace”. On Android, replacing requires Pure Writer Pro; finding doesn’t.
 
 On both apps, Pure Writer automatically makes a backup before replacing (on iOS, replacing within the current document doesn’t make a separate backup; you can undo it instead, which reverts all of that replacement in one step). To revert a replacement, restore that backup and choose to overwrite: on Android in “Settings › Backup & cloud sync”, on iOS in “Settings › Backup & Cloud Sync”. Overwriting also affects content other than this replacement, so please read the explanation in the confirmation dialog when you restore.
 
@@ -414,12 +409,12 @@ For now, the editors in Pure Writer for Android, iOS, and desktop have no option
 
 ### The text is hard to read after I changed the paper background {#legibility-issues-after-changing-themes--wallpapers}
 
-- **Android**: In “Settings › Themes & paper backgrounds”, choose “Keep the selected theme”, and then you can choose “Force black text” or “Force white text” below. When “Follow system theme” or the scheduled switch is selected, you can’t force a text color. Note that when you change the paper background, the text color goes back to the default. You can also turn on “Custom text color in editor” in “Settings › Fine-tuning” to set separate text colors for the light and dark themes.
+- **Android**: In “Settings › Themes & paper backgrounds”, choose “Keep the selected theme”, and then you can choose “Force black text” or “Force white text” below. When “Follow system theme” or the scheduled switch is selected, you can’t force a text color. Note that when you change the paper background, the text color goes back to the default. You can also turn on “Custom text color in editor” (an experimental feature that requires Pure Writer Pro) in “Settings › Fine-tuning” to set separate text colors for the light and dark themes.
 - **iOS**: The text color follows the appearance: black in Light Mode, white in Dark Mode. Choose suitable paper backgrounds for Light and Dark Mode under “Paper” in “Settings › Theme”. When you use a photo as the paper background, you can raise “Image Overlay” to make the text clearer.
 
 ### Can I change the color of the text? {#is-it-possible-to-change-the-color-of-the-text}
 
-- **Android**: Yes. Turn on “Custom text color in editor” (an experimental feature) in “Settings › Fine-tuning”, and you can set “Text color for light theme” and “Text color for dark theme” separately. When you choose “Keep the selected theme” in “Settings › Themes & paper backgrounds”, you can also force black or white text.
+- **Android**: Yes. Turn on “Custom text color in editor” (an experimental feature that requires Pure Writer Pro) in “Settings › Fine-tuning”, and you can set “Text color for light theme” and “Text color for dark theme” separately. When you choose “Keep the selected theme” in “Settings › Themes & paper backgrounds”, you can also force black or white text.
 - **iOS**: The text color in the editor follows Light or Dark Mode and can’t be customized.
 - **Desktop**: The text color follows the theme you choose and can’t be changed on its own.
 
@@ -456,8 +451,8 @@ For more about typewriter mode, see [What is typewriter mode?](#typewriter-mode)
 ### Can I export to .docx, .epub, or other formats? {#is-it-possible-to-save-the-article-as-docx-or-epub}
 
 - **Android and iOS**: Yes.
-  - A single document: on Android, tap “More” (⋮) on the top bar and choose “Preview & export…”; on iOS, tap “⋯” on the right of the top bar to open the panel and choose “Preview & Save as PDF, Long Image, DOCX, EPUB…”. You can save it as a TXT, MD, PDF, DOCX, or EPUB file, or as a long image or a set of short images.
-  - A whole book: choose “Export as one book” on Android or “Merge and Export Book” on iOS from the sidebar menu to export it as a TXT, DOCX, or EPUB file. On Android, this requires manual sorting.
+  - A single document: on Android, tap “More” (⋮) on the top bar and choose “Preview & export…”; on iOS, tap “⋯” on the right of the top bar to open the panel and choose “Preview & Save as PDF, Long Image, DOCX, EPUB…”. You can save it as a TXT, MD, PDF, DOCX, or EPUB file, or as a long image or a set of short images. On Android, this requires Pure Writer Pro (you can try it once without Pro).
+  - A whole book: choose “Export as one book” on Android or “Merge and Export Book” on iOS from the sidebar menu to export it as a TXT, DOCX, or EPUB file. On Android, this requires Pure Writer Pro and manual sorting.
 - **Desktop**: Documents can’t be exported for now.
 
 ### Exported TXT files show garbled text in a reader app {#articles-exported-by-this-app-cannot-be-displayed-correctly-in-other-apps}
@@ -480,17 +475,11 @@ To switch back, tap the “Sort order” icon at the top of the sidebar and choo
 
 The sidebars in Pure Writer for iOS and Pure Writer Desktop only use manual sorting, so folders are always shown.
 
-### Why does “Outlines” in Time Machine open the book list? (Android) {#clicking-outline-links-in-time-machine-only-opens-books-list}
-
-The outline feature no longer exists. The “Outlines” button in Time Machine is hidden by default and appears only after you turn on “Show ‘Outlines’ in Time Machine” in “Settings › Fine-tuning”.
-
-When you tap it, if the current book still has an outline from the old version, it opens in Editor 2; otherwise, the book list opens, as a reminder that you can create a new book as your outline and open it in Editor 2, so you can refer to the outline while you write.
-
 ### What is typewriter mode? {#typewriter-mode}
 
 In typewriter mode, only the paragraph with the cursor is shown normally and the rest of the text is dimmed, so you can focus on what you’re writing. It also makes it harder, to some extent, for people behind you to read what’s on the screen.
 
-- **Android**: Turn “Typewriter mode” on or off in Settings. Under “Typewriter mode” in “Settings › Fine-tuning”, you can choose “Paragraph mode” or “Line mode”.
+- **Android**: Turn “Typewriter mode” on or off in Settings. Under “Typewriter mode” in “Settings › Fine-tuning”, you can choose “Paragraph mode” or “Line mode” (requires Pure Writer Pro).
 - **iOS**: Turn “Typewriter Mode” on or off in Settings. It highlights only the current paragraph and works only in plain text documents.
 - **Desktop**: There’s no dimming effect. “Keep the last edited line near the center” in Settings is a different feature.
 
@@ -514,7 +503,7 @@ To turn off advanced read-only mode, open the menu of ⊕ in the bottom-right co
 
 ### How do I insert a new document somewhere else? {#insert-a-new-article-at-different-positions}
 
-- **Android**: Touch and hold ⊕ in the bottom-right corner, and the menu shows “New document after this one”, “New document at end of folder”, and “New document at end of list”; these appear only with manual sorting. After you turn on “Always show more creation options in ⊕” in “Settings › Fine-tuning”, tapping ⊕ shows them too. You can also touch and hold a document in the sidebar and choose “Add chapter above” or “Add chapter below”.
+- **Android**: Touch and hold ⊕ in the bottom-right corner, and the menu shows “New document after this one”, “New document at end of folder”, and “New document at end of list”; these appear only with manual sorting. After you turn on “Always show more creation options in ⊕” in “Settings › Fine-tuning” (requires Pure Writer Pro), tapping ⊕ shows them too. You can also touch and hold a document in the sidebar and choose “Add chapter above” or “Add chapter below”.
 - **iOS**: Tap “+” in the bottom-right corner; the menu has “New Document”, “New Document After Current”, “New Document at End of Folder”, and “New Document at Bottom of List”. Touch and hold a document in the sidebar to choose “New Document Above” or “New Document Below”.
 - **Desktop**: Right-click a document in the sidebar and choose “New document above” or “New document below”. Right-click a folder to choose “New document at end”.
 
@@ -522,7 +511,7 @@ To turn off advanced read-only mode, open the menu of ⊕ in the bottom-right co
 
 These settings gather options that relatively few people need, or that the developer doesn’t recommend changing. All three apps have them in Settings: “Fine-tuning” on Android, “Advanced Options” on iOS, and “Advanced options” on desktop. The description in the app reads “Extra settings for particular preferences” on Android and “For perfectionists: options that arguably shouldn’t exist.” on iOS. For example:
 
-- **Android**: “Smooth cursor”, “Center title”, “Always use portrait orientation”, “Always use landscape orientation”, “Long document threshold”, the highlight style of “Typewriter mode”, “Custom text color in editor”, and more;
+- **Android**: “Smooth cursor”, “Center title”, “Always use portrait orientation”, “Always use landscape orientation”, “Long document threshold”, the highlight style of “Typewriter mode”, “Custom text color in editor”, and more (changing most of them requires Pure Writer Pro; see the next question);
 - **iOS**: “Center Title”, “Blue Input Box”, “Spell Checker”, “Floating Word Count”, “Cursor Position for New Documents”, “Comma to Full Stop on Line Break”, and more;
 - **Desktop**: “Day starts at”, “Quote auto-completion”, “Show dot for current document”, and “Change a trailing comma to a period on Enter”.
 
@@ -562,7 +551,7 @@ It depends on the app:
 
 ### Why do my custom paper backgrounds stay in the list? (Android) {#how-does-this-app-keep-my-custom-wallpapers}
 
-In “Settings › Themes & paper backgrounds” on Android, the paper selection page automatically keeps the last two custom paper backgrounds you used, so you can easily choose them again. When you set a new custom paper background, the older of the two is replaced. To remove one, touch and hold it and delete it from the menu.
+In “Settings › Themes & paper backgrounds” on Android, the paper selection page automatically keeps the last two custom paper backgrounds you used, so you can easily choose them again. When you set a new custom paper background, the older of the two is replaced. To remove one, touch and hold it and delete it from the menu. Setting a custom paper background requires Pure Writer Pro, but choosing one of those two again doesn’t.
 
 Pure Writer for iOS sets one paper background each for Light and Dark Mode in “Settings › Theme”, and doesn’t keep a record of past ones.
 
@@ -576,7 +565,7 @@ Pure Writer for iOS sets one paper background each for Light and Dark Mode in �
 
 You can’t use an image of your own as the background of an exported image, but you can choose a theme for it.
 
-The preview page on Android and iOS offers several themes, such as Light · Pure, Dark · Pure, and a Smartisan Notes style. The two themes that follow the editor (“Theme: Light • Follow Editor” and “Theme: Dark • Follow Editor” on Android, “Light · Match Editor” and “Dark · Match Editor” on iOS) use the color of the editor’s solid paper background as their background. When the editor uses an image as its paper background, the exported image doesn’t include that image but uses a solid background.
+The preview page on Android (which requires Pure Writer Pro) and iOS offers several themes, such as Light · Pure, Dark · Pure, and a Smartisan Notes style. The two themes that follow the editor (“Theme: Light • Follow Editor” and “Theme: Dark • Follow Editor” on Android, “Light · Match Editor” and “Dark · Match Editor” on iOS) use the color of the editor’s solid paper background as their background. When the editor uses an image as its paper background, the exported image doesn’t include that image but uses a solid background.
 
 Image backgrounds aren’t supported because documents vary in length while a background image has a fixed size: stretching it distorts the image, repeating it often looks out of place, and it can also multiply the file size of a long image.
 
@@ -654,7 +643,7 @@ Pure Writer saves your text as plain text, and its editor doesn’t support rich
 
 When you need bold text, images, or other formatting, you can switch the document to Markdown, which marks formatting with plain text, such as `**bold**`:
 
-- **Android and iOS**: You can insert images into Markdown documents (see [Insert images](#insert-images)). Images you pick from your device are saved in Pure Writer’s “Image Assets”, and once you connect a cloud drive, they go to your cloud drive with backups and cloud sync. Preview and export (long images, PDF, DOCX, EPUB, and more) show the formatted result, and you can also copy the text as rich text or HTML to paste into other apps.
+- **Android and iOS**: You can insert images into Markdown documents (see [Insert images](#insert-images)). Images you pick from your device are saved in Pure Writer’s “Image Assets”, and once you connect a cloud drive, they go to your cloud drive with backups and cloud sync. The preview page and export (long images, PDF, DOCX, EPUB, and more) show the formatted result; on Android, they require Pure Writer Pro. You can also copy the text as rich text or HTML to paste into other apps.
 - **Desktop**: You can edit Markdown source and insert images, but the formatted result isn’t displayed for now, and images aren’t shown in the text.
 
 If you’d like to try Markdown, you can read the [Markdown tutorial](/zh-hans/markdown/) written by the developer (in Chinese), or the [Pure Writer Markdown User Guide](#pure-writer-markdown-user-guide) in this manual.
@@ -679,7 +668,7 @@ Purchases on each platform are separate:
 
 ### Google Play payment won’t start when I try to buy (Android)
 
-First make sure Google Play is installed on your device, you’re signed in with your Google account, and Google Play itself opens and makes purchases normally. We recommend using Pure Writer installed from Google Play.
+First make sure Google Play is installed on your device, you’re signed in with your Google account, and Google Play itself opens and makes purchases normally.
 
 If the Google Play payment screen doesn’t appear after you tap to buy, Pure Writer shows “Unable to start Google Play payments”. Open Google Play by hand once, then return to Pure Writer and try again. If you get the error DF-DFERH-01 while paying, restart your device and try again. Other errors are mostly related to the Google Play services on your device; please follow the instructions Google Play gives.
 
@@ -692,12 +681,6 @@ If the Pro page doesn’t show a valid purchase, try the following in order:
 1. Make sure Google Play opens normally on your device and that you’re using the Google account you purchased with (pay particular attention if your device has more than one Google account);
 2. Clear Google Play’s data in its app info page in your system settings, then open Google Play again;
 3. Restart Pure Writer a few times.
-
-### I bought Pure Writer on Google Play, but my new device can’t use Google Play (Android)
-
-Pro bought through Google Play is managed by your Google account, and Pure Writer needs Google Play on the device to confirm the purchase. If your new device can’t use Google Play (for example, a device without Google services), the purchase can’t be confirmed on it, and it can’t be transferred to iOS either.
-
-If the new device can install and use Google Play, sign in with the Google account you purchased with and install Pure Writer from Google Play to keep using Pro. Otherwise, the purchase can’t be used on that device.
 
 ### How do I cancel a subscription?
 
@@ -736,7 +719,7 @@ Learn more in [the iOS section of our homepage](/en/#ios-en), or download it fro
 
 ### Could my writing be stolen through Pure Writer? {#is-there-a-risk-of-articles-being-leaked-by-using-pure-writer}
 
-**Pure Writer doesn’t steal your writing.** Pure Writer’s servers don’t store your documents. Apart from the online features listed below, which you choose to use, your documents are kept only on your devices and in your own cloud storage.
+**Pure Writer doesn’t steal your writing.** Apart from the online features listed below, which you choose to use, your documents are kept only on your devices and in your own cloud storage, and aren’t sent to Pure Writer’s servers.
 
 #### Where documents and backups are stored
 
@@ -749,7 +732,7 @@ Pure Writer’s backup files are ordinary compressed archives without extra encr
 #### When your text is sent over the internet
 
 - **Fanhuaji conversions**: In Formatting options on all three apps, the conversions whose names include “繁化姬” (Fanhuaji), which appear when the app language is Chinese, send the text of the current document to Fanhuaji (zhconvert.org), a third-party service, to be converted. They explain this and ask for your consent before the first use; see [About Formatting options](#about-formatting-tools).
-- **AI features on Android**: Off by default; you need to turn them on in “AI settings”. When you use them, the text used to generate results is sent to an AI service: with “Pure Writer hosted AI”, it’s relayed through Pure Writer’s server to a large language model service; with “OpenAI”, it goes directly to the service you set up.
+- **AI features on Android**: Off by default; you need to turn them on in “AI settings”. When you use them, the text used to generate results is sent to an AI service. With “Pure Writer hosted AI” (requires Pure Writer Pro), the text is relayed through Pure Writer’s server to a large language model service; the server doesn’t store it in a database, but for troubleshooting, the server logs record part of the text in each request. With “OpenAI”, the text goes directly to the service address you set up (api.openai.com if you leave it blank), without passing through Pure Writer’s server.
 
 Please use the genuine Pure Writer. We can’t guarantee the safety of your documents in cracked versions.
 
@@ -778,7 +761,7 @@ Pure Writer automatically keeps backups on your device, so you can restore your 
 
 Cloud backup saves backups to your own cloud drive (on iOS, also to your own iCloud), so you can restore from it when you switch devices or your device is lost or damaged. Please set up at least one kind of cloud backup. Once it’s set up, Pure Writer backs up automatically, and there’s nothing you need to do day to day; when something needs your attention, such as an expired cloud drive sign-in, Pure Writer lets you know.
 
-- Backup files travel directly between your devices and your cloud drive (or iCloud); Pure Writer’s servers don’t store your documents or backups. When you use AliyunDrive, its authorization is passed on through Pure Writer’s server, and with cloud sync on, the server also keeps AliyunDrive sync records (backup file names, device models, sync times, and the like), which don’t include the content of your documents.
+- Backup files travel directly between your devices and your cloud drive (or iCloud), without going through Pure Writer’s servers. When you use AliyunDrive, its authorization is passed on through Pure Writer’s server, and with cloud sync on, the server also keeps AliyunDrive sync records (backup file names, device models, sync times, and the like), which don’t include the content of your documents.
 - Your cloud drive account and your Pure Writer account are unrelated. Signing in to a Pure Writer account doesn’t restore documents; to restore them, connect the cloud drive or iCloud that has your backups, or use a backup file.
 - Cloud sync is no substitute for backups: it keeps your devices consistent, so something deleted on one device is deleted on your other devices too.
 
@@ -965,7 +948,7 @@ Existing backups on your WebDAV server are in the “PureWriter › Backups” f
 
 #### Which services can I use with WebDAV?
 
-Cloud services that offer WebDAV (such as InfiniCLOUD, formerly TeraCLOUD) and WebDAV servers you set up yourself can be filled in and used, but servers don’t all behave the same way, and a server you run at home often can’t be reached once you’re away from your home network. Since WebDAV support will end in new versions, we don’t recommend signing up for a new WebDAV service just for Pure Writer.
+You can use a cloud service that offers WebDAV or a WebDAV server you set up yourself, but servers don’t all behave the same way, and a server you run at home often can’t be reached once you’re away from your home network. Since WebDAV support will end in new versions, we don’t recommend signing up for a new WebDAV service just for Pure Writer.
 
 #### Error: Your WebDAV configuration is incomplete or incorrect. {#error-your-webdav-configuration-is-incomplete-or-incorrect}
 
@@ -1343,19 +1326,3 @@ You can switch a document to Markdown (see [What is Markdown?](#whats-markdown))
 “Connect to desktop app” in the menu that the cloud icon on the top bar of Pure Writer for Android opens, and “Automatically connect to desktop app” in Fine-tuning, are only for the old desktop app, an early test version. It needed your phone and computer on the same Wi-Fi network, and you entered the IP address shown on your phone into the computer to edit the current document in real time. That version is no longer maintained.
 
 Today’s Pure Writer Desktop syncs through a cloud drive, doesn’t need an IP address, and doesn’t use these two options; see [How does Pure Writer Desktop sync with my phone?](#connect-to-desktop) to set it up.
-
-## Trivia {#easter-eggs}
-
-### Why is the developer Drakeet nicknamed 爪爪?
-
-Because “dra”, the first three letters of Drakeet, sounds like the Chinese character 爪 (zhuǎ); doubled, it becomes 爪爪 (DraDra).
-
-### Easter eggs in Pure Writer {#easter-eggs-in-pure-writer}
-
-Here are two little Easter eggs.
-
-- On the “Pure Writer Pro” page in Pure Writer for Android, repeat a certain action a number of times to find one. Its image needs an internet connection to load.
-
-- When you use the LXGW WenKai font in Pure Writer for Android or iOS (the default font when the app language is Chinese; on iOS, you can also choose it in “Settings › Font”), copy or type &#xE003; (U+E003) to see another one.
-
-  This character may not display correctly on this page; copy it into Pure Writer and use the LXGW WenKai font to see it properly.
