@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# 服务器出口整形（以 root 运行，由 writer-shaping.service 在开机时执行）。
+#
+# 公网出口是 2 Mbps 固定带宽，超出的包会在阿里云那一侧被直接丢掉：有人下载 JAR 时，
+# 打开网页这类小请求会因为丢包反复重传，几秒才出得来。把整形放在服务器上、略低于 2 Mbps，
+# 排队就发生在机器内；CAKE 按连接公平轮转，小请求不必排在大文件后面。
+# 带宽改了的话，同步修改 RATE（留约 5% 余量）。
+set -euo pipefail
+
+readonly RATE=1900kbit
+
+dev="$(ip -o route show default | awk '{print $5; exit}')"
+[[ -n "$dev" ]] || { echo "writer-shaping: 找不到默认路由的网卡" >&2; exit 1; }
+
+case "${1:-start}" in
+	start)
+		modprobe sch_cake
+		tc qdisc replace dev "$dev" root cake bandwidth "$RATE"
+		tc -s qdisc show dev "$dev" | head -n 3
+		;;
+	stop)
+		tc qdisc del dev "$dev" root 2>/dev/null || true
+		;;
+	*)
+		echo "用法：writer-shaping [start|stop]" >&2
+		exit 1
+		;;
+esac

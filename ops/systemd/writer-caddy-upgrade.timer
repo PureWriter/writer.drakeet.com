@@ -1,0 +1,11 @@
+# 每周一 05:00（服务器本地时间）检查一次 Caddy 的新版本；关机错过的话，开机后补跑。
+[Unit]
+Description=Weekly guarded upgrade of Caddy
+
+[Timer]
+OnCalendar=Mon *-*-* 05:00:00
+RandomizedDelaySec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

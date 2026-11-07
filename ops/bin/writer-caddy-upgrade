@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Caddy 的受控升级（以 root 运行，由 writer-caddy-upgrade.timer 每周触发，也可以手动运行）。
+#
+# Caddy 的补丁版本也可能带破坏性变更（例如 2026-11-04 的 v2.11.8 改动了 try_files 与 handle_errors 的行为），
+# 所以 caddy 包平时 apt-mark hold，不交给 unattended-upgrades 盲目升级。本脚本的做法：
+#   1. 发现新版本后，先解出新版本的二进制，用它校验现行配置（含各站点导入的规则）；
+#   2. 通过才安装，装上后自检关键地址；
+#   3. 任何一步失败，都装回原版本并记日志（journalctl -t writer-caddy-upgrade 可查）。
+set -euo pipefail
+
+readonly TAG=writer-caddy-upgrade
+readonly CADDY_LIST=sources.list.d/caddy-stable.list
+
+log() {
+	logger -t "$TAG" -- "$*"
+	echo "$*"
+}
+
+# 自检：服务在运行，首页与 Apple 关联域名文件能从本机按正式主机名取到。
+self_check() {
+	systemctl is-active --quiet caddy || return 1
+	curl -fsS --max-time 15 -o /dev/null --resolve writer.drakeet.com:443:127.0.0.1 \
+		https://writer.drakeet.com/.well-known/apple-app-site-association || return 1
+	local code
+	code="$(curl -sS --max-time 15 -o /dev/null -w '%{http_code}' --resolve writer.drakeet.com:443:127.0.0.1 https://writer.drakeet.com/)"
+	[[ "$code" =~ ^(200|301|302|308)$ ]]
+}
+
+install_version() {
+	apt-mark unhold caddy >/dev/null
+	DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --allow-downgrades "caddy=$1"
+	apt-mark hold caddy >/dev/null
+}
+
+# 只刷新 Caddy 官方源的索引，不影响系统其余软件源。
+apt-get update -qq -o Dir::Etc::sourcelist="$CADDY_LIST" -o Dir::Etc::sourceparts=- -o APT::Get::List-Cleanup=0
+
+installed="$(dpkg-query -W -f='${Version}' caddy)"
+candidate="$(apt-cache policy caddy | awk '/Candidate:/ {print $2}')"
+if [[ -z "$candidate" || "$candidate" == "(none)" ]]; then
+	log "查不到 caddy 的候选版本，跳过"
+	exit 1
+fi
+if dpkg --compare-versions "$candidate" le "$installed"; then
+	echo "Caddy 已是最新：$installed"
+	exit 0
+fi
+
+work="$(mktemp -d)"
+trap 'rm -rf -- "$work"' EXIT
+(cd "$work" && apt-get download -qq "caddy=$candidate")
+dpkg-deb -x "$work"/caddy_*.deb "$work/root"
+
+if ! "$work/root/usr/bin/caddy" validate --config /etc/caddy/Caddyfile --adapter caddyfile >"$work/validate.log" 2>&1; then
+	log "新版本 $candidate 拒绝现行配置，不升级：$(tail -n 5 "$work/validate.log" | tr '\n' ' ')"
+	exit 1
+fi
+
+install_version "$candidate"
+sleep 5
+if self_check; then
+	log "Caddy 已从 $installed 升级到 $candidate"
+	exit 0
+fi
+
+log "升级到 $candidate 后自检失败，装回 $installed"
+install_version "$installed"
+sleep 5
+self_check || log "装回 $installed 后自检仍失败，需要人工处理"
+exit 1

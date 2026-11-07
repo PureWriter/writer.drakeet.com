@@ -1,0 +1,14 @@
+# 服务器出口整形，见 /usr/local/bin/writer-shaping 的说明。
+[Unit]
+Description=Egress shaping slightly below the 2 Mbps public bandwidth (CAKE)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/writer-shaping start
+ExecStop=/usr/local/bin/writer-shaping stop
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,71 @@
+# 旧站在新服务器上的站点规则（第 A 步到第 C 步之间使用；第 C 步由新站的 caddy/site.caddy 取代）。
+# 这份文件在旧站的 master 里位于 caddy/site.caddy，由 scripts/deploy.sh 随每个版本一起发布。
+#
+# {args[0]} 是这一版 release 目录（经 current 软链接），网站根目录是其下的 public/。
+# 行为与旧 nginx 一致：/x 与 /x.html 都返回 x.html，目录返回其中的 index.html。顺带修正旧站的几个问题：
+#   - 不存在的路径返回 404，不再因 rewrite 循环返回 500；
+#   - 点开头的路径（.well-known 除外）一律 404；发布的版本里本来也没有 .git 与仓库文件；
+#   - 网盘授权完成页：rebase-server 给日文用户拼的是 _ja，旧站文件叫 _jp；服务商名不区分大小写；
+#   - Windows 安装包写进「已安装的应用」的坏链接 /desktop2JpAbortIfPureWriterRunning…（docs/rebuild.md 2.1）。
+
+root * {args[0]}/public
+
+encode zstd gzip
+
+# 删除类操作（-Server）会让整块推迟到写响应时才执行，所以单独成块，免得把各路径自己的缓存头盖掉。
+header -Server
+# Cache-Control 前的 ? 表示「没有设置过才设置」：图片、JAR 等路径设好的缓存头优先，其余默认 no-cache。
+header {
+	Strict-Transport-Security "max-age=31536000"
+	X-Content-Type-Options "nosniff"
+	Referrer-Policy "strict-origin-when-cross-origin"
+	?Cache-Control "no-cache"
+}
+header /images/* Cache-Control "public, max-age=604800"
+
+# Apple 关联域名文件没有扩展名，Caddy 不会自动给出类型，必须显式写 application/json；它绝不能被跳转。
+header /.well-known/apple-app-site-association Content-Type "application/json"
+
+# 点开头的路径一律 404，只放行 .well-known。
+@hidden {
+	path */.*
+	not path /.well-known/*
+}
+error @hidden 404
+
+# 桌面版 JAR 国内镜像：文件在站点目录之外，由 writer-jars-sync 维护；不列目录。
+handle_path /ocat/jars/* {
+	root * /srv/writer.drakeet.com/jars
+	header Cache-Control "public, max-age=86400"
+	file_server
+}
+
+# Windows 安装包的坏链接：按它本来要去的 /desktop2、/desktop2_en 处理。
+@broken_arp path_regexp broken_arp ^/(desktop2|desktop2_en)JpAbortIfPureWriterRunning
+rewrite @broken_arp /{re.broken_arp.1}.html
+
+# 网盘授权完成页：服务商名不区分大小写，_ja 指向旧站的 _jp 文件。
+@oauth path_regexp oauth ^/drives/oauth/(?i:(onedrive|dropbox|aliyun))(_en|_zh|_ja|_jp|_ko)?(?:\.html)?$
+map {re.oauth.1} {oauth_name} {
+	~(?i)^onedrive$ OneDrive
+	~(?i)^dropbox$ Dropbox
+	~(?i)^aliyun$ Aliyun
+}
+map {re.oauth.2} {oauth_suffix} {
+	_ja _jp
+	_en _en
+	_zh _zh
+	_jp _jp
+	_ko _ko
+	default ""
+}
+rewrite @oauth /drives/oauth/{oauth_name}{oauth_suffix}.html
+
+# /x 返回 x.html；以斜杠结尾的目录由 file_server 返回 index.html，不带斜杠的目录先补斜杠（308）。
+try_files {path} {path}.html {path}/
+file_server
+
+handle_errors 404 {
+	header -Server
+	respond "404 Not Found" 404
+}

@@ -1,0 +1,9 @@
+// 官网服务器对 unattended-upgrades 的补充设置。
+// 需要重启时（例如内核更新）在凌晨 04:30 自动重启：旧机连续运行 695 天、内核补丁从未生效，是这次重建最大的教训。
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "04:30";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+// Caddy 走受控升级（writer-caddy-upgrade），不在这里自动升级；它平时也处于 apt-mark hold。
+Unattended-Upgrade::Package-Blacklist {
+	"caddy";
+};
