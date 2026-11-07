@@ -1,0 +1,34 @@
+# Pure Writer
+
+> Pure Writer (纯纯写作 in Simplified Chinese, 純純寫作 in Traditional Chinese, 純純執筆 in Japanese) is a fast plain text editor you can trust, with History, cloud sync and backups, layers of protection against losing your work, and many thoughtful writing aids. It is available for Android, iPhone and iPad, with a desktop version for Windows and macOS.
+
+Pure Writer is a text editor for writing and organizing your own text. It does not offer books, magazines or other reading content, and it has no community, feed or publishing platform. What you write is never made public or shown to anyone else. Documents are stored on your device, backups and sync go only to your own iCloud or cloud drive, and Pure Writer's servers do not store your writing.
+
+Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be tried free for 7 days; afterwards a monthly subscription, a yearly subscription or a lifetime membership unlocks everything.
+
+## Home pages
+
+- [English](https://writer.drakeet.com/en/): overview, features, and download links
+- [简体中文](https://writer.drakeet.com/zh-hans/)
+- [繁體中文（台灣）](https://writer.drakeet.com/zh-hant/)
+- [繁體中文（香港）](https://writer.drakeet.com/zh-hk/)
+- [日本語](https://writer.drakeet.com/ja/)
+
+## Downloads
+
+- [Pure Writer for iOS on the App Store](https://apps.apple.com/app/id6803257195)
+- [Pure Writer for Android on Google Play](https://play.google.com/store/apps/details?id=com.drakeet.purewriter)
+- [Pure Writer Desktop for Windows and macOS](https://writer.drakeet.com/en/desktop/): also available in [简体中文](https://writer.drakeet.com/zh-hans/desktop/), [繁體中文（台灣）](https://writer.drakeet.com/zh-hant/desktop/), [繁體中文（香港）](https://writer.drakeet.com/zh-hk/desktop/), [日本語](https://writer.drakeet.com/ja/desktop/) and [Русский](https://writer.drakeet.com/ru/desktop/)
+
+## Help
+
+- [User manual](https://writer.drakeet.com/en/manual/): also in [简体中文](https://writer.drakeet.com/zh-hans/manual/) and [繁體中文](https://writer.drakeet.com/zh-hant/manual/)
+- [Automatic and cloud backup tutorial](https://writer.drakeet.com/en/backups/): also in [简体中文](https://writer.drakeet.com/zh-hans/backups/) and [繁體中文](https://writer.drakeet.com/zh-hant/backups/)
+- [Pure Writer for iOS support](https://writer.drakeet.com/en/ios/support/)
+- Feedback and support: writer@drakeet.com
+
+## Privacy policies
+
+- [Pure Writer for iOS](https://writer.drakeet.com/en/ios/privacy/)
+- [Pure Writer for Android](https://writer.drakeet.com/en/android/privacy/)
+- [Pure Writer Desktop](https://writer.drakeet.com/en/desktop/privacy/)
