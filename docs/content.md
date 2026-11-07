@@ -60,14 +60,17 @@
 - **自查**：先构建，再比对正文与锚点，直到两项都通过（允许的修正会表现为差异，逐条确认后在报告里列出）：
 
 ```bash
-scripts/build.sh --worktree --no-check --out /tmp/site-<页面>
+scripts/build-page.sh --out /tmp/site-<页面> content/<页面>
 python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<页面>/index.html --ids [--old-select 'article[data-locale=zh-Hans]'] [--skip footer]
 ```
+
+  - `build-page.sh` 只拿骨架加上指定的页面构建，几个人同时迁移不同页面时互不干扰；全站页面齐了以后，用 `scripts/build.sh --worktree` 做全站构建，它会再检查站内链接、锚点与期望产物清单。
 
   - 旧页是一页多语言的（首页、下载页、iOS 两页），用 `--old-select 'article[data-locale=<旧语言代码>]'` 取出对应语言；旧语言代码是 `zh-Hans`、`zh-Hant`、`zh-HK`、`en`、`ja`、`ru`。
   - Typora 页默认取 `#write`，不用写 `--old-select`。
   - 旧页里的页脚由全站页脚代替，比对时加 `--skip footer`。
   - 几个构建可以同时进行：每个构建用自己的 `--out` 目录。
+  - 首页的文件不在子目录里，构建时写文件本身，例如 `scripts/build-page.sh --out /tmp/site-home content/_index.en.html`。
 
 ## 四、链接
 

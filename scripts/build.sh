@@ -5,6 +5,7 @@
 #   scripts/build.sh --out <目录>        产物写到指定目录；几个构建可以同时进行，互不干扰
 #   scripts/build.sh --update-expected   检查通过后，用这次的产物重写 ops/expected-files.txt（有意增删页面时用）
 #   scripts/build.sh --no-check          跳过第 5 步的检查，只在页面还没迁移齐、写单个页面自查时用；部署永远带检查
+#   scripts/build.sh --source <目录>     从指定目录构建（scripts/build-page.sh 用它构建只含部分页面的副本）
 #
 # 构建警告一律视为错误。产物之外还会生成：根目录的 desktop2.json（原样复制）、.well-known/security.txt（Expires 取
 # 构建时起一年内）、文本文件的 brotli 与 gzip 预压缩版本（Caddy 按浏览器支持直接发送；没有 brotli 时只跳过 .br）。
@@ -19,12 +20,18 @@ die() {
 }
 
 from_worktree=0
+source_dir=""
 out="$REPO/public"
 update_expected=0
 run_checks=1
 while (($#)); do
 	case "$1" in
 		--worktree) from_worktree=1 ;;
+		--source)
+			shift
+			[[ $# -gt 0 ]] || die "--source 后面要跟目录"
+			source_dir="$1"
+			;;
 		--out)
 			shift
 			[[ $# -gt 0 ]] || die "--out 后面要跟目录"
@@ -41,7 +48,9 @@ work="$(mktemp -d)"
 trap 'rm -rf -- "$work"' EXIT
 
 # 1. 源文件：默认取已提交的 HEAD，部署内容与提交历史严格一致，工作区里的草稿不影响部署。
-if ((from_worktree)); then
+if [[ -n "$source_dir" ]]; then
+	src="$source_dir"
+elif ((from_worktree)); then
 	src="$REPO"
 else
 	src="$work/src"
