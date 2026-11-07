@@ -131,6 +131,18 @@ img {
   max-width: 100%;
   height: auto;
 }
+/*
+  单独成段的 img shortcode：Hugo 会去掉它两侧的 <p>，图片直接落在 <article> 下，没有段落的下边距，
+  与下一段贴在一起。这里补成块级并给出与段落相同的下边距。
+*/
+article > img {
+  display: block;
+  margin: 0 0 12px;
+}
+/* 作者样式里的 display（例如下载按钮的 inline-flex）会压过浏览器给 hidden 的默认 display: none，脚本隐藏的元素照样显示。 */
+[hidden] {
+  display: none !important;
+}
 hr {
   border: 0;
   border-top: 1px solid var(--rule);
@@ -455,6 +467,30 @@ details.note dd {
   max-width: 400px;
   height: auto;
   border-radius: 8px;
+}
+
+/* 窄屏：页头的图标与标题缩小一点，日文、俄文的长标题不会在词中间折行；下载按钮各占一行，宽度一致。 */
+@media (max-width: 480px) {
+  .masthead {
+    gap: 12px;
+  }
+  .masthead img {
+    width: 56px;
+    height: 56px;
+  }
+  .masthead h1 {
+    font-size: 1.5rem;
+  }
+  .download {
+    flex: 1 1 100%;
+  }
+}
+
+/* 页面末尾的附记（例如下载页的首发日期）：与正文之间用一条分隔线隔开，像旧页的页脚那样。 */
+.colophon {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
 }
 
 /* ───────────── iOS 支持页与隐私政策 ───────────── */

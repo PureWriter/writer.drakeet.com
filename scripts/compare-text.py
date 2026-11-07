@@ -5,13 +5,21 @@
 
   --old-select 选择器   旧页里要比对的区域，默认：有 #write（Typora 导出页）就取它，否则取 body
   --new-select 选择器   新页里要比对的区域，默认 main
-  --skip 标签名         两边都跳过的元素（可以重复），例如 --skip footer
+  --skip 标签名或 .类名  两边都跳过的元素（可以重复），例如 --skip footer、--skip .note
   --ids                 另外列出旧页里有、新页里没有的锚点（id 与 a name）
 
 选择器只支持几种简单写法：tag、#id、.class、tag[attr=value]、tag.class。
 
-做法：去掉标记，块级元素各自成行，行内连续的半角空白合并成一个空格（全角空格保留，中文段首的「　　」照常比对），
-<pre> 里的换行原样保留；然后逐行做 diff。两边一致时退出码为 0，否则为 1 并打印差异。
+做法：去掉标记，块级元素与 <br> 各自成行，行内连续的半角空白合并成一个空格，然后逐行做 diff。两边一致时退出码为 0，
+否则为 1 并打印差异。几条细则：
+  - 全角空格（U+3000）照常比对，中文段首的「　　」少了或多了都会报出来；
+  - 代码块逐行比对，块内的空行也算一行，行尾的半角空白不计；
+  - 旧站 Typora 导出页（body 带 typora-export）的段落是 white-space: pre-wrap，段内的字面换行在页面上显示为换行，
+    这里也按换行算：新页用 <br>（Markdown 行尾的 \\）保住换行才算一致，写成软换行会报出来；
+  - Typora 的代码块是 CodeMirror 渲染的：每行一个 pre.CodeMirror-line，另有隐藏的测量元素 .CodeMirror-measure
+    （内容是 xxxxxxxxxx）、为显示连续空格插入的不换行空格、零宽空格，以及把不可见字符画成红点「•」的 .cm-invalidchar。
+    这里跳过测量元素与红点，把不换行空格当作普通空格、去掉零宽空格，还原成原文再比。
+工具只比文字：链接地址、加粗与行内代码的范围不在比对范围内，复核时另外核对。
 """
 
 import argparse
@@ -21,13 +29,17 @@ import re
 import sys
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
-SKIP_ALWAYS = {"script", "style", "svg", "noscript", "template", "head"}
+SKIP_ALWAYS = {"script", "style", "svg", "noscript", "template", "head", "textarea"}
+# CodeMirror 的隐藏测量元素，以及它把零宽空格等不可见字符画成的红点占位「•」（原文里是看不见的字符）。
+SKIP_CLASSES_ALWAYS = {"CodeMirror-measure", "cm-invalidchar"}
 BLOCK = {
     "address", "article", "aside", "blockquote", "body", "dd", "details", "dialog", "div", "dl", "dt", "fieldset",
     "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hr", "li", "main", "nav",
     "ol", "p", "pre", "section", "summary", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "ul", "br", "html",
 }
-SPACES = re.compile(r"[ \t\n\r\f\v ]+")
+# 合并的只是半角空白与不换行空格；全角空格不在其中。
+SPACES = re.compile(r"[ \t\n\r\f\v\u00a0]+")
+ZERO_WIDTH = "\u200b"
 
 
 class Node:
@@ -36,6 +48,9 @@ class Node:
         self.attrs = dict(attrs)
         self.parent = parent
         self.children = []
+
+    def classes(self):
+        return set((self.attrs.get("class") or "").split())
 
 
 class TreeBuilder(html.parser.HTMLParser):
@@ -82,7 +97,7 @@ def matches(node, selector):
         return False
     if ident and node.attrs.get("id") != ident:
         return False
-    if cls and cls not in (node.attrs.get("class") or "").split():
+    if cls and cls not in node.classes():
         return False
     if attr and node.attrs.get(attr) != value:
         return False
@@ -100,44 +115,74 @@ def find(node, selector):
     return None
 
 
-def text_lines(node, skip):
-    """把一个区域变成文本行：块级元素各自成行，<pre> 保留原有换行。"""
+def node_text(node):
+    parts = []
+    for child in node.children:
+        if isinstance(child, str):
+            parts.append(child)
+        elif child.tag not in SKIP_ALWAYS and not (child.classes() & SKIP_CLASSES_ALWAYS):
+            parts.append(node_text(child))
+    return "".join(parts)
+
+
+def code_line(text):
+    """代码行还原成原文：去掉零宽空格，不换行空格当作普通空格，行尾的半角空白不计（全角空格保留）。"""
+    return text.replace(ZERO_WIDTH, "").replace("\u00a0", " ").rstrip(" \t\n\r\f\v")
+
+
+def text_lines(node, skip_tags, skip_classes, pre_wrap):
+    """把一个区域变成文本行。pre_wrap 为真时，段落里的字面换行按换行算（旧站 Typora 导出页）。"""
     lines = []
     buffer = []
 
     def flush():
-        text = SPACES.sub(" ", "".join(buffer)).strip()
+        # 只去掉两端的半角空格；U+3000 不动，中文段首的「　　」照常参与比对。
+        text = SPACES.sub(" ", "".join(buffer).replace(ZERO_WIDTH, "")).strip(" ")
         if text:
             lines.append(text)
         buffer.clear()
 
-    def walk(current, in_pre):
+    def add_pre_block(text):
+        # 新站的 <pre><code>：按换行切开，保留块内的空行，去掉首尾的空行（Hugo 在 </code> 前补的换行）。
+        block = [code_line(part) for part in text.split("\n")]
+        while block and not block[0]:
+            block.pop(0)
+        while block and not block[-1]:
+            block.pop()
+        lines.extend(block)
+
+    def walk(current):
         for child in current.children:
             if isinstance(child, str):
-                if in_pre:
-                    for index, part in enumerate(child.split("\n")):
+                if pre_wrap and "\n" in child:
+                    parts = child.split("\n")
+                    for index, part in enumerate(parts):
                         if index:
-                            flush_pre()
+                            flush()
                         buffer.append(part)
                 else:
                     buffer.append(child)
                 continue
-            if child.tag in SKIP_ALWAYS or child.tag in skip:
+            classes = child.classes()
+            if child.tag in SKIP_ALWAYS or child.tag in skip_tags or classes & (SKIP_CLASSES_ALWAYS | skip_classes):
+                continue
+            if "CodeMirror-line" in classes:
+                # Typora 代码块的一行：空行也是一行。
+                flush()
+                lines.append(code_line(node_text(child)))
+                continue
+            if child.tag == "pre" and "md-fences" not in classes:
+                flush()
+                add_pre_block(node_text(child))
                 continue
             block = child.tag in BLOCK
             if block:
-                flush() if not in_pre else flush_pre()
-            walk(child, in_pre or child.tag == "pre")
+                flush()
+            walk(child)
             if block:
-                flush() if not in_pre else flush_pre()
+                flush()
 
-    def flush_pre():
-        text = "".join(buffer).rstrip()
-        if text.strip():
-            lines.append(text)
-        buffer.clear()
-
-    walk(node, False)
+    walk(node)
     flush()
     return lines
 
@@ -182,9 +227,12 @@ def main():
     if new_area is None:
         raise SystemExit(f"新页里找不到 {args.new_select}")
 
-    skip = set(args.skip)
-    old_lines = text_lines(old_area, skip)
-    new_lines = text_lines(new_area, skip)
+    skip_tags = {item for item in args.skip if not item.startswith(".")}
+    skip_classes = {item[1:] for item in args.skip if item.startswith(".")}
+    old_body = find(old_doc.root, "body")
+    old_pre_wrap = old_body is not None and "typora-export" in old_body.classes()
+    old_lines = text_lines(old_area, skip_tags, skip_classes, old_pre_wrap)
+    new_lines = text_lines(new_area, skip_tags, skip_classes, False)
     status = 0
     if old_lines == new_lines:
         print(f"正文一致：{len(old_lines)} 行")

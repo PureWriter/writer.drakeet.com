@@ -4,7 +4,7 @@
   python3 scripts/check.py <产物目录> --expected ops/expected-files.txt --market ops/market-rules.toml \
       --zh-variants ops/zh-variants.toml [--update-expected]
 
-检查四项，任何一项不通过就以非零状态退出：
+检查五项，任何一项不通过就以非零状态退出：
   1. 期望产物清单：产物目录里的文件（不含预压缩的 .br、.gz）与入库的清单逐行比对，多一个、少一个都报错。这样新站的
      地址空间严格等于约定，Hugo 自作主张多生成的页面也能当场暴露。有意增删页面时，用 --update-expected 重写清单。
   2. 站内链接与锚点：每个 HTML 里指向本站的 href、src 都必须能落到产物里的文件；带 #锚点 的，目标页面里必须有
@@ -12,6 +12,9 @@
   3. 市场差异：只适合中国大陆用户的内容（备案号、蓝奏云、国内下载、360、坚果云与网盘切换截图）不得出现在简体中文以外
      的产物里。规则与豁免写在 ops/market-rules.toml；「旧版」名单里的页面只提示、不拦截。
   4. 台港用词：繁体（台湾）页面不得出现香港用词，繁体（香港）页面不得出现台湾用词，词表在 ops/zh-variants.toml。
+  5. iOS 隐私政策各语言的「更新日期」「生效日期」一致（旧站五种语言同页时天然同步，拆成五个文件后靠这项检查）。
+第 3、4 项跳过下载页里来自桌面端更新日志的条目（data-source="desktop2.json"）：那段文字的用词归桌面端管，
+不能让官网的检查拦住桌面版发版（rebuild.md 第一节「取舍原则」）。
 """
 
 import argparse
@@ -161,6 +164,14 @@ MARKET_SKIP_FILES = {"/desktop2.json"}
 MARKET_SUFFIXES = {".html", ".txt", ".xml", ".json"}
 
 
+# 下载页里来自桌面端更新日志的条目（notes shortcode 输出），市场与台港用词检查跳过它。产物经过压缩，属性可能不带引号。
+EXTERNAL_TEXT = re.compile(r"<ul[^>]*\bdata-source=[\"']?desktop2\.json[\"']?[^>]*>.*?</ul>", re.S)
+
+
+def page_text(file):
+    return EXTERNAL_TEXT.sub("", file.read_text(encoding="utf-8"))
+
+
 def page_path(root, file):
     """产物里的文件对应的地址路径：/en/manual/index.html 记作 /en/manual/，便于与豁免前缀比较。"""
     path = "/" + file.relative_to(root).as_posix()
@@ -182,7 +193,7 @@ def check_market(root, rules_path):
         path = page_path(root, file)
         if path.startswith(MARKET_SKIP_PREFIXES) or path in MARKET_SKIP_FILES:
             continue
-        text = file.read_text(encoding="utf-8")
+        text = page_text(file)
         for name, pattern, exempt in groups:
             if exempted(path, exempt):
                 continue
@@ -205,12 +216,46 @@ def check_zh_variants(root, rules_path):
         for prefix, (region, words) in banned.items():
             if not path.startswith(prefix):
                 continue
-            text = file.read_text(encoding="utf-8")
+            text = page_text(file)
             hits = [word for word in words if word in text]
             if hits:
                 message = f"{path}：出现了{region}用词：{'、'.join(hits)}"
                 (warnings if exempted(path, warn_only) else problems).append(message)
     return problems, warnings
+
+
+PRIVACY_LANGUAGES = ("zh-hans", "zh-hant", "zh-hk", "en", "ja")
+META_PARAGRAPH = re.compile(r"<p[^>]*\bclass=[\"']?meta[\"']?[^>]*>(.*?)</p>", re.S)
+CJK_DATE = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日")
+MONTHS = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+EN_DATE = re.compile(r"(" + "|".join(MONTHS) + r")\s+(\d{1,2}),\s*(\d{4})")
+
+
+def privacy_dates(file):
+    """取 iOS 隐私政策日期段里的日期，按出现顺序返回 [(年, 月, 日), …]：先是更新日期，后是生效日期。"""
+    match = META_PARAGRAPH.search(file.read_text(encoding="utf-8"))
+    if not match:
+        return None
+    text = match.group(1)
+    dates = [(int(y), int(m), int(d)) for y, m, d in CJK_DATE.findall(text)]
+    dates += [(int(y), MONTHS.index(month) + 1, int(d)) for month, d, y in EN_DATE.findall(text)]
+    return dates
+
+
+def check_privacy_dates(root):
+    found = {}
+    for language in PRIVACY_LANGUAGES:
+        file = root / language / "ios" / "privacy" / "index.html"
+        if not file.is_file():
+            return [f"/{language}/ios/privacy/ 不存在"]
+        dates = privacy_dates(file)
+        if not dates:
+            return [f"/{language}/ios/privacy/：找不到 class=meta 的日期段，或其中没有可识别的日期"]
+        found[language] = dates
+    if len({tuple(dates) for dates in found.values()}) == 1:
+        return []
+    detail = "；".join(f"{language} {dates}" for language, dates in found.items())
+    return [f"iOS 隐私政策各语言的日期不一致：{detail}"]
 
 
 def main():
@@ -226,7 +271,7 @@ def main():
     problems = check_links(root)
     market_problems, market_warnings = check_market(root, args.market)
     variant_problems, variant_warnings = check_zh_variants(root, args.zh_variants)
-    problems += market_problems + variant_problems
+    problems += market_problems + variant_problems + check_privacy_dates(root)
     for warning in market_warnings + variant_warnings:
         print(f"check: 提示（旧版名单，不拦截）：{warning}", file=sys.stderr)
     if not problems:
@@ -236,7 +281,7 @@ def main():
             print(f"check: {problem}", file=sys.stderr)
         print(f"check: 共 {len(problems)} 个问题", file=sys.stderr)
         return 1
-    print("check: 站内链接、锚点、市场差异、台港用词与期望产物清单都通过")
+    print("check: 站内链接、锚点、市场差异、台港用词、iOS 隐私政策日期与期望产物清单都通过")
     return 0
 
 

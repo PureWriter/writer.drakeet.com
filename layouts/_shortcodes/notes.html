@@ -8,7 +8,8 @@
 {{- if .Get "version" -}}
 {{ $notes.version }}
 {{- else -}}
-<ul>
+{{- /* data-source 标明这段文字来自桌面端的更新日志：scripts/check.py 的市场与台港用词检查跳过它，用词归桌面端的本地化管，免得官网的检查拦住桌面版发版。 */ -}}
+<ul data-source="desktop2.json">
 {{- range $notes.items }}
 <li>{{ . }}</li>
 {{- end }}

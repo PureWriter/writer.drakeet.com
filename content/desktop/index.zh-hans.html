@@ -1,0 +1,77 @@
+---
+title: 纯纯写作桌面版 - 下载 Windows 与 macOS 版
+description: 纯纯写作桌面版，适用于 Windows 与 macOS。通过网盘与手机上的纯纯写作同步，目前免费。
+lastmod: 2026-11-07
+image: images/desktop2dark.png
+icons: true
+jsonld: desktop
+appName: 纯纯写作桌面版
+lastmodFrom: desktop2.json
+script: download.js
+---
+<!--
+  纯纯写作桌面版下载页（简体中文）。其他语言各有一份 index.<语言>.html，内容各自完整，改动时各语言同步修改。
+  引号里的 Windows、macOS 界面名称照搬系统里的实际写法。
+  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop2.json
+  （docs/content.md 第六节），发新版时本页不用改；按钮与链接上的文字写在这里。
+  download.js 按访客的系统挑出主按钮，其余移到「其他安装包」一行，只剩一个主按钮时隐藏 data-chip-hint 的芯片说明；
+  没有脚本时三个主按钮并列、那一行不出现，所以「其他安装包」一行的 hidden 与芯片说明上的 data-chip-hint 都不能去掉。
+  蓝奏云备用下载、360 的提示、网盘之间的切换提示及其截图只放在简体中文这一份；版权与备案信息由全站页脚输出，这里不写。
+  旧站的锚点 #download 原样保留，站外带这个锚点的旧链接仍然有效。
+-->
+
+<header>
+  <div class="masthead">
+    <img src="/images/icon512.png" alt="" width="72" height="72">
+    <div>
+      <h1>纯纯写作桌面版</h1>
+      <p class="tagline">Windows 与 macOS · 目前免费</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download">下载{{< release >}}</h2>
+  <div class="downloads">
+    {{< download file="windows-x64" icon="windows" name="下载 Windows 版" detail="x64" >}}
+    {{< download file="macos-aarch64" icon="apple" name="下载 macOS 版" detail="Apple 芯片" >}}
+    {{< download file="macos-x64" icon="apple" name="下载 macOS 版" detail="Intel 芯片" >}}
+  </div>
+  <p class="others" hidden>其他安装包：{{< other-download file="macos-aarch64" icon="apple" label="macOS（Apple 芯片）" >}}{{< other-download file="macos-x64" icon="apple" label="macOS（Intel 芯片）" >}}{{< other-download file="windows-x64" icon="windows" label="Windows（x64）" >}}</p>
+  <p class="note" data-chip-hint>不确定 Mac 用的是哪种芯片？点屏幕左上角的苹果菜单，选择「关于本机」：显示「芯片 Apple M…」或「芯片 Apple A…」的，选 Apple 芯片版；显示「处理器 … Intel …」的，选 Intel 芯片版。</p>
+  <p class="note">下载缓慢或无法下载？可以试试备用地址：<a href="https://drakeet.lanzouy.com/s/desktop">蓝奏云</a>。</p>
+  <p class="note">请只从本页下载和更新纯纯写作桌面版，以免拿到被他人二次打包、植入风险代码的安装包。</p>
+  <details class="note"><summary>安装包的 SHA-256 校验值</summary>{{< checksums >}}</details>
+</section>
+
+{{< img src="img/desktop2dark.png" alt="纯纯写作桌面版的写作界面" class="shot" width="680" loading="eager" >}}
+
+<section>
+  <h2>最近更新<span class="aside">v{{< notes version=true >}}</span></h2>
+  {{< notes >}}
+</section>
+
+<section>
+  <h2>安装与更新</h2>
+  <ul>
+    <li>更新前请先退出纯纯写作桌面版，再运行新的安装包，这样安装后不会提示「需要重启」。</li>
+    <li>Windows 上，部分杀毒软件会误报没有数字签名的安装包。纯纯写作由实名注册的开发者与公司出品，请放心将安装包和安装目录 <code>C:\Users\&lt;用户名&gt;\AppData\Local\Pure Writer 2</code> 加入信任名单。</li>
+    <li>如果安装后打不开，请试着在 Windows 安全中心的「勒索软件防护」里允许纯纯写作访问文件夹；如果 360 提示「没有文件写入权限」，请暂时关闭 360 的防护后重新安装。</li>
+    <li>电脑上如果还装着 Windows 版 v2.1.9，请先在「设置 › 应用 › 安装的应用」里卸载它，再安装新版。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>与手机同步</h2>
+  <p>桌面版通过网盘同步，不需要登录纯纯写作账号，也不需要手机与电脑同时在线：在手机上的纯纯写作里选择与电脑相同的网盘，登录同一个网盘账号，两边就能互相同步。请把手机上的纯纯写作也更新到最新版。</p>
+  <p>注意，OneDrive、阿里云盘、坚果云是不同的网盘，手机与电脑必须选同一个。网盘只是同步的中转站，切换网盘时不必迁移数据。以 Android 版为例，在「备份、云备份、云同步」里点按「云连接类型」即可切换：</p>
+  {{< img src="img/DriveOnAndroidGuide.jpg" alt="纯纯写作 Android 版的「备份、云备份、云同步」页面：点按「云连接类型」可切换网盘" class="guide" width="400" >}}
+</section>
+
+<section>
+  <h2>反馈</h2>
+  <p>桌面版仍在持续打磨。遇到问题或有任何建议，欢迎写信到 <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>。</p>
+  <p>想知道这个桌面版是怎么做出来的，可以读读<a href="https://mp.weixin.qq.com/s/j-nxQIUI2rdOA52H-otoUQ">它的开发故事</a>。</p>
+</section>
+
+<p class="note colophon">全新的纯纯写作桌面版首次发布于 2024 年 6 月 20 日，夏至前一天。</p>

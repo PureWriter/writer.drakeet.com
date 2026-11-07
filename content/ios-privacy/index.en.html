@@ -1,0 +1,108 @@
+---
+title: Pure Writer for iOS Privacy Policy
+description: This policy explains what information the App handles, why, who it is shared with, how long it is kept, and how you can manage it.
+lastmod: 2026-10-30
+url: ios/privacy/
+iosBanner: true
+---
+<!--
+  纯纯写作 iOS 版隐私政策的英文版本。
+  App 内的「隐私政策」链接（带 App 界面语言的 ?lang=）与 App Store 的隐私政策网址都指向旧地址 /ios/privacy，
+  由服务器按语言跳到各语言的这一页（docs/rebuild.md 第三节、4.5）。
+  五种语言各有一份 index.<语言>.html：修改正文时五种语言须同步修改，并与 App 的实际行为及 App Store 中的
+  「App 隐私」信息保持一致，同时更新各语言的更新日期与 front matter 的 lastmod。
+-->
+
+<h1>Pure Writer for iOS Privacy Policy</h1>
+<p class="meta">Last updated: October 30, 2026 · Effective: October 30, 2026</p>
+
+<p>Pure Writer for iOS (the “App”, for iPhone and iPad) is developed and operated by Drakeet Co., Ltd. (“we” or “us”). This policy explains what information the App handles, why, who it is shared with, how long it is kept, and how you can manage it.</p>
+
+<h2>1. Your writing stays on your device</h2>
+<p>The documents, version history, and settings you create in the App are stored on your device. We have no server that stores your writing, and we cannot read it. Your writing leaves your device only through the features described in Section 3 that you turn on or agree to, and it is sent directly to the service you choose.</p>
+<p>The App contains no ads, does not track you across apps or websites, does not collect the advertising identifier, and does not sell your personal information.</p>
+
+<h2>2. Information we collect</h2>
+
+<h3>2.1 Error reports and usage statistics</h3>
+<p>To find problems and improve the App, we use Firebase, a service provided by Google, to collect:</p>
+<ul>
+  <li><strong>Error reports</strong>: the App’s state when a crash or error occurs, device model, OS version, and app version.</li>
+  <li><strong>Usage statistics</strong>: how features are used, settings preferences (such as theme, export format, and the type of cloud drive in use), trial and purchase information (such as the product purchased and its price), and an approximate region that Firebase infers from your IP address.</li>
+</ul>
+<p>This information is associated with a random identifier that Firebase generates for this installation. It is not linked to your Pure Writer account and does not include your writing, titles, search text, or account details.</p>
+<p>Both are on by default. You can turn off Send Error Reports and Send Usage Statistics separately at any time in Settings › Advanced Options. Once turned off, the App stops sending that information (a change to error reports takes full effect the next time the App starts); turning off usage statistics also clears statistics data on your device. Information that has already been sent cannot be recalled.</p>
+
+<h3>2.2 Pure Writer account (optional)</h3>
+<p>The App does not offer account registration, and you don’t need to sign in to use it. A Pure Writer account is used only to confirm membership status and does not store your writing. If you already have a Pure Writer account, you can sign in to keep using the membership benefits it already has.</p>
+<p>When you sign in, request a verification code, reset your password, or stay signed in, the App sends the following to our server: your email address, your password or verification code, a device identifier that the App generates randomly on your device, device model, OS version, app version, app language, and trial status.</p>
+<p>Our server stores your email address, your password in hashed form (never the original password), and your signed-in devices and their models, in order to verify your identity, confirm membership benefits, and manage signed-in devices. The App itself does not store your password.</p>
+
+<h3>2.3 Notice checks and feature switches</h3>
+<p>To let you know about important notices and updates, the App periodically (at most once every 12 hours) checks our server for notices. The request contains only the app version and where it was installed from (the App Store or TestFlight), the OS version, app language, device model, whether the system region is mainland China, and the type of cloud drive in use. It contains no account, device identifier, or other information that identifies you.</p>
+<p>The App also occasionally reads feature switches from our server so that we can adjust how Cloud Sync works when needed. This request contains no account, device identifier, or other information that identifies you.</p>
+
+<h3>2.4 When you use AliyunDrive</h3>
+<p>If you connect AliyunDrive, your authorization credentials pass through our server to complete authorization. Our server does not store them.</p>
+<p>Once connected, to coordinate sync across your devices and to avoid cleaning up backups that your other devices still use, the App sends your AliyunDrive user ID and the relevant backup file names to our server. If you turn on Cloud Sync, our server stores your AliyunDrive user ID and sync records (including backup file names and the folders that contain them, device models, and sync times; folder names are randomly generated identifiers). These do not include your writing or your AliyunDrive sign-in credentials.</p>
+
+<h3>2.5 Server access logs</h3>
+<p>Like most online services, our servers keep access logs, such as IP addresses and access times, when handling the requests above. These logs are used only to keep the service running and secure.</p>
+
+<h2>3. Content sent directly to third-party services at your choice</h2>
+
+<h3>3.1 Back Up to iCloud</h3>
+<p>When iCloud is available, the App by default saves a copy of its automatic backups to your own iCloud so you can restore after switching devices or reinstalling. Backups are stored directly in your Apple Account through Apple’s iCloud service, do not pass through our servers, and cannot be read by us. You can turn this off, or delete all backups in iCloud, in Settings › Backup &amp; Cloud Sync › Back Up to iCloud.</p>
+<p>If your Apple Account’s country or region is mainland China, iCloud is operated by Guizhou-Cloud Big Data Industry Co., Ltd. (GCBD).</p>
+
+<h3>3.2 Cloud drive backup and Cloud Sync</h3>
+<p>Only after you connect your own Dropbox, OneDrive, or AliyunDrive account in Settings › Backup &amp; Cloud Sync › Cloud Drive does the App upload automatic backups, along with any manual backups you choose to upload, to that drive. If you turn on Cloud Sync, the App also downloads and merges backups uploaded by your other devices.</p>
+<p>Backup files travel directly between your device and your cloud drive over HTTPS and do not pass through our servers. The backup files themselves are not additionally encrypted, and content stored in your cloud drive is subject to that provider’s privacy policy. Cloud drive sign-in credentials are stored only on your device, and disconnecting the drive stops uploads.</p>
+
+<h3>3.3 Online Chinese conversion</h3>
+<p>When the App is displayed in Chinese, you can convert text between Simplified and Traditional Chinese with <a href="https://zhconvert.org">Fanhuaji</a>, a third-party service. The App asks for your consent before first use, then sends the text of the current document to Fanhuaji for conversion. The request contains no account or device identifier. Nothing is sent unless you use this feature.</p>
+
+<h3>3.4 Web images in Markdown</h3>
+<p>If your Markdown text refers to an image on the web, the App downloads the image directly from that address when you preview or export, and that website can see network request information such as your IP address.</p>
+
+<h3>3.5 Purchases</h3>
+<p>Purchases and subscriptions in the App are processed by Apple through the App Store. We do not receive your payment information.</p>
+
+<h2>4. System permissions</h2>
+<p>The App asks for permission to add photos only when you save images to your photo library, and it does not read your existing photos. When you choose an image, the App uses the system picker, so only the image you select is shared with the App. The App does not request access to your location, contacts, camera, or microphone.</p>
+
+<h2>5. Third-party services</h2>
+<p>The App involves the following third-party services:</p>
+<ul>
+  <li>Google (Firebase): error reports and usage statistics. <a href="https://policies.google.com/privacy">Privacy Policy</a></li>
+  <li>Apple: iCloud backup and App Store purchases. <a href="https://www.apple.com/legal/privacy/">Privacy Policy</a></li>
+  <li>Dropbox: your connected cloud drive. <a href="https://www.dropbox.com/privacy">Privacy Policy</a></li>
+  <li>Microsoft (OneDrive): your connected cloud drive. <a href="https://privacy.microsoft.com/privacystatement">Privacy Statement</a></li>
+  <li>AliyunDrive: your connected cloud drive, subject to its own privacy policy.</li>
+  <li>Fanhuaji: online Chinese conversion.</li>
+</ul>
+<p>We share only the information necessary for the purposes described in this policy, and we confirm that third parties with whom we share user data provide the same or equal protection of that data as described in this policy. Services you connect yourself, such as your cloud drive account, are also subject to their own privacy policies.</p>
+
+<h2>6. Retention and deletion</h2>
+<ul>
+  <li><strong>Data on your device</strong>: deleted when you delete the App. Copies in device backups (such as iCloud Backup) are managed by the system and your settings.</li>
+  <li><strong>Error reports and usage statistics</strong>: deleted automatically by Firebase according to its retention periods.</li>
+  <li><strong>Account information</strong>: kept until you delete your account.</li>
+  <li><strong>Backups in iCloud and cloud drives</strong>: kept in your own accounts and managed by you. Backups in iCloud can also be deleted from within the App.</li>
+</ul>
+<p>After signing in to your Pure Writer account, tap Delete Account at the bottom of the Pro page, read the warning, and confirm to permanently delete your account. Your account record and its membership will be deleted, and the account will no longer be usable on any device. Your local documents, settings, backups in iCloud or your cloud drives, cloud sync data, and Pro purchased through Apple are unaffected. Cloud backups and sync data are managed through your own iCloud or cloud drive account, separately from your Pure Writer membership account. Go to Settings › Backup &amp; Cloud Sync to manage backups, sync, or cloud drive connections. Delete data stored on a cloud drive in that service; disconnecting the cloud drive does not delete existing data. Deleting your account does not cancel an Apple subscription; cancel it separately in Apple’s subscription management to stop renewals.</p>
+
+<h2>7. Your choices and rights</h2>
+<ul>
+  <li>Turn off error reports or usage statistics at any time.</li>
+  <li>Sign out at any time, or delete your Pure Writer account on the Pro page.</li>
+  <li>Turn off Back Up to iCloud, disconnect a cloud drive, or turn off Cloud Sync.</li>
+</ul>
+
+<h2>8. Changes to this policy</h2>
+<p>We may update this policy from time to time. The updated policy will be posted on this page with its update date. If there are significant changes, we will notify you in an appropriate way.</p>
+
+<h2>9. Contact us</h2>
+<p>If you have any questions about this policy, email <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+
+<p class="company">Drakeet Co., Ltd.</p>

@@ -1,0 +1,73 @@
+---
+title: Pure Writer для компьютера — скачать для Windows и macOS
+description: Windows и macOS · пока бесплатно. Pure Writer для компьютера синхронизируется через облачный диск. Аккаунт Pure Writer не нужен, и телефону не обязательно быть в сети одновременно с компьютером.
+lastmod: 2026-11-07
+image: images/desktop2dark_en.png
+icons: true
+jsonld: desktop
+appName: Pure Writer для компьютера
+lastmodFrom: desktop2.json
+script: download.js
+---
+<!--
+  纯纯写作桌面版下载页（俄文）。其他语言各有一份 index.<语言>.html，内容各自完整，改动时各语言同步修改。
+  引号里的 Windows、macOS 界面名称照搬系统里的实际写法。
+  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop2.json
+  （docs/content.md 第六节），发新版时本页不用改；按钮与链接上的文字写在这里。
+  download.js 按访客的系统挑出主按钮，其余移到「其他安装包」一行，只剩一个主按钮时隐藏 data-chip-hint 的芯片说明；
+  没有脚本时三个主按钮并列、那一行不出现，所以「其他安装包」一行的 hidden 与芯片说明上的 data-chip-hint 都不能去掉。
+  蓝奏云、360、网盘之间的切换提示一类只面向中国大陆用户的内容不写进这一份（docs/content.md 第七节）。
+  旧站的锚点 #download-ru 原样保留，站外带这个锚点的旧链接仍然有效。
+-->
+
+<header>
+  <div class="masthead">
+    <img src="/images/icon512.png" alt="" width="72" height="72">
+    <div>
+      <h1>Pure Writer для компьютера</h1>
+      <p class="tagline">Windows и macOS · пока бесплатно</p>
+    </div>
+  </div>
+</header>
+
+<section class="release">
+  <h2 id="download-ru">Скачать{{< release >}}</h2>
+  <div class="downloads">
+    {{< download file="windows-x64" icon="windows" name="Скачать для Windows" detail="x64" >}}
+    {{< download file="macos-aarch64" icon="apple" name="Скачать для macOS" detail="чип Apple" >}}
+    {{< download file="macos-x64" icon="apple" name="Скачать для macOS" detail="Intel" >}}
+  </div>
+  <p class="others" hidden>Другие варианты:{{< other-download file="macos-aarch64" icon="apple" label="macOS (чип Apple)" >}}{{< other-download file="macos-x64" icon="apple" label="macOS (Intel)" >}}{{< other-download file="windows-x64" icon="windows" label="Windows (x64)" >}}</p>
+  <p class="note" data-chip-hint>Не знаете, какой чип в вашем Mac? Откройте меню Apple › «Об этом Mac». Если там указано «Чип Apple M…» или «Чип Apple A…», скачайте версию для чипа Apple; если «Процессор … Intel …» — версию для Intel.</p>
+  <p class="note">Скачивайте и обновляйте Pure Writer только с этой страницы, чтобы не получить установщик, который кто-то перепаковал и добавил в него опасный код.</p>
+  <details class="note"><summary>Контрольные суммы SHA-256</summary>{{< checksums >}}</details>
+</section>
+
+{{< img src="img/desktop2dark_en.png" alt="Окно редактора Pure Writer для компьютера (интерфейс на английском)" class="shot" width="680" loading="eager" >}}
+
+<section>
+  <h2>Что нового<span class="aside">v{{< notes version=true >}}</span></h2>
+  {{< notes >}}
+</section>
+
+<section>
+  <h2>Установка и обновление</h2>
+  <ul>
+    <li>Перед обновлением закройте Pure Writer, а затем запустите новый установщик — тогда после установки не появится запрос на перезагрузку.</li>
+    <li>В Windows некоторые антивирусы ошибочно считают опасными установщики без цифровой подписи. Pure Writer выпускает официально зарегистрированная компания, поэтому установщик и папку установки <code>C:\Users\&lt;имя пользователя&gt;\AppData\Local\Pure Writer 2</code> можно спокойно добавить в список исключений.</li>
+    <li>Если после установки Pure Writer не запускается, попробуйте разрешить ему доступ в разделе «Защита от программ-шантажистов» (контролируемый доступ к папкам) приложения «Безопасность Windows».</li>
+    <li>Если на компьютере всё ещё установлена версия для Windows v2.1.9, сначала удалите её в разделе «Параметры › Приложения › Установленные приложения», а затем установите новую версию.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Синхронизация с телефоном</h2>
+  <p>Pure Writer для компьютера синхронизируется через облачный диск. Аккаунт Pure Writer не нужен, и телефону не обязательно быть в сети одновременно с компьютером. Выберите в Pure Writer на телефоне тот же облачный диск, что и на компьютере, и войдите в тот же аккаунт — после этого данные будут синхронизироваться в обе стороны. Не забудьте обновить Pure Writer на телефоне до последней версии.</p>
+</section>
+
+<section>
+  <h2>Обратная связь</h2>
+  <p>Мы продолжаем совершенствовать Pure Writer для компьютера. Если вы столкнулись с проблемой или хотите что-то предложить, напишите нам: <a href="mailto:writer@drakeet.com">writer@drakeet.com</a>.</p>
+</section>
+
+<p class="note colophon">Новый Pure Writer для компьютера впервые вышел 20 июня 2024 года, накануне летнего солнцестояния.</p>
