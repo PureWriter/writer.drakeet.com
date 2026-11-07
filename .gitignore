@@ -1,2 +1,5 @@
 
 *.sh
+
+# scripts/ 下是部署等仓库脚本：新的部署从 git archive 打包、只发布网站文件，它们不会出现在网站上。
+!/scripts/*.sh
