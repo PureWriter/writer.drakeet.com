@@ -739,7 +739,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 1. **兼容旧版桌面版，只改 rebase-server**：按设备自动回落。报告 GitHub 可达的设备照旧给 Cloudflare 上的地址（kuromi.drakeet.cn，即 R2）；其余设备先给 Cloudflare，同一台设备之后再来检查、仍停在旧版本，说明没下成，改给本站镜像；去掉现在按时间奇偶抛硬币的做法（`JarVersions`，`RawJsonResource` 里已有的 `kuromiHitMap`）。部署 rebase-server 由 Drakeet 执行。
 2. **新版桌面版自己选来源**：服务端同时下发多个来源（Cloudflare 在前，本站镜像在后），桌面版先试 Cloudflare，连不上或太慢就换镜像，已下载的部分断点续传。生成这些链接的脚本（桌面版发版时写 JarVersions 的那一步）一并调整。
-3. **旧图片**：把 `static/images/` 原样上传到 R2 的 kuromi 存储桶里一个专用的文件夹（例如 `writer-images/`），与 JAR 分开，以后清理 JAR 时不会误删；上传后按 `ops/images.sha256` 核对字节。Android 新版本加载这些图片时先试 Cloudflare 上的副本，失败再回到本站；旧版本与站外引用照旧从本站取，本站的 `/images/` 继续原样提供。
+3. **旧图片**：把 `static/images/` 原样上传到 R2 的 kuromi 存储桶里的 `writer/images/` 下，子路径与站内一致（例如稿纸背景是 `writer/images/papers/0.jpg`），客户端把 `writer.drakeet.com/images/` 换成这个前缀即可。用层级与存储桶根目录的 JAR 分开（Drakeet：目录用层级表达，不用短横命名），以后清理 JAR 时不会误删；上传后按 `ops/images.sha256` 核对字节。Android 新版本加载这些图片时先试 Cloudflare 上的副本，失败再回到本站；旧版本与站外引用照旧从本站取，本站的 `/images/` 继续原样提供。
 4. **发版高峰**：可以考虑分批推送更新，把下载摊开。
 5. **验收**：下一次桌面发版后的高峰里，本站出口中 JAR 的占比明显下降，网页的加载时间随之改善。
 
