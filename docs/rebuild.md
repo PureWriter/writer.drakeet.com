@@ -14,7 +14,7 @@
   - 第 E 步（SEO 与 AI 可发现性）：站长平台的验证需要 Drakeet 的账号；
   - 第 F 步剩下的两份教程：2026-11-07 已按三端现行版本重写并上线（fc0b13d），GPT 复审未发现事实错误；
   - 第 D 步在上线一周后（11-14 前后）核对；
-  - 第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md)。2026-11-08 凌晨三端代码都已完成并经 GPT 复审（rebase-server 已合并、iMac 已部署；桌面版与 Android 本地提交、随各自发版），R2 旧图片副本已上传；待 Drakeet 部署 api.drakeet.com，进度见那边的游标；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
+  - 第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md)。2026-11-08 凌晨三端代码都已完成并经 GPT 复审（rebase-server 已合并、iMac 已部署；桌面版与 Android 本地提交、随各自发版），R2 旧图片副本已上传；api.drakeet.com 11-08 早上部署并核对通过，剩下桌面版与 Android 随各自发版，进度见那边的游标；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
 - **仓库**：
   - 主目录 `/Users/drakeet/GitHub/writer.drakeet.com` 在 `master`，就是线上的新站；之后都在 `master` 上改、提交、推送，部署按 operations.md 5.1。
   - 重建期间的 `rebuild` 分支已在第 C 步快进进 `master`，它的工作树随后移除；旧站另有完整副本在本机 `/Users/drakeet/GitHub/writer.drakeet.com.old`。
@@ -736,7 +736,7 @@ scripts/             构建、预览、检查、部署与回滚
 - **站点名**：定为「纯纯写作」，四个名字同时写进 WebSite 的别名与每页的关键词（4.10）。
 - **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（iOS 是 Drakeet Co., Ltd.，Android 与桌面版的英文隐私政策是 Drakeet, Inc.，Android 简体版是苏州小白迷雾科技有限公司），官方账号属于产品，挂在产品上即可。
 - **分享卡片大图**：五种语言的首页改用 1200×630 的分享图：从 App Store 产品页的页头（雾山稿纸加「写作，连接过去，遥想未来。」）截取，左上角补上图标与名称，由 `scripts/og-images.py` 生成到 `assets/img/og/`，港繁共用台繁一张；构建时加内容指纹、原样发布为 JPEG（不少平台不认 WebP 的分享图），页头写明尺寸。下载页沿用桌面版截图的大卡片，其余页面仍是图标小卡片。微信不读这些标签，不受影响。旧的分享图（`images/header_zh_hans.jpg` 等）在固定字节清单里，照旧保留。
-- **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。2026-11-07 已在阿里云解析添加，权威 DNS 上可查到。
+- **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。根域名 drakeet.com 虽是指向 writer 的 CNAME，但阿里云权威 DNS 对根域名的 CAA 查询回 NODATA（只有 SOA），不会跟到 writer 的 CAA，其他子域名查到的仍是空；api.drakeet.com 现用的也是 Let's Encrypt（2026-11-08 核对）。以后若在根域名上加 CAA，就会约束所有没有自己 CAA 的子域名，届时先盘点各子域名所用的 CA。2026-11-07 已在阿里云解析添加，权威 DNS 上可查到。
 - **内容打磨**：结构化数据与 `llms.txt` 的内容打磨；各语言标题与描述的质量检查，除首页外统一为「页面名 - 品牌名」；用 Lighthouse 对各语言首页与下载页做一次无障碍与性能体检。
   - 2026-11-07 体检（PageSpeed Insights，移动端，简体首页）：性能 91、无障碍 95、最佳做法 100、SEO 100；真实用户的 Core Web Vitals 通过（LCP 2.2 秒、INP 101 毫秒、CLS 0）。
   - 无障碍扣分的是「链接只靠颜色区分」，正文链接已加淡下划线（c777135c）。
@@ -759,7 +759,6 @@ scripts/             构建、预览、检查、部署与回滚
 - rebase-server 的可选简化；
 - 补齐滞后的译文（第十一节）；
 - 个人代理服务按需重装；
-- CAA 记录：根域名 drakeet.com 是指向 writer.drakeet.com 的 CNAME，CA 查 CAA 时沿域名树向上并跟随 CNAME，所以在 writer 上加的 CAA 会约束 drakeet.com 下所有没有自己 CAA 的子域名（例如 api.drakeet.com）。先盘点各子域名所用的 CA，与根域名的 DNS 问题一起处理后再加；
 - 桌面版 CI 从镜像兜底下载 JAR 时不校验哈希（既有问题），可以改为校验 JarVersions 或 R2 给出的哈希；
 - 收回免密 sudo（5.3 的终态）。
 

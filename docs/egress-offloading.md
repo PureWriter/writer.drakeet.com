@@ -9,10 +9,10 @@
   - 8.3 的 S1、S2 完成：R2 上的旧图片副本已上传并核对通过。
   - 第 1 步完成：rebase-server 的 R1～R5（f2550f39，合进 master 为 e3b3af28）与桌面版的 D4、D5（a9c9d742，本地提交、未推送）；GPT（Sol）复审，须改已闭合。
   - iMac 改为脚本部署：rebase-server 的 `deploy_imac.sh`（7e078ce7），launchd 常驻，详见那边的 `docs/imac_deploy.md`；第 1 步的代码已用它部署到 iMac。
-  - api.drakeet.com：安装包与 `install.sh` 已放到它的 `~/egress-offloading/`，待 Drakeet 运行 `sudo bash ~/egress-offloading/install.sh`。
+  - api.drakeet.com：2026-11-08 早上 Drakeet 运行 `install.sh` 部署，脚本验收通过；部署前的版本备份在 `/opt/tomcat/rebase_2026_11_08_before_egress`。主持方从外部核对：旧版设备先拿到 Cloudflare、带 `urls` 与 `size`，同一设备 25 分钟内再请求仍是 Cloudflare；`multi_source=true`、macOS aarch64、已是最新版的请求都按 3.2 回复；两个下载地址都回 200、大小一致；iMac 仍回 `code` 0。
   - 第 2 步完成：桌面版的新下载器 D1～D3（93db345e，本地提交、未推送），D6 已用 Cloudflare 核对；GPT（Sol）复审，须改已闭合。
   - 第 3 步完成：Android 的 A1、A2（e39399911，本地提交、未推送），A3 在 API 30 模拟器上核对；GPT（Sol）复审，须改已闭合。
-  - 剩下：Drakeet 部署 api.drakeet.com；桌面版与 Android 各自发版（第九节第 3、4 步）；发版后按 8.5 看统计、按 8.3 的 S3 更新现役文档。
+  - 剩下：桌面版与 Android 各自发版（第九节第 3、4 步）；发版后按 8.5 看统计、按 8.3 的 S3 更新现役文档。
 
 ## 一、目标与边界
 
