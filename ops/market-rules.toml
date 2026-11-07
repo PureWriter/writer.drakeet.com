@@ -11,7 +11,6 @@
 # 「旧版」名单：原样迁移的旧繁体文本，含大陆专属内容（第十一节），本轮只提示、不拦截。文案批次处理后从这里删掉。
 legacy_warn_only = [
   "/zh-hant/backups/",
-  "/zh-hant/manual/",
 ]
 
 [[group]]
