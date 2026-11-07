@@ -1,6 +1,8 @@
 {{- /*
   顶部一行：左边回到本语言的首页（首页自己不显示），右边是语言切换（4.3）。
   语言切换固定列出五种核心语言：本页有该语言译文的指向译文，没有的指向该语言的首页；俄文只在本页有俄文译文时列出。
+  例外：香港繁体没有这一页时，指向台湾繁体的同一页。两者书写体系相同，香港读者读台湾繁体的手册、备份教程没有障碍
+  （旧站就是两地共用一份），比跳回香港首页更有用。当前页本身就是台湾繁体时仍回香港首页，免得点了像没有反应。
   用普通链接加 <details>，不需要脚本。404 页面之间不算译文，只留回到首页。
 */ -}}
 {{- $page := . -}}
@@ -19,6 +21,9 @@
 {{- $lang := .Lang }}
 {{- $target := "" }}
 {{- range where $page.AllTranslations "Lang" $lang }}{{ $target = .RelPermalink }}{{ end }}
+{{- if and (not $target) (eq $lang "zh-hk") (ne $page.Lang "zh-hant") }}
+{{- range where $page.AllTranslations "Lang" "zh-hant" }}{{ $target = .RelPermalink }}{{ end }}
+{{- end }}
 {{- if or $target (ne $lang "ru") }}
 {{- if eq $lang $page.Lang }}
 <li><span aria-current="page" lang="{{ .Locale }}">{{ .Label }}</span></li>
