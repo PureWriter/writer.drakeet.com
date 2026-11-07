@@ -96,7 +96,24 @@ scripts/deploy.sh --indexnow-only   # 不部署，把正式站当前版本的全
 - 镜像同步失败时，修好后在桌面版仓库运行 `./buildAllJars.sh --sync-only`，不必重新构建。
 - 实测速度：2026-11-07 上午（上海时间），每个版本三个包（约 127 MB）约 2 分钟。晚高峰尚未实测。
 
-### 5.3 日志
+### 5.3 R2 上的旧图片副本
+
+- `static/images/` 下的旧图片（清单 `ops/images.sha256`，43 个文件、7,214,775 字节）在 R2 的 kuromi 存储桶里有一份副本：对象键是 `writer/` 加清单里的路径，公开地址是 `https://kuromi.drakeet.cn/writer/images/…`，Content-Type 与 Cache-Control（`public, max-age=604800`）与本站 `/images/` 相同。2026-11-07 首次上传并核对通过。
+- 用途：Android 从带新图片加载器的版本起先从这里取稿纸与 Pro 图片，失败或字节不对再回到本站（`docs/egress-offloading.md` 第七节）。本站的 `/images/` 照旧原样提供，旧版本与站外引用不受这份副本影响。
+- 在官网仓库主目录里运行，需要本机 aws CLI 配好 `cloudflare-r2` profile（Drakeet 的 Mac）：
+
+```bash
+scripts/r2-images.sh verify   # 核对：键与清单不多不少；经公开地址逐个取回，sha256、状态码 200、Content-Type、Cache-Control 都对
+scripts/r2-images.sh upload   # 首次上传：先核对本地 static/ 的字节与清单一致；writer/ 前缀下已有对象就拒绝，不覆盖
+```
+
+- `verify` 三项全部通过才以 0 退出，逐个文件打印「通过」或不通过的原因。R2 上没有的键只报「不存在」、不经公开地址去取，免得 Cloudflare 把 404 缓存在边缘。
+- **删除与重传**：Android 新版本在用这些地址。删掉不会让它取不到图（会回到本站），但分流随之失效，本站出口重新被图片占用。
+  - 不要删除 `writer/` 下的对象。桌面版发版脚本与 OCAT 的 APK 清理只选特定名字的键（`PureWriter2-` 开头的 JAR 与安装包、`ocat` 开头的 APK），选不中 `writer/`（`docs/egress-offloading.md` 2.4）；改这些清理逻辑时不能放宽到 `writer/`。
+  - 脚本只做首次上传，没有覆盖与删除。确需重传（例如 `verify` 报字节不符）时另定做法，要点：覆盖原键，不要先删再传；带上同样的 Content-Type 与 Cache-Control；传完清除这些地址在 Cloudflare 的缓存，否则边缘最长一周后才换成新字节；最后跑 `verify`。
+  - 清单本身不会改（图片按原路径、原字节发布，见清单开头的说明）。
+
+### 5.4 日志
 
 - 访问日志 `/var/log/caddy/access.log`：JSON，含主机名与访客 IP；保留 183 天（《网络安全法》要求不少于六个月），到期自动删除。drakeet 在 `adm` 组里，不用 sudo 就能读。
 - Caddy 自身的运行日志（证书、配置加载）在 `/var/log/caddy/caddy.log`，不在 journald 里。
