@@ -44,6 +44,15 @@ while (($#)); do
 	shift
 done
 
+# 产物目录每次都会先清空：拒绝明显写错的目录（根目录、家目录、本仓库或它的上级、任何 git 仓库），免得误删。
+out_abs="$(mkdir -p "$out" && cd "$out" && pwd -P)"
+case "$REPO/" in
+	"$out_abs"/*) die "--out 不能是本仓库或它的上级目录：$out_abs" ;;
+esac
+[[ "$out_abs" != / && "$out_abs" != "$HOME" ]] || die "--out 不能是 $out_abs"
+[[ ! -e "$out_abs/.git" ]] || die "--out 指向一个 git 仓库：$out_abs"
+out="$out_abs"
+
 work="$(mktemp -d)"
 trap 'rm -rf -- "$work"' EXIT
 
