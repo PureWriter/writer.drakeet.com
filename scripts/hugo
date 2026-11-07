@@ -38,7 +38,7 @@ install_hugo() {
 			;;
 	esac
 	tmp="$(mktemp -d)"
-	echo "scripts/hugo: 首次运行，下载 Hugo $VERSION……" >&2
+	echo "scripts/hugo: 首次运行，下载 Hugo ${VERSION}……" >&2
 	curl -fsSL --retry 3 -o "$tmp/$asset" "https://github.com/gohugoio/hugo/releases/download/v$VERSION/$asset"
 	[[ "$(sha256_of "$tmp/$asset")" == "$expected" ]] || { rm -rf -- "$tmp"; die "$asset 的 SHA-256 不符，拒绝使用"; }
 	mkdir -p "$CACHE"

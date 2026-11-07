@@ -88,7 +88,7 @@ on_signal() {
 		{
 			echo "deploy: 切换开始之后被中断：切换后的检查没有做完，也没有自动回滚。"
 			echo "  查看服务器上的版本：$status_command"
-			echo "  要回到切换前的 $before：$restore_command"
+			echo "  要回到切换前的 ${before}：$restore_command"
 		} >&2
 	fi
 	exit "$1"
@@ -120,7 +120,7 @@ acquire_lock() {
 	fi
 	sed 's/^/    /' <<<"$owner" >&2
 	if kill -0 "$holder" 2>/dev/null; then
-		die "另一次部署正在进行（锁 $lock_dir，内容见上），不能同时部署；如果确认进程 $holder 不是部署，手动移除这把锁再试"
+		die "另一次部署正在进行（锁 ${lock_dir}，内容见上），不能同时部署；如果确认进程 $holder 不是部署，手动移除这把锁再试"
 	fi
 	{
 		echo "deploy: 部署锁 $lock_dir 是遗留的（内容见上）：持有它的进程 $holder 已不在，多半是上次部署被强杀或机器死机留下的。"
@@ -159,11 +159,11 @@ indexnow_submit() {
 			;;
 		000) hint="请求没有完成：$detail" ;;
 		403) hint="密钥无效：读不到 https://$site/indexnow.txt，或其中的内容与密钥不符" ;;
-		422) hint="地址不属于 $site，或密钥不合格式" ;;
+		422) hint="地址不属于 ${site}，或密钥不合格式" ;;
 		429) hint="推送太频繁" ;;
 		*) hint="没有被接受" ;;
 	esac
-	echo "deploy: IndexNow 推送失败（状态码 $status，$hint），$count 个地址没有推送出去；补推：scripts/deploy.sh --indexnow-only" >&2
+	echo "deploy: IndexNow 推送失败（状态码 ${status}，${hint}），$count 个地址没有推送出去；补推：scripts/deploy.sh --indexnow-only" >&2
 	return 1
 }
 
@@ -194,13 +194,13 @@ branch="$(git rev-parse --abbrev-ref HEAD)"
 
 # 分支要求（第六节）：正式站只接受 master；预发站任何分支都可以。
 if [[ "$env" == prod && "$branch" != master ]]; then
-	die "正式站只从 master 部署（当前在 $branch）；预发站用 --staging"
+	die "正式站只从 master 部署（当前在 ${branch}）；预发站用 --staging"
 fi
 
 id="$(date -u +%Y%m%dT%H%M%SZ)-$short"
-acquire_lock "部署 $branch 的 $short（$commit）到 $site，版本号 $id"
+acquire_lock "部署 $branch 的 ${short}（${commit}）到 ${site}，版本号 $id"
 work="$(mktemp -d)"
-echo "deploy: 部署 $branch 的 $short 到 $site（版本号 $id）"
+echo "deploy: 部署 $branch 的 $short 到 ${site}（版本号 ${id}）"
 
 # 1. 解出这个提交，用其中的 build.sh 构建并检查。--worktree 让它直接构建所在的这份目录，也就是刚解出来的提交，
 #    不再去读 git；构建用的 scripts/hugo、scripts/check.py 与 ops/ 下的检查配置都随之取自同一个提交。
@@ -244,9 +244,9 @@ activating=1
 if ! "${SSH[@]}" "$HOST" writer-release activate "$env" "$id"; then
 	live="$(server_current)"
 	if [[ "$live" == "$id" ]]; then
-		echo "deploy: writer-release 报告失败，但服务器上的 current 已经是 $id；照常做切换后的检查，不通过再切回 $before" >&2
+		echo "deploy: writer-release 报告失败，但服务器上的 current 已经是 ${id}；照常做切换后的检查，不通过再切回 $before" >&2
 	elif [[ -n "$live" ]]; then
-		die "切换失败：服务器上的 current 是 $live，不是这次的 $id（详情见上面 writer-release 的输出）"
+		die "切换失败：服务器上的 current 是 ${live}，不是这次的 ${id}（详情见上面 writer-release 的输出）"
 	else
 		die "切换失败，也查不到服务器上的 current 指向哪个版本；请运行 $status_command 核对，要回到切换前的版本就运行 $restore_command"
 	fi
@@ -261,7 +261,7 @@ fi
 if [[ "$env" == prod ]]; then
 	# curl -f 让 4xx、5xx 与传输中断都算失败；curl 不跟随跳转，3xx 的正文不是带版本号的 JSON，jq -e 读不出 version，同样算失败。
 	if live_json="$(curl -fsS --max-time 30 "https://$site/desktop2.json")" && live_version="$(jq -er .version <<<"$live_json")"; then
-		[[ "$live_version" == "$expected_version" ]] || failures+=("desktop2.json：期望版本 $expected_version，实际 $live_version")
+		[[ "$live_version" == "$expected_version" ]] || failures+=("desktop2.json：期望版本 ${expected_version}，实际 $live_version")
 	else
 		failures+=("从本机读取 https://$site/desktop2.json 失败，或其中没有版本号（见上面 curl 或 jq 的输出）")
 	fi

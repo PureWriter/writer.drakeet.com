@@ -114,7 +114,7 @@ check_local() {
 		fi
 		actual="$(shasum -a 256 "$file" | awk '{print $1}')"
 		if [[ "$actual" != "${sums[$i]}" ]]; then
-			echo "$file 的 sha256 是 $actual，清单里是 ${sums[$i]}" >&2
+			echo "$file 的 sha256 是 ${actual}，清单里是 ${sums[$i]}" >&2
 			problems=$((problems + 1))
 		fi
 		total=$((total + $(wc -c <"$file")))
@@ -126,7 +126,7 @@ check_local() {
 upload() {
 	local existing count i key
 	check_local
-	existing="$(list_keys)" || die "列出 $R2_BUCKET 存储桶的 $KEY_PREFIX 前缀失败（aws 的报错见上，profile $R2_PROFILE）"
+	existing="$(list_keys)" || die "列出 $R2_BUCKET 存储桶的 $KEY_PREFIX 前缀失败（aws 的报错见上，profile ${R2_PROFILE}）"
 	if [[ -n "$existing" ]]; then
 		count="$(wc -l <<<"$existing" | tr -d ' ')"
 		head -n 20 <<<"$existing" >&2
@@ -139,7 +139,7 @@ upload() {
 			--content-type "${types[$i]}" --cache-control "$CACHE_CONTROL" >/dev/null; then
 			die "上传 $key 失败（aws 的报错见上）。已经传上去的 $i 个对象不会撤回，再运行 upload 会因前缀不为空而拒绝；先运行 verify 看清现状，再决定怎么处理"
 		fi
-		echo "已上传 $key（$((i + 1))/${#paths[@]}）"
+		echo "已上传 ${key}（$((i + 1))/${#paths[@]}）"
 	done
 	echo "上传完成：${#paths[@]} 个对象。接着运行 scripts/r2-images.sh verify 核对"
 }
@@ -167,14 +167,14 @@ verify() {
 	local file_problems=()
 	work="$(mktemp -d "${TMPDIR:-/tmp}/writer-r2-images.XXXXXX")"
 
-	listed="$(list_keys)" || die "列出 $R2_BUCKET 存储桶的 $KEY_PREFIX 前缀失败（aws 的报错见上，profile $R2_PROFILE）"
+	listed="$(list_keys)" || die "列出 $R2_BUCKET 存储桶的 $KEY_PREFIX 前缀失败（aws 的报错见上，profile ${R2_PROFILE}）"
 	expected="$(for i in "${!paths[@]}"; do echo "$KEY_PREFIX${paths[$i]}"; done)"
 
 	# 第 1 项：多出来的键（在 R2 上、不在清单里）。缺少的键在下面逐个文件时报出。
 	while IFS= read -r key; do
 		[[ -n "$key" ]] || continue
 		if ! grep -Fxq -- "$key" <<<"$expected"; then
-			echo "多余  $key：不在 $MANIFEST 里"
+			echo "多余  ${key}：不在 $MANIFEST 里"
 			key_extra=$((key_extra + 1))
 		fi
 	done <<<"$listed"
@@ -182,7 +182,7 @@ verify() {
 	for i in "${!paths[@]}"; do
 		key="$KEY_PREFIX${paths[$i]}"
 		if ! grep -Fxq -- "$key" <<<"$listed"; then
-			echo "不存在  $key：R2 上没有这个键，未经公开地址取回"
+			echo "不存在  ${key}：R2 上没有这个键，未经公开地址取回"
 			key_missing=$((key_missing + 1))
 			not_fetched=$((not_fetched + 1))
 			continue
@@ -195,7 +195,7 @@ verify() {
 		# Cloudflare 因此按原样返回，取回的就是对象的原字节。
 		if ! status="$(curl -q -sS --connect-timeout 15 --max-time 120 --retry 2 --retry-delay 2 \
 			-D "$work/headers" -o "$work/body" -w '%{http_code}' "$url")"; then
-			echo "不通过  $key：经 $url 取回失败（curl 的报错见上）"
+			echo "不通过  ${key}：经 $url 取回失败（curl 的报错见上）"
 			not_fetched=$((not_fetched + 1))
 			continue
 		fi
@@ -209,7 +209,7 @@ verify() {
 			if [[ "$actual" == "${sums[$i]}" ]]; then
 				hash_ok=$((hash_ok + 1))
 			else
-				file_problems+=("sha256 是 $actual，清单里是 ${sums[$i]}")
+				file_problems+=("sha256 是 ${actual}，清单里是 ${sums[$i]}")
 				hash_bad=$((hash_bad + 1))
 			fi
 		fi
@@ -218,9 +218,9 @@ verify() {
 		content_type="$(header_value content-type "$work/headers")"
 		cache_control="$(header_value cache-control "$work/headers")"
 		line=""
-		[[ "$status" == 200 ]] || line+="状态码 $status；"
-		[[ "$content_type" == "${types[$i]}" ]] || line+="Content-Type 是「$content_type」，应为「${types[$i]}」；"
-		[[ "$cache_control" == "$CACHE_CONTROL" ]] || line+="Cache-Control 是「$cache_control」，应为「$CACHE_CONTROL」；"
+		[[ "$status" == 200 ]] || line+="状态码 ${status}；"
+		[[ "$content_type" == "${types[$i]}" ]] || line+="Content-Type 是「${content_type}」，应为「${types[$i]}」；"
+		[[ "$cache_control" == "$CACHE_CONTROL" ]] || line+="Cache-Control 是「${cache_control}」，应为「${CACHE_CONTROL}」；"
 		if [[ -z "$line" ]]; then
 			head_ok=$((head_ok + 1))
 		else
@@ -232,7 +232,7 @@ verify() {
 			echo "通过  $key"
 		else
 			joined="$(printf '%s；' "${file_problems[@]}")"
-			echo "不通过  $key：${joined%；}"
+			echo "不通过  ${key}：${joined%；}"
 		fi
 	done
 

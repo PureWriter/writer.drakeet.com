@@ -53,7 +53,7 @@ while (($#)); do
 	shift
 done
 
-[[ -x "$CADDY" ]] || die "找不到 Caddy：$CADDY（用环境变量 CADDY 指定与服务器同版本的二进制）"
+[[ -x "$CADDY" ]] || die "找不到 Caddy：${CADDY}（用环境变量 CADDY 指定与服务器同版本的二进制）"
 
 bench="$(mktemp -d "${TMPDIR:-/tmp}/writer-caddy-test.XXXXXX")"
 caddy_pid=""
@@ -63,7 +63,7 @@ cleanup() {
 		wait "$caddy_pid" 2>/dev/null || true
 	fi
 	if ((keep)); then
-		echo "测试台保留在 $bench（Caddy 日志：$bench/caddy.log）"
+		echo "测试台保留在 ${bench}（Caddy 日志：$bench/caddy.log）"
 	else
 		rm -rf -- "$bench"
 	fi

@@ -576,7 +576,7 @@ scripts/             构建、预览、检查、部署与回滚
 | 命令 | 作用 |
 |---|---|
 | `scripts/dev.sh` | 本机实时预览 |
-| `scripts/build.sh` | 从当前已提交的 HEAD 构建（`git archive` 到临时目录；`--worktree` 则构建脚本所在的这份目录），再跑不需要服务器的检查：构建警告视为错误、期望产物清单、站内链接全部可达、本地化与市场差异检查、固定图片按 `ops/images.sha256` 核对原字节、Apple 关联域名文件是合法的 JSON 且含本 App |
+| `scripts/build.sh` | 从当前已提交的 HEAD 构建（`git archive` 到临时目录；`--worktree` 则构建脚本所在的这份目录），再跑不需要服务器的检查：构建警告视为错误、期望产物清单、站内链接全部可达、本地化与市场差异检查、固定图片按 `ops/images.sha256` 核对原字节、Apple 关联域名文件是合法的 JSON 且含本 App、本机运行的 bash 脚本没有 `$名字` 紧跟非 ASCII 字符（macOS 的 bash 3.2 在 UTF-8 环境下会报 unbound variable） |
 | `scripts/deploy.sh` | 取一次完整的提交号并做分支判断 → 取得部署锁 → 把这个提交 `git archive` 解到临时目录，用其中的 `scripts/build.sh --worktree` 构建并检查，站点规则与 URL 合同也取自这同一份 → `rsync --link-dest` 上传到新的 release 目录 → 记下服务器上切换前的版本，由 writer-release 用 `mv -T` 切换 `current` 并重载 Caddy（Caddy 拒绝新规则时切回原版本），只保留最近 5 份 → 在服务器上跑这一版的 URL 合同，正式站另核对线上 `desktop2.json` 的版本，失败就自动切回切换前的版本并报错 → 正式站部署成功后把内容有变化的页面推送给 IndexNow（第九节 E），推送失败不影响部署结果。上传按内容比较（`--checksum`）、不保留修改时间：构建产物的时间每次都会变，按时间比较就得整站重传；这样内容未变的文件与上一版硬链接，实际传输的只有改动，ETag 也保持不变。只用 macOS 自带的 openrsync 也支持的选项 |
 | `scripts/deploy.sh --staging` | 同上，部署到预发站 writer2.drakeet.com，任何分支都可以 |
 | `scripts/deploy.sh --rollback` | 把 `current` 切回上一份，并重载 Caddy；同样先取得部署锁 |

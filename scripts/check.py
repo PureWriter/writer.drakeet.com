@@ -4,7 +4,7 @@
   python3 scripts/check.py <产物目录> --expected ops/expected-files.txt --market ops/market-rules.toml \
       --zh-variants ops/zh-variants.toml [--images ops/images.sha256] [--update-expected]
 
-检查七项，任何一项不通过就以非零状态退出：
+检查八项，任何一项不通过就以非零状态退出：
   1. 期望产物清单：产物目录里的所有文件与入库的清单逐行比对，多一个、少一个都报错，清单文件不存在也报错。这样新站的
      地址空间严格等于约定，Hugo 自作主张多生成的页面也能当场暴露。有意增删页面时，用 --update-expected 重写清单。
   2. 站内链接与锚点：每个 HTML 里指向本站的 href、src 都必须能落到产物里的文件；带 #锚点 的，目标页面里必须有
@@ -16,6 +16,9 @@
   5. iOS 隐私政策各语言的「更新日期」「生效日期」一致（旧站五种语言同页时天然同步，拆成五个文件后靠这项检查）。
   6. 固定图片的原字节：/images/ 下的每个文件按入库的 sha256 清单（ops/images.sha256）核对，多、少、字节不同都报错。
   7. Apple 关联域名文件 /.well-known/apple-app-site-association 是合法的 JSON，webcredentials.apps 里有本 App。
+  8. 本机运行的 bash 脚本（本脚本所在的 scripts/ 目录）里，`$名字` 后面不得紧跟中文等非 ASCII 字符：macOS 自带的
+     /bin/bash 3.2 在 UTF-8 环境下会把那个字符的首字节当成变量名的一部分，set -u 时报 unbound variable 退出（Drakeet 的
+     终端就是 UTF-8，桌面版 release.sh 也在那里调用 deploy.sh），要写成 `${名字}`。ops/bin/ 在服务器的 bash 5 上运行，不查。
 第 3、4 项跳过下载页里来自桌面端更新日志的条目（data-source="desktop2.json"）：那段文字的用词归桌面端管，
 不能让官网的检查拦住桌面版发版（rebuild.md 第一节「取舍原则」）。
 
@@ -339,6 +342,34 @@ def check_aasa(root):
     return []
 
 
+# 第 8 项：$名字 紧跟一个非 ASCII 字符（前面不是反斜杠转义）。
+SHELL_VARIABLE_BEFORE_NON_ASCII = re.compile(r"(?<!\\)\$[A-Za-z_][A-Za-z0-9_]*(?=[^\x00-\x7f])")
+
+
+def check_shell_scripts(scripts_dir):
+    problems = []
+    for file in sorted(scripts_dir.iterdir()):
+        if not file.is_file():
+            continue
+        try:
+            text = file.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        first_line = text.split("\n", 1)[0]
+        if not (first_line.startswith("#!") and "bash" in first_line):
+            continue
+        for number, line in enumerate(text.splitlines(), 1):
+            # 注释里的写法不影响运行。
+            if line.lstrip().startswith("#"):
+                continue
+            if SHELL_VARIABLE_BEFORE_NON_ASCII.search(line):
+                problems.append(
+                    f"scripts/{file.name} 第 {number} 行：变量后面紧跟非 ASCII 字符，macOS 的 bash 3.2 在 UTF-8 环境下会报"
+                    f" unbound variable，写成 ${{名字}}"
+                )
+    return problems
+
+
 def main():
     parser = argparse.ArgumentParser(description="检查构建产物")
     parser.add_argument("root", type=pathlib.Path)
@@ -358,6 +389,7 @@ def main():
     variant_problems, variant_warnings = check_zh_variants(root, args.zh_variants)
     problems += market_problems + variant_problems + check_privacy_dates(root)
     problems += check_images(root, args.images) + check_aasa(root)
+    problems += check_shell_scripts(pathlib.Path(__file__).resolve().parent)
     for warning in market_warnings + variant_warnings:
         print(f"check: 提示（旧版名单，不拦截）：{warning}", file=sys.stderr)
     if not problems:
@@ -367,7 +399,7 @@ def main():
             print(f"check: {problem}", file=sys.stderr)
         print(f"check: 共 {len(problems)} 个问题", file=sys.stderr)
         return 1
-    print("check: 站内链接、锚点、市场差异、台港用词、iOS 隐私政策日期、固定图片的原字节、Apple 关联域名文件与期望产物清单都通过")
+    print("check: 站内链接、锚点、市场差异、台港用词、iOS 隐私政策日期、固定图片的原字节、Apple 关联域名文件、本机脚本的 bash 3.2 兼容与期望产物清单都通过")
     return 0
 
 
