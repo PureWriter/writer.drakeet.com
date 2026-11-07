@@ -14,7 +14,7 @@
   - 第 E 步（SEO 与 AI 可发现性）：站长平台的验证需要 Drakeet 的账号；
   - 第 F 步剩下的两份教程：2026-11-07 已按三端现行版本重写并上线（fc0b13d），GPT 复审未发现事实错误；
   - 第 D 步在上线一周后（11-14 前后）核对；
-  - 原计划完成后，紧接着做第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md) 已经两轮 GPT 复审并定稿（只由 api.drakeet.com 下发更新）；iMac 那套先改为脚本部署，再按任务清单开工；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
+  - 第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md)。2026-11-08 凌晨三端代码都已完成并经 GPT 复审（rebase-server 已合并、iMac 已部署；桌面版与 Android 本地提交、随各自发版），R2 旧图片副本已上传；待 Drakeet 部署 api.drakeet.com，进度见那边的游标；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
 - **仓库**：
   - 主目录 `/Users/drakeet/GitHub/writer.drakeet.com` 在 `master`，就是线上的新站；之后都在 `master` 上改、提交、推送，部署按 operations.md 5.1。
   - 重建期间的 `rebuild` 分支已在第 C 步快进进 `master`，它的工作树随后移除；旧站另有完整副本在本机 `/Users/drakeet/GitHub/writer.drakeet.com.old`。
