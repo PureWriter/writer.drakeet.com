@@ -1,0 +1,61 @@
+# 官网服务器的全局 Caddy 配置，由 ops/provision.sh web 安装到 /etc/caddy/Caddyfile（root 所有）。
+#
+# 这里只放全局选项与各主机名。每个站点的具体规则（映射、协商、响应头、缓存头）随站点版本一起发布，
+# 位于 /srv/writer.drakeet.com/<环境>/current/caddy/site.caddy：规则与内容同属一个版本，一起部署、一起回滚，
+# 日常改跳转规则不需要 root。部署脚本切换 current 之后，以 drakeet 身份经管理接口让 Caddy 重载。
+#
+# import 后面的路径参数会替换站点规则里的 {args[0]}，即这一版 release 目录（经 current 软链接）。
+# 占位用的初始版本由 provision.sh 建好，保证这些导入在第一次部署之前也存在、Caddy 能正常启动。
+{
+	# ACME 账户的联系邮箱。不写的话 Caddy 只用 Let's Encrypt 一家，没有 ZeroSSL 兜底。
+	email writer@drakeet.com
+
+	# 管理接口只监听 unix socket，权限 0660：只有 caddy 组（drakeet 在其中）能重载配置，
+	# 本机其他用户无权改配置。目录 /run/caddy 由 systemd 片段里的 RuntimeDirectory 创建。
+	admin unix//run/caddy/admin.sock|0660
+
+	# Caddy 自身的运行日志（不是访问日志）。
+	log default {
+		output file /var/log/caddy/caddy.log {
+			roll_size 20MiB
+			roll_keep 10
+			roll_keep_for 4392h
+			mode 0640
+		}
+		format json
+	}
+}
+
+# 访问日志：JSON 格式，记录主机名，几个站点写进同一份文件也能分得清。
+# 保留 183 天（《网络安全法》要求网络日志留存不少于六个月）；日志含访客 IP，留够期限即删。
+# 文件权限 0640，目录 /var/log/caddy 属 caddy:adm（setgid），drakeet 在 adm 组里，不用 sudo 就能读。
+(access_log) {
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 100MiB
+			roll_keep 400
+			roll_keep_for 4392h
+			mode 0640
+		}
+		format json
+	}
+}
+
+writer.drakeet.com {
+	import access_log
+	import /srv/writer.drakeet.com/current/caddy/site.caddy /srv/writer.drakeet.com/current
+}
+
+# 预发站：新站上线前在真实的服务器、证书与网络里验证。不让搜索引擎收录。
+writer2.drakeet.com {
+	import access_log
+	header X-Robots-Tag "noindex, nofollow"
+	import /srv/writer.drakeet.com/staging/current/caddy/site.caddy /srv/writer.drakeet.com/staging/current
+}
+
+# drakeet.com 与 www.drakeet.com：原样提供旧服务器上备份下来的静态页，最终去留另定（docs/rebuild.md 5.7）。
+drakeet.com, www.drakeet.com {
+	import access_log
+	root * /srv/legacy/drakeet.com
+	file_server
+}

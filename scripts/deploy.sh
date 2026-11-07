@@ -41,9 +41,10 @@ git archive --format=tar HEAD | tar -x -C "$work/src"
 expected_version="$(jq -r .version "$work/src/desktop2.json")"
 [[ -n "$expected_version" && "$expected_version" != null ]] || die "读不出 desktop2.json 的版本号"
 
-# 2. 只发布网站文件：仓库文件、Jekyll 遗留与本脚本自己都不进网站根目录。
+# 2. 只发布网站文件：仓库文件、Jekyll 遗留、服务器配置 ops/ 与本脚本自己都不进网站根目录。
 #    排除列表写成文件再传给 rsync：macOS 自带的 openrsync 与 GNU rsync 都认这种写法。
 cat > "$work/excludes" <<'EOF'
+/.github/
 /.gitignore
 /AGENTS.md
 /CLAUDE.md
@@ -57,6 +58,7 @@ cat > "$work/excludes" <<'EOF'
 /caddy/
 /docs/
 /jekyll-theme-minimal.gemspec
+/ops/
 /script/
 /scripts/
 /sources/

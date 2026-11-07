@@ -1,0 +1,9 @@
+# Caddy 的受控升级，见 /usr/local/bin/writer-caddy-upgrade 的说明。
+[Unit]
+Description=Guarded upgrade of Caddy (validate before install, roll back on failure)
+After=network-online.target caddy.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/writer-caddy-upgrade

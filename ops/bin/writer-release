@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+# 站点版本的激活、回滚与清理（服务器端）。
+#
+# 部署脚本先用 rsync 把新版本上传到 <环境目录>/releases/<版本号>/（含 public/ 与 caddy/site.caddy），
+# 再经 ssh 以 drakeet 身份调用本脚本激活。也可以手动运行：
+#   writer-release activate <prod|staging> <版本号>
+#   writer-release rollback <prod|staging>
+#   writer-release status   <prod|staging>
+#
+# 激活 = 原子地把 current 软链接指向新版本，然后让 Caddy 重载（站点规则随版本发布，见 /etc/caddy/Caddyfile）。
+# Caddy 拒绝新规则时，运行中的旧配置保持不变，本脚本把 current 切回原版本，保证磁盘与运行状态一致。
+set -euo pipefail
+
+readonly BASE=/srv/writer.drakeet.com
+readonly CADDYFILE=/etc/caddy/Caddyfile
+# 保留按时间最新的 KEEP 份版本（current 与 previous 通常就在其中；它们即使更旧也不清理）。
+# 内容未变的文件在各版本间是硬链接，每份只多占改动过的文件。
+readonly KEEP=5
+
+die() {
+	echo "writer-release: $*" >&2
+	exit 1
+}
+
+env_dir() {
+	case "$1" in
+		prod) echo "$BASE" ;;
+		staging) echo "$BASE/staging" ;;
+		*) die "环境只能是 prod 或 staging：$1" ;;
+	esac
+}
+
+valid_id() {
+	# 版本号形如 20261107T081500Z-1a2b3c4d（UTC 时间加提交短哈希）；按字典序排列即按时间排列。
+	[[ "$1" =~ ^[0-9]{8}T[0-9]{6}Z-[0-9a-z]+$ ]]
+}
+
+current_id() {
+	basename "$(readlink "$1/current")"
+}
+
+# 原子切换：先建临时软链接，再用 rename(2) 覆盖 current（mv -T），中间没有 current 缺失的空窗。
+switch_to() {
+	local dir="$1" id="$2"
+	ln -sfn "releases/$id" "$dir/current.new"
+	mv -T "$dir/current.new" "$dir/current"
+}
+
+reload_caddy() {
+	# 管理接口地址取自 Caddyfile 里的 admin 选项（unix socket）；drakeet 在 caddy 组里，有权连接。
+	caddy reload --config "$CADDYFILE" --adapter caddyfile
+}
+
+prune() {
+	local dir="$1" cur prev old
+	cur="$(current_id "$dir")"
+	prev="$(cat "$dir/previous" 2>/dev/null || true)"
+	# 版本号按时间排序，跳过最新的 KEEP 份；current 与 previous 无论多旧都保留。
+	while read -r old; do
+		[[ -z "$old" || "$old" == "$cur" || "$old" == "$prev" ]] && continue
+		valid_id "$old" || [[ "$old" == 00000000T000000Z-bootstrap ]] || continue
+		rm -rf -- "${dir:?}/releases/$old"
+		echo "已清理旧版本：$old"
+	done < <(ls -1 "$dir/releases" | sort -r | tail -n +"$((KEEP + 1))")
+}
+
+cmd_activate() {
+	[[ $# -eq 2 ]] || die "用法：writer-release activate <prod|staging> <版本号>"
+	local dir id prev
+	dir="$(env_dir "$1")"
+	id="$2"
+	valid_id "$id" || die "版本号格式不对：$id"
+	[[ -d "$dir/releases/$id/public" && -f "$dir/releases/$id/caddy/site.caddy" ]] \
+		|| die "$dir/releases/$id 缺少 public/ 或 caddy/site.caddy"
+	prev="$(current_id "$dir")"
+	if [[ "$prev" == "$id" ]]; then
+		echo "已经是 $id"
+		return 0
+	fi
+	switch_to "$dir" "$id"
+	if ! reload_caddy; then
+		echo "Caddy 拒绝了新版本的站点规则，切回 $prev" >&2
+		switch_to "$dir" "$prev"
+		reload_caddy || true
+		exit 1
+	fi
+	echo "$prev" > "$dir/previous"
+	prune "$dir"
+	echo "已切换到 $id（上一版 $prev）"
+}
+
+cmd_rollback() {
+	[[ $# -eq 1 ]] || die "用法：writer-release rollback <prod|staging>"
+	local dir prev cur
+	dir="$(env_dir "$1")"
+	[[ -s "$dir/previous" ]] || die "没有记录上一版"
+	prev="$(cat "$dir/previous")"
+	[[ -d "$dir/releases/$prev" ]] || die "上一版的目录已不在：$prev"
+	cur="$(current_id "$dir")"
+	switch_to "$dir" "$prev"
+	if ! reload_caddy; then
+		switch_to "$dir" "$cur"
+		reload_caddy || true
+		die "Caddy 拒绝了上一版的站点规则，已恢复 $cur"
+	fi
+	# 交换 previous，再执行一次 rollback 就能回到刚才的版本。
+	echo "$cur" > "$dir/previous"
+	echo "已回滚到 $prev（原版本 $cur）"
+}
+
+cmd_status() {
+	[[ $# -eq 1 ]] || die "用法：writer-release status <prod|staging>"
+	local dir
+	dir="$(env_dir "$1")"
+	echo "current:  $(current_id "$dir")"
+	echo "previous: $(cat "$dir/previous" 2>/dev/null || echo '（无）')"
+	echo "releases:"
+	ls -1 "$dir/releases" | sort -r | sed 's/^/  /'
+}
+
+main() {
+	[[ $# -ge 1 ]] || die "用法：writer-release <activate|rollback|status> ..."
+	local cmd="$1"
+	shift
+	case "$cmd" in
+		activate) cmd_activate "$@" ;;
+		rollback) cmd_rollback "$@" ;;
+		status) cmd_status "$@" ;;
+		*) die "未知命令：$cmd" ;;
+	esac
+}
+
+main "$@"

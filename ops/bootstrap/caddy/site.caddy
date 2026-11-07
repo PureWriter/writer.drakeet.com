@@ -1,0 +1,4 @@
+# 占位版本的站点规则：服务器刚初始化、还没有第一次部署时使用。
+# {args[0]} 是这一版 release 目录（经 current 软链接），网站根目录是其下的 public/。
+root * {args[0]}/public
+file_server
