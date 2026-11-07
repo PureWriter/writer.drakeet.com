@@ -82,6 +82,7 @@ img/og/en.<fingerprint>.jpg
 img/og/ja.<fingerprint>.jpg
 img/og/zh-hans.<fingerprint>.jpg
 img/og/zh-hant.<fingerprint>.jpg
+indexnow.txt
 ja/404.html
 ja/desktop/index.html
 ja/index.html

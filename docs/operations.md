@@ -72,16 +72,22 @@ ufw 与阿里云安全组保持同一份白名单。改动任何一处，同时�
 scripts/deploy.sh              # 部署已提交的 HEAD 到正式站（只接受 master）；切换后跑 URL 合同，不通过自动切回
 scripts/deploy.sh --staging    # 部署到预发站 writer2.drakeet.com（任何分支都可以）
 scripts/deploy.sh --rollback   # 切回上一版；再执行一次就回到刚才的版本（加 --staging 对预发站）
+scripts/deploy.sh --indexnow-only   # 不部署，把正式站当前版本的全部地址推送给 IndexNow（补推、首次验证）
 ```
 
 - 部署只发布已提交的内容：开头取一次提交号，产物、构建工具与检查配置、站点规则与 URL 合同都取自这个提交，工作区里的草稿和部署期间别人新做的提交都不影响。
 - 每次部署是服务器上的一个新版本目录（`public/`、`caddy/site.caddy`、`checks/`）；内容没变的文件与上一版共用 inode，实际上传的只有改动。保留最近 5 份。
 - 切换之后在服务器上跑这一版附带的 URL 合同（`checks/contract.py --site <主机名>`，连本机 443、按主机名带 SNI，不经公网），正式站另从本机核对线上 `desktop2.json` 的版本；任何一项不通过都自动切回切换前的版本。合同表是 `ops/contract.tsv`，格式写在表头。
 - 站点规则 `caddy/site.caddy` 随版本一起发布、一起回滚；Caddy 拒绝新规则时会自动切回原版本。改了规则或合同，提交之前先在本机运行 `scripts/test-caddy.sh`：它按服务器的目录结构搭测试台，用与服务器同版本的 Caddy 跑整张合同。
-- 同一时间只有一次部署：deploy.sh 在 git 公共目录里加锁（`.git/writer-deploy.lock`），含 `--rollback`。部署进程被强杀或机器死机时锁会遗留，再部署会拒绝并给出移除命令，确认没有部署在进行后照做即可。
+- 同一时间只有一次部署：deploy.sh 在 git 公共目录里加锁（`.git/writer-deploy.lock`），含 `--rollback` 与 `--indexnow-only`。部署进程被强杀或机器死机时锁会遗留，再部署会拒绝并给出移除命令，确认没有部署在进行后照做即可。
 - 出口被 JAR 下载占满时上传很慢：整站上传（预发站第一次部署）用过约 10 分钟，增量部署通常一两分钟。
 - 查看服务器上的版本：`ssh drakeet@writer.drakeet.com writer-release status prod`。
 - 桌面版 `release.sh` 的 deploy 步骤调用的也是这个脚本。
+- **IndexNow 推送**（rebuild.md 第九节 E）：
+  - 时机：正式站部署成功（合同与 `desktop2.json` 的核对都通过、没有回滚）之后自动进行，桌面发版的部署也一样；预发站、`--rollback` 与失败的部署不推送。
+  - 推送什么：在服务器上逐个比较切换前后两个版本里 sitemap 所列页面的文件，只推内容有变化或新增的地址。
+  - 看结果：部署输出的最后一行。成功是「已向 IndexNow 推送 N 个地址，状态码 200」（或 202：已收下，密钥稍后验证）；没有变化是「没有内容有变化的页面，不推送 IndexNow」；失败是一行「IndexNow 推送失败（状态码…）」，写明原因，例如 403 是 IndexNow 读不到 `/indexnow.txt` 或内容与密钥不符，000 是网络错误或 20 秒超时。推送失败不影响部署结果，退出码照旧为 0。
+  - 手动补推：`scripts/deploy.sh --indexnow-only`，把正式站当前版本的全部地址推送一次（三十来个，全推无妨），失败时以 1 退出。密钥文件是 `static/indexnow.txt`，换密钥时连同 `ops/contract.tsv` 里核对它的那一行一起改。
 
 ### 5.2 桌面版 JAR 镜像
 

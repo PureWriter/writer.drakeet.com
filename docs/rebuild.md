@@ -152,6 +152,7 @@ static/images/       旧站全部图片，按原路径原样发布
 static/.well-known/  apple-app-site-association
 static/ocat/         DeepOCAT 旧页，原样（最后阶段再定去留）
 static/llms.txt      手写的产品介绍与主要链接
+static/indexnow.txt  IndexNow 的密钥文件（第九节 E）
 desktop2.json        桌面版发版数据，由桌面版 release.sh 写入；路径与旧站相同
 caddy/site.caddy     本站的 Caddy 站点规则，随每次部署一起发布（5.3）
 ops/                 服务器初始化、全局 Caddyfile、服务器端脚本、URL 合同表与检查脚本、期望产物清单
@@ -272,7 +273,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 **301 的缓存**：先带 `Cache-Control: max-age=86400`，稳定一两个月后再加长。这样写错的映射修正后，最多一天就从用户浏览器里消失。
 
-**永不参与协商和跳转**：`/.well-known/*`、`/images/*`、`/desktop2.json`、`/ocat/jars/*`、`/robots.txt`、`/sitemap.xml`、`/llms.txt`。唯一的例外是 Caddy 的规范化：文件写成带尾斜杠的地址时（例如 `/desktop2.json/`），file_server 308 到不带斜杠的写法，与目录补斜杠对称。没有依赖方这样请求，AASA 等文件的正式地址不受影响。
+**永不参与协商和跳转**：`/.well-known/*`、`/images/*`、`/desktop2.json`、`/ocat/jars/*`、`/robots.txt`、`/sitemap.xml`、`/llms.txt`、`/indexnow.txt`。唯一的例外是 Caddy 的规范化：文件写成带尾斜杠的地址时（例如 `/desktop2.json/`），file_server 308 到不带斜杠的写法，与目录补斜杠对称。没有依赖方这样请求，AASA 等文件的正式地址不受影响。
 
 **未知路径**：返回真正的 404，不再返回 500，也不跳回首页。带语言前缀的路径（包括 `/ru` 这样只有前缀的）用该语言的 404 页，其余一律用根目录那份多语言 404 页，不在错误处理里做协商。
 
@@ -375,6 +376,7 @@ scripts/             构建、预览、检查、部署与回滚
 - **关键词**：每个可收录的页面写一行 `<meta name="keywords">`，只列这四个名字，本语言的写法在前。Google 与 Bing 已明确不看这个标签，百度没有明确的现行说法，个别搜索引擎仍会参考；名字能被搜到，主要靠上面的 WebSite 别名与各语言页面的标题。
 - **iOS 智能横幅**：首页、各语言的 iOS 支持页与 iOS 隐私政策保留 iOS 智能横幅的 meta。
 - **`/.well-known/security.txt`**：写明联系邮箱，Expires 在构建时自动生成为一年内的日期，不需要人记着更新。
+- **`/indexnow.txt`**：IndexNow 的密钥文件（`static/indexnow.txt`），正式站部署成功后推送有变化的页面时用到，见第九节 E。
 - **不加任何统计脚本**。需要了解访问情况时，用 `ops/` 下的日志报告脚本（5.5）在服务器上做聚合。
 
 更深入的 SEO 与 AI 可发现性工作放在第 E 步。
@@ -575,17 +577,17 @@ scripts/             构建、预览、检查、部署与回滚
 |---|---|
 | `scripts/dev.sh` | 本机实时预览 |
 | `scripts/build.sh` | 从当前已提交的 HEAD 构建（`git archive` 到临时目录；`--worktree` 则构建脚本所在的这份目录），再跑不需要服务器的检查：构建警告视为错误、期望产物清单、站内链接全部可达、本地化与市场差异检查、固定图片按 `ops/images.sha256` 核对原字节、Apple 关联域名文件是合法的 JSON 且含本 App |
-| `scripts/deploy.sh` | 取一次完整的提交号并做分支判断 → 取得部署锁 → 把这个提交 `git archive` 解到临时目录，用其中的 `scripts/build.sh --worktree` 构建并检查，站点规则与 URL 合同也取自这同一份 → `rsync --link-dest` 上传到新的 release 目录 → 记下服务器上切换前的版本，由 writer-release 用 `mv -T` 切换 `current` 并重载 Caddy（Caddy 拒绝新规则时切回原版本），只保留最近 5 份 → 在服务器上跑这一版的 URL 合同，正式站另核对线上 `desktop2.json` 的版本，失败就自动切回切换前的版本并报错。上传按内容比较（`--checksum`）、不保留修改时间：构建产物的时间每次都会变，按时间比较就得整站重传；这样内容未变的文件与上一版硬链接，实际传输的只有改动，ETag 也保持不变。只用 macOS 自带的 openrsync 也支持的选项 |
+| `scripts/deploy.sh` | 取一次完整的提交号并做分支判断 → 取得部署锁 → 把这个提交 `git archive` 解到临时目录，用其中的 `scripts/build.sh --worktree` 构建并检查，站点规则与 URL 合同也取自这同一份 → `rsync --link-dest` 上传到新的 release 目录 → 记下服务器上切换前的版本，由 writer-release 用 `mv -T` 切换 `current` 并重载 Caddy（Caddy 拒绝新规则时切回原版本），只保留最近 5 份 → 在服务器上跑这一版的 URL 合同，正式站另核对线上 `desktop2.json` 的版本，失败就自动切回切换前的版本并报错 → 正式站部署成功后把内容有变化的页面推送给 IndexNow（第九节 E），推送失败不影响部署结果。上传按内容比较（`--checksum`）、不保留修改时间：构建产物的时间每次都会变，按时间比较就得整站重传；这样内容未变的文件与上一版硬链接，实际传输的只有改动，ETag 也保持不变。只用 macOS 自带的 openrsync 也支持的选项 |
 | `scripts/deploy.sh --staging` | 同上，部署到预发站 writer2.drakeet.com，任何分支都可以 |
 | `scripts/deploy.sh --rollback` | 把 `current` 切回上一份，并重载 Caddy；同样先取得部署锁 |
-| `scripts/deploy.sh --first-cutover-from-rebuild` | 只用于第 C 步的首次切换：从 `rebuild` 部署正式站。要求 `master` 已经合进 `rebuild`（否则会把桌面发版之后已经过时的 `desktop2.json` 部署上去），而这个提交还不在 `master` 里；第 C 步完成后删掉这个参数 |
+| `scripts/deploy.sh --indexnow-only` | 不部署，把正式站当前版本 sitemap 里的全部地址推送给 IndexNow，用于补推与首次验证（第九节 E）；同样先取得部署锁 |
 | `scripts/test-caddy.sh` | 改站点规则或合同之后在本机自查：按服务器的目录结构搭测试台，用与服务器同版本的 Caddy 跑整张 URL 合同；`--public` 用已经构建好的产物，`--keep` 留下测试台便于排查 |
 | `ops/provision.sh` | 服务器初始化，可重复执行，分两段：第一段只做恢复服务所需的事，第二段做其余加固；需要 root |
 
 **几条规则**：
 
 - **只部署已提交的内容**：deploy.sh 开头取一次提交号，产物、构建工具（Hugo 的版本、检查脚本与 `ops/` 下的检查配置）、站点规则与合同都取自这一个提交，部署内容与提交历史严格一致；工作区里的草稿、构建期间别人新做的提交都不影响部署，也不会挡住桌面发版。
-- **同一时间只有一次部署**：部署都从这台 Mac 发起（桌面版 release.sh 与手动部署），deploy.sh 在主目录与 `rebuild` 工作树共用的 git 公共目录里取一把锁，覆盖从构建到回滚（含 `--rollback`）的全过程。两次部署交错时，失败的那次会把后完成的那次一起回滚掉，加锁就去掉了这个前提。锁已存在时一律拒绝，不自动接管：持有它的进程还在，说明另一次部署正在进行；已不在，是上次部署被强杀或机器死机留下的，deploy.sh 打印锁里的记录与移除命令，确认没有部署在进行后手动移除。正常退出、出错与 INT、TERM、HUP 都会释放锁，遗留锁很少出现，手动处理的代价很小。
+- **同一时间只有一次部署**：部署都从这台 Mac 发起（桌面版 release.sh 与手动部署），deploy.sh 在 git 公共目录里取一把锁，覆盖从构建到回滚（含 `--rollback`）的全过程，部署后的 IndexNow 推送与 `--indexnow-only` 也在锁内。两次部署交错时，失败的那次会把后完成的那次一起回滚掉，加锁就去掉了这个前提。锁已存在时一律拒绝，不自动接管：持有它的进程还在，说明另一次部署正在进行；已不在，是上次部署被强杀或机器死机留下的，deploy.sh 打印锁里的记录与移除命令，确认没有部署在进行后手动移除。正常退出、出错与 INT、TERM、HUP 都会释放锁，遗留锁很少出现，手动处理的代价很小。
 - **切换失败与中断**：deploy.sh 在切换之前记下服务器上的当前版本，自动回滚用 `writer-release activate <环境> <那个版本>` 明确切回它，不依赖服务器上记录的 previous（writer-release 在切换、重载成功之后才写 previous，那之前出错时它还是更早的一版）。writer-release 报告失败时，deploy.sh 先查服务器上 `current` 实际指向的版本：已是这次的版本就照常检查、不通过再切回，否则如实报告是哪个版本。切换开始之后被中断，打印查看状态与切回原版本的命令（current 是哪个版本都可以直接运行）后以非零退出。
 - **生产部署的分支要求**：只接受 `master`。唯一的例外是第 C 步的首次部署：用一个只为这一次放行 `rebuild` 的显式参数，验收通过后主目录再快进到同一个提交，然后删掉这个参数。
 - **桌面发版路径上不做与发版无关的拦截**：与时间有关的检查（例如证书或文件将要到期）在 deploy.sh 里只告警。
@@ -725,7 +727,12 @@ scripts/             构建、预览、检查、部署与回滚
 ### E. SEO 与 AI 可发现性
 
 - **站长平台**：只在 Google Search Console 添加站点并提交 sitemap，Bing 与百度的站长平台不做。由 Drakeet 在收尾阶段亲自添加，见「当前游标」的收尾清单。
-- **部署后自动推送**：`scripts/deploy.sh` 部署正式站成功后，把这次有变化的地址推送给 IndexNow（Bing、Yandex、Naver 等共用一个接口，凭据是站点根目录的一个密钥文件，不需要账号）；推送失败只提示，不影响部署。Google 不支持 IndexNow，靠 sitemap；百度的推送接口需要它站长平台的凭据，不做。
+- **部署后自动推送**：`scripts/deploy.sh` 部署正式站成功后，把这次有变化的地址推送给 IndexNow（Bing、Yandex、Naver、Seznam 等共用一个接口，凭据是站点根目录的一个密钥文件，不需要账号）；推送失败只提示，不影响部署。Google 不支持 IndexNow，靠 sitemap；百度的推送接口需要它站长平台的凭据，不做。实现：
+  - **密钥文件**：`static/indexnow.txt`，发布在根目录 `/indexnow.txt`，内容只有密钥本身（32 位十六进制，不带换行）。放在根目录，作用范围才覆盖全站；推送时用 `keyLocation` 指向它。密钥本来就是公开的。站点规则第 2 段把它列进 `@static`，按原样提供（`text/plain`、`no-cache`，与 robots.txt 相同）；合同表核对它的内容就是密钥，换密钥时两处一起改。
+  - **推送什么**：只推内容有变化、且应当收录的页面。`scripts/indexnow-urls.py` 经 ssh 从标准输入交给服务器上的 python3 运行（不必安装到服务器上，脚本取自这次部署的提交）：读新版本的 sitemap，逐个逐字节比较切换前后两个版本目录里同一地址对应的页面文件（`…/index.html`），输出内容不同或上一版没有的地址。sitemap 不列带 noindex 的页面（4.10），所以列在里面就是应当收录的。没有可比较的上一版时（首次）每个页面都算新增，推送全部；没有变化就不推送。CSS 指纹一变，所有页面的 HTML 都跟着变，这时全推，不另作处理。
+  - **什么时候推**：只在正式站部署成功之后，也就是 URL 合同与 `desktop2.json` 的核对都通过、没有回滚。`--staging`、`--rollback` 与失败的部署都不推送；桌面版 release.sh 的部署同样会推送。
+  - **怎么推**：一次 POST 到 `https://api.indexnow.org/indexnow`，JSON 体含 `host`、`key`、`keyLocation`、`urlList`，超时 20 秒，用本机的 curl 与 jq。200 与 202 算成功，打印推送了几个地址与状态码；其余状态码与网络错误只打印一行提示，部署结果与退出码不变（照旧为 0）。
+  - **手动入口**：`scripts/deploy.sh --indexnow-only`，把正式站当前版本 sitemap 里的全部地址推送一次，密钥也取自当前版本；用于自动推送失败后补推，以及首次验证。不重算差异：补推时不一定说得清该与哪一版比，全站只有三十来个地址，全推一次也无妨。失败时以 1 退出。
 - **站点名**：定为「纯纯写作」，四个名字同时写进 WebSite 的别名与每页的关键词（4.10）。
 - **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（iOS 是 Drakeet Co., Ltd.，Android 与桌面版的英文隐私政策是 Drakeet, Inc.，Android 简体版是苏州小白迷雾科技有限公司），官方账号属于产品，挂在产品上即可。
 - **分享卡片大图**：五种语言的首页改用 1200×630 的分享图：从 App Store 产品页的页头（雾山稿纸加「写作，连接过去，遥想未来。」）截取，左上角补上图标与名称，由 `scripts/og-images.py` 生成到 `assets/img/og/`，港繁共用台繁一张；构建时加内容指纹、原样发布为 JPEG（不少平台不认 WebP 的分享图），页头写明尺寸。下载页沿用桌面版截图的大卡片，其余页面仍是图标小卡片。微信不读这些标签，不受影响。旧的分享图（`images/header_zh_hans.jpg` 等）在固定字节清单里，照旧保留。

@@ -3,6 +3,7 @@
 #   scripts/deploy.sh                               部署已提交的 HEAD 到正式站 writer.drakeet.com（只接受 master）
 #   scripts/deploy.sh --staging                     部署已提交的 HEAD 到预发站 writer2.drakeet.com（任何分支都可以）
 #   scripts/deploy.sh --rollback [--staging]        把正式站（或预发站）切回上一版；再执行一次就回到刚才的版本
+#   scripts/deploy.sh --indexnow-only               不部署，把正式站当前版本 sitemap 里的全部地址推送给 IndexNow（补推、首次验证）
 #
 # 做法：
 #   1. 开头取一次完整的提交号，之后用到的一切都取自这个提交：git archive 解到临时目录，用解出来的 scripts/build.sh 构建并
@@ -13,8 +14,11 @@
 #   4. 记下服务器上切换前的版本，再 ssh 调用 writer-release 原子切换 current 并重载 Caddy（Caddy 拒绝新规则时它会自己切回
 #      原版本）。它报告失败时，先查服务器上 current 实际指向哪个版本：已是这次的版本就照常检查，否则如实报告；
 #   5. 在服务器上对这个环境跑 URL 合同（按主机名连本机 443，不经公网）；正式站另从本机核对线上 desktop2.json 的版本
-#      等于这次提交里的版本（与旧站相同）。任何一项不通过都自动切回切换前的那个版本并报错。
-# 所有操作（含 --rollback）都先取得部署锁，同一时间只有一次部署在进行；锁已存在时一律拒绝，遗留的锁要手动移除（见 acquire_lock）。
+#      等于这次提交里的版本（与旧站相同）。任何一项不通过都自动切回切换前的那个版本并报错；
+#   6. 正式站部署成功（检查都通过、没有回滚）之后，把内容有变化的页面推送给 IndexNow（docs/rebuild.md 第九节 E）：在服务器上
+#      逐个比较切换前后两个版本里 sitemap 所列页面的文件（scripts/indexnow-urls.py），有变化或新增的地址一次 POST 过去。
+#      推送失败只打印一行提示，部署结果与退出码不受影响。预发站、--rollback 与失败的部署都不推送。
+# 所有操作（含 --rollback 与 --indexnow-only）都先取得部署锁，同一时间只有一次部署在进行；锁已存在时一律拒绝，遗留的锁要手动移除（见 acquire_lock）。
 set -euo pipefail
 
 readonly HOST=drakeet@writer.drakeet.com
@@ -22,6 +26,8 @@ readonly SITE_BASE=/srv/writer.drakeet.com
 # 连不上服务器时 15 秒放弃；连上之后每 15 秒探一次，连续 4 次没有回应（约一分钟）就断开，网络中断时部署不会无限期挂着。
 # BatchMode 不弹口令提示，密钥不行就直接失败。rsync 经 -e 用同一组选项。
 readonly SSH=(ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+# IndexNow 的公共入口：Bing、Yandex、Naver、Seznam 等共用，提交给它就会转给其余各家（docs/rebuild.md 第九节 E）。
+readonly INDEXNOW_ENDPOINT=https://api.indexnow.org/indexnow
 
 cd "$(dirname "$0")/.."
 
@@ -30,17 +36,23 @@ die() {
 	exit 1
 }
 
-usage="用法：scripts/deploy.sh [--staging] [--rollback]"
+usage="用法：scripts/deploy.sh [--staging] [--rollback]，或 scripts/deploy.sh --indexnow-only"
 staging=0
 rollback=0
+indexnow_only=0
 while (($#)); do
 	case "$1" in
 		--staging) staging=1 ;;
 		--rollback) rollback=1 ;;
+		--indexnow-only) indexnow_only=1 ;;
 		*) die "$usage" ;;
 	esac
 	shift
 done
+# 只推送正式站：预发站的页面与正式站重复，sitemap 里写的也是正式站的地址。
+if ((indexnow_only && (staging || rollback))); then
+	die "--indexnow-only 只推送正式站，不能与 --staging、--rollback 同用"
+fi
 
 # 两个环境的差别只在服务器上的目录与主机名（docs/operations.md 第 4 节）。
 if ((staging)); then
@@ -117,9 +129,61 @@ acquire_lock() {
 	exit 1
 }
 
+# 把地址（urls，每行一个）一次推送给 IndexNow（docs/rebuild.md 第九节 E）。key 是站点根目录 /indexnow.txt 里的密钥，
+# keyLocation 指向这个文件，作用范围因此覆盖全站。200 与 202（已收下、密钥稍后验证）算成功；没有地址时不推送。这两种情况
+# 返回 0。其余状态码、网络错误与密钥不合格式都只打印一行提示并返回 1，由调用方决定是否影响退出码：部署后的自动推送不影响，
+# 手动推送以 1 退出。
+indexnow_submit() {
+	local key="$1" urls="$2" body count result status detail hint
+	if [[ ! "$key" =~ ^[A-Za-z0-9-]{8,128}$ ]]; then
+		echo "deploy: IndexNow 的密钥文件缺失或格式不对（应为 8～128 位字母、数字与短横线），没有推送" >&2
+		return 1
+	fi
+	body="$(jq -Rnc --arg host "$site" --arg key "$key" --arg keyLocation "https://$site/indexnow.txt" \
+		'{host: $host, key: $key, keyLocation: $keyLocation, urlList: [inputs | select(length > 0)]}' <<<"$urls")" || return 1
+	count="$(jq '.urlList | length' <<<"$body")"
+	if ((count == 0)); then
+		echo "deploy: 没有内容有变化的页面，不推送 IndexNow"
+		return 0
+	fi
+	# 超时要短：推送排在部署成功之后，桌面版发版也走这里，不值得为它久等。请求没有完成时 -w 照样输出，状态码是 000，
+	# errormsg 是 curl 的出错原因；-s 不让 curl 另外打印，提示只有下面一行。
+	result="$(curl -s -o /dev/null -w '%{http_code} %{errormsg}' --max-time 20 \
+		-H 'Content-Type: application/json; charset=utf-8' --data-binary "$body" "$INDEXNOW_ENDPOINT")" || true
+	status="${result%% *}"
+	detail="${result#* }"
+	case "$status" in
+		200 | 202)
+			echo "deploy: 已向 IndexNow 推送 $count 个地址，状态码 $status"
+			return 0
+			;;
+		000) hint="请求没有完成：$detail" ;;
+		403) hint="密钥无效：读不到 https://$site/indexnow.txt，或其中的内容与密钥不符" ;;
+		422) hint="地址不属于 $site，或密钥不合格式" ;;
+		429) hint="推送太频繁" ;;
+		*) hint="没有被接受" ;;
+	esac
+	echo "deploy: IndexNow 推送失败（状态码 $status，$hint），$count 个地址没有推送出去；补推：scripts/deploy.sh --indexnow-only" >&2
+	return 1
+}
+
 if ((rollback)); then
 	acquire_lock "回滚 $site"
 	"${SSH[@]}" "$HOST" writer-release rollback "$env"
+	exit 0
+fi
+
+# 手动推送（补推、首次验证）：把正式站当前版本 sitemap 里的全部地址推送一次，密钥也取自当前版本，正是 IndexNow 会去读的
+# 那一份。不重算差异：补推时不一定说得清该与哪一版比，全站只有三十来个地址，全推一次也无妨。同样先取得部署锁：部署进行中
+# current 随时会变，等它结束再推，推的才是线上确定的版本。
+if ((indexnow_only)); then
+	acquire_lock "把 $site 的全部地址推送给 IndexNow"
+	live_public="$base/current/public"
+	key="$("${SSH[@]}" "$HOST" cat "$live_public/indexnow.txt")" \
+		|| die "读不到 $site 当前版本的 indexnow.txt（见上）；密钥文件要先随一次部署上线"
+	urls="$("${SSH[@]}" "$HOST" python3 -I - --site "$site" "$live_public" <scripts/indexnow-urls.py)" \
+		|| die "没能列出 $site 当前版本 sitemap 里的地址（见上）"
+	indexnow_submit "$key" "$urls" || exit 1
 	exit 0
 fi
 
@@ -211,3 +275,17 @@ if ((${#failures[@]})); then
 	die "已切回切换前的版本 $before"
 fi
 echo "deploy: 部署完成：$site 现在是 $id"
+
+# 6. 正式站把内容有变化的页面推送给 IndexNow。到这里线上已确定是这次的版本，之后被中断也不需要切回，先关掉切换期间的
+#    中断提示。切换前的版本只在服务器上，所以比较在那里做，比较脚本取自这次部署的提交；密钥取自这次上传的产物。
+#    推送成败都不改变部署结果：部署已经成功，退出码照旧为 0。
+activating=0
+if [[ "$env" == prod ]]; then
+	indexnow_key="$(cat "$release/public/indexnow.txt" 2>/dev/null)" || indexnow_key=""
+	if changed="$("${SSH[@]}" "$HOST" python3 -I - --site "$site" "$base/releases/$id/public" "$base/releases/$before/public" \
+		<"$src/scripts/indexnow-urls.py")"; then
+		indexnow_submit "$indexnow_key" "$changed" || true
+	else
+		echo "deploy: 没能比较出内容有变化的页面（见上），没有推送 IndexNow；补推：scripts/deploy.sh --indexnow-only" >&2
+	fi
+fi

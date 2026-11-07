@@ -108,10 +108,12 @@ route {
 	#                                                 社交平台的旧分享预览；原路径、原字节
 	#      /desktop2.json                             桌面版 release.sh 发版后的线上校验（curl 不跟随跳转）
 	#      /robots.txt、/sitemap.xml、/llms.txt、站点图标
+	#      /indexnow.txt                              IndexNow 的密钥文件（第九节 E）：搜索引擎按推送里的 keyLocation 读取，
+	#                                                 放在根目录，作用范围才覆盖全站
 	#      /css/、/js/、/img/                           Hugo 生成的带内容指纹的样式、脚本与图片
 	#    唯一的跳转是 file_server 的规范化：文件写成带尾斜杠的地址（例如 /desktop2.json/）时 308 到不带斜杠的写法，
 	#    与第 3 段目录补斜杠对称。没有依赖方这样请求，保留 Caddy 的默认行为。
-	@static path /.well-known/* /images/* /desktop2.json /robots.txt /sitemap.xml /llms.txt /favicon.ico /apple-touch-icon.png /apple-touch-icon-precomposed.png /css/* /js/* /img/*
+	@static path /.well-known/* /images/* /desktop2.json /robots.txt /sitemap.xml /llms.txt /indexnow.txt /favicon.ico /apple-touch-icon.png /apple-touch-icon-precomposed.png /css/* /js/* /img/*
 	handle @static {
 		# 这个文件没有扩展名，Caddy 不会自动给类型，而关联域名要求 application/json（第三节）。
 		header /.well-known/apple-app-site-association Content-Type "application/json"
