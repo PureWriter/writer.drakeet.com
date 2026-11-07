@@ -1,0 +1,671 @@
+# 纯纯写作官网的 URL 合同（docs/rebuild.md 第三节、4.5、4.6、4.9、5.5）：已发布的 App、服务端与外部平台依赖的地址，
+# 以及站点规则（caddy/site.caddy）的逐条期望。这份表是唯一正本，由 ops/contract.py 执行：
+#   - scripts/test-caddy.sh 对本机 Caddy 跑（改规则时）；
+#   - scripts/deploy.sh 切换版本之后在服务器上对正式站或预发站跑，失败自动回滚。
+# 第三节写「为什么」与依赖方；这里写「请求什么、期望什么」。改站点规则时，先在这里加上或改好对应的行。
+#
+# 格式：每行一个用例，7 列，用制表符分隔；以 # 开头的行与空行是注释。不跟随跳转，每列分别核对：
+#   1. 路径        含查询串，按线路上的原样写：非 ASCII 字符与空格写成百分号编码。几种特殊写法：
+#                    {version}              换成站点 /desktop2.json 里的版本号（JAR 镜像里一定有当前版本）
+#                    /css/* from /zh-hans/  /zh-hans/ 页面里第一个以 /css/ 开头的地址（带内容指纹，每次构建都会变）
+#                    http://{host}/…        走 HTTP（服务器的 80 端口）；本机测试台没有 HTTPS，这类行跳过
+#   2. 请求头      「名字: 值」，多个用「 | 」分隔；「-」表示不带任何请求头（除了 Host）。不写 Accept-Encoding 就拿到未压缩的
+#                  响应。「名字:」后面不写值就发一个空的请求头（用来区分「带了但为空」与「根本没带」）。
+#                  「:method: POST」改用别的请求方法（默认 GET）。
+#                  字段名与请求方法都按 HTTP 的 token 写法核对（字母、数字与 !#$%&'*+-.^_`|~，不含空格），不合时不发任何请求，以 2 退出。
+#   3. 状态码
+#   4. Location    完全相等；「-」表示不应有 Location。{host} 换成被检查的主机名。
+#   5. Content-Type 前缀，多个可接受的写法用「 | 」分隔；「-」表示不核对。各系统的类型表略有不同（例如 .xml），所以只写前缀。
+#   6. 响应头      多项用「 | 」分隔：「名字: 片段」表示含有该片段，「名字 == 值」表示完全相等，「名字 =~ 正则」表示整个值
+#                  符合这个正则（Python 的 re.fullmatch；正则里的 | 两边不加空格，免得被当成分隔符），「!名字」表示不应有
+#                  这个头（! 后面直接跟字段名）；「-」表示不核对。字段名同样按 token 写法核对。
+#   7. 内容        响应体里必须出现的文字，多项用「 | 」分隔；以 ! 开头的表示不应出现；「-」表示不核对。
+#                  HTML 是压缩过的，属性值不带引号（例如 <html lang=en>）。
+#
+# 关于测试台：scripts/test-caddy.sh 的 JAR 目录用临时目录模拟，放的是以当前版本命名的假文件；产物里缺页就是不通过。
+
+# ======================================================================================================================
+# 永不参与协商与跳转的路径（4.5）：带上语言头或 ?lang= 也原样返回。
+# ======================================================================================================================
+# Apple 关联域名文件：iOS 的 webcredentials，Apple 的 CDN 从海外抓取；必须是 application/json，绝不跳转。
+/.well-known/apple-app-site-association	-	200	-	application/json	Cache-Control == no-cache	9MKUN97L6J.com.drakeet.writer
+/.well-known/apple-app-site-association	Accept-Language: en-US	200	-	application/json	-	webcredentials
+/.well-known/apple-app-site-association?lang=en	-	200	-	application/json	-	webcredentials
+/.well-known/security.txt	-	200	-	text/plain	-	Contact: mailto:writer@drakeet.com
+/.well-known/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+
+# 旧图片：原路径、原字节，缓存一周；刻意不设 Cross-Origin-Resource-Policy（ocat.app 跨站引用）。
+# Android 稿纸背景（完整地址存进用户设置并随同步传到其他设备）。
+/images/papers/0.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800 | !Cross-Origin-Resource-Policy	-
+/images/papers/4.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800	-
+/images/papers/5.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800	-
+/images/papers/6.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800	-
+# 范围请求照常返回 206 与对应的一段（App 与浏览器的断点续传）。
+/images/papers/0.jpg	Range: bytes=0-0	206	-	image/jpeg	Content-Range: bytes 0-0/ | Content-Length == 1 | Cache-Control == public, max-age=604800	-
+# Android Pro 介绍页与首次启动预取。
+/images/pro/0.webp	-	200	-	image/webp	Cache-Control == public, max-age=604800	-
+/images/pro/1.webp	-	200	-	image/webp	-	-
+/images/pro/2.webp	-	200	-	image/webp	-	-
+/images/pro/3.webp	-	200	-	image/webp	-	-
+/images/pro/4.webp	-	200	-	image/webp	-	-
+/images/pro/5.webp	-	200	-	image/webp	-	-
+/images/pro/en/0.webp	-	200	-	image/webp	-	-
+/images/pro/en/1.webp	-	200	-	image/webp	-	-
+/images/pro/en/2.webp	-	200	-	image/webp	-	-
+/images/pro/en/3.webp	-	200	-	image/webp	-	-
+/images/pro/en/4.webp	-	200	-	image/webp	-	-
+/images/pro/en/5.webp	-	200	-	image/webp	-	-
+/images/pro/PureWriterDesktop.webp	-	200	-	image/webp	-	-
+/images/pro/PureWriterDesktopDark.webp	-	200	-	image/webp	-	-
+/images/pro/en/PureWriterDesktop.webp	-	200	-	image/webp	-	-
+/images/pro/en/PureWriterDesktopDark.webp	-	200	-	image/webp	-	-
+# Android「关于」页；日志里有带 ?lang= 的请求，同样原样返回。
+/images/icon512.png	-	200	-	image/png	Cache-Control == public, max-age=604800	-
+/images/icon512.png?lang=en	Accept-Language: zh-CN	200	-	image/png	-	-
+# 2026-10-27 从首页撤下、Facebook 旧分享仍在引用的横幅。
+/images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg	-	200	-	image/jpeg	-	-
+# ocat.app 热链的 5 张（og:image、JSON-LD、PWA manifest、下载徽章、二维码）。
+/images/orca_dark.png	-	200	-	image/png	!Cross-Origin-Resource-Policy	-
+/images/IMG_6011.png	-	200	-	image/png	-	-
+/images/OCAT_QR.png	-	200	-	image/png	-	-
+/images/Google_Play_Store_badge_EN.svg	-	200	-	image/svg+xml	-	-
+/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg	-	200	-	image/svg+xml	-	-
+# 不存在的图片：404 不能带着一周的缓存头。错误响应一律 no-store（理由见 site.caddy 的 handle_errors）。
+/images/no-such-image.jpg	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/images/	-	404	-	text/html	Cache-Control == no-store	-
+
+# 桌面版发版数据：release.sh 发版后用不跟随跳转的 curl 校验，每次验证；文本文件有预压缩版本。
+# 浏览器同时接受 br 与 gzip 时有 br 副本就发 br；构建机没有 brotli 时只有 gzip 副本（4.9：只跳过预压缩，不让构建失败），
+# 部署也不该因此失败，所以这类行 br 与 gzip 都接受。
+/desktop2.json	-	200	-	application/json	Cache-Control == no-cache	"version"
+/desktop2.json	Accept-Language: ja-JP	200	-	application/json	-	"version"
+/desktop2.json	Accept-Encoding: br, gzip	200	-	application/json	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
+/desktop2.json	Accept-Encoding: gzip	200	-	application/json	Content-Encoding == gzip	"version"
+/desktop2.json	Accept-Encoding: zstd	200	-	application/json	Content-Encoding == zstd	-
+# 条件请求：文件存在时 If-None-Match: * 得到 304，没有正文，缓存头照旧。
+/desktop2.json	If-None-Match: *	304	-	-	Cache-Control == no-cache	!"version"
+
+# 桌面版 JAR 国内镜像（文件在站点目录之外）：rebase-server 的自动更新分流、桌面版 CI 的兜底下载。不列目录；
+# 还没同步上来的 JAR 返回 404，且不能被缓存一天。当前版本的三个 JAR 只发 HEAD，核对存在与缓存头：服务器内存只有 1 GiB，
+# 不必每次部署都把约 120 MB 读一遍；文件内容由 writer-jars-sync 按 sha256 校验后才放进镜像（5.6）。
+/ocat/jars/PureWriter2-{version}-Windows-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/PureWriter2-{version}-macOS-aarch64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/PureWriter2-{version}-macOS-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/PureWriter2-0.0.0-Windows-x64.jar	-	404	-	text/html	Cache-Control == no-store | !Server	<html lang=mul>
+/ocat/jars/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+
+# 搜索引擎与 AI 的基础文件、站点图标（4.10、4.8）。
+/robots.txt	-	200	-	text/plain	Cache-Control == no-cache	Sitemap: https://writer.drakeet.com/sitemap.xml
+/sitemap.xml	-	200	-	text/xml | application/xml	-	https://writer.drakeet.com/zh-hans/sitemap.xml
+/zh-hans/sitemap.xml	-	200	-	text/xml | application/xml	-	<loc>https://writer.drakeet.com/zh-hans/</loc>
+/llms.txt	-	200	-	text/plain	-	Pure Writer
+/favicon.ico	-	200	-	image/	-	-
+/apple-touch-icon.png	-	200	-	image/png	-	-
+/apple-touch-icon-precomposed.png	-	200	-	image/png	-	-
+
+# Hugo 生成的带内容指纹的样式、脚本与图片：缓存一年并标为 immutable；地址从页面里取。已不存在的旧指纹 404、不缓存。
+/css/* from /zh-hans/	-	200	-	text/css	Cache-Control == public, max-age=31536000, immutable	-
+/css/* from /zh-hans/	Accept-Encoding: br, gzip	200	-	text/css	Content-Encoding =~ br|gzip	-
+/js/* from /zh-hans/desktop/	-	200	-	text/javascript | application/javascript	Cache-Control == public, max-age=31536000, immutable	-
+/img/* from /zh-hans/	-	200	-	image/	Cache-Control == public, max-age=31536000, immutable	-
+/css/main.min.0000000000000000000000000000000000000000000000000000000000000000.css	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+
+# ======================================================================================================================
+# 带语言前缀的正式地址（4.3）：直接提供、永不协商；只有不带尾斜杠的目录由 Caddy 308 补斜杠，粘着杂字符的写法 301 到
+# 干净的地址（见后面「清理杂字符」）。
+# ======================================================================================================================
+# 简体中文首页带 ICP 备案号、指向 beian.miit.gov.cn 的链接与公安备案号（5.5）；其他语言的页面不带（AGENTS.md 的市场约定）。
+/zh-hans/	-	200	-	text/html	Cache-Control == no-cache	闽ICP备2021006387号-1 | https://beian.miit.gov.cn/ | 苏公网安备32050602012178号
+/zh-hant/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-TW | !beian.miit.gov.cn
+/zh-hk/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-HK | !beian.miit.gov.cn
+/en/	-	200	-	text/html	Cache-Control == no-cache	<html lang=en | !beian.miit.gov.cn
+/ja/	-	200	-	text/html	Cache-Control == no-cache	<html lang=ja | !beian.miit.gov.cn
+# 带前缀的地址不看语言头与 ?lang=。
+/zh-hans/	Accept-Language: en-US	200	-	text/html	-	<html lang=zh-Hans
+/en/?lang=zh-Hans	Accept-Language: zh-CN	200	-	text/html	-	<html lang=en
+/zh-hans/	Accept-Encoding: br, gzip	200	-	text/html	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
+# 不带尾斜杠的目录：Caddy 默认 308 补斜杠。
+/zh-hans	-	308	/zh-hans/	-	-	-
+/en/desktop	-	308	/en/desktop/	-	-	-
+/zh-hans/genuine	-	308	/zh-hans/genuine/	-	-	-
+# 未知路径：404，用该语言目录下的 404.html，不做协商、不跳首页。俄文没有首页。
+/zh-hans/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
+/zh-hant/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hant-TW>
+/zh-hk/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hant-HK>
+/en/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=en>
+/ja/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=ja>
+/ru/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=ru>
+/en/manual/no-such-page/	Accept-Language: ja	404	-	text/html	Cache-Control == no-store	<html lang=en>
+/ru/	-	404	-	text/html	Cache-Control == no-store	<html lang=ru>
+/ru	-	404	-	text/html	Cache-Control == no-store	<html lang=ru>
+# 不带语言前缀的未知路径：根目录那份多语言 404 页。
+/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/no-such-page	Accept-Language: ja-JP	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/no-such-page	Accept-Encoding: gzip	404	-	text/html	Cache-Control == no-store | Content-Encoding == gzip	<html lang=mul>
+/desktop2/PureWriter2-4.4.0-Windows-x64.exe	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+# 不存在的路径以 404.html/ 结尾时同样是 404，不跳转：错误页的 file_server 关掉了规范化跳转（理由见 site.caddy 的 handle_errors 404）。
+/x/404.html/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/en/x/404.html/	-	404	-	text/html	Cache-Control == no-store	<html lang=en>
+
+# 各个跳转目标都确实存在（301 与协商指向的每一个页面），而且送出的就是这一页：内容核对本页的规范地址（canonical），按
+# layouts/partials/head.html 的固定输出写到标签结束的 >。只写到地址为止的话，canonical 指向本页下级地址的页面也能通过。
+/zh-hans/desktop/	-	200	-	text/html	Cache-Control == no-cache	rel=canonical href=https://writer.drakeet.com/zh-hans/desktop/>
+/zh-hant/desktop/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/desktop/>
+/zh-hk/desktop/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hk/desktop/>
+/en/desktop/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/desktop/>
+/ja/desktop/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/desktop/>
+/ru/desktop/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ru/desktop/>
+/zh-hans/manual/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/manual/>
+/zh-hant/manual/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/manual/>
+/en/manual/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/manual/>
+/zh-hans/backups/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/backups/>
+/zh-hant/backups/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/backups/>
+/en/backups/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/backups/>
+/zh-hans/markdown/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/markdown/>
+/zh-hans/protections/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/protections/>
+/zh-hans/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/genuine/>
+/zh-hans/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/android/privacy/>
+/en/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/android/privacy/>
+/zh-hans/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/ios/privacy/>
+/zh-hant/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/ios/privacy/>
+/zh-hk/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hk/ios/privacy/>
+/en/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/ios/privacy/>
+/ja/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/ios/privacy/>
+/zh-hans/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/ios/support/>
+/zh-hant/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/ios/support/>
+/zh-hk/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hk/ios/support/>
+/en/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/ios/support/>
+/ja/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/ios/support/>
+/en/desktop/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/desktop/privacy/>
+/en/blog/new-desktop-dev-story/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/new-desktop-dev-story/>
+
+# ======================================================================================================================
+# 多语言入口的协商（4.5）：?lang= 合法时 301（去掉 lang，其余参数照带）；否则按 Accept-Language 的顺序取第一个目标页
+# 支持的语言，302，带 Vary: Accept-Language 与 no-store；不带语言头落到 zh-hans，带了但都不受支持落到 en。
+# ======================================================================================================================
+# 首页 /（Android「需要更新」对话框、iOS 示例文章、App Store 营销网址、外部链接）。5.5：不带语言头与 zh-CN 都到 /zh-hans/。
+/	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: zh-CN	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: zh-CN,zh;q=0.9,en;q=0.8	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: zh-TW	302	/zh-hant/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: zh-HK	302	/zh-hk/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: zh-MO	302	/zh-hk/	-	-	-
+/	Accept-Language: zh-Hant-HK	302	/zh-hk/	-	-	-
+/	Accept-Language: zh-Hans-HK	302	/zh-hans/	-	-	-
+/	Accept-Language: zh-Hant	302	/zh-hant/	-	-	-
+/	Accept-Language: zh_TW	302	/zh-hant/	-	-	-
+/	Accept-Language: zh	302	/zh-hans/	-	-	-
+/	Accept-Language: zh-SG	302	/zh-hans/	-	-	-
+/	Accept-Language: ja-JP	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: en-US	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: EN-gb	302	/en/	-	-	-
+# 首页没有俄文：ru-RU 不受支持，落到 en。
+/	Accept-Language: ru-RU	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: fr	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: *	302	/en/	-	-	-
+/	Accept-Language:	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
+# 不受支持的语言跳过、看下一个；按出现顺序而不是 q 值。
+/	Accept-Language: fr, ja	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7	302	/en/	-	-	-
+/	Accept-Language: de, ru;q=0.9, zh-TW;q=0.1, ja;q=0.8	302	/zh-hant/	-	-	-
+/	Accept-Language: ko-KR, zh-Hant-HK;q=0.9	302	/zh-hk/	-	-	-
+/	Accept-Language: ru;q=1.0, ja;q=0.1	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+# 空项、分号前后的空格不影响按顺序取第一个受支持的语言。
+/	Accept-Language: zh-TW,,en	302	/zh-hant/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: ,,ja	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	Accept-Language: fr , ja ;q=0.5	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+# 多行 Accept-Language 按出现顺序连起来看；其中一行为空也一样。
+/	Accept-Language: fr | Accept-Language: ja-JP	302	/ja/	-	-	-
+/	Accept-Language:  | Accept-Language: zh-HK	302	/zh-hk/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/index	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/index	Accept-Language: en	302	/en/	-	-	-
+/index.html	Accept-Language: ja	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
+# ?lang=：日志里出现过的真实取值。规范化后合法就 301，结果只取决于地址，不带 Vary。
+/?lang=zh-Hans	-	301	/zh-hans/	-	Cache-Control == max-age=86400 | !Vary	-
+/?lang=zh-Hans	Accept-Language: en-US	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/?lang=en	Accept-Language: zh-CN	301	/en/	-	Cache-Control == max-age=86400	-
+/?lang=zh-Hant	-	301	/zh-hant/	-	Cache-Control == max-age=86400	-
+/?lang=zh-HK	-	301	/zh-hk/	-	Cache-Control == max-age=86400	-
+/?lang=ja	-	301	/ja/	-	Cache-Control == max-age=86400	-
+/?lang=zh	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/?lang=zh-hans	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/?lang=zh_CN	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/?lang=zh_TW	-	301	/zh-hant/	-	Cache-Control == max-age=86400	-
+/?lang=zh-Hans/page/2	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/?lang=EN	-	301	/en/	-	-	-
+/index.html?lang=zh-HK	-	301	/zh-hk/	-	Cache-Control == max-age=86400	-
+/index?lang=ja	-	301	/ja/	-	-	-
+# 去掉 lang 参数，其余参数的顺序与写法原样带上。lang 参数从原始查询串里取：有多个时以第一个为准（与旧站脚本一致），
+# 去掉的也是它；紧挨着它的 & 一并去掉，不留下孤立的 ? 或 &。
+/?lang=en&utm_source=twitter	-	301	/en/?utm_source=twitter	-	Cache-Control == max-age=86400	-
+/?utm_source=x&lang=ja&b=%E4%B8%AD	-	301	/ja/?utm_source=x&b=%E4%B8%AD	-	-	-
+/?b=2&lang=zh-Hant	-	301	/zh-hant/?b=2	-	-	-
+/?lang=zh-Hans&lang=en	-	301	/zh-hans/?lang=en	-	-	-
+/?lang=zh-TW&lang=zh-Hans	-	301	/zh-hant/?lang=zh-Hans	-	Cache-Control == max-age=86400 | !Vary	-
+/?lang=zh&lang=zh-Hant	-	301	/zh-hans/?lang=zh-Hant	-	-	-
+/?lang=en&	-	301	/en/	-	-	-
+/?&lang=en	-	301	/en/	-	-	-
+/?a=1&&lang=ja	-	301	/ja/?a=1	-	-	-
+/?a=1&lang=ja&&b=2	-	301	/ja/?a=1&b=2	-	-	-
+# 只认原始查询串里字面的 lang=：半角分号不是分隔符，lang=en;x=1 整个是 lang 的值，规范化为 en（与旧站脚本相同）；
+# 编码过的键名不是 lang，原样留在查询串里。
+/?lang=en;x=1	Accept-Language: ja	301	/en/	-	-	-
+/?l%61ng=en	-	302	/zh-hans/?l%61ng=en	-	-	-
+# ?lang= 不是首页支持的语言（ru、fr、cn、1、空）：视为没有传，按 Accept-Language 协商，302 同样去掉 lang。
+/?lang=ru	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?lang=ru	Accept-Language: ru-RU,ru;q=0.9	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?lang=fr&a=1	Accept-Language: ja	302	/ja/?a=1	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?lang=cn	Accept-Language: zh-TW	302	/zh-hant/	-	-	-
+/?lang=1	-	302	/zh-hans/	-	-	-
+/?lang=	Accept-Language: en	302	/en/	-	-	-
+/?utm_source=x	Accept-Language: zh-HK	302	/zh-hk/?utm_source=x	-	Cache-Control == no-store | Vary: Accept-Language	-
+
+# iOS 隐私政策 /ios/privacy：App 内链接带 ?lang=<界面语言>（iOS 的 30 种界面语言），App Store Connect 的隐私政策网址。
+# 页面支持的 5 种 301；其余 25 种视为没有传，交给 Accept-Language（这几行不带语言头，所以落到 zh-hans）。
+/ios/privacy?lang=en	-	301	/en/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy?lang=zh-Hans	-	301	/zh-hans/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy?lang=zh-Hant	-	301	/zh-hant/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy?lang=zh-HK	-	301	/zh-hk/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy?lang=ja	-	301	/ja/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy?lang=bg	-	302	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/privacy?lang=cs	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=da	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=de	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=el	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=es	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=fi	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=fr	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=hi	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=hu	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=id	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=it	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ko	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=nl	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pl	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pt-BR	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pt-PT	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ro	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ru	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=sv	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ta	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=th	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=tr	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=uk	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=vi	-	302	/zh-hans/ios/privacy/	-	-	-
+# 同样的界面语言，再带上 iOS 内置浏览器会发的语言头：不受支持的落到 en，受支持的按顺序取。
+/ios/privacy?lang=de	Accept-Language: de-DE,de;q=0.9	302	/en/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/privacy?lang=fr	Accept-Language: fr-FR,fr;q=0.9	302	/en/ios/privacy/	-	-	-
+/ios/privacy?lang=ru	Accept-Language: ru-RU	302	/en/ios/privacy/	-	-	-
+/ios/privacy?lang=pt-BR	Accept-Language: pt-BR, zh-Hant-TW;q=0.8	302	/zh-hant/ios/privacy/	-	-	-
+/ios/privacy	-	302	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/privacy	Accept-Language: en-GB	302	/en/ios/privacy/	-	-	-
+/ios/privacy.html?lang=ja	-	301	/ja/ios/privacy/	-	Cache-Control == max-age=86400	-
+/ios/privacy.html	Accept-Language: zh-HK	302	/zh-hk/ios/privacy/	-	-	-
+# iOS 支持页 /ios/support：App Store Connect 的支持网址，规则与隐私政策相同。
+/ios/support	-	302	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support	Accept-Language: ja-JP	302	/ja/ios/support/	-	-	-
+/ios/support?lang=en	-	301	/en/ios/support/	-	Cache-Control == max-age=86400	-
+/ios/support?lang=zh-Hans	-	301	/zh-hans/ios/support/	-	-	-
+/ios/support?lang=zh-Hant	-	301	/zh-hant/ios/support/	-	-	-
+/ios/support?lang=zh-HK	-	301	/zh-hk/ios/support/	-	-	-
+/ios/support?lang=ja	-	301	/ja/ios/support/	-	-	-
+/ios/support?lang=de	-	302	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support?lang=ko	Accept-Language: ko-KR, ja-JP;q=0.5	302	/ja/ios/support/	-	-	-
+/ios/support.html	Accept-Language: en-US	302	/en/ios/support/	-	-	-
+
+# 桌面版下载页：/desktop（包管理器清单、Android 文案），/desktop2、/desktop2_en、/desktop_en（已安装桌面版的「检查更新」、
+# rebase-server、winget 清单），以及 Windows 安装包写进「已安装的应用」的坏链接。比首页多一个 ru。
+/desktop	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language: ru-RU	302	/ru/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language: ru-RU, en;q=0.5	302	/ru/desktop/	-	-	-
+/desktop	Accept-Language: fr, ru	302	/ru/desktop/	-	-	-
+/desktop	Accept-Language: en-US, ru;q=0.9	302	/en/desktop/	-	-	-
+/desktop	Accept-Language: ja;q=0.1, ru;q=0.9	302	/ja/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language: uk, ja	302	/ja/desktop/	-	-	-
+/desktop	Accept-Language: zh-CN	302	/zh-hans/desktop/	-	-	-
+/desktop	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
+/desktop	Accept-Language: zh-HK	302	/zh-hk/desktop/	-	-	-
+/desktop	Accept-Language: zh-Hant-HK	302	/zh-hk/desktop/	-	-	-
+/desktop	Accept-Language: zh-Hans-HK	302	/zh-hans/desktop/	-	-	-
+/desktop	Accept-Language: ja-JP	302	/ja/desktop/	-	-	-
+/desktop	Accept-Language: en-US	302	/en/desktop/	-	-	-
+/desktop	Accept-Language: fr	302	/en/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language: fr, ja	302	/ja/desktop/	-	-	-
+/desktop?lang=ru	-	301	/ru/desktop/	-	Cache-Control == max-age=86400	-
+/desktop?lang=zh-Hant	Accept-Language: en	301	/zh-hant/desktop/	-	Cache-Control == max-age=86400	-
+/desktop.html	Accept-Language: ja	302	/ja/desktop/	-	-	-
+/desktop.html?lang=en	-	301	/en/desktop/	-	-	-
+/desktop2	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
+/desktop2	Accept-Language: ru	302	/ru/desktop/	-	-	-
+/desktop2?lang=zh-Hans	-	301	/zh-hans/desktop/	-	Cache-Control == max-age=86400	-
+/desktop2?lang=en	-	301	/en/desktop/	-	-	-
+/desktop2?lang=zh-Hant	-	301	/zh-hant/desktop/	-	-	-
+/desktop2?lang=zh-HK	-	301	/zh-hk/desktop/	-	-	-
+/desktop2?lang=ja	-	301	/ja/desktop/	-	-	-
+/desktop2?lang=ru	-	301	/ru/desktop/	-	-	-
+/desktop2?lang=zh	-	301	/zh-hans/desktop/	-	-	-
+/desktop2?lang=fr	Accept-Language: fr-CA, en	302	/en/desktop/	-	-	-
+# 日志里粘着尾巴的取值：zh-Hans](https://…?lang=zh-Hans) 与 zh-Hans`，规范化后都是 zh-hans。
+/desktop2?lang=zh-Hans](https://writer.drakeet.com/desktop2?lang=zh-Hans)	-	301	/zh-hans/desktop/	-	Cache-Control == max-age=86400	-
+/desktop2?lang=zh-Hans%60	-	301	/zh-hans/desktop/	-	-	-
+/desktop2?lang=zh-Hant%5D	-	301	/zh-hant/desktop/	-	-	-
+/desktop2?lang=zh-Hans&v=5.1.0	-	301	/zh-hans/desktop/?v=5.1.0	-	-	-
+/desktop2.html	Accept-Language: en	302	/en/desktop/	-	-	-
+/desktop2_en	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_en	Accept-Language: fr	302	/en/desktop/	-	-	-
+/desktop2_en	Accept-Language: zh-CN	302	/zh-hans/desktop/	-	-	-
+/desktop2_en.html	Accept-Language: ja	302	/ja/desktop/	-	-	-
+/desktop_en	Accept-Language: ja-JP	302	/ja/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop_en.html	Accept-Language: en	302	/en/desktop/	-	-	-
+/desktop_en?lang=ru	-	301	/ru/desktop/	-	-	-
+# Windows 安装包里的坏链接（约从 3.1.0 起；存量安装改不了，由网站兜底）。
+/desktop2JpAbortIfPureWriterRunningPure	Accept-Language: zh-CN	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2JpAbortIfPureWriterRunningPure	-	302	/zh-hans/desktop/	-	-	-
+/desktop2_enJpAbortIfPureWriterRunningPure	Accept-Language: en-US	302	/en/desktop/	-	-	-
+/desktop2_enJpAbortIfPureWriterRunningPure%20Writer	Accept-Language: ja	302	/ja/desktop/	-	-	-
+
+# 繁体桌面入口 /desktop2_zh、/desktop_zh（rebase-server 与 Android 繁体文案，台湾与香港都会用到）：只在 zh-hk 与 zh-hant
+# 之间协商，默认 zh-hant；规范化为 zh-hans 的标签（zh-CN、zh-Hans-HK）与其他语言都跳过。
+/desktop2_zh	-	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: zh-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-MO	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-Hant-HK	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-Hant	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-Hans-HK	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-CN	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: en-US	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: fr, zh-Hans-HK, zh-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: zh-CN, zh-TW	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-CN, zh-HK;q=0.5	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-TW, zh-HK	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-HK, zh-TW	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: ja-JP, zh-hk;q=0.1	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-HK-Hans, zh-TW	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh_HK	302	/zh-hk/desktop/	-	-	-
+/desktop2_zh	Accept-Language: zh-CN,,zh-HK ;q=0.5	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: zh-SG, zh-Hans-MO, zh-Hant-MO	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: zh-Hans] , zh-Hant]	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh?lang=zh-HK	-	301	/zh-hk/desktop/	-	Cache-Control == max-age=86400	-
+/desktop2_zh?lang=zh-Hant	Accept-Language: zh-HK	301	/zh-hant/desktop/	-	Cache-Control == max-age=86400	-
+/desktop2_zh?lang=zh-Hant-HK	-	301	/zh-hk/desktop/	-	-	-
+# 有多个 lang 时以第一个为准。
+/desktop2_zh?lang=zh-TW&lang=zh-HK	-	301	/zh-hant/desktop/?lang=zh-HK	-	-	-
+# ?lang= 不是 zh-hk 或 zh-hant：视为没有传。
+/desktop2_zh?lang=en	Accept-Language: zh-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh?lang=zh-Hans	-	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh.html	-	302	/zh-hant/desktop/	-	-	-
+/desktop_zh	Accept-Language: zh-Hant-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+/desktop_zh.html	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
+
+# ======================================================================================================================
+# 单语言旧地址（4.4）：确定性 301，与语言头无关；.html 写法同样处理；查询串原样带上；先缓存一天。
+# ======================================================================================================================
+# 使用手册：Android 帮助入口按地区分别打开。
+/wiki	-	301	/zh-hans/manual/	-	Cache-Control == max-age=86400 | !Vary	-
+/wiki	Accept-Language: en-US	301	/zh-hans/manual/	-	Cache-Control == max-age=86400	-
+/wiki.html	-	301	/zh-hans/manual/	-	Cache-Control == max-age=86400	-
+/wiki?from=android&lang=en	-	301	/zh-hans/manual/?from=android&lang=en	-	Cache-Control == max-age=86400	-
+/wiki_zh	-	301	/zh-hant/manual/	-	Cache-Control == max-age=86400	-
+/wiki_zh.html	-	301	/zh-hant/manual/	-	-	-
+/wiki_en	-	301	/en/manual/	-	Cache-Control == max-age=86400	-
+/wiki_en.html	Accept-Language: zh-CN	301	/en/manual/	-	-	-
+# 旧地址区分大小写，与旧站的文件名一致：/Wiki 不是 /wiki，按未知路径 404。
+/Wiki	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+# 自动备份与云备份教程：Android 备份教程入口（_zh 与 _en 是 2019—2023 年的版本在用）、外部 README。
+/backups	-	301	/zh-hans/backups/	-	Cache-Control == max-age=86400	-
+/backups.html	-	301	/zh-hans/backups/	-	-	-
+/backups_zh	-	301	/zh-hant/backups/	-	Cache-Control == max-age=86400	-
+/backups_zh?from=android	-	301	/zh-hant/backups/?from=android	-	-	-
+/backups_en	-	301	/en/backups/	-	Cache-Control == max-age=86400	-
+/backups_en.html	-	301	/en/backups/	-	-	-
+# 请使用正版：Android 检测到篡改时打开的提示页，存量极大。
+/warning	-	301	/zh-hans/genuine/	-	Cache-Control == max-age=86400	-
+/warning.html	-	301	/zh-hans/genuine/	-	-	-
+# Android 隐私政策：应用商店与 Google OAuth 同意屏幕很可能登记了前两个；第三个是 2023 年给华为用过的旧地址。
+/privacy	-	301	/zh-hans/android/privacy/	-	Cache-Control == max-age=86400	-
+/privacy.html	-	301	/zh-hans/android/privacy/	-	-	-
+/privacy_en	-	301	/en/android/privacy/	-	Cache-Control == max-age=86400	-
+/privacy_en.html	-	301	/en/android/privacy/	-	-	-
+/privacy_individual	-	301	/zh-hans/android/privacy/	-	Cache-Control == max-age=86400	-
+/privacy_individual.html	-	301	/zh-hans/android/privacy/	-	-	-
+# Google OAuth 同意屏幕登记的应用首页（据旧页正文）。
+/home_en	-	301	/en/	-	Cache-Control == max-age=86400	-
+/home_en.html	-	301	/en/	-	-	-
+# 桌面版菜单（非中文界面）与桌面版隐私政策（/desktop/privacy 是 2024-12 的旧地址）。
+/blog/NewDesktopDevStory	-	301	/en/blog/new-desktop-dev-story/	-	Cache-Control == max-age=86400	-
+/blog/NewDesktopDevStory.html	-	301	/en/blog/new-desktop-dev-story/	-	-	-
+/d/privacy	-	301	/en/desktop/privacy/	-	Cache-Control == max-age=86400	-
+/d/privacy.html	-	301	/en/desktop/privacy/	-	-	-
+/desktop/privacy	-	301	/en/desktop/privacy/	-	Cache-Control == max-age=86400	-
+/desktop/privacy.html	-	301	/en/desktop/privacy/	-	-	-
+# 站内链接与外部 README 用到的教程页。
+/markdown	-	301	/zh-hans/markdown/	-	Cache-Control == max-age=86400	-
+/markdown.html	-	301	/zh-hans/markdown/	-	-	-
+/protections	-	301	/zh-hans/protections/	-	Cache-Control == max-age=86400	-
+/protections.html	-	301	/zh-hans/protections/	-	-	-
+# 没有站内入口的旧首页：日文版、drakeet.cn 的旧内容。
+/dorakito	-	301	/ja/	-	Cache-Control == max-age=86400	-
+/dorakito.html	-	301	/ja/	-	-	-
+/cn	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/cn/	-	301	/zh-hans/	-	Cache-Control == max-age=86400	-
+/cn/index	-	301	/zh-hans/	-	-	-
+/cn/index.html	-	301	/zh-hans/	-	-	-
+# rebase-server、俄语用户的通知。
+/desktop2_ru	-	301	/ru/desktop/	-	Cache-Control == max-age=86400	-
+/desktop2_ru	Accept-Language: zh-CN	301	/ru/desktop/	-	-	-
+/desktop2_ru.html	-	301	/ru/desktop/	-	-	-
+# 停用的临时下载页（Telegram 频道的旧消息链接着 /v28.1）与 Android 清单里未经验证的网页链接：回到首页，再由首页协商。
+/v28	-	301	/	-	Cache-Control == max-age=86400	-
+/v28/	-	301	/	-	-	-
+/v28.1	-	301	/	-	Cache-Control == max-age=86400	-
+/v28.1/	-	301	/	-	-	-
+/about	-	301	/	-	Cache-Control == max-age=86400	-
+/pro	-	301	/	-	Cache-Control == max-age=86400	-
+
+# ======================================================================================================================
+# 网盘授权完成页（4.6）：rebase-server 在桌面版授权完成后 307 过来的旧地址，一律内部重写到每家网盘唯一的完成页，不跳转。
+# 服务商名不区分大小写；后缀无、_en、_zh、_ja、_jp、_ko；可带 .html。日文的 _ja 在旧站一直是 500。
+# ======================================================================================================================
+/drives/oauth/OneDrive	-	200	-	text/html	Cache-Control == no-cache	OneDrive authorization successful | noindex
+/drives/oauth/OneDrive.html	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/OneDrive_en	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/OneDrive_zh	Accept-Language: en-US	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/OneDrive_ja	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/OneDrive_jp.html	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/OneDrive_ko	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/onedrive	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/ONEDRIVE_en.html	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/Dropbox	-	200	-	text/html	-	Dropbox authorization successful | noindex
+/drives/oauth/Dropbox_ja.html	-	200	-	text/html	-	Dropbox authorization successful
+/drives/oauth/dropbox_ko	-	200	-	text/html	-	Dropbox authorization successful
+/drives/oauth/Aliyun	-	200	-	text/html	-	AliyunDrive authorization successful | noindex
+/drives/oauth/Aliyun_zh	-	200	-	text/html	-	AliyunDrive authorization successful
+/drives/oauth/aliyun_ja?code=1	-	200	-	text/html	-	AliyunDrive authorization successful
+# 新地址本身也能直接访问。
+/drives/oauth/onedrive/	-	200	-	text/html	-	OneDrive authorization successful
+/drives/oauth/dropbox/	-	200	-	text/html	-	Dropbox authorization successful
+/drives/oauth/aliyun/	-	200	-	text/html	-	AliyunDrive authorization successful
+# 不认识的后缀与服务商：404。
+/drives/oauth/OneDrive_fr	-	404	-	text/html	-	<html lang=mul>
+/drives/oauth/GoogleDrive	-	404	-	text/html	-	<html lang=mul>
+/drives/oauth/	-	404	-	text/html	-	<html lang=mul>
+
+# ======================================================================================================================
+# DeepOCAT 旧页：原样提供，CSP 在 img-src 上单独放行 kuromi.drakeet.cn 的图标。
+# ======================================================================================================================
+/ocat/ocat	-	200	-	text/html	Content-Security-Policy: img-src 'self' data: https://kuromi.drakeet.cn; | Cache-Control == no-cache	<title>ocat</title>
+/ocat/ocat.html	-	200	-	text/html	Content-Security-Policy: https://kuromi.drakeet.cn	<title>ocat</title>
+/ocat/privacy	-	200	-	text/html	Content-Security-Policy: img-src 'self' data: https://kuromi.drakeet.cn;	Privacy Policy - DeepOCAT
+/ocat/privacy.html	-	200	-	text/html	-	Privacy Policy - DeepOCAT
+/ocat/terms	-	200	-	text/html	Content-Security-Policy: https://kuromi.drakeet.cn	Terms of Use - DeepOCAT
+/ocat/terms.html	-	200	-	text/html	-	Terms of Use - DeepOCAT
+/ocat/ocat.md	-	404	-	text/html	-	<html lang=mul>
+/ocat/	-	404	-	text/html	-	<html lang=mul>
+# 其余页面不放宽。
+/zh-hans/genuine/	-	200	-	text/html	Content-Security-Policy: img-src 'self' data:;	-
+
+# ======================================================================================================================
+# 清理杂字符（4.5）：旧入口名后面紧跟全角标点、不换行空格、右括号、反引号、星号、波浪线、方括号，或单个尾斜杠时，
+# 301 到去掉尾巴的旧入口（查询串照带），再按上面的规则处理。前几行是日志里真实出现过的地址。带语言前缀的新地址后面
+# 粘着同样的字符时，301 到去掉尾巴、带尾斜杠的新地址（见本节末尾）。
+# ======================================================================================================================
+/desktop2%E3%80%82	-	301	/desktop2	-	Cache-Control == max-age=86400	-
+/desktop2%E3%80%82?lang=en	-	301	/desktop2?lang=en	-	Cache-Control == max-age=86400	-
+/desktop2%C2%A0	-	301	/desktop2	-	Cache-Control == max-age=86400	-
+/desktop2%E3%80%81	-	301	/desktop2	-	-	-
+/desktop2%29%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%A7%82%E6%9C%9B%E4%B8%80%E4%B8%8B%E6%AD%A3%E5%BC%8F%E7%89%88%E3%80%82	-	301	/desktop2	-	-	-
+/desktop%29%EF%BC%89%E3%80%82	-	301	/desktop	-	-	-
+/desktop%EF%BC%8C%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%A1%8C%E9%9D%A2%E7%89%88	-	301	/desktop	-	-	-
+/desktop%EF%BC%88%E9%9C%80%E4%B8%8E%E6%89%8B%E6%9C%BA%E7%89%88	-	301	/desktop	-	-	-
+/desktop)	-	301	/desktop	-	-	-
+/desktop~~	-	301	/desktop	-	-	-
+/desktop**%5Breference:0%5D	-	301	/desktop	-	-	-
+/desktop2**%5Breference:0	-	301	/desktop2	-	-	-
+/desktop2%5D(https://writer.drakeet.com/desktop2)	-	301	/desktop2	-	-	-
+/warning%60%EF%BC%88%E5%AD%98%E4%BA%8E%E4%B8%A4%E4%B8%AA%E5%AD%97%E6%AE%B5%EF%BC%89	-	301	/warning	-	-	-
+/markdown%29%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%9C%AC%E6%95%99%E7%A8%8B%E4%B8%AD%E9%98%85%E8%A7%88	-	301	/markdown	-	-	-
+# 其余字符类：弯引号、省略号、全角空格、不换行空格的其他写法、全角波浪线、间隔号。
+/desktop%E2%80%9D	-	301	/desktop	-	-	-
+/desktop%E2%80%A6	-	301	/desktop	-	-	-
+/desktop%E3%80%80	-	301	/desktop	-	-	-
+/desktop%E2%80%AF	-	301	/desktop	-	-	-
+/desktop%EF%BD%9E	-	301	/desktop	-	-	-
+/desktop%C2%B7	-	301	/desktop	-	-	-
+# 其他旧入口同样适用。
+/desktop2_zh%E3%80%82	-	301	/desktop2_zh	-	-	-
+/desktop2_en%EF%BC%89	-	301	/desktop2_en	-	-	-
+/ios/privacy%E3%80%82	-	301	/ios/privacy	-	-	-
+/wiki%EF%BC%8C	-	301	/wiki	-	-	-
+/v28.1%E3%80%82	-	301	/v28.1	-	-	-
+/blog/NewDesktopDevStory)	-	301	/blog/NewDesktopDevStory	-	-	-
+# 首页地址本身：只在 / 后面全是这些字符时清理（/。、/) 都在日志里出现过）；扫描器的探测后面跟着字母，照旧 404。
+/%E3%80%82	-	301	/	-	Cache-Control == max-age=86400	-
+/)	-	301	/	-	-	-
+/%EF%BC%89%E3%80%82?lang=ja	-	301	/?lang=ja	-	-	-
+/*.auto.tfvars	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/%5Bslug%5D	-	404	-	text/html	-	<html lang=mul>
+# 单个尾斜杠。
+/desktop2/	-	301	/desktop2	-	Cache-Control == max-age=86400	-
+/desktop2/?lang=ja	-	301	/desktop2?lang=ja	-	-	-
+/desktop/	-	301	/desktop	-	-	-
+/wiki/	-	301	/wiki	-	-	-
+/ios/privacy/	-	301	/ios/privacy	-	-	-
+/index/	-	301	/index	-	-	-
+/about/	-	301	/about	-	-	-
+# 字母、数字、点、下划线、ASCII 空格与左括号都不在其中：不清理，按未知路径 404。
+/desktop2.jsonx	-	404	-	text/html	-	<html lang=mul>
+/desktop2_enx	-	404	-	text/html	-	<html lang=mul>
+/desktop3	-	404	-	text/html	-	<html lang=mul>
+/desktop2%20	-	404	-	text/html	-	<html lang=mul>
+/desktop2(	-	404	-	text/html	-	<html lang=mul>
+/wikis	-	404	-	text/html	-	<html lang=mul>
+/desktop2//x	-	404	-	text/html	-	<html lang=mul>
+# 带语言前缀的新地址：语言前缀加若干段（小写字母、数字、短横），可带一个尾斜杠，后面紧跟上述字符时 301 到「前缀加这些段」
+# 再补上尾斜杠，查询串照带；杂字符之后是什么都不看。不判断目标是否存在。
+/zh-hans/desktop/%E3%80%82	-	301	/zh-hans/desktop/	-	Cache-Control == max-age=86400	-
+/zh-hans/desktop%E3%80%82?from=x	-	301	/zh-hans/desktop/?from=x	-	Cache-Control == max-age=86400	-
+/en%EF%BC%89	-	301	/en/	-	Cache-Control == max-age=86400	-
+/en/desktop/%5D(https://writer.drakeet.com/en/desktop/)	-	301	/en/desktop/	-	-	-
+# 点不算段里的字符，文件地址不清理；ASCII 空格不是杂字符。都按未知路径 404。
+/zh-hans/sitemap.xml%E3%80%82	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
+/zh-hans/desktop/%20	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
+
+# ======================================================================================================================
+# 不规范的路径写法：多余的斜杠与 .、.. 段按清理后的路径处理，与规范写法一样一步到位；含反斜杠或控制字符的回 400
+# （都在 site.caddy 第 0 段）。旧站的 nginx 默认合并斜杠，第 A 步的现网按清理后的路径找文件，都回 200；日志 52 天里
+# //wiki 40 次、// 13 次、//wiki_en 11 次，另有 //desktop、//desktop_zh、//markdown、//backups*、//privacy*、
+# //ios/privacy?lang=…、//ios/support?lang=…、/./desktop_* 等。
+# ======================================================================================================================
+//	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+//wiki	-	301	/zh-hans/manual/	-	Cache-Control == max-age=86400	-
+//wiki_en	-	301	/en/manual/	-	-	-
+//desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+//ios/privacy?lang=zh-HK	-	301	/zh-hk/ios/privacy/	-	-	-
+/./desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+/x/../wiki	-	301	/zh-hans/manual/	-	-	-
+//drives/oauth/OneDrive_ja	-	200	-	text/html	-	OneDrive authorization successful
+//zh-hans/	-	200	-	text/html	-	<html lang=zh-Hans
+//desktop2%E3%80%82	-	301	/desktop2	-	-	-
+# 编码过的 ? 是路径的一部分，不会被当成查询串的开始。
+//desktop2%3Flang=en	-	404	-	text/html	-	<html lang=mul>
+# 解码后含反斜杠或 ASCII 控制字符的路径一律 400，没有 Location：file_server 补斜杠、去斜杠的 308 用原始路径拼 Location，
+# 浏览器会把其中的 /\ 当成 //、删掉制表符，变成站外跳转（理由见 site.caddy 第 0 段）。前两行是目录补斜杠的方向，
+# 第三行是文件去斜杠的方向，最后一行看起来是正常的地址。
+/%5Cexample.invalid/%3F%2F..%2F..%2Fen	-	400	-	text/plain	Cache-Control == no-store | !Server	-
+/%09/example.invalid/../../en	-	400	-	text/plain	Cache-Control == no-store	-
+/%5Cx/%3F/../../zh-hans/sitemap.xml/	-	400	-	text/plain	Cache-Control == no-store	-
+/zh-hans%5Cdesktop/	-	400	-	text/plain	Cache-Control == no-store	-
+
+# ======================================================================================================================
+# 仓库文件与点开头的路径：新站不再提供，一律 404（第三节）。
+# ======================================================================================================================
+/.git/config	-	404	-	text/html	Cache-Control == no-store | !Server	<html lang=mul>
+/.git/HEAD	-	404	-	text/html	-	<html lang=mul>
+/.gitignore	-	404	-	text/html	-	<html lang=mul>
+/.github/workflows/monitor.yml	-	404	-	text/html	-	<html lang=mul>
+/.env	-	404	-	text/html	-	<html lang=mul>
+/backups/.env	-	404	-	text/html	-	<html lang=mul>
+/zh-hans/.git/config	-	404	-	text/html	-	<html lang=zh-Hans>
+/AGENTS.md	-	404	-	text/html	-	<html lang=mul>
+/CLAUDE.md	-	404	-	text/html	-	<html lang=mul>
+/CNAME	-	404	-	text/html	-	<html lang=mul>
+/Gemfile	-	404	-	text/html	-	<html lang=mul>
+/_config.yml	-	404	-	text/html	-	<html lang=mul>
+/_layouts/default.html	-	404	-	text/html	-	<html lang=mul>
+/assets/css/style.css	-	404	-	text/html	-	<html lang=mul>
+/assets/css/main.css	-	404	-	text/html	-	<html lang=mul>
+/sources/	-	404	-	text/html	-	<html lang=mul>
+/thumbnail.png	-	404	-	text/html	-	<html lang=mul>
+/index.md	-	404	-	text/html	-	<html lang=mul>
+/hugo.toml	-	404	-	text/html	-	<html lang=mul>
+/content/_index.zh-hans.html	-	404	-	text/html	-	<html lang=mul>
+/static/robots.txt	-	404	-	text/html	-	<html lang=mul>
+/scripts/deploy.sh	-	404	-	text/html	-	<html lang=mul>
+/caddy/site.caddy	-	404	-	text/html	-	<html lang=mul>
+/checks/contract.tsv	-	404	-	text/html	-	<html lang=mul>
+/ops/contract.tsv	-	404	-	text/html	-	<html lang=mul>
+/docs/rebuild.md	-	404	-	text/html	-	<html lang=mul>
+/public/index.html	-	404	-	text/html	-	<html lang=mul>
+# 预压缩副本不单独作为地址提供（4.2：地址空间就是期望产物清单），只在原地址上按 Accept-Encoding 发送（见上面的压缩用例）。
+/zh-hans/index.html.br	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
+/desktop2.json.gz	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+
+# ======================================================================================================================
+# 响应头（4.9）：安全头对页面、跳转与 404 都生效；不暴露 Server；刻意不设 Cross-Origin-Resource-Policy。
+# ======================================================================================================================
+/zh-hans/genuine/	-	200	-	text/html	Content-Security-Policy == default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests | Strict-Transport-Security == max-age=31536000 | X-Content-Type-Options == nosniff | Referrer-Policy == strict-origin-when-cross-origin | Permissions-Policy: camera=() | Permissions-Policy: microphone=() | Permissions-Policy: geolocation=() | !Server | !Cross-Origin-Resource-Policy	-
+/no-such-page	-	404	-	text/html	Strict-Transport-Security == max-age=31536000 | X-Content-Type-Options == nosniff | Content-Security-Policy: script-src 'self' | Referrer-Policy == strict-origin-when-cross-origin | !Server	-
+/wiki	-	301	/zh-hans/manual/	-	Strict-Transport-Security == max-age=31536000 | X-Content-Type-Options == nosniff | !Server	-
+/	Accept-Language: ja	302	/ja/	-	Strict-Transport-Security == max-age=31536000 | !Server	-
+/images/papers/0.jpg	-	200	-	image/jpeg	Strict-Transport-Security == max-age=31536000 | X-Content-Type-Options == nosniff | !Server	-
+# 除 GET、HEAD 以外的请求方法：文件不接受，405，带 Allow，同样不暴露 Server、不存储。
+/zh-hans/	:method: POST	405	-	-	Cache-Control == no-store | Allow: GET | !Server	-
+/zh-hans/	:method: HEAD	200	-	text/html	Cache-Control == no-cache	-
+# 405 是一行完整的纯文本。浏览器式的 Accept-Encoding 加上 GET、HEAD 以外的方法时，file_server 已按预压缩副本写下
+# Content-Encoding 与 Content-Length 才报 405；Apple 关联域名文件的 application/json 也早已写下。这些都不能沿用到 405 上，
+# 否则声明的编码与长度对不上正文（理由见 site.caddy 文末的 handle_errors）。
+/zh-hans/	:method: POST | Accept-Encoding: gzip, deflate, br, zstd	405	-	text/plain	Cache-Control == no-store | !Content-Encoding | !Server	405
+/desktop2.json	:method: PUT | Accept-Encoding: gzip	405	-	text/plain	Cache-Control == no-store | !Content-Encoding	405
+/.well-known/apple-app-site-association	:method: POST	405	-	text/plain	Cache-Control == no-store	405
+# 404 页总是完整发送，不受请求里的范围与条件头影响：file_server 发送 404 页时照常处理它们，规则先把它们去掉（理由见
+# site.caddy 的 handle_errors 404）。越界的 Range 相当于断点续传一个已被清理的 JAR。
+/no-such-page	Range: bytes=0-20	404	-	text/html	Cache-Control == no-store | !Content-Range	<html lang=mul>
+/ocat/jars/PureWriter2-0.0.0-Windows-x64.jar	Range: bytes=50000000-	404	-	text/html	Cache-Control == no-store | !Content-Range	<html lang=mul>
+/no-such-page	If-Modified-Since: Fri, 01 Jan 2100 00:00:00 GMT	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/no-such-page	If-None-Match: *	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+/zh-hans/no-such-page	If-Match: "nope"	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
+# 错误响应一律 no-store：412（条件不满足）与 416（范围越界）由 Go 的文件服务直接写出、不经 handle_errors，靠 site.caddy
+# 里按状态码匹配的那条 header 改掉出错前按路径设好的缓存头（图片一周、带指纹的一年 immutable）。
+/images/papers/0.jpg	If-Match: "nope"	412	-	-	Cache-Control == no-store	-
+/css/* from /zh-hans/	If-Unmodified-Since: Mon, 01 Jan 2001 00:00:00 GMT	412	-	-	Cache-Control == no-store	-
+/images/papers/0.jpg	Range: bytes=999999999-	416	-	-	Cache-Control == no-store	-
+
+# ======================================================================================================================
+# HTTP（第三节最后一行）：任意路径 308 到 https 的同一路径（Caddy 的默认行为，不在 site.caddy 里），再按本表处理。
+# 只在服务器上检查；本机测试台只有 HTTP。
+# ======================================================================================================================
+http://{host}/desktop2?lang=en	-	308	https://{host}/desktop2?lang=en	-	-	-
+http://{host}/.well-known/apple-app-site-association	-	308	https://{host}/.well-known/apple-app-site-association	-	-	-

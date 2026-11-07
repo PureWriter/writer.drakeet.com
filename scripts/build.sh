@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # 构建站点并跑不需要服务器的检查（docs/rebuild.md 第六节）。
-#   scripts/build.sh                     从已提交的 HEAD 构建到 public/（部署用的就是这种构建）
-#   scripts/build.sh --worktree          从工作区构建，包括未提交的改动（写页面时自查用）
+#   scripts/build.sh                     从已提交的 HEAD 构建到 public/
+#   scripts/build.sh --worktree          从本脚本所在的这份目录构建，包括未提交的改动（写页面时自查用）。scripts/deploy.sh
+#                                        把要部署的提交解到临时目录，再用其中的 build.sh 以这种方式构建那一份
 #   scripts/build.sh --out <目录>        产物写到指定目录；几个构建可以同时进行，互不干扰
 #   scripts/build.sh --update-expected   检查通过后，用这次的产物重写 ops/expected-files.txt（有意增删页面时用）
 #   scripts/build.sh --no-check          跳过第 5 步的检查，只在页面还没迁移齐、写单个页面自查时用；部署永远带检查
@@ -56,7 +57,8 @@ out="$out_abs"
 work="$(mktemp -d)"
 trap 'rm -rf -- "$work"' EXIT
 
-# 1. 源文件：默认取已提交的 HEAD，部署内容与提交历史严格一致，工作区里的草稿不影响部署。
+# 1. 源文件：默认取已提交的 HEAD，工作区里的草稿不影响构建结果。部署不走这条路：deploy.sh 把提交解出来后用 --worktree
+#    构建，构建工具与检查配置也就都取自那个提交。
 if [[ -n "$source_dir" ]]; then
 	src="$source_dir"
 elif ((from_worktree)); then
@@ -94,10 +96,10 @@ Preferred-Languages: zh, en
 Canonical: https://writer.drakeet.com/.well-known/security.txt
 EOT
 
-# 5. 检查：站内链接与锚点、市场差异、台港用词、期望产物清单。
+# 5. 检查：站内链接与锚点、市场差异、台港用词、iOS 隐私政策日期、固定图片的原字节、Apple 关联域名文件、期望产物清单。
 if ((run_checks)); then
 	check_args=("$out" --expected "$REPO/ops/expected-files.txt" --market "$REPO/ops/market-rules.toml" \
-		--zh-variants "$REPO/ops/zh-variants.toml")
+		--zh-variants "$REPO/ops/zh-variants.toml" --images "$REPO/ops/images.sha256")
 	((update_expected)) && check_args+=(--update-expected)
 	python3 -I "$REPO/scripts/check.py" "${check_args[@]}"
 fi

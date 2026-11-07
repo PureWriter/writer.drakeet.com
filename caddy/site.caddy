@@ -1,73 +1,462 @@
-# 旧站在新服务器上的站点规则（第 A 步到第 C 步之间使用；第 C 步由新站的 caddy/site.caddy 取代）。
-# 这份文件在旧站的 master 里位于 caddy/site.caddy，由 scripts/deploy.sh 随每个版本一起发布。
+# 纯纯写作官网的站点规则：地址映射、语言协商、响应头与缓存头（docs/rebuild.md 第三节、4.5、4.6、4.9）。
 #
-# {args[0]} 是这一版 release 目录（经 current 软链接），网站根目录是其下的 public/。
-# 行为与旧 nginx 一致：/x 与 /x.html 都返回 x.html，目录返回其中的 index.html。顺带修正旧站的几个问题：
-#   - 不存在的路径返回 404，不再因 rewrite 循环返回 500；
-#   - 点开头的路径（.well-known 除外）一律 404；发布的版本里本来也没有 .git 与仓库文件；
-#   - 网盘授权完成页：rebase-server 给日文用户拼的是 _ja，旧站文件叫 _jp；服务商名不区分大小写；
-#   - Windows 安装包写进「已安装的应用」的坏链接 /desktop2JpAbortIfPureWriterRunning…（docs/rebuild.md 2.1）。
+# 这份文件随每个版本一起发布：scripts/deploy.sh 把它放进服务器上版本目录的 caddy/site.caddy，全局配置
+# /etc/caddy/Caddyfile（仓库里的 ops/caddy/Caddyfile）在正式站与预发站的站点块里各自
+#   import <版本目录>/caddy/site.caddy <版本目录>
+# 所以 {args[0]} 就是这一版的版本目录（经 current 软链接），网站根目录是其下的 public/。规则与内容同属一个版本，
+# 一起部署、一起回滚；Caddy 拒绝新规则时，服务器上的 writer-release 会切回上一版。
+#
+# 逐条的请求与期望以 ops/contract.tsv 为唯一正本。改这里的任何规则，先在合同表里加上或改好对应的行，再用
+# scripts/test-caddy.sh 对本机 Caddy 跑一遍；部署时 scripts/deploy.sh 还会在服务器上对线上再跑一遍，失败自动回滚。
+#
+# 写规则时要记住的几点（都实测过）：
+#   - redir 的第一个参数以 / 开头时会被当成路径匹配器，所以一律写成 redir * <目标> <状态码>；
+#   - path 匹配器不区分大小写；旧地址按旧站（文件系统区分大小写）的行为处理，所以用区分大小写的正则（map、path_regexp）；
+#   - {path} 是解码后、没有清理过的原样路径：请求 /desktop2%E3%80%82 得到「/desktop2。」，请求 //wiki 得到「//wiki」。
+#     path、path_regexp 匹配器与 file_server 则先清理路径（合并连续的斜杠，解析 . 与 .. 段，保留结尾的斜杠）。所以 map
+#     不直接用 {path}，而用第 0 段存下的清理后的路径 {vars.clean_path}，与匹配器、file_server 看到的一致；
+#   - {query.lang} 这类占位符取的是 Go 解析过的查询参数：同名参数用逗号连起来，含半角分号的参数对被丢掉，键名也会解码，
+#     与原始查询串 {query} 对不上。所以 lang 参数从原始查询串里取（第 6 段）；
+#   - 正则是 Go 的 RE2：没有前瞻、后顾与反向引用；map 的正则不锚定，要自己写 ^ 与 $；空格写成 \x20，不用引号括起正则
+#     （caddy fmt 会弄乱用反引号括起来、以 ~ 开头的正则）；
+#   - map 只在用到它的输出时才求值，所以写在 route 里各自用到它的那一段前面，按段阅读即可；
+#   - 不带 -、?、> 的 header 立即写进响应头，出错转到 handle_errors 时也仍在；handle_path 等设下的 root 同样会带过去。
+#     file_server 先按 Accept-Encoding 选好预压缩副本、写下 Content-Encoding 与 Content-Length，之后才检查请求方法，
+#     所以这两个头也会带进错误响应（见文末的 handle_errors）。
 
 root * {args[0]}/public
 
+# 压缩（4.9）：构建时已为文本文件生成 .br 与 .gz（scripts/build.sh），下面各处的 file_server 用 precompressed 直接发送；
+# 浏览器不支持这两种、或文件没有预压缩版本时，再由 encode 动态压缩。
 encode zstd gzip
 
-# 删除类操作（-Server）会让整块推迟到写响应时才执行，所以单独成块，免得把各路径自己的缓存头盖掉。
-header -Server
-# Cache-Control 前的 ? 表示「没有设置过才设置」：图片、JAR 等路径设好的缓存头优先，其余默认 no-cache。
+# 安全响应头（4.9），对所有响应生效，包括跳转与 404：
+#   - CSP：脚本只许本站文件（全站只有下载页的 download.js）；样式允许内联：本站没有用户输入，禁止内联样式的收益小于它
+#     带来的定制工作（Markdown 表格对齐会输出 style 属性）。DeepOCAT 旧页在下面单独放宽；
+#   - HSTS 一年，不加 includeSubDomains 与 preload：preload 要求在 drakeet.com 上设置并覆盖全部子域，牵连太广、难以撤销；
+#   - Permissions-Policy 关掉本站用不到的设备能力；
+#   - 刻意不设 Cross-Origin-Resource-Policy：ocat.app 跨站引用本站 /images/ 下的 5 张图片。
 header {
+	Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 	Strict-Transport-Security "max-age=31536000"
 	X-Content-Type-Options "nosniff"
 	Referrer-Policy "strict-origin-when-cross-origin"
-	?Cache-Control "no-cache"
-}
-header /images/* Cache-Control "public, max-age=604800"
-
-# Apple 关联域名文件没有扩展名，Caddy 不会自动给出类型，必须显式写 application/json；它绝不能被跳转。
-header /.well-known/apple-app-site-association Content-Type "application/json"
-
-# 点开头的路径一律 404，只放行 .well-known。
-@hidden {
-	path */.*
-	not path /.well-known/*
-}
-error @hidden 404
-
-# 桌面版 JAR 国内镜像：文件在站点目录之外，由 writer-jars-sync 维护；不列目录。
-handle_path /ocat/jars/* {
-	root * /srv/writer.drakeet.com/jars
-	header Cache-Control "public, max-age=86400"
-	file_server
+	Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 }
 
-# Windows 安装包的坏链接：按它本来要去的 /desktop2、/desktop2_en 处理。
-@broken_arp path_regexp broken_arp ^/(desktop2|desktop2_en)JpAbortIfPureWriterRunning
-rewrite @broken_arp /{re.broken_arp.1}.html
+# 不暴露 Server。删除类操作会推迟到写响应时才执行，单独成块，免得把上面那块也一起推迟。
+# 80 端口到 https 的自动跳转由 Caddy 在站点规则之外完成，那个 308 仍带 Server: Caddy（不含版本号，4.9 只要求不暴露版本）。
+header -Server
 
-# 网盘授权完成页：服务商名不区分大小写，_ja 指向旧站的 _jp 文件。
-@oauth path_regexp oauth ^/drives/oauth/(?i:(onedrive|dropbox|aliyun))(_en|_zh|_ja|_jp|_ko)?(?:\.html)?$
-map {re.oauth.1} {oauth_name} {
-	~(?i)^onedrive$ OneDrive
-	~(?i)^dropbox$ Dropbox
-	~(?i)^aliyun$ Aliyun
+# 默认的缓存头：HTML 与其余没有专门设置的文件，每次都用 ETag 验证（4.9）。? 表示「前面没有设置过才设置」，
+# 图片、带指纹的文件、跳转等各自设好的缓存头优先。
+header ?Cache-Control "no-cache"
+
+# 错误响应一律不缓存（4.9）。404、405、400 等经文末的 handle_errors 发出，那里各自写明 no-store；412（条件请求不满足）与
+# 416（Range 越界）却由 Go 的文件服务直接写出、不经 handle_errors，会带着出错前按路径设好的缓存头（例如带指纹的样式表的
+# 一年 immutable）。这一条推迟到写响应头时按最终的状态码判断：4xx、5xx 一律改成 no-store，2xx、3xx 不受影响。
+header {
+	Cache-Control "no-store"
+	match {
+		status 4xx 5xx
+	}
 }
-map {re.oauth.2} {oauth_suffix} {
-	_ja _jp
-	_en _en
-	_zh _zh
-	_jp _jp
-	_ko _ko
-	default ""
+
+route {
+	# ==================================================================================================================
+	# 0. 路径的预处理：先拒绝不安全的原始路径，再存下清理后的路径。
+	#
+	#    解码后、未清理的路径 {path} 含反斜杠或 ASCII 控制字符（0x00–0x1F、0x7F）的一律 400，走文末兜底的 handle_errors。
+	#    原因：file_server 的规范化跳转（目录补尾斜杠、文件去尾斜杠）用原始的解码路径拼 Location，Caddy 只处理开头的 //；
+	#    Go 的 http.Redirect 只在 url.Parse 成功时才清理路径，而且只清理 ? 之前的部分；浏览器在 http、https 地址里
+	#    把 /\ 当成 //，还会删掉地址里的制表符。实测：
+	#      /%5Cexample.invalid/%3F%2F..%2F..%2Fen 得到 308、Location: /\example.invalid/?/../../en/（编码过的 ? 让 .. 落在
+	#      不清理的那一半）；
+	#      /%09/example.invalid/../../en 得到 308、Location 里是原样的制表符（url.Parse 不接受控制字符，整个地址都不清理）。
+	#    浏览器都会按 //example.invalid/… 跳到站外。实测的载体是反斜杠与制表符，其余控制字符一并拒绝，规则简单，正常的地址里
+	#    也不会有它们。
+	#    必须看未清理的 {path}：清理会把含这些字符的那一段连同后面的 .. 一起消掉，path、path_regexp 匹配器与 file_server
+	#    都看不到它们。vars_regexp 匹配的是 {path} 的原值，不会再展开其中的占位符。
+	@unsafe_path vars_regexp {path} [\x00-\x1f\x7f\\]
+	error @unsafe_path 400
+
+	#    清理后的路径，供下面各段的 map 使用（理由见文件开头）。这样 //wiki、/./desktop_zh、/x/../wiki 这类写法与规范写法
+	#    一样处理，一步到位：旧站的 nginx 默认合并斜杠，第 A 步的现网按清理后的路径找文件，都回 200；日志 52 天里这类请求
+	#    约 105 次（//wiki 40 次、// 13 次、//wiki_en 11 次）。本来就规范的路径，清理前后完全相同。
+	@clean_path path_regexp clean_path (?s)^.*$
+	vars @clean_path clean_path {re.clean_path.0}
+
+	# ==================================================================================================================
+	# 1. 点开头的路径一律 404，只放行 .well-known。发布的版本里本来就没有 .git 与仓库文件（构建产物里只有网站文件），
+	#    这条保证将来误放进去的点文件不会被当成网页提供。.well-known/ 下整个放行，那里多出来的文件（包括点文件）靠构建时的
+	#    期望产物清单（ops/expected-files.txt）挡住，不在这里区分。旧站 52 天里 .git/ 被扒取 7.2 万次。
+	@hidden {
+		path */.*
+		not path /.well-known/*
+	}
+	error @hidden 404
+
+	# 预压缩副本（.br、.gz，scripts/build.sh 生成）只由 file_server 在原地址上按 Accept-Encoding 发送，不单独作为地址提供：
+	# 新站的地址空间就是期望产物清单（4.2），清单里没有它们。产物里没有本来就以 .br、.gz 结尾的文件。
+	@sidecar path *.br *.gz
+	error @sidecar 404
+
+	# ==================================================================================================================
+	# 2. 永不参与协商与跳转的路径（4.5）：已发布的 App、外部平台与浏览器直接请求它们，必须在原地址原样返回。
+	#      /.well-known/apple-app-site-association   iOS 关联域名（1.0 起各版写死），Apple 的 CDN 从海外抓取
+	#      /images/                                   Android 稿纸背景（完整地址存进用户设置）与 Pro 介绍页、ocat.app 热链、
+	#                                                 社交平台的旧分享预览；原路径、原字节
+	#      /desktop2.json                             桌面版 release.sh 发版后的线上校验（curl 不跟随跳转）
+	#      /robots.txt、/sitemap.xml、/llms.txt、站点图标
+	#      /css/、/js/、/img/                           Hugo 生成的带内容指纹的样式、脚本与图片
+	#    唯一的跳转是 file_server 的规范化：文件写成带尾斜杠的地址（例如 /desktop2.json/）时 308 到不带斜杠的写法，
+	#    与第 3 段目录补斜杠对称。没有依赖方这样请求，保留 Caddy 的默认行为。
+	@static path /.well-known/* /images/* /desktop2.json /robots.txt /sitemap.xml /llms.txt /favicon.ico /apple-touch-icon.png /apple-touch-icon-precomposed.png /css/* /js/* /img/*
+	handle @static {
+		# 这个文件没有扩展名，Caddy 不会自动给类型，而关联域名要求 application/json（第三节）。
+		header /.well-known/apple-app-site-association Content-Type "application/json"
+		# 旧图片的地址固定、内容不变，缓存一周（4.8）。
+		header /images/* Cache-Control "public, max-age=604800"
+		# 文件名带内容指纹，内容一改地址就变，所以缓存一年并标为 immutable。
+		@fingerprinted path /css/* /js/* /img/*
+		header @fingerprinted Cache-Control "public, max-age=31536000, immutable"
+		# 发版数据每次都要验证：release.sh 部署后立刻就要读到新版本（4.7）。
+		header /desktop2.json Cache-Control "no-cache"
+		file_server {
+			precompressed br gzip
+		}
+	}
+
+	# 桌面版 JAR 国内镜像（5.6）：rebase-server 把约一半连不上 GitHub 的国内用户的自动更新改写到这里，桌面版 CI 也用它兜底。
+	# 文件在站点目录之外，由服务器上的 writer-jars-sync 维护，站点部署不碰它；不列目录。按版本命名、内容不变，缓存一天。
+	# WRITER_JARS_DIR 只给本机测试台用（scripts/test-caddy.sh），在加载配置时读取；服务器上不设，取默认的 /srv/writer.drakeet.com/jars。
+	handle_path /ocat/jars/* {
+		root * {$WRITER_JARS_DIR:/srv/writer.drakeet.com/jars}
+		header Cache-Control "public, max-age=86400"
+		file_server
+	}
+
+	# ==================================================================================================================
+	# 3. 带语言前缀的正式地址（4.3）：直接由 file_server 提供，永不协商。跳转只有两种：后面粘着杂字符的写法 301 到干净的地址
+	#    （下一条）；Caddy 的默认行为，不带尾斜杠的目录（/zh-hans、/en/desktop）308 补上斜杠。未知路径 404，用该语言目录下的
+	#    404.html（见文末 handle_errors）。
+	#
+	#    清理杂字符：上线后 AI 回答与中文正文里会出现 /zh-hans/desktop/。、/en/desktop/](https://…) 这类截断不干净的新地址，
+	#    旧地址已有同样的规则（第 8 段；/desktop2。 52 天 189 次）。语言前缀加若干段（只含小写字母、数字与短横）、可带一个
+	#    尾斜杠，后面紧跟杂字符的，301 到「前缀加这些段」再补上尾斜杠，查询串原样带上；杂字符之后是什么都不看。不判断目标
+	#    是否存在：不存在时跳过去照样是 404。点不算段里的字符，所以 /zh-hans/sitemap.xml。 这类文件地址不清理，仍是 404。
+	#    这一条要排在下面的 file_server 之前，而且不能嵌进 @prefixed 的 handle 里：/en） 这种语言前缀后面直接粘着杂字符的
+	#    写法不匹配 @prefixed。杂字符类与第 8 段的 @junk、@junk_root 完全相同，三处必须一起改。
+	@prefixed_junk path_regexp prefixed_junk ^(/(?:zh-hans|zh-hant|zh-hk|en|ja|ru)(?:/[a-z0-9-]+)*)/?[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]
+	handle @prefixed_junk {
+		header Cache-Control "max-age=86400"
+		redir * {re.prefixed_junk.1}/{?query} 301
+	}
+
+	@prefixed path_regexp ^/(?:zh-hans|zh-hant|zh-hk|en|ja|ru)(?:/|$)
+	handle @prefixed {
+		file_server {
+			precompressed br gzip
+		}
+	}
+
+	# ==================================================================================================================
+	# 4. 网盘授权完成页（4.6）：rebase-server 在 api.drakeet.com 收下授权码之后，把桌面版用户的浏览器 307 到旧地址
+	#    /drives/oauth/<OneDrive|Dropbox|Aliyun><无|_en|_zh|_ja|_jp|_ko>，可能带 .html；服务商名大小写不限。
+	#    一律内部重写到每家网盘唯一的完成页，不跳转：rebase-server 永远不用改，给日文用户拼的 _ja 也不再 500。
+	#    重写的目标写成 index.html 而不是目录：请求本身就是小写、不带斜杠时，目录形式会被 file_server 308 补斜杠，变成跳转。
+	#    新地址 /drives/oauth/<服务商>/ 本身由最后的 file_server 直接提供。
+	map {vars.clean_path} {oauth_page} {
+		~^/drives/oauth/(?i:onedrive)(?:_en|_zh|_ja|_jp|_ko)?(?:\.html)?$ /drives/oauth/onedrive/index.html
+		~^/drives/oauth/(?i:dropbox)(?:_en|_zh|_ja|_jp|_ko)?(?:\.html)?$ /drives/oauth/dropbox/index.html
+		~^/drives/oauth/(?i:aliyun)(?:_en|_zh|_ja|_jp|_ko)?(?:\.html)?$ /drives/oauth/aliyun/index.html
+	}
+	@oauth not vars {oauth_page} ""
+	handle @oauth {
+		rewrite * {oauth_page}
+		file_server {
+			precompressed br gzip
+		}
+	}
+
+	# ==================================================================================================================
+	# 5. DeepOCAT 旧页（2025-03，目前没有任何仓库引用）：本轮原样保留，最后阶段与 drakeet.com 一并决定去留（第三节、第 G 步）。
+	#    隐私与条款两页引用 kuromi.drakeet.cn 上的图标，Typora 导出的那页只用内联样式，所以只在 img-src 上多放行这一个来源。
+	@ocat path_regexp ocat ^/ocat/(ocat|privacy|terms)(?:\.html)?$
+	handle @ocat {
+		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://kuromi.drakeet.cn; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+		rewrite * /ocat/{re.ocat.1}.html
+		file_server {
+			precompressed br gzip
+		}
+	}
+
+	# ==================================================================================================================
+	# 6. 多语言入口的协商（4.5）。这些旧地址本来就按访客语言显示，App Store 的审核员与外国用户要看到英文，iOS App 还会带上
+	#    ?lang=<界面语言>（30 种里的任何一种），所以它们只做协商：
+	#      1) ?lang= 规范化后是目标页面支持的语言：301 到该语言，去掉 lang 参数，其余参数照带；
+	#      2) 否则按 Accept-Language 的顺序逐个规范化，取第一个目标页面支持的语言（不解析 q 值，与旧站一致；目标页没有的
+	#         语言直接跳过，看下一个）；
+	#      3) 请求根本不带 Accept-Language（多为爬虫与检查程序）时落到默认语言；带了、但都不受支持时落到英文。
+	#    第 2、3 步返回 302，带 Vary: Accept-Language 与 Cache-Control: no-store。302 同样去掉 lang 参数：带语言前缀的页面
+	#    不看它，留在地址里只会让人误以为它起了作用。
+	#
+	#    入口一览（map 的输出：入口种类、语言前缀之后的页面路径）：
+	#      core     /、/index、/index.html；/ios/privacy、/ios/support 与 .html 写法       首页与 iOS 两页：五种核心语言
+	#      desktop  /desktop、/desktop2、/desktop2_en、/desktop_en 与 .html 写法；         桌面版下载页：五种核心语言加 ru
+	#               Windows 安装包写进「已安装的应用」的坏链接 /desktop2(_en)JpAbortIfPureWriterRunning…（2.1）
+	#      zh       /desktop2_zh、/desktop_zh 与 .html 写法                                  只在 zh-hk 与 zh-hant 之间协商，默认 zh-hant
+	#    依赖方：Android「需要更新」对话框、iOS 示例文章与 App 内链接、App Store Connect 的营销、隐私与支持网址、
+	#    已安装桌面版的「检查更新」、rebase-server、包管理器的清单（Homebrew、Scoop、AUR、winget）、Android 文案。
+	map {vars.clean_path} {entry} {entry_page} {
+		~^/(?:index(?:\.html)?)?$ core ""
+		~^/ios/(privacy|support)(?:\.html)?$ core ios/${1}/
+		~^/(?:desktop|desktop2|desktop2_en|desktop_en)(?:\.html)?$ desktop desktop/
+		~^/desktop2(?:_en)?JpAbortIfPureWriterRunning desktop desktop/
+		~^/(?:desktop2_zh|desktop_zh)(?:\.html)?$ zh desktop/
+	}
+
+	# ?lang= 的值：原始查询串里第一个 lang 参数（lang=…）的值，不解码。下面 query_without_lang 去掉的正是这一个，取值与去掉
+	# 用同一个口径；有多个 lang 时以第一个为准，与旧站脚本一致。不解码不影响真实取值：iOS、Android 与外部链接写的都是字面的
+	# 短横与下划线，日志里粘着尾巴的 zh-Hans%60、zh-Hant%5D 只是尾巴被编码。
+	map {query} {lang_value} {
+		~(?:^|&)lang=([^&]*) ${1}
+	}
+
+	# 语言规范化（4.5）：?lang= 与 Accept-Language 的每个标签共用同一套规则，从上到下取第一条匹配的：
+	#   转小写、_ 当作 -；以 zh 开头的，含 -hans 归 zh-hans，含 -hk 或 -mo 归 zh-hk，含 -hant 或 -tw 归 zh-hant，其余归 zh-hans
+	#   （zh-Hant-HK 归香港，zh-Hans-HK 归简体）；以 ja、en、ru 开头的各归本语言；其余视为没有提供。
+	#   「含」按子串判断：日志里真实出现过 zh-Hans](https://…?lang=zh-Hans) 这类粘着尾巴的取值。
+	# 下面 lang_param 与 al_core 两份规则必须保持一致；合同表分别覆盖了两边。
+	map {lang_value} {lang_param} {
+		~(?is)^zh.*[-_]hans zh-hans
+		~(?is)^zh.*[-_](?:hk|mo) zh-hk
+		~(?is)^zh.*[-_](?:hant|tw) zh-hant
+		~(?i)^zh zh-hans
+		~(?i)^ja ja
+		~(?i)^en en
+		~(?i)^ru ru
+	}
+
+	# 入口支持 ?lang= 的哪些取值；不支持的视为没有传，交给 Accept-Language。
+	map {entry}:{lang_param} {entry_lang_by_param} {
+		~^core:(zh-hans|zh-hant|zh-hk|en|ja)$ ${1}
+		~^desktop:(zh-hans|zh-hant|zh-hk|en|ja|ru)$ ${1}
+		~^zh:(zh-hk|zh-hant)$ ${1}
+	}
+
+	# 各入口按 Accept-Language 协商的结果，以及请求根本不带 Accept-Language 时的默认语言。
+	map {entry} {entry_lang_by_header} {entry_lang_default} {
+		core {al_core} zh-hans
+		desktop {al_desktop} zh-hans
+		zh {al_zh} zh-hant
+	}
+
+	# core：Accept-Language 里第一个以 zh、ja、en 开头的标签（这正是第一个规范化后受支持的标签），再按同一套规则规范化；
+	# 一个都没有时是英文。Caddy 把多行 Accept-Language 用逗号连成一行，顺序不变。
+	map {header.Accept-Language} {al_tag_core} {
+		~(?i)^(?:[^,]*,)*?[\x20\t]*((?:zh|ja|en)[^,;]*) ${1}
+	}
+	map {al_tag_core} {al_core} {
+		~(?is)^zh.*[-_]hans zh-hans
+		~(?is)^zh.*[-_](?:hk|mo) zh-hk
+		~(?is)^zh.*[-_](?:hant|tw) zh-hant
+		~(?i)^zh zh-hans
+		~(?i)^ja ja
+		~(?i)^en en
+		~(?i)^ru ru
+		default en
+	}
+
+	# desktop：第一个以 zh、ja、en、ru 开头的标签。它以 ru 开头就是俄文；否则它也是 core 里取到的那个标签，结果与 al_core 相同。
+	map {header.Accept-Language} {al_tag_desktop} {
+		~(?i)^(?:[^,]*,)*?[\x20\t]*((?:zh|ja|en|ru)[^,;]*) ${1}
+	}
+	map {al_tag_desktop} {al_desktop} {
+		~(?i)^ru ru
+		default {al_core}
+	}
+
+	# zh：第一个规范化为 zh-hk 或 zh-hant 的标签。zh-CN、zh-Hans-HK 这类规范化为 zh-hans 的标签要跳过、继续看下一个，
+	# RE2 没有前瞻，所以「不含 -hans」由正则本身写出来。下面那条长正则由这几段拼成（都在 (?i) 下）：
+	#   A     短横后面的一段，不以 hans 开头：
+	#         (?:[^,;_\-h][^,;_\-]*|h(?:[^,;_\-a][^,;_\-]*)?|ha(?:[^,;_\-n][^,;_\-]*)?|han(?:[^,;_\-s][^,;_\-]*)?)
+	#   HK    zh[^,;_\-]*(?:[-_]+A)*[-_]+(?:hk|mo)[^,;_\-]*(?:[-_]+A)*[-_]*      以 zh 开头、含 -hk 或 -mo、不含 -hans
+	#   HANT  zh[^,;_\-]*(?:[-_]+A)*[-_]+(?:hant|tw)[^,;_\-]*(?:[-_]+A)*[-_]*    以 zh 开头、含 -hant 或 -tw、不含 -hans
+	#   整条  ^(?:[^,]*,)*?[\x20\t]*(?:(HK)|HANT)(?:;[^,]*)?(?:,|$)       （\x20 是空格：正则里不写字面的空格，免得要加引号）
+	# 前面的 (?:[^,]*,)*? 是惰性的，RE2 按「回溯实现会先找到的那个匹配」给出分组，所以停在第一个 HK 或 HANT 标签上；
+	# 同一个标签两者都符合时（zh-Hant-HK），排在前面的 HK 优先，与规范化的顺序一致。分组 1 有值说明第一个候选是香港。
+	# 这条正则曾与 4.5 的参考实现做过穷举与随机比对（单个标签一千二百万种、整行三十万条），结果完全一致。
+	map {header.Accept-Language} {al_tag_zh_hk} {
+		~(?i)^(?:[^,]*,)*?[\x20\t]*(?:(zh[^,;_\-]*(?:[-_]+(?:[^,;_\-h][^,;_\-]*|h(?:[^,;_\-a][^,;_\-]*)?|ha(?:[^,;_\-n][^,;_\-]*)?|han(?:[^,;_\-s][^,;_\-]*)?))*[-_]+(?:hk|mo)[^,;_\-]*(?:[-_]+(?:[^,;_\-h][^,;_\-]*|h(?:[^,;_\-a][^,;_\-]*)?|ha(?:[^,;_\-n][^,;_\-]*)?|han(?:[^,;_\-s][^,;_\-]*)?))*[-_]*)|zh[^,;_\-]*(?:[-_]+(?:[^,;_\-h][^,;_\-]*|h(?:[^,;_\-a][^,;_\-]*)?|ha(?:[^,;_\-n][^,;_\-]*)?|han(?:[^,;_\-s][^,;_\-]*)?))*[-_]+(?:hant|tw)[^,;_\-]*(?:[-_]+(?:[^,;_\-h][^,;_\-]*|h(?:[^,;_\-a][^,;_\-]*)?|ha(?:[^,;_\-n][^,;_\-]*)?|han(?:[^,;_\-s][^,;_\-]*)?))*[-_]*)(?:;[^,]*)?(?:,|$) ${1}
+	}
+	map {al_tag_zh_hk} {al_zh} {
+		~. zh-hk
+		default zh-hant
+	}
+
+	# 去掉 lang 参数之后的查询串，带开头的 ?。去掉的是原始查询串里第一个 lang 参数，就是上面 lang_value 取值的那一个；
+	# 紧挨着它的 & 一并去掉，不留下孤立的 ? 或 &；其余参数的顺序与写法原样保留。四条规则依次对应：只有 lang；lang 在最前；
+	# lang 在中间；lang 在最后。(.*?) 是惰性的，停在第一个 lang 上；([^&].*) 要求后面还有参数，免得 & 被当成参数留下。
+	map {query} {query_without_lang} {
+		~^&*lang=[^&]*&*$ ""
+		~^&*lang=[^&]*&+([^&].*)$ ?${1}
+		~^(.*?)&+lang=[^&]*&+([^&].*)$ ?${1}&${2}
+		~^(.*?)&+lang=[^&]*&*$ ?${1}
+		~^(.+)$ ?${1}
+	}
+
+	@entry not vars {entry} ""
+	handle @entry {
+		# 1) ?lang= 是这个入口支持的语言。结果只取决于地址本身、与请求头无关，所以不需要 Vary，可以缓存一天。
+		@by_param not vars {entry_lang_by_param} ""
+		handle @by_param {
+			header Cache-Control "max-age=86400"
+			redir * /{entry_lang_by_param}/{entry_page}{query_without_lang} 301
+		}
+		# 3) 请求根本不带 Accept-Language。要排在 2) 前面判断：handle 按书写顺序取第一个匹配的。
+		@no_accept_language header !Accept-Language
+		handle @no_accept_language {
+			header Cache-Control "no-store"
+			header Vary "Accept-Language"
+			redir * /{entry_lang_default}/{entry_page}{query_without_lang} 302
+		}
+		# 2) 按 Accept-Language 协商（都不受支持时，core 与 desktop 落到 en，zh 落到 zh-hant）。
+		handle {
+			header Cache-Control "no-store"
+			header Vary "Accept-Language"
+			redir * /{entry_lang_by_header}/{entry_page}{query_without_lang} 302
+		}
+	}
+
+	# ==================================================================================================================
+	# 7. 单语言旧地址：按 4.4 的表确定性 301，.html 写法同样处理，查询串原样带上（4.5）。先带一天的缓存，写错的映射修正后
+	#    最多一天就从用户浏览器里消失；稳定一两个月后再加长。依赖方（第三节）：
+	#      /wiki*                Android 帮助入口（按地区分别打开）
+	#      /backups*             Android 备份教程入口（_zh、_en 是 2019—2023 年的版本在用）、外部 README
+	#      /warning              Android 检测到篡改时打开的提示页，存量极大
+	#      /privacy*             应用商店与 Google OAuth 同意屏幕登记的隐私政策；_individual 是 2023 年给华为用过的旧地址
+	#      /home_en              Google OAuth 同意屏幕登记的应用首页
+	#      /blog/NewDesktopDevStory、/d/privacy、/desktop/privacy   桌面版菜单与桌面版隐私政策（后者是 2024-12 的旧地址）
+	#      /markdown、/protections                                   站内链接、外部 README
+	#      /dorakito、/cn                                            没有站内入口的旧首页（日文版、drakeet.cn 的旧内容）
+	#      /desktop2_ru                                              rebase-server、俄语用户的通知
+	#      /v28、/v28.1（有无尾斜杠）、/about、/pro                  停用的临时下载页（Telegram 旧消息）、Android 清单里未经验证的
+	#                                                                网页链接；回到首页，再由首页按语言协商
+	map {vars.clean_path} {legacy_target} {
+		~^/wiki(?:\.html)?$ /zh-hans/manual/
+		~^/wiki_zh(?:\.html)?$ /zh-hant/manual/
+		~^/wiki_en(?:\.html)?$ /en/manual/
+		~^/backups(?:\.html)?$ /zh-hans/backups/
+		~^/backups_zh(?:\.html)?$ /zh-hant/backups/
+		~^/backups_en(?:\.html)?$ /en/backups/
+		~^/warning(?:\.html)?$ /zh-hans/genuine/
+		~^/(?:privacy|privacy_individual)(?:\.html)?$ /zh-hans/android/privacy/
+		~^/privacy_en(?:\.html)?$ /en/android/privacy/
+		~^/home_en(?:\.html)?$ /en/
+		~^/blog/NewDesktopDevStory(?:\.html)?$ /en/blog/new-desktop-dev-story/
+		~^/(?:d|desktop)/privacy(?:\.html)?$ /en/desktop/privacy/
+		~^/markdown(?:\.html)?$ /zh-hans/markdown/
+		~^/protections(?:\.html)?$ /zh-hans/protections/
+		~^/dorakito(?:\.html)?$ /ja/
+		~^/cn(?:/(?:index(?:\.html)?)?)?$ /zh-hans/
+		~^/desktop2_ru(?:\.html)?$ /ru/desktop/
+		~^/v28(?:\.1)?/?$ /
+		~^/(?:about|pro)$ /
+	}
+	@legacy not vars {legacy_target} ""
+	handle @legacy {
+		header Cache-Control "max-age=86400"
+		redir * {legacy_target}{?query} 301
+	}
+
+	# ==================================================================================================================
+	# 8. 清理杂字符（4.5）：外部文字链接与 AI 回答里截断不干净的地址，例如 /desktop2。（52 天 189 次，多来自 Bing）、
+	#    /desktop2](https://…)、/desktop**[reference:0、/warning`（……。旧入口名后面紧跟下列字符，或只多一个尾斜杠时，
+	#    301 到去掉尾巴的旧入口，再按上面的规则处理：
+	#      全角标点   U+3000–303F（含全角空格与 、。「」【】）、U+FF01–FF0F、FF1A–FF20、FF3B–FF40、FF5B–FF65（全角符号，
+	#                 不含全角字母与数字）、U+2010–2027（破折号、弯引号、省略号）与间隔号 U+00B7
+	#      不换行空格 U+00A0、U+2007、U+202F、U+FEFF
+	#      ASCII 的右括号、反引号（写作 \x60）、星号、波浪线与方括号
+	#    字母、数字、点与下划线都不在其中，所以 /desktop2.json、/desktop2_en 不会被误伤。旧入口已在上面精确匹配过，
+	#    这里只会遇到带尾巴的写法；/cn/、/v28/ 这类本身就在表里的写法上面已经一步到位。
+	#    这个字符类与下面的 @junk_root、第 3 段的 @prefixed_junk 完全相同，三处必须一起改。
+	@junk path_regexp junk ^/(index|desktop|desktop2|desktop2_en|desktop2_zh|desktop2_ru|desktop_en|desktop_zh|ios/privacy|ios/support|wiki|wiki_zh|wiki_en|backups|backups_zh|backups_en|warning|privacy|privacy_en|privacy_individual|home_en|blog/NewDesktopDevStory|d/privacy|desktop/privacy|markdown|protections|dorakito|cn|v28|v28\.1|about|pro|ocat/ocat|ocat/privacy|ocat/terms)(?:[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]|/$)
+	handle @junk {
+		header Cache-Control "max-age=86400"
+		redir * /{re.junk.1}{?query} 301
+	}
+
+	# 首页地址本身后面跟着这些字符（日志里 /。 52 天 24 次、/) 5 次）：同样 301 回到 /。只在 / 后面全是这些字符时才清理，
+	# 扫描器的 /*.auto.tfvars、/[slug] 一类探测后面跟着字母，照旧 404，不会被变成跳转。字符类与 @junk 相同（见上）。
+	@junk_root path_regexp ^/[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]+$
+	handle @junk_root {
+		header Cache-Control "max-age=86400"
+		redir * /{?query} 301
+	}
+
+	# ==================================================================================================================
+	# 9. 其余：产物里有这个文件就提供（例如根目录的 404.html、新地址 /drives/oauth/<服务商>/），没有就 404，用根目录那份
+	#    多语言 404 页。不再像旧站那样返回 500，也不跳回首页（4.5）；仓库文件（AGENTS.md、sources/ 等）不在产物里，同样 404。
+	handle {
+		file_server {
+			precompressed br gzip
+		}
+	}
 }
-rewrite @oauth /drives/oauth/{oauth_name}{oauth_suffix}.html
 
-# /x 返回 x.html；以斜杠结尾的目录由 file_server 返回 index.html，不带斜杠的目录先补斜杠（308）。
-try_files {path} {path}.html {path}/
-file_server
-
-# 出错时前面按路径设好的长缓存头仍在响应里，这里改回 no-cache：JAR 刚同步上来之前的 404 不能被缓存一整天。
+# 404：带语言前缀的路径（包括 /ru 这样只有前缀、目录里又没有首页的）用该语言的 404.html，其余一律用根目录那份多语言的
+# 404.html，不在错误处理里做协商（4.5）。语言前缀的边界与第 3 段的 @prefixed 相同：后面是 / 或路径结束。
+# 状态码就是 404。前面按路径设好的长缓存头（图片一周、JAR 一天、带指纹的一年）这时仍在响应头里，必须改掉：例如 JAR 刚同步
+# 上来之前的 404 不能被缓存一整天。handle_path 设下的 JAR 目录同样会带过来，所以重新指定网站根目录。
+# file_server 以指定的状态码发送 404 页时，照常处理请求里的范围与条件头，只把结果的状态码改成 404：带 Range 得到半截页面
+# 和 Content-Range，越界的 Range 得到没有 Cache-Control 的纯文本，带 If-None-Match（例如浏览器拿存下的 404 页来验证）、
+# If-Modified-Since、If-Match 等得到没有正文的 404（实测）。所以先去掉这些请求头，404 页总是完整发送；缓存头用 no-store
+# 而不是 no-cache，浏览器不存 404，也就不会拿它来验证。
+# 出错之前按路径写好的 Content-Type 也会带进来（例如 Apple 关联域名文件的 application/json：path 匹配器不区分大小写，
+# 服务器的文件系统区分），所以显式写明 404 页的类型。Content-Encoding 不能像下面的兜底那样删掉：发送 404 页的预压缩副本
+# 时要用到它；进入这里之前也没有谁写过它，file_server 找不到文件就报 404，还没到选副本那一步。
+# 这里的 file_server 关掉规范化跳转：它比较的是原始路径与重写后路径的最后一段，不存在的 /x/404.html/ 重写成 /404.html 后
+# 两者都是 404.html，它就会当成「文件写成了带尾斜杠的地址」308 到 /x/404.html，而不是发 404 页。错误页从来不该跳转。
 handle_errors 404 {
+	root * {args[0]}/public
+	request_header -Range
+	request_header -If-Range
+	request_header -If-Match
+	request_header -If-None-Match
+	request_header -If-Modified-Since
+	request_header -If-Unmodified-Since
 	header -Server
-	header Cache-Control "no-cache"
-	respond "404 Not Found" 404
+	header Cache-Control "no-store"
+	header Content-Type "text/html; charset=utf-8"
+	@prefixed_404 path_regexp prefixed_404 ^/(zh-hans|zh-hant|zh-hk|en|ja|ru)(?:/|$)
+	handle @prefixed_404 {
+		rewrite * /{re.prefixed_404.1}/404.html
+		file_server {
+			status 404
+			precompressed br gzip
+			disable_canonical_uris
+		}
+	}
+	handle {
+		rewrite * /404.html
+		file_server {
+			status 404
+			precompressed br gzip
+			disable_canonical_uris
+		}
+	}
+}
+
+# 其余错误（例如对文件用 POST 得到的 405）：只回状态码与一行文字，同样不暴露 Server、不缓存。
+# file_server 先选好预压缩副本、写下 Content-Encoding 与 Content-Length，再检查请求方法报 405；Apple 关联域名文件的
+# Content-Type 也早已写好。这里回的是一行纯文本，这三个头必须去掉或改写，否则声明的编码与长度对不上正文，浏览器式的请求
+# 会收到残缺的响应。file_server 写下的 Allow: GET, HEAD 保留，405 本来就要带它。
+handle_errors {
+	header -Server
+	header -Content-Encoding
+	header -Content-Length
+	header Content-Type "text/plain; charset=utf-8"
+	header Cache-Control "no-store"
+	respond "{err.status_code} {err.status_text}" {err.status_code}
 }

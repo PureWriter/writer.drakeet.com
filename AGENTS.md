@@ -27,5 +27,5 @@
 ## 部署与服务器
 
 - 部署与服务器的现役事实与操作（部署、回滚、JAR 镜像、日志、修改服务器配置、外部监控、救援）见 [docs/operations.md](docs/operations.md)。
-- 生产部署只从 `master` 进行：`scripts/deploy.sh` 发布已提交的 HEAD，冒烟检查失败自动切回上一版，`--rollback` 手动切回。站点的跳转、映射与响应头规则在 `caddy/site.caddy`，随版本一起发布。第 C 步之前，`rebuild` 上的这两个文件是旧站的版本，新站在第 B 步把它们换成自己的版本，并加上部署到预发站的 `--staging`。
+- 新站的 `scripts/deploy.sh` 与 `caddy/site.caddy` 已经就位。生产部署只从 `master` 进行（第 C 步的首次切换用 `--first-cutover-from-rebuild`）：`scripts/deploy.sh` 发布已提交的 HEAD，切换后在服务器上跑 URL 合同 `ops/contract.tsv`，失败自动切回上一版；`--rollback` 手动切回，`--staging` 部署到预发站 writer2.drakeet.com。站点的跳转、映射与响应头规则在 `caddy/site.caddy`，随版本一起发布；改了规则或合同，先用 `scripts/test-caddy.sh` 在本机跑一遍整张合同。
 - 服务器配置在 `ops/`，代表线上的那一份以 `master` 为准：改服务器先在 `master` 上改、提交并推送，再按手册同步到服务器，然后合进 `rebuild`，不要只在 `rebuild` 上改。

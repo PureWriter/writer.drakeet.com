@@ -2,10 +2,10 @@
 """构建产物的检查（docs/rebuild.md 第六节），由 scripts/build.sh 调用，只用 Python 标准库。
 
   python3 scripts/check.py <产物目录> --expected ops/expected-files.txt --market ops/market-rules.toml \
-      --zh-variants ops/zh-variants.toml [--update-expected]
+      --zh-variants ops/zh-variants.toml [--images ops/images.sha256] [--update-expected]
 
-检查五项，任何一项不通过就以非零状态退出：
-  1. 期望产物清单：产物目录里的文件（不含预压缩的 .br、.gz）与入库的清单逐行比对，多一个、少一个都报错。这样新站的
+检查七项，任何一项不通过就以非零状态退出：
+  1. 期望产物清单：产物目录里的所有文件与入库的清单逐行比对，多一个、少一个都报错，清单文件不存在也报错。这样新站的
      地址空间严格等于约定，Hugo 自作主张多生成的页面也能当场暴露。有意增删页面时，用 --update-expected 重写清单。
   2. 站内链接与锚点：每个 HTML 里指向本站的 href、src 都必须能落到产物里的文件；带 #锚点 的，目标页面里必须有
      同名的 id。站内链接一律写新地址，旧地址只给站外的存量链接用，所以指向旧地址也算错。
@@ -13,13 +13,21 @@
      的产物里。规则与豁免写在 ops/market-rules.toml；「旧版」名单里的页面只提示、不拦截。
   4. 台港用词：繁体（台湾）页面不得出现香港用词，繁体（香港）页面不得出现台湾用词，词表在 ops/zh-variants.toml。
   5. iOS 隐私政策各语言的「更新日期」「生效日期」一致（旧站五种语言同页时天然同步，拆成五个文件后靠这项检查）。
+  6. 固定图片的原字节：/images/ 下的每个文件按入库的 sha256 清单（ops/images.sha256）核对，多、少、字节不同都报错。
+  7. Apple 关联域名文件 /.well-known/apple-app-site-association 是合法的 JSON，webcredentials.apps 里有本 App。
 第 3、4 项跳过下载页里来自桌面端更新日志的条目（data-source="desktop2.json"）：那段文字的用词归桌面端管，
 不能让官网的检查拦住桌面版发版（rebuild.md 第一节「取舍原则」）。
+
+本脚本在 build.sh 第 5 步运行，那时还没有预压缩（第 6 步），所以第 1、6 项不为 .br、.gz 留任何例外：产物里出现的 .br、.gz
+只可能来自源文件，Caddy 的 precompressed 会把它当成原文件的副本发给浏览器，内容却没有经过任何核对。它照常被报成多出的
+产物，/images/ 下的报成不在清单里。
 """
 
 import argparse
 import fnmatch
+import hashlib
 import html.parser
+import json
 import pathlib
 import re
 import sys
@@ -76,10 +84,11 @@ def normalize(path):
 
 
 def list_files(root):
+    # 收入所有文件，.br、.gz 也不例外（理由见文件开头）。
     return sorted(
         normalize(path.relative_to(root).as_posix())
         for path in root.rglob("*")
-        if path.is_file() and path.suffix not in (".br", ".gz")
+        if path.is_file()
     )
 
 
@@ -93,9 +102,9 @@ def check_expected(root, expected_path, update):
         expected_path.write_text(header + "\n".join(actual) + "\n")
         print(f"check: 已重写 {expected_path}（{len(actual)} 个文件）")
         return []
-    if not expected_path.exists():
-        print(f"check: 没有 {expected_path}，跳过期望产物清单的比对", file=sys.stderr)
-        return []
+    # 清单丢了不能当作通过：那样地址空间就没有约束了，多出的页面与文件都发现不了。
+    if not expected_path.is_file():
+        return [f"找不到期望产物清单 {expected_path}；有意重建清单时用 --update-expected"]
     expected = [
         line.strip()
         for line in expected_path.read_text().splitlines()
@@ -258,12 +267,81 @@ def check_privacy_dates(root):
     return [f"iOS 隐私政策各语言的日期不一致：{detail}"]
 
 
+# 固定图片（第三节、4.8）。清单里的路径相对于产物根目录，例如 images/papers/0.jpg。
+IMAGES_REASON = (
+    "/images/ 下是旧站图片，必须按原路径、原字节发布：Android 稿纸背景把完整地址存进用户设置，ocat.app 热链其中 5 张，"
+    "社交平台的旧分享预览也在引用，不允许重新压缩、替换或改名（docs/rebuild.md 第三节、4.8）"
+)
+SHA256_LINE = re.compile(r"([0-9a-f]{64})  (images/\S.*)")
+
+
+def check_images(root, manifest_path):
+    if not manifest_path.is_file():
+        return [f"找不到固定图片的清单 {manifest_path}"]
+    expected = {}
+    problems = []
+    for line_no, line in enumerate(manifest_path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        match = SHA256_LINE.fullmatch(line)
+        if not match:
+            problems.append(f"{manifest_path.name}:{line_no}：应写成「sha256  images/…」：{line}")
+            continue
+        expected[match.group(2)] = match.group(1)
+
+    actual = {}
+    for file in sorted((root / "images").rglob("*")):
+        if not file.is_file():
+            continue
+        actual[file.relative_to(root).as_posix()] = hashlib.sha256(file.read_bytes()).hexdigest()
+
+    for path in sorted(actual.keys() - expected.keys()):
+        problems.append(f"/{path} 不在 {manifest_path.name} 里：/images/ 只放旧站原有的图片，新页面的图片放进 assets/（4.8）")
+    for path in sorted(expected.keys() - actual.keys()):
+        problems.append(f"缺少 /{path}（{manifest_path.name} 里有）：{IMAGES_REASON}")
+    for path in sorted(expected.keys() & actual.keys()):
+        if actual[path] != expected[path]:
+            problems.append(f"/{path} 的字节与 {manifest_path.name} 不同：{IMAGES_REASON}")
+    return problems
+
+
+# Apple 关联域名文件（第三节）：iOS 1.0 起各版都写死了 webcredentials 关联域名，Apple 的 CDN 抓到无效的文件，密码自动填充
+# 就失效。合同只能核对状态码、类型与片段，证明不了它是合法的 JSON，所以在构建时解析一遍。
+AASA_PATH = ".well-known/apple-app-site-association"
+AASA_APP_ID = "9MKUN97L6J.com.drakeet.writer"
+
+
+def reject_constant(name):
+    """json.loads 默认接受 NaN、Infinity、-Infinity，它们不是合法的 JSON（RFC 8259），遇到就报错。"""
+    raise ValueError(f"含有非标准的常量 {name}")
+
+
+def check_aasa(root):
+    file = root / AASA_PATH
+    if not file.is_file():
+        return [f"缺少 /{AASA_PATH}"]
+    try:
+        data = json.loads(file.read_text(encoding="utf-8"), parse_constant=reject_constant)
+    except ValueError as error:
+        # JSONDecodeError、UnicodeDecodeError 与 reject_constant 抛出的都是 ValueError。
+        return [f"/{AASA_PATH} 不是合法的 JSON：{error}"]
+    webcredentials = data.get("webcredentials") if isinstance(data, dict) else None
+    apps = webcredentials.get("apps") if isinstance(webcredentials, dict) else None
+    if not isinstance(apps, list) or AASA_APP_ID not in apps:
+        return [f"/{AASA_PATH} 的 webcredentials.apps 里没有 {AASA_APP_ID}"]
+    return []
+
+
 def main():
     parser = argparse.ArgumentParser(description="检查构建产物")
     parser.add_argument("root", type=pathlib.Path)
     parser.add_argument("--expected", type=pathlib.Path, required=True)
     parser.add_argument("--market", type=pathlib.Path, required=True)
     parser.add_argument("--zh-variants", type=pathlib.Path, required=True)
+    # 默认取与本脚本同一份检出里的清单，直接运行本脚本时不必写。
+    parser.add_argument(
+        "--images", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parent.parent / "ops" / "images.sha256"
+    )
     parser.add_argument("--update-expected", action="store_true")
     args = parser.parse_args()
 
@@ -272,6 +350,7 @@ def main():
     market_problems, market_warnings = check_market(root, args.market)
     variant_problems, variant_warnings = check_zh_variants(root, args.zh_variants)
     problems += market_problems + variant_problems + check_privacy_dates(root)
+    problems += check_images(root, args.images) + check_aasa(root)
     for warning in market_warnings + variant_warnings:
         print(f"check: 提示（旧版名单，不拦截）：{warning}", file=sys.stderr)
     if not problems:
@@ -281,7 +360,7 @@ def main():
             print(f"check: {problem}", file=sys.stderr)
         print(f"check: 共 {len(problems)} 个问题", file=sys.stderr)
         return 1
-    print("check: 站内链接、锚点、市场差异、台港用词、iOS 隐私政策日期与期望产物清单都通过")
+    print("check: 站内链接、锚点、市场差异、台港用词、iOS 隐私政策日期、固定图片的原字节、Apple 关联域名文件与期望产物清单都通过")
     return 0
 
 
