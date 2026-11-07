@@ -727,12 +727,21 @@ scripts/             构建、预览、检查、部署与回滚
 - drakeet.com、www.drakeet.com 与 DeepOCAT 旧页的去留；DNS 清理；
 - 请 ocat.app 改为自己托管那 5 张图片；
 - rebase-server 的可选简化；
-- 桌面端「R2 失败改用镜像」的改进（5.6）；
 - 补齐滞后的译文（第十一节）；
 - 个人代理服务按需重装；
 - CAA 记录：根域名 drakeet.com 是指向 writer.drakeet.com 的 CNAME，CA 查 CAA 时沿域名树向上并跟随 CNAME，所以在 writer 上加的 CAA 会约束 drakeet.com 下所有没有自己 CAA 的子域名（例如 api.drakeet.com）。先盘点各子域名所用的 CA，与根域名的 DNS 问题一起处理后再加；
 - 桌面版 CI 从镜像兜底下载 JAR 时不校验哈希（既有问题），可以改为校验 JarVersions 或 R2 给出的哈希；
 - 收回免密 sudo（5.3 的终态）。
+
+### H. 出口分流（Drakeet 2026-11-07 定，紧接在原计划之后进行）
+
+起因见第十一节「出口带宽被 JAR 下载占满」：发版后的高峰里 JAR 占出口的 83%，`/images/` 占 16%，网页只占 0.5%。本站在境内，全世界都能访问；Cloudflare 在中国部分地区连不上，所以不能一刀切，要按情况给不同的来源，本站作为兜底。两头一起做：
+
+1. **兼容旧版桌面版，只改 rebase-server**：按设备自动回落。报告 GitHub 可达的设备照旧给 Cloudflare 上的地址（kuromi.drakeet.cn，即 R2）；其余设备先给 Cloudflare，同一台设备之后再来检查、仍停在旧版本，说明没下成，改给本站镜像；去掉现在按时间奇偶抛硬币的做法（`JarVersions`，`RawJsonResource` 里已有的 `kuromiHitMap`）。部署 rebase-server 由 Drakeet 执行。
+2. **新版桌面版自己选来源**：服务端同时下发多个来源（Cloudflare 在前，本站镜像在后），桌面版先试 Cloudflare，连不上或太慢就换镜像，已下载的部分断点续传。生成这些链接的脚本（桌面版发版时写 JarVersions 的那一步）一并调整。
+3. **旧图片**：把 `static/images/` 原样上传到 R2 的 kuromi 存储桶里一个专用的文件夹（例如 `writer-images/`），与 JAR 分开，以后清理 JAR 时不会误删；上传后按 `ops/images.sha256` 核对字节。Android 新版本加载这些图片时先试 Cloudflare 上的副本，失败再回到本站；旧版本与站外引用照旧从本站取，本站的 `/images/` 继续原样提供。
+4. **发版高峰**：可以考虑分批推送更新，把下载摊开。
+5. **验收**：下一次桌面发版后的高峰里，本站出口中 JAR 的占比明显下降，网页的加载时间随之改善。
 
 ## 十、待 Drakeet 定的事项
 
@@ -783,7 +792,7 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
     - JAR：rebase-server 的 `JarVersions` 已经在分流，报告 GitHub 可达的设备给 Cloudflare 上的地址（kuromi.drakeet.cn，即 R2），其余按时间奇偶各给一半 Cloudflare、一半本站镜像。可以改成按设备自动回落：先给 Cloudflare，同一台设备下次检查时仍停在旧版本，说明没下成，再给本站镜像（`RawJsonResource` 里已有记录这件事的 `kuromiHitMap`，还没用于决定）。这样只改服务端，本站只承担确实连不上 Cloudflare 的设备，R2 的出口不收费。更进一步是让桌面版自己先试 Cloudflare、连不上或太慢再换镜像，并且分批推送更新，把发版后的高峰摊开；
     - `/images/`：Android 稿纸背景存的是完整地址，旧版本只能继续从本站取；新版本可以先试 Cloudflare 上的副本、失败再回到本站；
     - 网页留在本站（备案、国内访问速度与 SEO）。
-  - 这些都在 rebase-server、桌面版与 Android 里改，不在本轮的网站重建范围内，第 C 步之后另行安排。
+  - 这些都在 rebase-server、桌面版与 Android 里改，已排入第九节 H，紧接在原计划之后进行。
 
 ## 十二、评审记录
 
