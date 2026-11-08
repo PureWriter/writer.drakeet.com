@@ -75,7 +75,7 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
   - Typora 页默认取 `#write`，不用写 `--old-select`。
   - 旧页里的页脚由全站页脚代替，比对时加 `--skip footer`。
   - 几个构建可以同时进行：每个构建用自己的 `--out` 目录。
-  - 全站页面齐了以后，`scripts/compare-migration.sh` 一次比对全部页面（旧页取自旧站最后一个内容提交 069a297），统一结构或改模板之后用它确认正文没有被改动。
+  - 全站页面齐了以后，曾用 `scripts/compare-migration.sh` 一次比对全部页面（旧页取自旧站最后一个内容提交 069a297）。第 F 步重写了手册与教程之后，大半页面本来就与旧页不同，它已退役删除。
   - 首页的文件不在子目录里，构建时写文件本身，例如 `scripts/build-page.sh --out /tmp/site-home content/_index.en.html`。
 
 ## 四、链接
@@ -152,4 +152,4 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 - 文档类页面（隐私政策、教程）的日期段写成 `<p class="meta">`（多行用 `<br>`），末尾的署名写成 `<p class="company">`，与 iOS 隐私政策一致。
 - **署名的主体**：简体中文写「苏州小白迷雾科技有限公司」，其余语言一律写「Drakeet Co., Ltd.」（日本公司的英文名，日文页也是这样写）。例外是简体的 iOS 隐私政策与 iOS 支持页：iOS 版在 App Store 上的销售商是 Drakeet Co., Ltd.，正文与署名都写它，页脚用 front matter 的 `company` 跟着改（第二节）。
 - 首页中文段落开头的「　　」是写在文字里的缩进，长文页面不加。
-- 统一结构只改标记，不改文字：改完用 `scripts/compare-migration.sh` 确认正文与锚点与旧页一致。
+- 统一结构只改标记，不改文字：改前改后各构建一份产物（`scripts/build-page.sh --out <目录>`），比对这几页的正文与锚点没有变化。
