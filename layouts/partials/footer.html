@@ -1,11 +1,14 @@
 {{- /*
   版权与备案信息只放在简体中文页面的底部，居中显示（《非经营性互联网信息服务备案管理办法》要求在主页底部中央标明）。
   其他语言的页面不输出页脚：由语言参数里有没有 icp 决定，不靠人记（4.3）。公安备案图标由本站托管。
+  版权一行的主体默认取界面文字里的 company；页面在 front matter 里写了 company 就用页面的。简体的 iOS 支持页与
+  隐私政策这样写：iOS 版在 App Store 上的销售商是 Drakeet Co., Ltd.，页脚与正文的署名要是同一个主体。
 */ -}}
 {{- with .Language.Params.icp }}
 {{- $icon := resources.Get "img/gongan.png" | fingerprint "sha256" }}
+{{- $company := $.Params.company | default (i18n "company") }}
 <footer class="site-footer">
-<p>{{ i18n "copyright" }}</p>
+<p>{{ i18n "copyright" (dict "Company" $company) }}</p>
 <p><a href="https://beian.mps.gov.cn/#/query/webSearch"><img src="{{ $icon.RelPermalink }}" alt="" width="16" height="16">{{ $.Language.Params.gongan }}</a>　<a href="https://beian.miit.gov.cn/">{{ . }}</a></p>
 </footer>
 {{- end }}

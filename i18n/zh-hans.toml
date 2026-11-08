@@ -4,5 +4,7 @@ languageMenu = "语言"
 notFoundTitle = "找不到这个页面"
 notFoundBody = "这个地址没有对应的页面，可能已经移动或删除。"
 notFoundHome = "回到纯纯写作首页"
-copyright = "版权所有：苏州小白迷雾科技有限公司"
+# 页脚版权一行；主体默认是 company，页面可以在 front matter 里用 company 换掉（layouts/partials/footer.html）。
+copyright = "版权所有：{{ .Company }}"
+company = "苏州小白迷雾科技有限公司"
 megabytes = "{{ .Count }} MB"

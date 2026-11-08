@@ -44,6 +44,7 @@
 | `script: download.js` | 引用 `assets/js/` 下的脚本（全站只有下载页用） |
 | `noindex: true` | 不让搜索引擎收录，也不进 sitemap（授权完成页、404） |
 | `layout: bare` 与 `htmlLang: mul` | 不带顶部与页脚的居中单页，几种语言并列（授权完成页、根目录 404） |
+| `company` | 页脚版权一行的主体（页脚只在简体中文输出）。不写就是界面文字里的 company，即苏州小白迷雾科技有限公司；简体的 iOS 支持页与隐私政策写 `Drakeet Co., Ltd.`：iOS 版在 App Store 上的销售商是它，与正文的署名一致，同一页不出现两个主体 |
 
 ## 三、迁移旧页面：正文逐字一致
 
@@ -149,5 +150,6 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 - 标题只用来表达结构，不拿来加粗或放大一句话；需要强调的一行写成段落加 `<strong>`，旧锚点的 id 写在这个段落上（例如「请使用正版」页的下载一行）。
 - 标题里不放链接：回首页有顶部导航。
 - 文档类页面（隐私政策、教程）的日期段写成 `<p class="meta">`（多行用 `<br>`），末尾的署名写成 `<p class="company">`，与 iOS 隐私政策一致。
+- **署名的主体**：简体中文写「苏州小白迷雾科技有限公司」，其余语言一律写「Drakeet Co., Ltd.」（日本公司的英文名，日文页也是这样写）。例外是简体的 iOS 隐私政策与 iOS 支持页：iOS 版在 App Store 上的销售商是 Drakeet Co., Ltd.，正文与署名都写它，页脚用 front matter 的 `company` 跟着改（第二节）。
 - 首页中文段落开头的「　　」是写在文字里的缩进，长文页面不加。
 - 统一结构只改标记，不改文字：改完用 `scripts/compare-migration.sh` 确认正文与锚点与旧页一致。

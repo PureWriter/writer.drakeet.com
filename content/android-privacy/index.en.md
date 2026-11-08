@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: Pure Writer does not collect your private information. This policy covers what the Android app queries, its permissions, third-party SDKs, backups, Fanhuaji conversion, and account cancellation.
-lastmod: 2026-11-07
+lastmod: 2026-11-08
 url: android/privacy/
 ---
 
@@ -10,6 +10,7 @@ url: android/privacy/
   简体中文版是 index.zh-hans.md，两份各自维护：修改政策时两种语言一起核对。
   正文与旧站逐字一致；标题的 id 沿用旧页（Typora 生成），站外的旧锚点仍然有效。「Article Data and Backup」在旧页里没有 id，这里不显式写，由 Hugo 自动生成。
   例外：2026-11 在「Basic Statement」末尾新增一段（部分功能另行提供条款时以相应条款为准），新增「Fanhuaji Conversion」一节（与简体版同步新增），更新日期随之改动；这一节在旧页里没有，id 按标题写。
+  2026-11-08 末尾的署名由 Drakeet, Inc. 改为 Drakeet Co., Ltd.（全站的署名：简体中文写苏州小白迷雾科技有限公司，其余语言写 Drakeet Co., Ltd.），更新日期随之改动。
   AI 功能不写进本政策：开启 AI 服务时 App 会先显示单独的条款（继续使用即视为接受），本政策不重复，只用「Basic Statement」末尾那一段概括这类另有条款的功能，不点名。
   「Links」一节列出链接到本页的地方：应用首页（旧地址 /home_en，已改为新的英文首页）与 Google Cloud 控制台的 OAuth 同意屏幕。
   Google 审核 OAuth 应用时会核对首页上有没有隐私政策的链接，所以英文首页要一直保留指向本页的链接。
@@ -85,6 +86,6 @@ If you have any questions about this policy, or encounter any problems and sugge
 
 <p class="meta">Published Date: July 1, 2017<br>
 Effective Date: July 1, 2017<br>
-Update Date: November 7, 2026</p>
+Update Date: November 8, 2026</p>
 
-<p class="company">Drakeet, Inc.</p>
+<p class="company">Drakeet Co., Ltd.</p>

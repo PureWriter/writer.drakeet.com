@@ -1,7 +1,7 @@
 ---
 title: Desktop Privacy Policy
 description: Pure Writer desktop does not collect your private information. This policy covers the error logs, usage statistics and device information it reports, the folder it creates, cloud backups and cloud drive accounts, Aliyun Drive, update checks, Fanhuaji conversion, and how to contact us.
-lastmod: 2026-11-07
+lastmod: 2026-11-08
 url: desktop/privacy/
 ---
 
@@ -18,6 +18,7 @@ url: desktop/privacy/
     阿里同步索引的请求另用独立的客户端，只带阿里用户 ID 与签名，不带这些请求头，也不带阿里的令牌。
   - 「Checking for Updates」里服务器记下的字段，对应服务端 RawJsonResource 的 updateDesktopDeviceRecord（按设备标识每次检查更新时更新一条）。
   - 局域网同步在增量发布开着时不启动，不会向服务器发布本机的局域网地址与连接口令，所以本页没写；服务端关掉增量发布开关之前，要先把这件事补进来。
+  2026-11-08 末尾的署名由 Drakeet, Inc. 改为 Drakeet Co., Ltd.（全站的署名：简体中文写苏州小白迷雾科技有限公司，其余语言写 Drakeet Co., Ltd.），更新日期随之改动。
   末尾三个日期在旧页里各占一行（Typora 导出的段落保留换行），这里用行尾的反斜杠写成换行，保持同样的显示。
   结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
 -->
@@ -80,6 +81,6 @@ If you have any questions about this policy, or encounter any problems and sugge
 
 <p class="meta">Published Date: Dec 11, 2024<br>
 Effective Date: Dec 11, 2024<br>
-Update Date: Nov 7, 2026</p>
+Update Date: Nov 8, 2026</p>
 
-<p class="company">Drakeet, Inc.</p>
+<p class="company">Drakeet Co., Ltd.</p>
