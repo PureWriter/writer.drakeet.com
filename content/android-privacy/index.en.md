@@ -11,6 +11,9 @@ url: android/privacy/
   正文与旧站逐字一致；标题的 id 沿用旧页（Typora 生成），站外的旧锚点仍然有效。「Article Data and Backup」在旧页里没有 id，这里不显式写，由 Hugo 自动生成。
   例外：2026-11 在「Basic Statement」末尾新增一段（部分功能另行提供条款时以相应条款为准），新增「Fanhuaji Conversion」一节（与简体版同步新增），更新日期随之改动；这一节在旧页里没有，id 按标题写。
   2026-11-08 末尾的署名由 Drakeet, Inc. 改为 Drakeet Co., Ltd.（全站的署名：简体中文写苏州小白迷雾科技有限公司，其余语言写 Drakeet Co., Ltd.），更新日期随之改动。
+  2026-11-08 补齐简体版有、英文版一直缺的三段，按简体版的原意翻译：「Basic Statement」里读取局域网 IP、纯纯写作账号邮箱两条，
+  「Third-party SDKs Used」里的支付宝 SDK 一条（Android 版只有一个正式渠道，各市场的安装包依赖相同，Google Play 的版本里也有支付宝 SDK）。
+  隐私政策各语言的披露要一致：改简体版的披露时，英文版同一笔改动里跟着改。
   AI 功能不写进本政策：开启 AI 服务时 App 会先显示单独的条款（继续使用即视为接受），本政策不重复，只用「Basic Statement」末尾那一段概括这类另有条款的功能，不点名。
   「Links」一节列出链接到本页的地方：应用首页（旧地址 /home_en，已改为新的英文首页）与 Google Cloud 控制台的 OAuth 同意屏幕。
   Google 审核 OAuth 应用时会核对首页上有没有隐私政策的链接，所以英文首页要一直保留指向本页的链接。
@@ -34,6 +37,10 @@ Pure Writer does not collect your private information. It only queries the follo
 
 - Information about other apps installed on the phone: Pure Writer will try to check if Alipay or WeChat is present on your phone to guess if you are a user in mainland China. Alipay cannot provide payment services for overseas user platforms like Google Play, so we need to provide Google Pay for overseas users. Thus, this is necessary content to query. However, rest assured, these information checks are entirely local, and the results will not be uploaded anywhere, **purely local checks, purely local analysis** guesses. No one will know what other apps you have installed on your phone, as we **do not upload or store this information**.
 
+- Reading IP information: To connect automatically to [Pure Writer Desktop](/en/desktop/) over your local network and sync documents with it, the Android app reads your local network (LAN) IP address after it starts. Your LAN IP address can only be reached from within your local network, and when connecting to the desktop app, Pure Writer generates two key pairs to verify each other's signatures and encrypt the data before anything is synced, so this is secure and does not touch your privacy. Until it connects to the desktop app, Pure Writer may read your LAN IP address from time to time. Rest assured, once it has connected to the desktop app, it stops reading the IP address, and if it never manages to connect, it automatically reads it less often.
+
+- Pure Writer account email: If you register a Pure Writer account in the app (this is not necessary), your email address will be collected; otherwise we could not keep a record of your Pro status. Registering a Pure Writer account currently requires only your email address as the account name, not your gender, nickname, or any other private information, so your email address is just an email address and is not linked to any other information related to your privacy.
+
 Some features of Pure Writer may come with their own terms. When you use these features, those terms take precedence.
 
 ## Copyright of Works {#copyright-of-works}
@@ -47,6 +54,8 @@ To better protect user privacy, starting from Android 11, Pure Writer **no longe
 For systems before Android 11, Pure Writer will request read and write permissions to the phone's storage, for functions like automatic backups, exporting articles, long images, etc. We will not read any of your other file contents without your knowledge.
 
 ## Third-party SDKs Used {#third-party-sdks-used}
+
+- Alipay SDK: It is initialized only when you open the Pure Writer Pro page and tap a paid item. We also intercept the Alipay SDK to keep it from leaving junk files in your external storage: the files it creates are automatically redirected to Pure Writer's private directory and are removed when Pure Writer is uninstalled, so you don't need to worry about the Alipay SDK leaving junk files in your external storage. For more about the Alipay SDK, see its official website: [Alipay SDK Privacy Notice](https://opendocs.alipay.com/open/54/01g6qm)
 
 - Google Billing SDK: Google's payment method SDK, [Privacy Policy](https://support.google.com/googleplay/android-developer/answer/10281818)
 
