@@ -763,7 +763,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 - drakeet.com、www.drakeet.com 与 DeepOCAT 旧页：已定为一律 301 到 ocat.app（5.7），规则与合同已在 `master`，待装到服务器；DNS 清理（根域名的 CNAME 与 MX 并存、writer2 的解析）仍待处理；
 - ~~请 ocat.app 改为自己托管那 5 张图片~~：2026-11-08 完成（OCAT 仓库 `pages/ocat` 的 440b408，图片放在 ocat.app 的 `/images/`）。本站的 5 张照旧按原路径、原字节保留，旧的缓存页面与社交平台的预览可能仍在引用；
-- ~~rebase-server 的可选简化~~（不做）：指的是把 rebase-server 里官网的旧地址（授权完成页、`/desktop2_zh` 等）改成新地址，省一次跳转。旧版客户端仍会请求旧地址，网站的兼容规则无论如何都要保留；改了用户感觉不到，还要多部署一次服务端；
+- rebase-server 的可选简化（暂不做，rebase-server 81a047c5 在 `Drives.kt` 与 `RawJsonResource.kt` 里加了注释）：指的是把 rebase-server 里官网的旧地址（授权完成页、`/desktop2_zh` 等）改成新地址，省一次跳转。旧版客户端仍会请求旧地址，网站的兼容规则无论如何都要保留；改了用户感觉不到，还要多部署一次服务端；
 - 补齐滞后的译文（第十一节）；
 - ~~个人代理服务按需重装~~：2026-11-08 用 Ubuntu 官方源的 shadowsocks-libev 重新部署，只开 TCP 8621，见 operations.md 第 10 节；
 - 桌面版 CI 从镜像兜底下载 JAR 时不校验哈希（既有问题），可以改为校验 JarVersions 或 R2 给出的哈希；
