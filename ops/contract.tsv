@@ -497,17 +497,20 @@
 /drives/oauth/	-	404	-	text/html	-	<html lang=mul>
 
 # ======================================================================================================================
-# DeepOCAT 旧页：原样提供，CSP 在 img-src 上单独放行 kuromi.drakeet.cn 的图标。
+# DeepOCAT 旧页（2025-03）：已从本站删除，301 到 OCAT 的官网 ocat.app 上对应的页面（首页、隐私政策、使用条款），
+# .html 写法同样处理，查询串原样带上，与其他旧地址一样缓存一天。其余 /ocat/ 下的地址（JAR 镜像除外）照常 404。
 # ======================================================================================================================
-/ocat/ocat	-	200	-	text/html	Content-Security-Policy: img-src 'self' data: https://kuromi.drakeet.cn; | Cache-Control == no-cache	<title>ocat</title>
-/ocat/ocat.html	-	200	-	text/html	Content-Security-Policy: https://kuromi.drakeet.cn	<title>ocat</title>
-/ocat/privacy	-	200	-	text/html	Content-Security-Policy: img-src 'self' data: https://kuromi.drakeet.cn;	Privacy Policy - DeepOCAT
-/ocat/privacy.html	-	200	-	text/html	-	Privacy Policy - DeepOCAT
-/ocat/terms	-	200	-	text/html	Content-Security-Policy: https://kuromi.drakeet.cn	Terms of Use - DeepOCAT
-/ocat/terms.html	-	200	-	text/html	-	Terms of Use - DeepOCAT
+/ocat/ocat	-	301	https://ocat.app/	-	Cache-Control == max-age=86400	-
+/ocat/ocat.html	-	301	https://ocat.app/	-	-	-
+/ocat/privacy	-	301	https://ocat.app/privacy	-	Cache-Control == max-age=86400	-
+/ocat/privacy.html	-	301	https://ocat.app/privacy	-	-	-
+/ocat/terms	-	301	https://ocat.app/terms	-	-	-
+/ocat/terms.html?from=x	-	301	https://ocat.app/terms?from=x	-	-	-
+# 杂字符先清理成旧地址，再按上面跳到 ocat.app。
+/ocat/privacy%E3%80%82	-	301	/ocat/privacy	-	-	-
 /ocat/ocat.md	-	404	-	text/html	-	<html lang=mul>
 /ocat/	-	404	-	text/html	-	<html lang=mul>
-# 其余页面不放宽。
+# 本站页面的 CSP 只许本站与 data: 的图片，不放行任何站外来源。
 /zh-hans/genuine/	-	200	-	text/html	Content-Security-Policy: img-src 'self' data:;	-
 
 # ======================================================================================================================

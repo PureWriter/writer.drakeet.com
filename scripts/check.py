@@ -171,8 +171,8 @@ def check_links(root):
     return problems
 
 
-# 市场检查不看的产物：简体中文页面本身、旧图片、DeepOCAT 旧页、.well-known、发版数据（含各语言的更新日志）。
-MARKET_SKIP_PREFIXES = ("/zh-hans/", "/images/", "/ocat/", "/.well-known/")
+# 市场检查不看的产物：简体中文页面本身、旧图片、.well-known、发版数据（含各语言的更新日志）。
+MARKET_SKIP_PREFIXES = ("/zh-hans/", "/images/", "/.well-known/")
 MARKET_SKIP_FILES = {"/desktop2.json"}
 MARKET_SUFFIXES = {".html", ".txt", ".xml", ".json"}
 

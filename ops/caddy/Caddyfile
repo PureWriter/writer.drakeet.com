@@ -53,9 +53,10 @@ writer2.drakeet.com {
 	import /srv/writer.drakeet.com/staging/current/caddy/site.caddy /srv/writer.drakeet.com/staging/current
 }
 
-# drakeet.com 与 www.drakeet.com：原样提供旧服务器上备份下来的静态页，最终去留另定（docs/rebuild.md 5.7）。
+# drakeet.com 与 www.drakeet.com：一律 301 到 OCAT 的官网 https://ocat.app（docs/rebuild.md 5.7）。规则在同目录的
+# drakeet.com.caddy（仓库里的 ops/caddy/drakeet.com.caddy），本机测试台 scripts/test-caddy.sh 导入同一份文件跑它的合同。
+# 证书照旧由 Caddy 自动签发：跳转之前要先完成 TLS 握手。drakeet.com 没有 CAA 记录，不限制签发的 CA。
 drakeet.com, www.drakeet.com {
 	import access_log
-	root * /srv/legacy/drakeet.com
-	file_server
+	import /etc/caddy/drakeet.com.caddy
 }

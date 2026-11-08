@@ -3,7 +3,6 @@
 #
 # 准备：把仓库的 ops/ 目录传到服务器的 /root/writer-provision/ops/，并在 /root/writer-provision/ 放：
 #   authorized_keys   drakeet 账户允许登录的公钥（不入库）
-#   drakeet.com/      drakeet.com 与 www.drakeet.com 的静态页（从旧服务器备份，不入库；没有则跳过）
 #
 # 顺序（防止把自己锁在外面，见 docs/rebuild.md 5.3）：
 #   provision.sh users      建 drakeet 账户（adm、sudo 组）、公钥、重建期间的免密 sudo
@@ -128,12 +127,6 @@ cmd_web() {
 	ensure_bootstrap_release "$SITE_BASE"
 	ensure_bootstrap_release "$SITE_BASE/staging"
 	install -d -m 0755 -o "$ADMIN" -g "$ADMIN" "$SITE_BASE/jars" "$SITE_BASE/jars-incoming"
-	install -d -m 0755 -o "$ADMIN" -g "$ADMIN" /srv/legacy /srv/legacy/drakeet.com
-	if [[ -d "$INPUT/drakeet.com" ]]; then
-		cp -R "$INPUT/drakeet.com/." /srv/legacy/drakeet.com/
-		chown -R "$ADMIN:$ADMIN" /srv/legacy/drakeet.com
-		find /srv/legacy/drakeet.com -type f -exec chmod 0644 {} +
-	fi
 	# 访问日志目录：属组 adm、setgid，新文件继承 adm 组，drakeet 不用 sudo 就能读。
 	# 日志文件必须属 caddy，否则 Caddy 打不开它们、起不来；这里顺带修正以前以 root 校验时建出的 root 文件。
 	install -d -m 2750 -o caddy -g adm /var/log/caddy
@@ -146,6 +139,8 @@ cmd_web() {
 	done
 
 	log "Caddy 全局配置"
+	# drakeet.com 与 www.drakeet.com 的跳转规则先装好：全局配置导入它，缺了校验就不过。
+	install -m 0644 -o root -g root "$OPS/caddy/drakeet.com.caddy" /etc/caddy/drakeet.com.caddy
 	install -m 0644 -o root -g root "$OPS/caddy/Caddyfile" /etc/caddy/Caddyfile
 	# 以 caddy 身份校验：校验会打开（不存在就新建）日志文件，以 root 运行会把它们建成 root 所有，
 	# Caddy 随后就打不开；同时也验证了 caddy 用户读得到各站点导入的规则。

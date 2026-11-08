@@ -16,7 +16,7 @@
 #     path、path_regexp 匹配器与 file_server 则先清理路径（合并连续的斜杠，解析 . 与 .. 段，保留结尾的斜杠）。所以 map
 #     不直接用 {path}，而用第 0 段存下的清理后的路径 {vars.clean_path}，与匹配器、file_server 看到的一致；
 #   - {query.lang} 这类占位符取的是 Go 解析过的查询参数：同名参数用逗号连起来，含半角分号的参数对被丢掉，键名也会解码，
-#     与原始查询串 {query} 对不上。所以 lang 参数从原始查询串里取（第 6 段）；
+#     与原始查询串 {query} 对不上。所以 lang 参数从原始查询串里取（第 5 段）；
 #   - 正则是 Go 的 RE2：没有前瞻、后顾与反向引用；map 的正则不锚定，要自己写 ^ 与 $；空格写成 \x20，不用引号括起正则
 #     （caddy fmt 会弄乱用反引号括起来、以 ~ 开头的正则）；
 #   - map 只在用到它的输出时才求值，所以写在 route 里各自用到它的那一段前面，按段阅读即可；
@@ -32,7 +32,7 @@ encode zstd gzip
 
 # 安全响应头（4.9），对所有响应生效，包括跳转与 404：
 #   - CSP：脚本只许本站文件（全站只有下载页的 download.js）；样式允许内联：本站没有用户输入，禁止内联样式的收益小于它
-#     带来的定制工作（Markdown 表格对齐会输出 style 属性）。DeepOCAT 旧页在下面单独放宽；
+#     带来的定制工作（Markdown 表格对齐会输出 style 属性）；
 #   - HSTS 一年，不加 includeSubDomains 与 preload：preload 要求在 drakeet.com 上设置并覆盖全部子域，牵连太广、难以撤销；
 #   - Permissions-Policy 关掉本站用不到的设备能力；
 #   - 刻意不设 Cross-Origin-Resource-Policy：ocat.app 跨站引用本站 /images/ 下的 5 张图片。
@@ -144,11 +144,11 @@ route {
 	#    404.html（见文末 handle_errors）。
 	#
 	#    清理杂字符：上线后 AI 回答与中文正文里会出现 /zh-hans/desktop/。、/en/desktop/](https://…) 这类截断不干净的新地址，
-	#    旧地址已有同样的规则（第 8 段；/desktop2。 52 天 189 次）。语言前缀加若干段（只含小写字母、数字与短横）、可带一个
+	#    旧地址已有同样的规则（第 7 段；/desktop2。 52 天 189 次）。语言前缀加若干段（只含小写字母、数字与短横）、可带一个
 	#    尾斜杠，后面紧跟杂字符的，301 到「前缀加这些段」再补上尾斜杠，查询串原样带上；杂字符之后是什么都不看。不判断目标
 	#    是否存在：不存在时跳过去照样是 404。点不算段里的字符，所以 /zh-hans/sitemap.xml。 这类文件地址不清理，仍是 404。
 	#    这一条要排在下面的 file_server 之前，而且不能嵌进 @prefixed 的 handle 里：/en） 这种语言前缀后面直接粘着杂字符的
-	#    写法不匹配 @prefixed。杂字符类与第 8 段的 @junk、@junk_root 完全相同，三处必须一起改。
+	#    写法不匹配 @prefixed。杂字符类与第 7 段的 @junk、@junk_root 完全相同，三处必须一起改。
 	@prefixed_junk path_regexp prefixed_junk ^(/(?:zh-hans|zh-hant|zh-hk|en|ja|ru)(?:/[a-z0-9-]+)*)/?[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]
 	handle @prefixed_junk {
 		header Cache-Control "max-age=86400"
@@ -182,19 +182,7 @@ route {
 	}
 
 	# ==================================================================================================================
-	# 5. DeepOCAT 旧页（2025-03，目前没有任何仓库引用）：本轮原样保留，最后阶段与 drakeet.com 一并决定去留（第三节、第 G 步）。
-	#    隐私与条款两页引用 kuromi.drakeet.cn 上的图标，Typora 导出的那页只用内联样式，所以只在 img-src 上多放行这一个来源。
-	@ocat path_regexp ocat ^/ocat/(ocat|privacy|terms)(?:\.html)?$
-	handle @ocat {
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://kuromi.drakeet.cn; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
-		rewrite * /ocat/{re.ocat.1}.html
-		file_server {
-			precompressed br gzip
-		}
-	}
-
-	# ==================================================================================================================
-	# 6. 多语言入口的协商（4.5）。这些旧地址本来就按访客语言显示，App Store 的审核员与外国用户要看到英文，iOS App 还会带上
+	# 5. 多语言入口的协商（4.5）。这些旧地址本来就按访客语言显示，App Store 的审核员与外国用户要看到英文，iOS App 还会带上
 	#    ?lang=<界面语言>（30 种里的任何一种），所以它们只做协商：
 	#      1) ?lang= 规范化后是目标页面支持的语言：301 到该语言，去掉 lang 参数，其余参数照带；
 	#      2) 否则按 Accept-Language 的顺序逐个规范化，取第一个目标页面支持的语言（不解析 q 值，与旧站一致；目标页没有的
@@ -332,7 +320,7 @@ route {
 	}
 
 	# ==================================================================================================================
-	# 7. 单语言旧地址：按 4.4 的表确定性 301，.html 写法同样处理，查询串原样带上（4.5）。先带一天的缓存，写错的映射修正后
+	# 6. 单语言旧地址：按 4.4 的表确定性 301，.html 写法同样处理，查询串原样带上（4.5）。先带一天的缓存，写错的映射修正后
 	#    最多一天就从用户浏览器里消失；稳定一两个月后再加长。依赖方（第三节）：
 	#      /wiki*                Android 帮助入口（按地区分别打开）
 	#      /backups*             Android 备份教程入口（_zh、_en 是 2019—2023 年的版本在用）、外部 README
@@ -345,6 +333,8 @@ route {
 	#      /desktop2_ru                                              rebase-server、俄语用户的通知
 	#      /v28、/v28.1（有无尾斜杠）、/about、/pro                  停用的临时下载页（Telegram 旧消息）、Android 清单里未经验证的
 	#                                                                网页链接；回到首页，再由首页按语言协商
+	#      /ocat/ocat、/ocat/privacy、/ocat/terms                    2025-03 的 DeepOCAT 旧页，已从本站删除：OCAT 的官网 ocat.app
+	#                                                                上有对应的首页、隐私政策与使用条款，跳到那里
 	map {vars.clean_path} {legacy_target} {
 		~^/wiki(?:\.html)?$ /zh-hans/manual/
 		~^/wiki_zh(?:\.html)?$ /zh-hant/manual/
@@ -365,6 +355,8 @@ route {
 		~^/desktop2_ru(?:\.html)?$ /ru/desktop/
 		~^/v28(?:\.1)?/?$ /
 		~^/(?:about|pro)$ /
+		~^/ocat/ocat(?:\.html)?$ https://ocat.app/
+		~^/ocat/(privacy|terms)(?:\.html)?$ https://ocat.app/${1}
 	}
 	@legacy not vars {legacy_target} ""
 	handle @legacy {
@@ -373,7 +365,7 @@ route {
 	}
 
 	# ==================================================================================================================
-	# 8. 清理杂字符（4.5）：外部文字链接与 AI 回答里截断不干净的地址，例如 /desktop2。（52 天 189 次，多来自 Bing）、
+	# 7. 清理杂字符（4.5）：外部文字链接与 AI 回答里截断不干净的地址，例如 /desktop2。（52 天 189 次，多来自 Bing）、
 	#    /desktop2](https://…)、/desktop**[reference:0、/warning`（……。旧入口名后面紧跟下列字符，或只多一个尾斜杠时，
 	#    301 到去掉尾巴的旧入口，再按上面的规则处理：
 	#      全角标点   U+3000–303F（含全角空格与 、。「」【】）、U+FF01–FF0F、FF1A–FF20、FF3B–FF40、FF5B–FF65（全角符号，
@@ -398,7 +390,7 @@ route {
 	}
 
 	# ==================================================================================================================
-	# 9. 其余：产物里有这个文件就提供（例如根目录的 404.html、新地址 /drives/oauth/<服务商>/），没有就 404，用根目录那份
+	# 8. 其余：产物里有这个文件就提供（例如根目录的 404.html、新地址 /drives/oauth/<服务商>/），没有就 404，用根目录那份
 	#    多语言 404 页。不再像旧站那样返回 500，也不跳回首页（4.5）；仓库文件（AGENTS.md、sources/ 等）不在产物里，同样 404。
 	handle {
 		file_server {

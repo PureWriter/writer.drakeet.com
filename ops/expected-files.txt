@@ -91,9 +91,6 @@ ja/ios/support/index.html
 ja/sitemap.xml
 js/download.min.<fingerprint>.js
 llms.txt
-ocat/ocat.html
-ocat/privacy.html
-ocat/terms.html
 robots.txt
 ru/404.html
 ru/desktop/index.html

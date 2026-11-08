@@ -2,7 +2,7 @@
 #
 # 只适合中国大陆用户的内容只放在简体中文（/zh-hans/）页面里。scripts/check.py 扫描构建产物里简体中文目录以外的
 # HTML 与文本文件（含页面里的 JSON-LD、根目录的 llms.txt），命中下面任何一组就让构建失败。
-# 不扫描：/zh-hans/、/images/（旧图片）、/ocat/（DeepOCAT 旧页，去留另定）、/.well-known/、desktop2.json（发版数据，
+# 不扫描：/zh-hans/、/images/（旧图片）、/.well-known/、desktop2.json（发版数据，
 # 里面本来就有各语言的更新日志）。
 #
 # 每组的 exempt 是豁免的页面，写产物里的路径前缀，* 匹配一段语言目录。法律页与网盘授权完成页只豁免「网盘名称」这一组
