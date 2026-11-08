@@ -14,6 +14,7 @@
   - 第 E 步：已完成并上线（第九节 E），只剩 Drakeet 在 Google Search Console 添加站点，列在下面的收尾清单；
   - 第 F 步：完成。使用手册与两份教程都已按三端现行版本重写并上线（教程 fc0b13d，GPT 复审未发现事实错误）；
   - 第 D 步在上线一周后（11-14 前后）核对；
+  - 10.1 的翻新建议已全部定下：第 F 步之外的各条 2026-11-08 在 `master` 上实施完毕；正式站的部署，以及把 drakeet.com 的跳转规则装到服务器（operations.md 第 6 节），等 Drakeet 同意后进行；
   - 第九节 H（出口分流）：设计正本 [egress-offloading.md](egress-offloading.md)。2026-11-08 凌晨三端代码都已完成并经 GPT 复审（rebase-server 已合并、iMac 已部署；桌面版与 Android 本地提交、随各自发版），R2 旧图片副本已上传；api.drakeet.com 11-08 早上部署并核对通过，剩下桌面版与 Android 随各自发版，进度见那边的游标；隐私政策的其余问题记在第十一节，网站重建完成后单开一个系列。
 - **仓库**：
   - 主目录 `/Users/drakeet/GitHub/writer.drakeet.com` 在 `master`，就是线上的新站；之后都在 `master` 上改、提交、推送，部署按 operations.md 5.1。
@@ -112,7 +113,7 @@
 | `/drives/oauth/{OneDrive,Dropbox,Aliyun}` 加 `_en`、`_zh`、`_ja`、`_ko`、`_jp` 后缀，服务商名不区分大小写 | rebase-server 在桌面版授权完成后 307 过来的落地页 | 内部重写到每家网盘唯一的完成页，不跳转（4.6） |
 | `/markdown`、`/protections` | 站内链接、外部 README | 301 |
 | `/dorakito`、`/cn`、`/cn/`、`/cn/index(.html)` | 没有站内入口的旧首页（日文版、drakeet.cn 的旧内容） | 301 到对应语言的首页 |
-| `/ocat/ocat`、`/ocat/privacy`、`/ocat/terms` | 2025-03 的 DeepOCAT 页面，目前没有任何仓库引用 | 本轮原样保留，最后阶段与 drakeet.com 一并决定 |
+| `/ocat/ocat`、`/ocat/privacy`、`/ocat/terms`（含 `.html`） | 2025-03 的 DeepOCAT 页面，没有任何仓库引用，日志里只有零星访问 | 301 到 OCAT 的官网 ocat.app 上对应的页面（首页、`/privacy`、`/terms`），页面从本站删除（5.7） |
 | `/v28`、`/v28.1`，有无尾斜杠均可 | 已停用的临时下载页；官方 Telegram 频道的旧消息链接着 `/v28.1` | 301 到首页 |
 | `/about`、`/pro` | Android 清单里未经验证的网页链接（没有 autoVerify） | 301 到首页 |
 | 所有旧页面的 `.html` 写法；旧入口名后面带着全角标点、不换行空格、右括号、反引号、星号、波浪线、方括号或单个尾斜杠 | 旧 nginx 规则；外部文字链接与 AI 回答里截断不干净的地址（例如 `/desktop2。` 52 天 189 次，多来自 Bing） | 301 到干净的旧入口，再按本表处理 |
@@ -150,7 +151,6 @@ assets/              样式表与脚本（经 Hugo 处理，输出带指纹的�
 i18n/                界面文字（导航、页脚、按钮等），每种语言一个文件
 static/images/       旧站全部图片，按原路径原样发布
 static/.well-known/  apple-app-site-association
-static/ocat/         DeepOCAT 旧页，原样（最后阶段再定去留）
 static/llms.txt      手写的产品介绍与主要链接
 static/indexnow.txt  IndexNow 的密钥文件（第九节 E）
 desktop2.json        桌面版发版数据，由桌面版 release.sh 写入；路径与旧站相同
@@ -295,7 +295,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 **新做法**：每家网盘只做一个完成页，地址固定为 `/drives/oauth/<onedrive｜dropbox｜aliyun>/`，与 `/desktop2.json`、`/images/` 一样，作为有据可查的不带语言前缀的例外。
 
-- **正文**：就是旧站五个语言版本的原话（简体、繁体、英文、日文、韩文），每段带自己的 `lang` 属性，依次并列。文本不改，只是排版合并。
+- **正文**：旧站五个语言版本（简体、繁体、英文、日文、韩文）并列，每段带自己的 `lang` 属性。迁移时文本不改，只是排版合并；英文与韩文原是机翻腔（「Please return to Pure Writer client on your own」「자체적으로 … 돌아가십시오」），2026-11 重译成自然、简短的说法（10.1 第 4 条）。
 - **为什么合并**：这是一闪而过的确认页，用户一眼就能找到自己的语言；不再为 3 个页面引入一整套韩文站点语言，15 个文件变成 3 个，也不需要任何语言判断。
 - **旧地址的处理**：所有旧写法（无后缀、`_en`、`_zh`、`_ja`、`_jp`、`_ko`、`.html`、服务商名大小写不同）用一条规则内部重写到对应的完成页，不跳转。rebase-server 永远不用改，日文用户的 500 也就修好了。
 - **顺手修正的旧错误**：
@@ -329,7 +329,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 | 响应头 | 值 |
 |---|---|
-| `Content-Security-Policy` | `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`。脚本从严；样式允许内联：本站没有用户输入，禁止内联样式的收益小于它带来的定制工作（Markdown 表格对齐、代码高亮都会输出 style 属性）。DeepOCAT 旧页单独放宽。 |
+| `Content-Security-Policy` | `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`。脚本从严；样式允许内联：本站没有用户输入，禁止内联样式的收益小于它带来的定制工作（Markdown 表格对齐、代码高亮都会输出 style 属性）。 |
 | `Strict-Transport-Security` | `max-age=31536000`。不加 `includeSubDomains` 和 `preload`：preload 要求在 drakeet.com 上设置并覆盖全部子域，牵连太广，而且很难撤销 |
 | `X-Content-Type-Options` | `nosniff` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
@@ -510,7 +510,7 @@ scripts/             构建、预览、检查、部署与回滚
   - 内容列写必须出现的文字，以 `!` 开头的表示不应出现；gzip 压缩的响应先解压再核对。
 - **contract.py**：逐条报告不通过的是哪一行、期望什么、实际什么。有任何一行不通过以 1 退出；连续 5 行请求失败（连接错误、超时）就停止检查、报告还有多少行没跑，同样以 1 退出；表本身写错、或一行用例都没有，以 2 退出。被检查的是我们自己的 Caddy，不另设整轮的总期限。
 - **三个运行时机**：
-  1. 改站点规则或合同时，`scripts/test-caddy.sh` 在本机按服务器的目录结构搭测试台，用与服务器同版本的 Caddy 跑整张表（本机只有 HTTP，`http://` 的两行跳过）；
+  1. 改站点规则或合同时，`scripts/test-caddy.sh` 在本机按服务器的目录结构搭测试台，用与服务器同版本的 Caddy 跑整张表（本机只有 HTTP，`http://` 的两行跳过）；drakeet.com 的跳转规则与它单独的合同也在这里一起跑（5.7）；
   2. 每次部署（正式站与预发站）切换之后，`scripts/deploy.sh` 在服务器上运行这一版附带的表：`--site <主机名>` 连本机 127.0.0.1 的 443 端口，按主机名带 SNI、校验证书，不经 2 Mbps 的公网；不通过就自动回滚；
   3. Caddy 受控升级的自检（5.2）改为运行当前版本附带的表，这样补丁版本改动 `try_files`、改写或错误处理时也能被发现。这一项在第 C 步接入，在那之前它只查 AASA、首页与一个不存在的路径（应为 404）。
 - **合同不核对文件字节**：`writer-jars-sync` 按 sha256 校验之后才把 JAR 放进镜像（5.6），合同只用 HEAD 请求核对 `desktop2.json` 里当前版本的三个 JAR 存在、缓存头正确，不必每次部署都在 1 GiB 内存的服务器上把约 120 MB 读一遍。固定图片的原字节在构建时按入库的清单 `ops/images.sha256` 核对（第六节）。
@@ -562,9 +562,16 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### 5.7 其他托管
 
-- **drakeet.com 与 www.drakeet.com**：换系统后先由 Caddy 继续提供备份下来的那两个静态文件（证书自动签发），保证它们不断。最终是保留、301 到 ocat.app，还是停止支持，放到第 G 步决定。DNS 上的两处问题也放到那时处理：
-  - 根域名用 CNAME 指向 writer.drakeet.com，同时又有 MX 记录，不符合 DNS 规范；
-  - writer2.drakeet.com 这条解析，切换后不再需要预发时可以删除。
+- **drakeet.com 与 www.drakeet.com：一律 301 到 OCAT 的官网 https://ocat.app。**
+  - **现状**（2026-11-08 核对）：DNS 上，drakeet.com 是指向 writer.drakeet.com 的 CNAME，www.drakeet.com 是指向本机的 A 记录，两者都没有 CAA 记录（阿里云权威 DNS 对根域名的 CAA 查询回 NODATA）。换系统后由全局配置里这两个主机名的站点块原样提供旧服务器备份下来的 OCAT 介绍页（`/srv/legacy/drakeet.com`）。这个页面链接着 `/privacy` 与 `/terms`，服务器上从来没有这两个文件，一直是 404。新服务器上线以来的访问日志里，真实的请求几乎只有首页与这两个地址，其余都是扫描器的探测。
+  - **为什么跳转**：OCAT 已有自己的官网 ocat.app，上面有首页、隐私政策（`/privacy`）与使用条款（`/terms`）；这里的旧页停在 2025 年，说法与 ocat.app 不一致（例如介绍页说「不收集任何隐私信息」，DeepOCAT 的隐私政策页又列出了收集的数据，10.1 第 6 条），留着只会误导。301 让旧链接与搜索结果都落到 ocat.app，比停止服务对访客友好，也不必再维护两份内容。
+  - **规则**：ocat.app 上有对应页面的旧路径保留路径（`/privacy`、`/terms`，区分大小写，允许一个尾斜杠），其余一律到 ocat.app 的首页；查询串原样带上，缓存一天，与本站旧地址的 301 一致（4.5）。不跟着 ocat.app 现有的地址自动保留路径：那样会把这里从来没有过的地址也变成它的地址。跳转目标只由固定写法拼成，不带请求里的原始路径，所以拼不出跳到别处的地址。本站的 DeepOCAT 旧页（第三节）按同样的口径 301 到 ocat.app 的首页、`/privacy` 与 `/terms`，`static/ocat/` 随之删除。
+  - **放在哪里**：规则写在 `ops/caddy/drakeet.com.caddy`，由 `ops/provision.sh web` 装到 `/etc/caddy/`，全局配置在这两个主机名的站点块里导入它。它与站点内容无关，不随站点版本发布、回滚，所以合同单独成表 `ops/contract-drakeet.com.tsv`，不放进每次部署都跑的 `ops/contract.tsv`；`scripts/test-caddy.sh` 在测试台导入同一份规则跑这张表。装到服务器与对线上核对的步骤见 operations.md 第 6 节。
+  - **证书**：照旧由 Caddy 自动签发，跳转之前要先完成 TLS 握手。drakeet.com 没有 CAA 记录，不限制签发的 CA。
+  - **装到服务器之后**：服务器上的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 不再使用（`provision.sh` 也不再复制它们），可以删除；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
+  - **DNS 上仍待处理的两处**（需要在阿里云解析里改，不影响跳转）：
+    - 根域名用 CNAME 指向 writer.drakeet.com，同时又有 MX 记录，不符合 DNS 规范。可以改为直接指向本机公网地址的 A 记录，与 www 一致；
+    - writer2.drakeet.com 这条解析，切换后不再需要预发时可以删除。
 - **个人代理服务**：不放进主线。配置先备份，之后按需改用仍在维护的实现重新部署。
 
 ## 六、构建、部署与回滚
@@ -734,7 +741,7 @@ scripts/             构建、预览、检查、部署与回滚
   - **怎么推**：一次 POST 到 `https://api.indexnow.org/indexnow`，JSON 体含 `host`、`key`、`keyLocation`、`urlList`，超时 20 秒，用本机的 curl 与 jq。200 与 202 算成功，打印推送了几个地址与状态码；其余状态码与网络错误只打印一行提示，部署结果与退出码不变（照旧为 0）。
   - **手动入口**：`scripts/deploy.sh --indexnow-only`，把正式站当前版本 sitemap 里的全部地址推送一次，密钥也取自当前版本；用于自动推送失败后补推，以及首次验证。不重算差异：补推时不一定说得清该与哪一版比，全站只有三十来个地址，全推一次也无妨。失败时以 1 退出。
 - **站点名**：定为「纯纯写作」，四个名字同时写进 WebSite 的别名与每页的关键词（4.10）。
-- **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（iOS 是 Drakeet Co., Ltd.，Android 与桌面版的英文隐私政策是 Drakeet, Inc.，Android 简体版是苏州小白迷雾科技有限公司），官方账号属于产品，挂在产品上即可。
+- **官方账号**：Telegram 频道 `https://t.me/PureWriter` 与微信公众号「Drakeets」。首页的 SoftwareApplication 用 `sameAs` 写 Telegram 频道与 App Store、Google Play 的应用页；公众号没有公开的网页地址，写不进 `sameAs`，只写进 `llms.txt`。不另写 Organization：各市场的运营主体不同（简体中文页面是苏州小白迷雾科技有限公司，其余语言与 App Store 上的 iOS 版是 Drakeet Co., Ltd.，见 10.1 第 1 条），官方账号属于产品，挂在产品上即可。
 - **分享卡片大图**：五种语言的首页改用 1200×630 的分享图：从 App Store 产品页的页头（雾山稿纸加「写作，连接过去，遥想未来。」）截取，左上角补上图标与名称，由 `scripts/og-images.py` 生成到 `assets/img/og/`，港繁共用台繁一张；构建时加内容指纹、原样发布为 JPEG（不少平台不认 WebP 的分享图），页头写明尺寸。下载页沿用桌面版截图的大卡片，其余页面仍是图标小卡片。微信不读这些标签，不受影响。旧的分享图（`images/header_zh_hans.jpg` 等）在固定字节清单里，照旧保留。
 - **CAA 记录**：`writer.drakeet.com` 与 `writer2.drakeet.com` 各写两条 `0 issue`，分别是 `letsencrypt.org` 与 `sectigo.com`（Caddy 的兜底 ZeroSSL 由 Sectigo 签发）。CAA 只往上级域名查找、不影响同级，所以不影响 drakeet.com 的其他子域。根域名 drakeet.com 虽是指向 writer 的 CNAME，但阿里云权威 DNS 对根域名的 CAA 查询回 NODATA（只有 SOA），不会跟到 writer 的 CAA，其他子域名查到的仍是空；api.drakeet.com 现用的也是 Let's Encrypt（2026-11-08 核对）。以后若在根域名上加 CAA，就会约束所有没有自己 CAA 的子域名，届时先盘点各子域名所用的 CA。2026-11-07 已在阿里云解析添加，权威 DNS 上可查到。
 - **内容打磨**：结构化数据与 `llms.txt` 的内容打磨；各语言标题与描述的质量检查，除首页外统一为「页面名 - 品牌名」；用 Lighthouse 对各语言首页与下载页做一次无障碍与性能体检。
@@ -754,7 +761,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### G. 后续
 
-- drakeet.com、www.drakeet.com 与 DeepOCAT 旧页的去留；DNS 清理；
+- drakeet.com、www.drakeet.com 与 DeepOCAT 旧页：已定为一律 301 到 ocat.app（5.7），规则与合同已在 `master`，待装到服务器；DNS 清理（根域名的 CNAME 与 MX 并存、writer2 的解析）仍待处理；
 - 请 ocat.app 改为自己托管那 5 张图片；
 - rebase-server 的可选简化；
 - 补齐滞后的译文（第十一节）；
@@ -782,27 +789,25 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
 
 | # | 问题 | 证据 | 建议 | 状态 |
 |---|---|---|---|---|
-| 1 | 公司署名四种写法 | 首页与下载页「苏州小白迷雾科技有限公司」，iOS 页「Drakeet Co., Ltd.」，英文 Android 与桌面隐私政策「Drakeet, Inc.」，日文旧首页「ドラキート株式会社」。新站的简体 iOS 支持页与隐私政策上，正文署名 Drakeet Co., Ltd.，全站页脚又写着「版权所有：苏州小白迷雾科技有限公司」，同一页出现两个主体 | 按市场与语言定一套写法（与第 E 步的「运营主体写法」合并）；在定之前，至少要决定简体 iOS 两页的页脚是否照常显示版权一行 | 待定 |
-| 2 | 「请使用正版」页过时 | 「纯纯写作 98% 的功能都是免费的」与 iOS 统一付费不符；隐私政策链接指向 GitHub 上的旧文件；下载只给小米商店 | 改为指向官网各端下载页与隐私政策，删去过时的比例说法 | 待定 |
-| 3 | 几篇长文过时 | 保护机制停在 2019 年；繁体备份教程是 2022 年前的旧版；英文备份教程停在 2023 年；英文 Android 隐私政策缺两段 | 与手册同批核实；繁体、英文以核实后的简体为准重做；隐私政策补齐请 Drakeet 过目 | 部分完成：繁体、英文备份教程已随第 F 步重做（fc0b13d）；保护机制一文与英文 Android 隐私政策待定 |
-| 4 | 网盘授权完成页的英文、韩文机翻腔 | 「Please return to Pure Writer client on your own」「자체적으로 … 돌아가십시오」 | 重译这两句（4.6 原定本轮不改文本） | 待定 |
-| 5 | 下载页的英、日、俄版本没有链接开发故事 | 简繁有微信原文链接；英文开发故事 /en/blog/new-desktop-dev-story/ 现成 | 英、日、俄版本补上链接（指向英文版） | 待定 |
-| 6 | DeepOCAT 三页说法矛盾 | 介绍页「不收集任何隐私信息」，隐私政策页列出收集的数据 | 与 drakeet.com 的去留一并决定（第 G 步），例如迁到 DeepOCAT 自己的域名 | 待定 |
+| 1 | 公司署名四种写法 | 首页与下载页「苏州小白迷雾科技有限公司」，iOS 页「Drakeet Co., Ltd.」，英文 Android 与桌面隐私政策「Drakeet, Inc.」，日文旧首页「ドラキート株式会社」。新站的简体 iOS 支持页与隐私政策上，正文署名 Drakeet Co., Ltd.，全站页脚又写着「版权所有：苏州小白迷雾科技有限公司」，同一页出现两个主体 | 简体中文写「苏州小白迷雾科技有限公司」，其余语言（含日文）写日本公司的英文名「Drakeet Co., Ltd.」。例外：iOS 版在 App Store（中、日、美区）的销售商是 Drakeet Co., Ltd.，简体的 iOS 隐私政策与支持页正文、署名照旧写它，页脚用 front matter 的 `company` 跟着写它（docs/content.md） | 已完成（4d613af）：英文 Android 与桌面版政策改为 Drakeet Co., Ltd.，更新日期 2026-11-08；非简体页面本来就不输出页脚 |
+| 2 | 「请使用正版」页过时 | 「纯纯写作 98% 的功能都是免费的」与 iOS 统一付费不符；隐私政策链接指向 GitHub 上的旧文件；下载只给小米商店 | 简化：只留「请从官方渠道下载、不要信任破解版」，下载与隐私政策指向官网各端的页面，删去过时的说法 | 已完成（a5abd92）；只有简体中文一种语言 |
+| 3 | 几篇长文过时 | 保护机制停在 2019 年；繁体备份教程是 2022 年前的旧版；英文备份教程停在 2023 年；英文 Android 隐私政策缺两段 | 长文简化、概括：删去过时或无法核实的具体说法，留下仍然成立的要点；隐私政策缺的实质披露译成英文补齐 | 已完成：繁体、英文备份教程随第 F 步重做（fc0b13d）；保护机制概括重写（a5abd92）；英文 Android 隐私政策实际缺三段（Basic Statement 的读取局域网 IP、账号邮箱两条，第三方 SDK 的支付宝 SDK 一条），都是实质披露，已补齐（d916be2） |
+| 4 | 网盘授权完成页的英文、韩文机翻腔 | 「Please return to Pure Writer client on your own」「자체적으로 … 돌아가십시오」 | 重译这两句（4.6） | 已完成（e6012af） |
+| 5 | 下载页的英、日、俄版本没有链接开发故事 | 简繁有微信原文链接；英文开发故事 /en/blog/new-desktop-dev-story/ 现成 | 维持现状，不加链接 | 已定 |
+| 6 | DeepOCAT 三页说法矛盾 | 介绍页「不收集任何隐私信息」，隐私政策页列出收集的数据 | 与 drakeet.com 一起 301 到 OCAT 的官网 ocat.app（5.7） | 已完成（4ae9f85）：旧页从本站删除；drakeet.com 的规则待装到服务器 |
 | 7 | 手册推荐的 TeraCLOUD 已更名 | teracloud.jp 证书过期，服务 2023 年改名 InfiniCLOUD | 并入第 F 步 | 第 F 步 |
-| 8 | 非简体首页的网盘清单删掉了阿里云盘 | 台繁、港繁、英、日四个首页都只列 Dropbox、OneDrive；旧首页页头注释把「阿里云盘」扩大成只限简体（与 AGENTS.md 的约定不一致）；新规则允许各语言列出它，iOS 隐私政策五种语言都列了 | 四个首页的网盘清单恢复阿里云盘，与 App 一致 | 待定 |
-| 9 | 「获奖情况」只出现在三种中文首页 | 调研报告 4.1 | 确认是否有意；无意就补上英、日 | 待定 |
-| 10 | 简体 iOS 隐私政策的一处说法与其他语言不一致 | 「六、保存期限与删除」写「账号信息：保存至您注销账号为止」，同节下文与其他四种语言都说删除账号（刪除帳號、delete your account、アカウントを削除） | 改为「删除账号」，与 App 里的叫法一致（隐私政策，请 Drakeet 过目；iOS 仓库 docs/privacy.md 同步核对） | 待定 |
+| 8 | 非简体首页的网盘清单删掉了阿里云盘 | 台繁、港繁、英、日四个首页都只列 Dropbox、OneDrive；旧首页页头注释把「阿里云盘」扩大成只限简体（与 AGENTS.md 的约定不一致）；新规则允许各语言列出它，iOS 隐私政策五种语言都列了 | 四个首页的网盘清单恢复阿里云盘，与 App 一致 | 已完成（b693ec2）：繁体写阿里雲盤，英、日写 AliyunDrive（App 里的叫法）；AGENTS.md 写明阿里云盘可以出现在各语言里 |
+| 9 | 「获奖情况」只出现在三种中文首页 | 调研报告 4.1 | 维持现状 | 已定 |
+| 10 | 简体 iOS 隐私政策的一处说法与其他语言不一致 | 「六、保存期限与删除」写「账号信息：保存至您注销账号为止」，同节下文与其他四种语言都说删除账号（刪除帳號、delete your account、アカウントを削除） | 改为「删除账号」，与 App 里的叫法一致；措辞对齐的编辑性更正，不改页面日期 | 已完成（9a83ce4）；iOS 仓库 docs/privacy.md 里没有「注销账号」的说法 |
 | 11 | 简繁备份教程的截图过时 | 第一张截图的红字仍是「从此万无一失，一劳永逸」，与 2026-10 去掉「万无一失」的方向不一致。截图里露出的邮箱不必处理：Drakeet 2026-11-07 确认他的邮箱本来就在许多地方公开 | 随第 3 条重做备份教程时决定是否换图 | 已完成：重写时删去了坚果云的三张截图（fc0b13d） |
 | 12 | 英文备份教程的明显错误 | 标题拼成「Bakup」；两处「Documents/PureWriter/Backups that you manually click」一类的替换事故；仍有 2026-10 已从其他页面去掉的结果承诺 | 并入第 3 条 | 已完成：英文备份教程已重写（fc0b13d） |
-| 13 | 几处小的排版错误 | 日文首页「透かしの文字やEPUB」缺空格；英文、俄文下载页「Other downloads:」「Другие варианты:」冒号后没有空格，读屏会连读成一个词 | 文案批次顺手改 | 待定 |
+| 13 | 几处小的排版错误 | 日文首页「透かしの文字やEPUB」缺空格；英文、俄文下载页「Other downloads:」「Другие варианты:」冒号后没有空格，读屏会连读成一个词 | 文案批次顺手改 | 已完成（b693ec2） |
 
 ### 10.2 其他待定事项
 
-1. **桌面版的两个旧问题**（不影响本轮，网站已兜底）：
-   - Windows 安装包写进「已安装的应用」的更新链接是坏的（2.1）。要修，需要先在 Windows 上读出注册表里的实际值、核实成因，再改安装包；
-   - 2026-10-30 的 iOS 隐私政策已于 11-05 上线，页面日期仍写 10 月 30 日。要不要改日期，由您定。
+1. **桌面版的旧问题**（不影响本轮，网站已兜底）：Windows 安装包写进「已安装的应用」的更新链接是坏的（2.1）。要修，需要先在 Windows 上读出注册表里的实际值、核实成因，再改安装包。
 
-已定的事项不再列出：过渡期工作目录、工具下载、备案号、不做快照、不做演练、由我在 Chrome 里操作阿里云控制台、带宽保持 2 Mbps 固定、HTTP/3 安全组规则（已添加）、ACME 联系邮箱用 writer@drakeet.com（已登记到账户）、外部监控用 GitHub Actions、部署与服务器的说明放在 `docs/operations.md`。
+已定的事项不再列出：过渡期工作目录、工具下载、备案号、不做快照、不做演练、由我在 Chrome 里操作阿里云控制台、带宽保持 2 Mbps 固定、HTTP/3 安全组规则（已添加）、ACME 联系邮箱用 writer@drakeet.com（已登记到账户）、外部监控用 GitHub Actions、部署与服务器的说明放在 `docs/operations.md`、iOS 隐私政策的页面日期（写这一版上线生效的 2026-11-05，编辑性更正不改日期；实质变化的英文 Android 与桌面版政策写 2026-11-08）。
 
 ## 十一、已知问题与后续（本轮不做）
 
@@ -813,15 +818,15 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
   - `privacy_en` 缺两段；
   - `backups_zh` 落后于 sources/ 原稿。
 
-  本轮按线上版本原样迁移，留待文案批次处理。
+  本轮按线上版本原样迁移，留待文案批次处理。之后都已处理：手册与备份教程随第 F 步重写，`privacy_en` 补齐了缺的段落（10.1 第 3 条）。
 - **违反市场约定的旧内容**：`backups_zh`、`wiki_zh` 里有只适合大陆用户的内容。第 C 步时原样迁移，构建检查只给提示；第 F 步重写手册与备份教程后已不含这类内容，「旧版」名单清空，两页按常规规则检查。
 - **Azure 注册里的网页回调**：注册信息里是否还留着 `https://writer.drakeet.com/drives/one` 这类从未使用过的网页回调，未核实，可以顺手清理。
-- **隐私政策与相关的数据处理（先记账，网站重建完成后单开一个系列统一审视，Drakeet 2026-11-07 定）**：新站上线的隐私政策停在 2026-11-07 这一版（Android 不写 AI，只写一句「部分功能可能另行提供条款」；桌面版补上了使用统计、设备信息、网盘账号、阿里云盘与检查更新），这一轮不再继续改。核实时发现、留给那个系列的：
+- **隐私政策与相关的数据处理（先记账，网站重建完成后单开一个系列统一审视，Drakeet 2026-11-07 定）**：新站上线的隐私政策停在 2026-11-07 这一版（Android 不写 AI，只写一句「部分功能可能另行提供条款」；桌面版补上了使用统计、设备信息、网盘账号、阿里云盘与检查更新）。此后只按 10.1 改过几处：英文 Android 与桌面版的署名、英文 Android 补齐缺的段落（这两份的更新日期因此是 2026-11-08）、iOS 版的页面日期与一处用词；其余这一轮不再继续改。核实时发现、留给那个系列的：
   - 桌面版发给我们服务器的请求都带系统主机名作为电脑名（常含用户的名字），检查更新时服务器记进 `desktopDevices`。方向：只带随机生成的设备标识，改完再从政策里删掉这一项。
   - 服务器上留着以「阿里云盘 + 手机号」为键的旧版同步索引，不设自动删除；老用户升级时 V2 迁移还会把旧键发给服务器一次。方向：迁移完成后删除。
   - 阿里云盘续期把 refresh token 放在 GET 查询串里，访问日志可能留下它（iOS 仓库 docs/privacy.md 的 BACKUP-013 已登记改为 POST）。
   - AI：服务端在请求入口把最后一条消息的正文连同邮箱与 Android ID 写进运行日志（rebase-server `AIResource.kt` 的 timber 几处），计划改为不记正文；请求的 user 字段带原始 Android ID，自填的第三方服务也会收到。
-  - Android 发往我们服务器的请求头（设备标识、型号、MCC、安装来源、网盘类型、邮箱等）与服务器访问日志（IP），Android 与桌面版的政策都没有完整写；Android 英文政策比简体少几段（见本节「滞后的译文」）。敏感词的上报按政策要求不写进隐私政策。
+  - Android 发往我们服务器的请求头（设备标识、型号、MCC、安装来源、网盘类型、邮箱等）与服务器访问日志（IP），Android 与桌面版的政策都没有完整写（Android 英文政策缺的几段已补齐，与简体一致，10.1 第 3 条）。敏感词的上报按政策要求不写进隐私政策。
   - 安全：rebase-server 的源码里写死了几把第三方 AI 服务的 API Key，应改用配置文件或环境变量，并更换这些 Key。
   - 出口分流（第九节 H，egress-offloading.md）：Android 新版本加载官网旧图片时先访问 Cloudflare 上的 kuromi.drakeet.cn，请求不带设备与账号信息，只有 OkHttp 的默认请求头；写进政策时列入第三方 CDN。桌面版的 JAR 下载用到的两个地址与以前相同。另记一条既有事实：Android 经 Glide 请求官网图片时带系统的 User-Agent（含机型、系统版本与构建号），一直如此。
 - **Android 与桌面版的文案问题（手册重写时发现，与手册无关）**：
