@@ -472,25 +472,25 @@
 # 网盘授权完成页（4.6）：rebase-server 在桌面版授权完成后 307 过来的旧地址，一律内部重写到每家网盘唯一的完成页，不跳转。
 # 服务商名不区分大小写；后缀无、_en、_zh、_ja、_jp、_ko；可带 .html。日文的 _ja 在旧站一直是 500。
 # ======================================================================================================================
-/drives/oauth/OneDrive	-	200	-	text/html	Cache-Control == no-cache	OneDrive authorization successful | noindex
-/drives/oauth/OneDrive.html	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/OneDrive_en	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/OneDrive_zh	Accept-Language: en-US	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/OneDrive_ja	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/OneDrive_jp.html	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/OneDrive_ko	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/onedrive	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/ONEDRIVE_en.html	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/Dropbox	-	200	-	text/html	-	Dropbox authorization successful | noindex
-/drives/oauth/Dropbox_ja.html	-	200	-	text/html	-	Dropbox authorization successful
-/drives/oauth/dropbox_ko	-	200	-	text/html	-	Dropbox authorization successful
-/drives/oauth/Aliyun	-	200	-	text/html	-	AliyunDrive authorization successful | noindex
-/drives/oauth/Aliyun_zh	-	200	-	text/html	-	AliyunDrive authorization successful
-/drives/oauth/aliyun_ja?code=1	-	200	-	text/html	-	AliyunDrive authorization successful
+/drives/oauth/OneDrive	-	200	-	text/html	Cache-Control == no-cache	Pure Writer is now connected to OneDrive! | noindex
+/drives/oauth/OneDrive.html	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/OneDrive_en	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/OneDrive_zh	Accept-Language: en-US	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/OneDrive_ja	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/OneDrive_jp.html	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/OneDrive_ko	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/onedrive	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/ONEDRIVE_en.html	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/Dropbox	-	200	-	text/html	-	Pure Writer is now connected to Dropbox! | noindex
+/drives/oauth/Dropbox_ja.html	-	200	-	text/html	-	Pure Writer is now connected to Dropbox!
+/drives/oauth/dropbox_ko	-	200	-	text/html	-	Pure Writer is now connected to Dropbox!
+/drives/oauth/Aliyun	-	200	-	text/html	-	Pure Writer is now connected to AliyunDrive! | noindex
+/drives/oauth/Aliyun_zh	-	200	-	text/html	-	Pure Writer is now connected to AliyunDrive!
+/drives/oauth/aliyun_ja?code=1	-	200	-	text/html	-	Pure Writer is now connected to AliyunDrive!
 # 新地址本身也能直接访问。
-/drives/oauth/onedrive/	-	200	-	text/html	-	OneDrive authorization successful
-/drives/oauth/dropbox/	-	200	-	text/html	-	Dropbox authorization successful
-/drives/oauth/aliyun/	-	200	-	text/html	-	AliyunDrive authorization successful
+/drives/oauth/onedrive/	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
+/drives/oauth/dropbox/	-	200	-	text/html	-	Pure Writer is now connected to Dropbox!
+/drives/oauth/aliyun/	-	200	-	text/html	-	Pure Writer is now connected to AliyunDrive!
 # 不认识的后缀与服务商：404。
 /drives/oauth/OneDrive_fr	-	404	-	text/html	-	<html lang=mul>
 /drives/oauth/GoogleDrive	-	404	-	text/html	-	<html lang=mul>
@@ -589,7 +589,7 @@
 //ios/privacy?lang=zh-HK	-	301	/zh-hk/ios/privacy/	-	-	-
 /./desktop_zh	-	302	/zh-hant/desktop/	-	-	-
 /x/../wiki	-	301	/zh-hans/manual/	-	-	-
-//drives/oauth/OneDrive_ja	-	200	-	text/html	-	OneDrive authorization successful
+//drives/oauth/OneDrive_ja	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
 //zh-hans/	-	200	-	text/html	-	<html lang=zh-Hans
 //desktop2%E3%80%82	-	301	/desktop2	-	-	-
 # 编码过的 ? 是路径的一部分，不会被当成查询串的开始。
