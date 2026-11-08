@@ -568,10 +568,8 @@ scripts/             构建、预览、检查、部署与回滚
   - **规则**：ocat.app 上有对应页面的旧路径保留路径（`/privacy`、`/terms`，区分大小写，允许一个尾斜杠），其余一律到 ocat.app 的首页；查询串原样带上，缓存一天，与本站旧地址的 301 一致（4.5）。不跟着 ocat.app 现有的地址自动保留路径：那样会把这里从来没有过的地址也变成它的地址。跳转目标只由固定写法拼成，不带请求里的原始路径，所以拼不出跳到别处的地址。本站的 DeepOCAT 旧页（第三节）按同样的口径 301 到 ocat.app 的首页、`/privacy` 与 `/terms`，`static/ocat/` 随之删除。
   - **放在哪里**：规则写在 `ops/caddy/drakeet.com.caddy`，由 `ops/provision.sh web` 装到 `/etc/caddy/`，全局配置在这两个主机名的站点块里导入它。它与站点内容无关，不随站点版本发布、回滚，所以合同单独成表 `ops/contract-drakeet.com.tsv`，不放进每次部署都跑的 `ops/contract.tsv`；`scripts/test-caddy.sh` 在测试台导入同一份规则跑这张表。装到服务器与对线上核对的步骤见 operations.md 第 6 节。
   - **证书**：照旧由 Caddy 自动签发，跳转之前要先完成 TLS 握手。drakeet.com 没有 CAA 记录，不限制签发的 CA。
-  - **装到服务器之后**：服务器上的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 不再使用（`provision.sh` 也不再复制它们），可以删除；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
-  - **DNS 上仍待处理的两处**（需要在阿里云解析里改，不影响跳转）：
-    - 根域名用 CNAME 指向 writer.drakeet.com，同时又有 MX 记录，不符合 DNS 规范。可以改为直接指向本机公网地址的 A 记录，与 www 一致；
-    - writer2.drakeet.com 是现役的预发站（`scripts/deploy.sh --staging`），解析保留。
+  - **上线**：2026-11-08 装到服务器并平滑重载，两个主机名的合同对线上各 17 行全过。服务器上原来的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 随后删除（`provision.sh` 也不再复制它们）；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
+  - **DNS**：根域名原来是指向 writer.drakeet.com 的 CNAME，又同时有 MX 等记录，不符合 DNS 规范（一个名字有 CNAME 就不能再有别的记录）。2026-11-08 改为指向本机公网地址的 A 记录，与 www 一致；MX（Google Workspace）与 TXT（Search Console 等的域名验证）不变，权威 DNS 上核对过。writer2.drakeet.com 是现役的预发站（`scripts/deploy.sh --staging`），解析保留。
 - **个人代理服务**：不放进主线，`provision.sh` 不安装它。2026-11-08 按需重新部署（Ubuntu 官方源的 shadowsocks-libev，只开 TCP），做法与理由见 operations.md 第 10 节。
 
 ## 六、构建、部署与回滚
@@ -761,7 +759,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### G. 后续
 
-- drakeet.com、www.drakeet.com 与 DeepOCAT 旧页：已定为一律 301 到 ocat.app（5.7），规则与合同已在 `master`，待装到服务器；DNS 清理（根域名的 CNAME 与 MX 并存、writer2 的解析）仍待处理；
+- ~~drakeet.com、www.drakeet.com 与 DeepOCAT 旧页~~：2026-11-08 起一律 301 到 ocat.app，根域名的解析改为 A 记录（5.7）；
 - ~~请 ocat.app 改为自己托管那 5 张图片~~：2026-11-08 完成（OCAT 仓库 `pages/ocat` 的 440b408，图片放在 ocat.app 的 `/images/`）。本站的 5 张照旧按原路径、原字节保留，旧的缓存页面与社交平台的预览可能仍在引用；
 - rebase-server 的可选简化（暂不做，rebase-server 81a047c5 在 `Drives.kt` 与 `RawJsonResource.kt` 里加了注释）：指的是把 rebase-server 里官网的旧地址（授权完成页、`/desktop2_zh` 等）改成新地址，省一次跳转。旧版客户端仍会请求旧地址，网站的兼容规则无论如何都要保留；改了用户感觉不到，还要多部署一次服务端；
 - 补齐滞后的译文（第十一节）；
@@ -794,7 +792,7 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
 | 3 | 几篇长文过时 | 保护机制停在 2019 年；繁体备份教程是 2022 年前的旧版；英文备份教程停在 2023 年；英文 Android 隐私政策缺两段 | 长文简化、概括：删去过时或无法核实的具体说法，留下仍然成立的要点；隐私政策缺的实质披露译成英文补齐 | 已完成：繁体、英文备份教程随第 F 步重做（fc0b13d）；保护机制概括重写（a5abd92）；英文 Android 隐私政策实际缺三段（Basic Statement 的读取局域网 IP、账号邮箱两条，第三方 SDK 的支付宝 SDK 一条），都是实质披露，已补齐（d916be2） |
 | 4 | 网盘授权完成页的英文、韩文机翻腔 | 「Please return to Pure Writer client on your own」「자체적으로 … 돌아가십시오」 | 重译这两句（4.6） | 已完成（e6012af） |
 | 5 | 下载页的英、日、俄版本没有链接开发故事 | 简繁有微信原文链接；英文开发故事 /en/blog/new-desktop-dev-story/ 现成 | 维持现状，不加链接 | 已定 |
-| 6 | DeepOCAT 三页说法矛盾 | 介绍页「不收集任何隐私信息」，隐私政策页列出收集的数据 | 与 drakeet.com 一起 301 到 OCAT 的官网 ocat.app（5.7） | 已完成（4ae9f85）：旧页从本站删除；drakeet.com 的规则待装到服务器 |
+| 6 | DeepOCAT 三页说法矛盾 | 介绍页「不收集任何隐私信息」，隐私政策页列出收集的数据 | 与 drakeet.com 一起 301 到 OCAT 的官网 ocat.app（5.7） | 已完成（4ae9f85）：旧页从本站删除；drakeet.com 的规则 2026-11-08 已装到服务器 |
 | 7 | 手册推荐的 TeraCLOUD 已更名 | teracloud.jp 证书过期，服务 2023 年改名 InfiniCLOUD | 并入第 F 步 | 第 F 步 |
 | 8 | 非简体首页的网盘清单删掉了阿里云盘 | 台繁、港繁、英、日四个首页都只列 Dropbox、OneDrive；旧首页页头注释把「阿里云盘」扩大成只限简体（与 AGENTS.md 的约定不一致）；新规则允许各语言列出它，iOS 隐私政策五种语言都列了 | 四个首页的网盘清单恢复阿里云盘，与 App 一致 | 已完成（b693ec2）：繁体写阿里雲盤，英、日写 AliyunDrive（App 里的叫法）；AGENTS.md 写明阿里云盘可以出现在各语言里 |
 | 9 | 「获奖情况」只出现在三种中文首页 | 调研报告 4.1 | 维持现状 | 已定 |
