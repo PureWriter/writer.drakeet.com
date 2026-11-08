@@ -34,7 +34,7 @@
 /.well-known/security.txt	-	200	-	text/plain	-	Contact: mailto:writer@drakeet.com
 /.well-known/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
 
-# 旧图片：原路径、原字节，缓存一周；刻意不设 Cross-Origin-Resource-Policy（ocat.app 跨站引用）。
+# 旧图片：原路径、原字节，缓存一周；刻意不设 Cross-Origin-Resource-Policy（ocat.app 曾跨站引用，旧的缓存页面与别处的引用可能还在）。
 # Android 稿纸背景（完整地址存进用户设置并随同步传到其他设备）。
 /images/papers/0.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800 | !Cross-Origin-Resource-Policy	-
 /images/papers/4.jpg	-	200	-	image/jpeg	Cache-Control == public, max-age=604800	-
@@ -64,7 +64,7 @@
 /images/icon512.png?lang=en	Accept-Language: zh-CN	200	-	image/png	-	-
 # 2026-10-27 从首页撤下、Facebook 旧分享仍在引用的横幅。
 /images/86e2ff85gy1gqlo1gmetxj21kw0rs46f.jpg	-	200	-	image/jpeg	-	-
-# ocat.app 热链的 5 张（og:image、JSON-LD、PWA manifest、下载徽章、二维码）。
+# ocat.app 曾热链的 5 张（og:image、JSON-LD、PWA manifest、下载徽章、二维码；2026-11-08 起它自己托管，旧的缓存页面与社交平台的预览可能仍在引用）。
 /images/orca_dark.png	-	200	-	image/png	!Cross-Origin-Resource-Policy	-
 /images/IMG_6011.png	-	200	-	image/png	-	-
 /images/OCAT_QR.png	-	200	-	image/png	-	-

@@ -35,7 +35,8 @@ encode zstd gzip
 #     带来的定制工作（Markdown 表格对齐会输出 style 属性）；
 #   - HSTS 一年，不加 includeSubDomains 与 preload：preload 要求在 drakeet.com 上设置并覆盖全部子域，牵连太广、难以撤销；
 #   - Permissions-Policy 关掉本站用不到的设备能力；
-#   - 刻意不设 Cross-Origin-Resource-Policy：ocat.app 跨站引用本站 /images/ 下的 5 张图片。
+#   - 刻意不设 Cross-Origin-Resource-Policy：ocat.app 曾跨站引用本站 /images/ 下的 5 张图片，2026-11-08 起改为自己托管，
+#     旧的缓存页面与别处的引用可能还在。
 header {
 	Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 	Strict-Transport-Security "max-age=31536000"
@@ -104,7 +105,7 @@ route {
 	# ==================================================================================================================
 	# 2. 永不参与协商与跳转的路径（4.5）：已发布的 App、外部平台与浏览器直接请求它们，必须在原地址原样返回。
 	#      /.well-known/apple-app-site-association   iOS 关联域名（1.0 起各版写死），Apple 的 CDN 从海外抓取
-	#      /images/                                   Android 稿纸背景（完整地址存进用户设置）与 Pro 介绍页、ocat.app 热链、
+	#      /images/                                   Android 稿纸背景（完整地址存进用户设置）与 Pro 介绍页、ocat.app 旧页、
 	#                                                 社交平台的旧分享预览；原路径、原字节
 	#      /desktop2.json                             桌面版 release.sh 发版后的线上校验（curl 不跟随跳转）
 	#      /robots.txt、/sitemap.xml、/llms.txt、站点图标

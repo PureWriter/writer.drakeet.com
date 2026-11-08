@@ -279,7 +279,7 @@ def check_privacy_dates(root):
 
 # 固定图片（第三节、4.8）。清单里的路径相对于产物根目录，例如 images/papers/0.jpg。
 IMAGES_REASON = (
-    "/images/ 下是旧站图片，必须按原路径、原字节发布：Android 稿纸背景把完整地址存进用户设置，ocat.app 热链其中 5 张，"
+    "/images/ 下是旧站图片，必须按原路径、原字节发布：Android 稿纸背景把完整地址存进用户设置，ocat.app 曾热链其中 5 张，"
     "社交平台的旧分享预览也在引用，不允许重新压缩、替换或改名（docs/rebuild.md 第三节、4.8）"
 )
 SHA256_LINE = re.compile(r"([0-9a-f]{64})  (images/\S.*)")

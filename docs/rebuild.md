@@ -94,7 +94,7 @@
 | `/images/papers/{0,4,5,6}.jpg` | Android 稿纸：完整 URL 存进用户设置，并随同步传到其他设备 | 原样，字节永不改变 |
 | `/images/pro/{0..5}.webp`、`/images/pro/en/{0..5}.webp`、`/images/pro/(en/)PureWriterDesktop(Dark).webp` | Android Pro 介绍页、首次启动预取 | 原样 |
 | `/images/icon512.png` | Android「关于」页 | 原样 |
-| `/images/` 下其余旧图片，含 ocat.app 热链的 5 张，以及 2026-10-27 从首页撤下、Facebook 旧分享仍在引用的横幅 | 第三方 README；ocat.app 的 og:image、JSON-LD 与 PWA manifest；社交平台的预览 | 原样，整个目录保留 |
+| `/images/` 下其余旧图片，含 ocat.app 曾热链的 5 张（2026-11-08 起它自己托管），以及 2026-10-27 从首页撤下、Facebook 旧分享仍在引用的横幅 | 第三方 README；ocat.app 的 og:image、JSON-LD 与 PWA manifest；社交平台的预览 | 原样，整个目录保留 |
 | `/desktop2.json` | 桌面版 release.sh 发版后的线上校验（curl 不跟随跳转） | 原样 |
 | `/ocat/jars/PureWriter2-<版本>-<平台>.jar` | rebase-server：客户端报告连不上 GitHub 时，约一半的自动更新下载改写到这里；桌面版 CI 的兜底下载 | 原样（文件放在站点目录之外，见 5.6） |
 | `/`、`/index`、`/index.html`（含 `?lang=` 与 `#ios-*` 等锚点） | Android「需要更新」对话框、iOS 示例文章、App Store 营销网址、外部链接 | 协商；`?lang=` 合法时 301 |
@@ -335,7 +335,7 @@ scripts/             构建、预览、检查、部署与回滚
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | 关闭摄像头、麦克风、定位等用不到的能力 |
 | `Server` | 不暴露版本。80 端口到 https 的自动跳转由 Caddy 在站点规则之外完成，那个 308 带不含版本号的 `Server: Caddy` |
-| 刻意不设 | `Cross-Origin-Resource-Policy`：ocat.app 跨站引用本站图片 |
+| 刻意不设 | `Cross-Origin-Resource-Policy`：ocat.app 曾跨站引用本站图片（2026-11-08 起自己托管），旧的缓存页面与别处的引用可能还在 |
 
 **缓存**
 
@@ -477,7 +477,7 @@ scripts/             构建、预览、检查、部署与回滚
   - ufw 默认拒绝入站，只放行 TCP 22、80、443 与 UDP 443；
   - 安全组保持同一份白名单，两处的规则写在 `docs/operations.md` 的同一张表里；
   - 80 端口不限来源，ACME 验证需要；
-  - 个人代理的 8621 端口在它重新部署之前保持关闭（安全组里遗留的 8621 规则已于 2026-11-07 删除）。
+  - 个人代理的 TCP 8621：旧规则 2026-11-07 随换系统删除，2026-11-08 重新部署代理时加回（operations.md 第 3 节、第 10 节）。
 - **自动安全更新**：
   - unattended-upgrades 安装 security 来源的更新，需要重启时在凌晨 04:30（上海时间）自动重启。旧机 695 天不重启、内核补丁从未生效，是这次最大的教训；
   - Caddy 不在其中，走 5.2 的受控升级；
@@ -571,8 +571,8 @@ scripts/             构建、预览、检查、部署与回滚
   - **装到服务器之后**：服务器上的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 不再使用（`provision.sh` 也不再复制它们），可以删除；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
   - **DNS 上仍待处理的两处**（需要在阿里云解析里改，不影响跳转）：
     - 根域名用 CNAME 指向 writer.drakeet.com，同时又有 MX 记录，不符合 DNS 规范。可以改为直接指向本机公网地址的 A 记录，与 www 一致；
-    - writer2.drakeet.com 这条解析，切换后不再需要预发时可以删除。
-- **个人代理服务**：不放进主线。配置先备份，之后按需改用仍在维护的实现重新部署。
+    - writer2.drakeet.com 是现役的预发站（`scripts/deploy.sh --staging`），解析保留。
+- **个人代理服务**：不放进主线，`provision.sh` 不安装它。2026-11-08 按需重新部署（Ubuntu 官方源的 shadowsocks-libev，只开 TCP），做法与理由见 operations.md 第 10 节。
 
 ## 六、构建、部署与回滚
 
@@ -762,10 +762,10 @@ scripts/             构建、预览、检查、部署与回滚
 ### G. 后续
 
 - drakeet.com、www.drakeet.com 与 DeepOCAT 旧页：已定为一律 301 到 ocat.app（5.7），规则与合同已在 `master`，待装到服务器；DNS 清理（根域名的 CNAME 与 MX 并存、writer2 的解析）仍待处理；
-- 请 ocat.app 改为自己托管那 5 张图片；
-- rebase-server 的可选简化；
+- ~~请 ocat.app 改为自己托管那 5 张图片~~：2026-11-08 完成（OCAT 仓库 `pages/ocat` 的 440b408，图片放在 ocat.app 的 `/images/`）。本站的 5 张照旧按原路径、原字节保留，旧的缓存页面与社交平台的预览可能仍在引用；
+- ~~rebase-server 的可选简化~~（不做）：指的是把 rebase-server 里官网的旧地址（授权完成页、`/desktop2_zh` 等）改成新地址，省一次跳转。旧版客户端仍会请求旧地址，网站的兼容规则无论如何都要保留；改了用户感觉不到，还要多部署一次服务端；
 - 补齐滞后的译文（第十一节）；
-- 个人代理服务按需重装；
+- ~~个人代理服务按需重装~~：2026-11-08 用 Ubuntu 官方源的 shadowsocks-libev 重新部署，只开 TCP 8621，见 operations.md 第 10 节；
 - 桌面版 CI 从镜像兜底下载 JAR 时不校验哈希（既有问题），可以改为校验 JarVersions 或 R2 给出的哈希；
 - 收回免密 sudo（5.3 的终态）。
 
@@ -805,7 +805,7 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
 
 ### 10.2 其他待定事项
 
-1. **桌面版的旧问题**（不影响本轮，网站已兜底）：Windows 安装包写进「已安装的应用」的更新链接是坏的（2.1）。要修，需要先在 Windows 上读出注册表里的实际值、核实成因，再改安装包。
+1. **桌面版的旧问题**（已定：不改安装包）：Windows 安装包写进「已安装的应用」的更新链接是坏的（2.1）。网站已把这类地址跳到桌面版下载页（站点规则第 6 段），存量安装本来就只能靠网站兜底；根治要改 MSI 的代码页（运行中拦截的三语文案依赖 65001）并在 Windows 上实测，安装器出错会让用户装不上，代价远大于收益。
 
 已定的事项不再列出：过渡期工作目录、工具下载、备案号、不做快照、不做演练、由我在 Chrome 里操作阿里云控制台、带宽保持 2 Mbps 固定、HTTP/3 安全组规则（已添加）、ACME 联系邮箱用 writer@drakeet.com（已登记到账户）、外部监控用 GitHub Actions、部署与服务器的说明放在 `docs/operations.md`、iOS 隐私政策的页面日期（写这一版上线生效的 2026-11-05，编辑性更正不改日期；实质变化的英文 Android 与桌面版政策写 2026-11-08）。
 
@@ -820,7 +820,7 @@ Drakeet 2026-11-07：借重建之机全面翻新整顿，发现不规范、能�
 
   本轮按线上版本原样迁移，留待文案批次处理。之后都已处理：手册与备份教程随第 F 步重写，`privacy_en` 补齐了缺的段落（10.1 第 3 条）。
 - **违反市场约定的旧内容**：`backups_zh`、`wiki_zh` 里有只适合大陆用户的内容。第 C 步时原样迁移，构建检查只给提示；第 F 步重写手册与备份教程后已不含这类内容，「旧版」名单清空，两页按常规规则检查。
-- **Azure 注册里的网页回调**：注册信息里是否还留着 `https://writer.drakeet.com/drives/one` 这类从未使用过的网页回调，未核实，可以顺手清理。
+- **Azure 注册里的网页回调**：`https://writer.drakeet.com/drives/one` 仍在使用，保留。2026-11-08 核对：现行的 Android 与 iOS 用 `www://` 回调，桌面版用 api.drakeet.com 的地址，都不经过它；但旧服务器 9～11 月的日志里一直有真实用户的浏览器带着 `?error=…` 被跳回这个地址（微软只跳回已登记的地址），来自 Android、Windows、ChromeOS 与 Linux，说明仍有旧版客户端在用，删掉会让这些版本无法授权。本站对它回 404，与旧站相同；以后可以考虑放一个「授权没有完成，请回到纯纯写作重试」的提示页。
 - **隐私政策与相关的数据处理（先记账，网站重建完成后单开一个系列统一审视，Drakeet 2026-11-07 定）**：新站上线的隐私政策停在 2026-11-07 这一版（Android 不写 AI，只写一句「部分功能可能另行提供条款」；桌面版补上了使用统计、设备信息、网盘账号、阿里云盘与检查更新）。此后只按 10.1 改过几处：英文 Android 与桌面版的署名、英文 Android 补齐缺的段落（这两份的更新日期因此是 2026-11-08）、iOS 版的页面日期与一处用词；其余这一轮不再继续改。核实时发现、留给那个系列的：
   - 桌面版发给我们服务器的请求都带系统主机名作为电脑名（常含用户的名字），检查更新时服务器记进 `desktopDevices`。方向：只带随机生成的设备标识，改完再从政策里删掉这一项。
   - 服务器上留着以「阿里云盘 + 手机号」为键的旧版同步索引，不设自动删除；老用户升级时 V2 迁移还会把旧键发给服务器一次。方向：迁移完成后删除。

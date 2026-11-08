@@ -40,10 +40,11 @@ ufw 与阿里云安全组保持同一份白名单。改动任何一处，同时�
 | 入 | TCP 80 | 任意 | HTTP 跳转 HTTPS；ACME 验证 |
 | 入 | TCP 443 | 任意 | HTTPS |
 | 入 | UDP 443 | 任意 | HTTP/3 |
+| 入 | TCP 8621 | 任意 | Drakeet 的个人代理（第 10 节） |
 | 入 | 其余 | — | 拒绝（安全组优先级 100 的「拒绝全部」；ufw 默认拒绝入站） |
 | 出 | 全部 | — | 允许 |
 
-个人代理原先用的 8621 端口已在 2026-11-07 从安全组删除；以后重新部署代理时，两处都要加回来。
+个人代理只开 TCP 8621：2026-11-08 重新部署时 ufw 已放行，安全组的这条规则由 Drakeet 在控制台添加。
 
 ## 4. 目录
 
@@ -229,3 +230,17 @@ ssh -t drakeet@writer.drakeet.com 'sudo -k; sudo -v && echo 口令 sudo 正常'
 ```
 
 5. 看到「口令 sudo 正常」后再关闭会话 A。若验证失败，在会话 A 里检查 `id drakeet` 是否含 `sudo` 组，或把免密文件恢复回去。
+
+## 10. 个人代理
+
+Drakeet 自用的 shadowsocks 代理：他住在日本，偶尔经这台国内服务器访问中国大陆的服务。它不属于网站，`provision.sh` 不安装它；换系统时按本节重新部署。
+
+- **实现**：Ubuntu 官方源（universe）的 `shadowsocks-libev`，随 unattended-upgrades 更新。universe 由社区维护，自动更新只装已经发布的修复；2026-11 复审时没有找到适用于下面这种 AEAD 服务端配置的未修漏洞。没有用支持 SS2022 的 shadowsocks-rust：官方源里没有，要手动装二进制、手动升级，对偶尔自用的代理不值得多一套维护。
+- **配置**：`/etc/shadowsocks-libev/config.json`（root 600）：端口 8621、`chacha20-ietf-poly1305`、`tcp_only`。口令在服务器上随机生成，只存在这个文件里；要给客户端重发配置时从它生成 `ss://` 链接，不打印到终端，也不提交进仓库。
+- **systemd**：包自带的 `shadowsocks-libev.service` 以 `DynamicUser` 运行，读不到 root 的 600 文件。drop-in `/etc/systemd/system/shadowsocks-libev.service.d/10-writer.conf` 用 `LoadCredential` 把配置交给它，并且：
+  - `ExecStart` 加上 `--acl`；`ExecStartPre` 先以服务身份确认 ACL 可读、非空，因为 ss-server 读不到 ACL 时会关掉它照常启动；
+  - `MemoryHigh=96M`、`MemoryMax=128M`、`Restart=on-failure`：与官网共用 1 GiB 内存，宁可中断代理，也不挤占官网；
+  - 包升级不会覆盖这份 drop-in，但它替换了 `ExecStart`，升级后用 `systemctl cat shadowsocks-libev` 核对包有没有新增启动参数。
+- **出站黑名单**：`/etc/shadowsocks-libev/server-block-local.acl` 禁止经代理访问本机、内网、阿里云元数据服务（100.100.100.200）、组播与保留地址，包括 IPv4 映射的 IPv6 写法 `::ffff:0:0/96`（不加它，`[::ffff:127.0.0.1]` 与 `[::ffff:100.100.100.200]` 都能绕过，2026-11-08 实测过）。3.3.5 的 UDP 中继不检查这份黑名单，所以只开 TCP。
+- **验证**：在服务器上以 root 运行 `ss-local -c /etc/shadowsocks-libev/config.json -s 127.0.0.1 -p 8621 -b 127.0.0.1 -l 10808`，再用 `curl --socks5-hostname 127.0.0.1:10808` 访问：外部网站应为 200；`http://127.0.0.1/`、`http://[::ffff:127.0.0.1]/`、`http://100.100.100.200/latest/meta-data/` 应失败（对照：不经代理直连时前者回 308、后者回 200）。服务器自己的主机名在本机解析到链路本地地址，所以经代理访问 writer.drakeet.com 失败是预期的。
+- **防火墙**：ufw 与安全组都只放行 TCP 8621（第 3 节）。

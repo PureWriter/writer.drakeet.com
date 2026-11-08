@@ -23,8 +23,6 @@ Android 版的写作与编辑、历史记录、自动备份、云备份与云同
 
 ## 正版纯纯写作 {#正版纯纯写作}
 
-纯纯写作是一个令人感到安心、拥有历史记录、多重防止文章丢失功能，和许多写作辅助的编辑器。
-
 <p id="下载正版httpsappmicomdetailsidcomdrakeetpurewriter"><strong>下载正版：</strong><a href="/zh-hans/#download-android">Android 版</a>、<a href="/zh-hans/#download-ios">iPhone 与 iPad 版</a>、<a href="/zh-hans/desktop/">桌面版</a></p>
 
 隐私政策：[Android 版](/zh-hans/android/privacy/)、[iOS 版](/zh-hans/ios/privacy/)、[桌面版（英文）](/en/desktop/privacy/)
