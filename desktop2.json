@@ -1,61 +1,61 @@
 {
-  "version": "5.2.1",
+  "version": "5.2.2",
   "released": "2026-11-10",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-5.2.1-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-Windows-x64.exe",
+      "name": "PureWriter2-5.2.2-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-Windows-x64.exe",
       "size": 92431360,
-      "sha256": "6c82f92b5d1977619e93dc7d38bac7fb9f56bfc0214fd4137b3a44181054ca22"
+      "sha256": "fa1ade0b40721e56a07687490034221b83bc4787aa2a1092906cded1f7c49cc3"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-5.2.1-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-macOS-aarch64.dmg",
-      "size": 88941680,
-      "sha256": "8d70fb0194d49ca64946251e7110151b186bc3f8668d0e9b9e85f53c745fdda1"
+      "name": "PureWriter2-5.2.2-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-macOS-aarch64.dmg",
+      "size": 88942801,
+      "sha256": "c0cadc706a5ab848c30e10c3c4a725127d33bbfa22b8b0993f98b290b3cdbf44"
     },
     "macos-x64": {
-      "name": "PureWriter2-5.2.1-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-macOS-x64.dmg",
-      "size": 90556253,
-      "sha256": "c651e9f0c95845a8586a463b18da3537e3678de04629d4e6ce47221aa504670d"
+      "name": "PureWriter2-5.2.2-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-macOS-x64.dmg",
+      "size": 90557425,
+      "sha256": "1cbae2ae6a3fb8124ab56867a6c1ab3b8aa9a036d329a21ec0b136b836857de5"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "光标改为匀速滑动：用方向键换行时不再像是一下子跳过去，按住方向键时也更跟手；页面需要跟着滚动或用鼠标拖动选取时，光标会直接到位。"
+        "修复 macOS 上启动后偶尔没有菜单栏的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "游標改為等速滑動：用方向鍵換行時不再像是一下子跳過去，按住方向鍵時也更跟手；頁面需要跟著捲動或用滑鼠拖曳選取時，游標會直接到位。"
+        "修正 macOS 上啟動後偶爾沒有選單列的問題。"
       ]
     },
     "zh-HK": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "游標改為勻速滑動：用方向鍵換行時不再像是一下子跳過去，按住方向鍵時也更跟手；頁面需要跟着捲動或用滑鼠拖動選取時，游標會直接到位。"
+        "修正 macOS 上啟動後偶爾沒有選單列的問題。"
       ]
     },
     "en": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "The caret now slides at a steady speed: moving to another line with the arrow keys no longer looks like a jump, and holding an arrow key keeps up better. When the page has to scroll, or when you drag to select with the mouse, the caret goes straight into place."
+        "Fixed an issue where the menu bar was sometimes missing after launch on macOS."
       ]
     },
     "ja": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "カーソルが一定の速さで滑るようになりました。方向キーで行を移るときに飛んだように見えなくなり、方向キーを押し続けたときの追従もよくなりました。ページのスクロールを伴うときやマウスでドラッグして選択するときは、カーソルがすぐにその位置へ移ります。"
+        "macOS で起動後にメニューバーが表示されないことがある問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "5.2.1",
+      "version": "5.2.2",
       "items": [
-        "Курсор теперь скользит с постоянной скоростью: при переходе на другую строку клавишами со стрелками он больше не выглядит так, будто перепрыгивает, а при удержании клавиши со стрелкой лучше поспевает за нажатиями. Когда страница должна прокрутиться или при выделении перетаскиванием мышью курсор сразу встаёт на место."
+        "Исправлена ошибка, из-за которой в macOS после запуска иногда отсутствовала строка меню."
       ]
     }
   }
