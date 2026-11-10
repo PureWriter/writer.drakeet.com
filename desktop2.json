@@ -1,61 +1,61 @@
 {
-  "version": "5.2.0",
+  "version": "5.2.1",
   "released": "2026-11-10",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-5.2.0-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.0-Windows-x64.exe",
-      "size": 92427264,
-      "sha256": "56514ebe77a2c7440f2f62856fb99629c0ff604f389a1d23cf343efd9014b290"
+      "name": "PureWriter2-5.2.1-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-Windows-x64.exe",
+      "size": 92431360,
+      "sha256": "6c82f92b5d1977619e93dc7d38bac7fb9f56bfc0214fd4137b3a44181054ca22"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-5.2.0-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.0-macOS-aarch64.dmg",
-      "size": 88937109,
-      "sha256": "565da7cdd31c738541ea9a6b4073072a6be18dad561d9084a209b7292d1844e5"
+      "name": "PureWriter2-5.2.1-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-macOS-aarch64.dmg",
+      "size": 88941680,
+      "sha256": "8d70fb0194d49ca64946251e7110151b186bc3f8668d0e9b9e85f53c745fdda1"
     },
     "macos-x64": {
-      "name": "PureWriter2-5.2.0-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.0-macOS-x64.dmg",
-      "size": 90554633,
-      "sha256": "481baef40a4e767159c9a678dc959cfe77a23a6b349e558c4b52fbd9e389b92f"
+      "name": "PureWriter2-5.2.1-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.1-macOS-x64.dmg",
+      "size": 90556253,
+      "sha256": "c651e9f0c95845a8586a463b18da3537e3678de04629d4e6ce47221aa504670d"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows：所选字体里没有的文字（如天城文、藏文、楔形文字）和 emoji，现在会自动改用系统里的其他字体显示，不再出现方块。"
+        "光标改为匀速滑动：用方向键换行时不再像是一下子跳过去，按住方向键时也更跟手；页面需要跟着滚动或用鼠标拖动选取时，光标会直接到位。"
       ]
     },
     "zh-Hant": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows：所選字型裡沒有的文字（如天城文、藏文、楔形文字）和 emoji，現在會自動改用系統裡的其他字型顯示，不再出現方塊。"
+        "游標改為等速滑動：用方向鍵換行時不再像是一下子跳過去，按住方向鍵時也更跟手；頁面需要跟著捲動或用滑鼠拖曳選取時，游標會直接到位。"
       ]
     },
     "zh-HK": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows：所選字體裏沒有的文字（如天城文、藏文、楔形文字）和 emoji，現在會自動改用系統裏的其他字體顯示，不再出現方塊。"
+        "游標改為勻速滑動：用方向鍵換行時不再像是一下子跳過去，按住方向鍵時也更跟手；頁面需要跟着捲動或用滑鼠拖動選取時，游標會直接到位。"
       ]
     },
     "en": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows: characters missing from the selected font (such as Devanagari, Tibetan, and cuneiform) and emoji now automatically display in other system fonts instead of empty boxes."
+        "The caret now slides at a steady speed: moving to another line with the arrow keys no longer looks like a jump, and holding an arrow key keeps up better. When the page has to scroll, or when you drag to select with the mouse, the caret goes straight into place."
       ]
     },
     "ja": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows：選択したフォントにない文字（デーヴァナーガリー、チベット文字、楔形文字など）や絵文字が、四角で表示されず、システムの別のフォントで自動的に表示されるようになりました。"
+        "カーソルが一定の速さで滑るようになりました。方向キーで行を移るときに飛んだように見えなくなり、方向キーを押し続けたときの追従もよくなりました。ページのスクロールを伴うときやマウスでドラッグして選択するときは、カーソルがすぐにその位置へ移ります。"
       ]
     },
     "ru": {
-      "version": "5.2.0",
+      "version": "5.2.1",
       "items": [
-        "Windows: символы, которых нет в выбранном шрифте (например, деванагари, тибетские и клинопись), а также эмодзи теперь автоматически отображаются другими шрифтами системы, а не пустыми квадратами."
+        "Курсор теперь скользит с постоянной скоростью: при переходе на другую строку клавишами со стрелками он больше не выглядит так, будто перепрыгивает, а при удержании клавиши со стрелкой лучше поспевает за нажатиями. Когда страница должна прокрутиться или при выделении перетаскиванием мышью курсор сразу встаёт на место."
       ]
     }
   }
