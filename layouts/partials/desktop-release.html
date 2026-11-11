@@ -1,6 +1,6 @@
 {{- /*
-  读取仓库根目录的 desktop2.json（桌面版 release.sh 写入，4.7），供下载页的几个 shortcode 与结构化数据共用。
+  读取仓库根目录的 desktop.json（桌面版 release.sh 写入，4.7），供下载页的几个 shortcode 与结构化数据共用。
   用 partialCached 调用，一次构建只解析一次。
 */ -}}
-{{- $data := os.ReadFile "desktop2.json" | transform.Unmarshal -}}
+{{- $data := os.ReadFile "desktop.json" | transform.Unmarshal -}}
 {{- return $data -}}

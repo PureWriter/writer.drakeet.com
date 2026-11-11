@@ -6,6 +6,7 @@
 apple-touch-icon-precomposed.png
 apple-touch-icon.png
 css/main.min.<fingerprint>.css
+desktop.json
 desktop2.json
 drives/oauth/aliyun/index.html
 drives/oauth/dropbox/index.html

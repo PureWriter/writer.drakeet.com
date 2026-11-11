@@ -17,6 +17,8 @@ readonly INCOMING=/srv/writer.drakeet.com/jars-incoming
 readonly R2_BASE=https://kuromi.drakeet.cn
 readonly KEEP_VERSIONS=7
 readonly PLATFORMS='Windows-x64|macOS-x64|macOS-aarch64'
+# 桌面版 5.3.0 起产物文件名的前缀从 PureWriter2 改为 PureWriter；镜像里两种都有，服务端仍在下发的旧版本是旧前缀。
+readonly PREFIX='PureWriter2?'
 
 die() {
 	echo "writer-jars-sync: $*" >&2
@@ -37,7 +39,7 @@ flock -n 9 || die "已有另一个同步在运行"
 for pair in "$@"; do
 	name="${pair%%=*}"
 	sha="${pair#*=}"
-	[[ "$name" =~ ^PureWriter2-${escaped_version}-(${PLATFORMS})\.jar$ ]] || die "文件名不对：$name"
+	[[ "$name" =~ ^${PREFIX}-${escaped_version}-(${PLATFORMS})\.jar$ ]] || die "文件名不对：$name"
 	[[ "$sha" =~ ^[0-9a-f]{64}$ ]] || die "sha256 格式不对：$name"
 
 	target="$JARS/$name"
@@ -65,8 +67,8 @@ done
 
 # 列出镜像里现有的版本号，按版本号排序，保留最新的 KEEP_VERSIONS 个。
 mapfile -t versions < <(
-	find "$JARS" -maxdepth 1 -type f -name 'PureWriter2-*.jar' -printf '%f\n' \
-		| sed -nE "s/^PureWriter2-([0-9]+(\.[0-9]+)+)-(${PLATFORMS})\.jar$/\1/p" \
+	find "$JARS" -maxdepth 1 -type f -name 'PureWriter*.jar' -printf '%f\n' \
+		| sed -nE "s/^${PREFIX}-([0-9]+(\.[0-9]+)+)-(${PLATFORMS})\.jar$/\1/p" \
 		| sort -uV
 )
 keep="$(printf '%s\n' "${versions[@]}" | tail -n "$KEEP_VERSIONS")"
@@ -74,6 +76,8 @@ for v in "${versions[@]}"; do
 	if [[ "$v" == "$version" ]] || grep -qxF -- "$v" <<<"$keep"; then
 		continue
 	fi
-	rm -f -- "$JARS/PureWriter2-$v-Windows-x64.jar" "$JARS/PureWriter2-$v-macOS-x64.jar" "$JARS/PureWriter2-$v-macOS-aarch64.jar"
+	for prefix in PureWriter PureWriter2; do
+		rm -f -- "$JARS/$prefix-$v-Windows-x64.jar" "$JARS/$prefix-$v-macOS-x64.jar" "$JARS/$prefix-$v-macOS-aarch64.jar"
+	done
 	echo "已清理旧版本：$v"
 done

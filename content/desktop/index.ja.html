@@ -6,13 +6,13 @@ image: images/desktop2dark_en.png
 icons: true
 jsonld: desktop
 appName: 純純執筆 パソコン版
-lastmodFrom: desktop2.json
+lastmodFrom: desktop.json
 script: download.js
 ---
 <!--
   纯纯写作桌面版下载页（日文）。其他语言各有一份 index.<语言>.html，内容各自完整，改动时各语言同步修改。
   引号里的 Windows、macOS 界面名称照搬系统里的实际写法。
-  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop2.json
+  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop.json
   （docs/content.md 第六节），发新版时本页不用改；按钮与链接上的文字写在这里。
   download.js 按访客的系统挑出主按钮，其余移到「其他安装包」一行，只剩一个主按钮时隐藏 data-chip-hint 的芯片说明；
   没有脚本时三个主按钮并列、那一行不出现，所以「其他安装包」一行的 hidden 与芯片说明上的 data-chip-hint 都不能去掉。
@@ -54,7 +54,7 @@ script: download.js
   <h2>インストールとアップデート</h2>
   <ul>
     <li>アップデートの前に純純執筆を終了してから、新しいインストーラを実行してください。インストール後に再起動を求められずに済みます。</li>
-    <li>Windows では、一部のウイルス対策ソフトがデジタル署名のないインストーラを誤って検出することがあります。純純執筆は登記された会社が開発しています。安心してインストーラとインストール先のフォルダ <code>C:\Users\&lt;ユーザー名&gt;\AppData\Local\Pure Writer 2</code> を許可リストに追加してください。</li>
+    <li>Windows では、一部のウイルス対策ソフトがインストーラを誤って検出することがあります。純純執筆は登記された会社が開発しており、インストーラには Drakeet Co., Ltd. のデジタル署名が付いています。安心してインストーラとインストール先のフォルダ <code>C:\Users\&lt;ユーザー名&gt;\AppData\Local\Pure Writer</code> を許可リストに追加してください。</li>
     <li>インストール後に起動できない場合は、Windows セキュリティの「ランサムウェア防止」（コントロールされたフォルダー アクセス）で純純執筆を許可してみてください。</li>
     <li>Windows 版 v2.1.9 がまだインストールされている場合は、先に「設定 › アプリ › インストールされているアプリ」からアンインストールしてから、新しいバージョンをインストールしてください。</li>
   </ul>

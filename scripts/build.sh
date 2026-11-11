@@ -8,7 +8,7 @@
 #   scripts/build.sh --no-check          跳过第 5 步的检查，只在页面还没迁移齐、写单个页面自查时用；部署永远带检查
 #   scripts/build.sh --source <目录>     从指定目录构建（scripts/build-page.sh 用它构建只含部分页面的副本）
 #
-# 构建警告一律视为错误。产物之外还会生成：根目录的 desktop2.json（原样复制）、.well-known/security.txt（Expires 取
+# 构建警告一律视为错误。产物之外还会生成：根目录的 desktop.json（原样复制，旧地址 desktop2.json 上另放一份副本）、.well-known/security.txt（Expires 取
 # 构建时起一年内）、文本文件的 brotli 与 gzip 预压缩版本（Caddy 按浏览器支持直接发送；没有 brotli 时只跳过 .br）。
 set -euo pipefail
 
@@ -83,8 +83,10 @@ if grep -E '^(WARN|ERROR)' "$log" >/dev/null; then
 	die "Hugo 有警告（构建把警告视为错误）"
 fi
 
-# 3. desktop2.json 原样发布在根目录，供桌面版 release.sh 校验与外部读取（4.7）。
-cp "$src/desktop2.json" "$out/desktop2.json"
+# 3. desktop.json 原样发布在根目录，供桌面版 release.sh 校验与外部读取（4.7）。它原来叫 desktop2.json，桌面版改名时一起改了；
+#    旧地址上放同一份内容的副本，仍在读旧地址的外部读取方不必跟着改。
+cp "$src/desktop.json" "$out/desktop.json"
+cp "$src/desktop.json" "$out/desktop2.json"
 
 # 4. security.txt：联系方式，Expires 自动取构建时起约一年，不需要人记着更新（4.10）。
 mkdir -p "$out/.well-known"

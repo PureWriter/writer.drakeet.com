@@ -97,7 +97,7 @@ class Target:
             self.address, self.port = args.connect, 443
             self.host = args.site
             self.description = f"https://{self.host}（连 {self.address}）"
-        self._version = None
+        self._release = None
 
     def fetch(self, method, path, headers, plain_http=False):
         if self.mode == "local":
@@ -119,14 +119,25 @@ class Target:
         finally:
             conn.close()
 
-    def version(self):
-        """站点 /desktop2.json 里的版本号，替换路径里的 {version}（JAR 镜像里一定有当前版本的 JAR）。"""
-        if self._version is None:
-            resp = self.fetch("GET", "/desktop2.json", [])
+    def release(self):
+        """站点 /desktop.json 的内容：当前发布的桌面版，供路径里的 {version} 与 {prefix} 取值。"""
+        if self._release is None:
+            resp = self.fetch("GET", "/desktop.json", [])
             if resp.status != 200:
-                raise ValueError(f"读取 /desktop2.json 得到 {resp.status}，无法替换 {{version}}")
-            self._version = json.loads(resp.text())["version"]
-        return self._version
+                raise ValueError(f"读取 /desktop.json 得到 {resp.status}，无法替换 {{version}} 与 {{prefix}}")
+            self._release = json.loads(resp.text())
+        return self._release
+
+    def version(self):
+        """当前发布的版本号（JAR 镜像里一定有当前版本的 JAR）。"""
+        return self.release()["version"]
+
+    def prefix(self):
+        """
+        当前版本产物文件名的前缀，取自安装包的文件名。JAR 与安装包同一个前缀；桌面版 5.3.0 把它从 PureWriter2 改成了 PureWriter，
+        从数据里取而不写死，站点就能先于那次发版部署，发版时自动跟着切换。
+        """
+        return self.release()["files"]["windows-x64"]["name"].split("-")[0]
 
 
 class SNIConnection(http.client.HTTPSConnection):
@@ -235,6 +246,8 @@ def check_row(target, row):
         path = re.sub(r"^http://[^/]+", "", path) or "/"
     if "{version}" in path:
         path = path.replace("{version}", target.version())
+    if "{prefix}" in path:
+        path = path.replace("{prefix}", target.prefix())
     asset = ASSET_FROM.fullmatch(path)
     if asset:
         prefix, page = asset.groups()

@@ -5,6 +5,6 @@
 {{- $release := partialCached "desktop-release.html" "desktop2" "desktop2" -}}
 {{- $key := .Get "file" -}}
 {{- $file := index $release.files $key -}}
-{{- if not $file }}{{ errorf "desktop2.json 里没有平台 %q：%s" $key .Position }}{{ end -}}
+{{- if not $file }}{{ errorf "desktop.json 里没有平台 %q：%s" $key .Position }}{{ end -}}
 <a data-file="{{ $key }}" href="{{ $file.url }}" hidden><svg class="icon" aria-hidden="true"><use href="#icon-{{ .Get "icon" }}"/></svg>{{ .Get "label" }}</a>
 {{- /**/ -}}

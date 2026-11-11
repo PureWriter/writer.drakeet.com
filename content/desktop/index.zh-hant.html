@@ -6,13 +6,13 @@ image: images/desktop2dark.png
 icons: true
 jsonld: desktop
 appName: 純純寫作桌面版
-lastmodFrom: desktop2.json
+lastmodFrom: desktop.json
 script: download.js
 ---
 <!--
   纯纯写作桌面版下载页（繁体中文，台湾）。其他语言各有一份 index.<语言>.html，内容各自完整，改动时各语言同步修改。
   繁体分台湾与香港两份，用词按各自习惯；引号里的 Windows、macOS 界面名称照搬系统里的实际写法。
-  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop2.json
+  版本与发布日期、安装包的地址与大小、校验值和「最近更新」由 shortcode 在构建时取自仓库根目录的 desktop.json
   （docs/content.md 第六节），发新版时本页不用改；按钮与链接上的文字写在这里。
   download.js 按访客的系统挑出主按钮，其余移到「其他安装包」一行，只剩一个主按钮时隐藏 data-chip-hint 的芯片说明；
   没有脚本时三个主按钮并列、那一行不出现，所以「其他安装包」一行的 hidden 与芯片说明上的 data-chip-hint 都不能去掉。
@@ -54,7 +54,7 @@ script: download.js
   <h2>安裝與更新</h2>
   <ul>
     <li>更新前請先結束純純寫作桌面版，再執行新的安裝檔，這樣安裝後就不會出現「需要重新啟動」的提示。</li>
-    <li>在 Windows 上，部分防毒軟體會誤判沒有數位簽章的安裝檔。純純寫作由實名註冊的開發者與公司推出，請放心將安裝檔和安裝資料夾 <code>C:\Users\&lt;使用者名稱&gt;\AppData\Local\Pure Writer 2</code> 加入信任清單。</li>
+    <li>在 Windows 上，個別防毒軟體仍可能誤判。純純寫作由實名註冊的開發者與公司推出，安裝檔帶有 Drakeet Co., Ltd. 的數位簽章，請放心將安裝檔和安裝資料夾 <code>C:\Users\&lt;使用者名稱&gt;\AppData\Local\Pure Writer</code> 加入信任清單。</li>
     <li>若安裝後無法開啟，請試著在 Windows 安全性的「勒索軟體防護」中允許純純寫作存取資料夾。</li>
     <li>若電腦上還裝著 Windows 版 v2.1.9，請先到「設定 › 應用程式 › 已安裝的應用程式」解除安裝，再安裝新版。</li>
   </ul>

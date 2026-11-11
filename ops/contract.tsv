@@ -6,7 +6,8 @@
 #
 # 格式：每行一个用例，7 列，用制表符分隔；以 # 开头的行与空行是注释。不跟随跳转，每列分别核对：
 #   1. 路径        含查询串，按线路上的原样写：非 ASCII 字符与空格写成百分号编码。几种特殊写法：
-#                    {version}              换成站点 /desktop2.json 里的版本号（JAR 镜像里一定有当前版本）
+#                    {version}              换成站点 /desktop.json 里的版本号（JAR 镜像里一定有当前版本）
+#                    {prefix}               换成站点 /desktop.json 里安装包文件名的前缀（PureWriter2 或 PureWriter，JAR 与安装包同前缀）
 #                    /css/* from /zh-hans/  /zh-hans/ 页面里第一个以 /css/ 开头的地址（带内容指纹，每次构建都会变）
 #                    http://{host}/…        走 HTTP（服务器的 80 端口）；本机测试台没有 HTTPS，这类行跳过
 #   2. 请求头      「名字: 值」，多个用「 | 」分隔；「-」表示不带任何请求头（除了 Host）。不写 Accept-Encoding 就拿到未压缩的
@@ -77,20 +78,23 @@
 # 桌面版发版数据：release.sh 发版后用不跟随跳转的 curl 校验，每次验证；文本文件有预压缩版本。
 # 浏览器同时接受 br 与 gzip 时有 br 副本就发 br；构建机没有 brotli 时只有 gzip 副本（4.9：只跳过预压缩，不让构建失败），
 # 部署也不该因此失败，所以这类行 br 与 gzip 都接受。
-/desktop2.json	-	200	-	application/json	Cache-Control == no-cache	"version"
-/desktop2.json	Accept-Language: ja-JP	200	-	application/json	-	"version"
-/desktop2.json	Accept-Encoding: br, gzip	200	-	application/json	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
-/desktop2.json	Accept-Encoding: gzip	200	-	application/json	Content-Encoding == gzip	"version"
-/desktop2.json	Accept-Encoding: zstd	200	-	application/json	Content-Encoding == zstd	-
+/desktop.json	-	200	-	application/json	Cache-Control == no-cache	"version"
+/desktop.json	Accept-Language: ja-JP	200	-	application/json	-	"version"
+/desktop.json	Accept-Encoding: br, gzip	200	-	application/json	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
+/desktop.json	Accept-Encoding: gzip	200	-	application/json	Content-Encoding == gzip	"version"
+/desktop.json	Accept-Encoding: zstd	200	-	application/json	Content-Encoding == zstd	-
 # 条件请求：文件存在时 If-None-Match: * 得到 304，没有正文，缓存头照旧。
-/desktop2.json	If-None-Match: *	304	-	-	Cache-Control == no-cache	!"version"
+/desktop.json	If-None-Match: *	304	-	-	Cache-Control == no-cache	!"version"
+# 改名之前的地址：同一份内容的副本，留给仍在读旧地址的外部读取方。
+/desktop2.json	-	200	-	application/json	Cache-Control == no-cache	"version"
+/desktop2.json	Accept-Encoding: br, gzip	200	-	application/json	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
 
 # 桌面版 JAR 国内镜像（文件在站点目录之外）：rebase-server 的自动更新分流、桌面版 CI 的兜底下载。不列目录；
 # 还没同步上来的 JAR 返回 404，且不能被缓存一天。当前版本的三个 JAR 只发 HEAD，核对存在与缓存头：服务器内存只有 1 GiB，
 # 不必每次部署都把约 120 MB 读一遍；文件内容由 writer-jars-sync 按 sha256 校验后才放进镜像（5.6）。
-/ocat/jars/PureWriter2-{version}-Windows-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
-/ocat/jars/PureWriter2-{version}-macOS-aarch64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
-/ocat/jars/PureWriter2-{version}-macOS-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/{prefix}-{version}-Windows-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/{prefix}-{version}-macOS-aarch64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
+/ocat/jars/{prefix}-{version}-macOS-x64.jar	:method: HEAD	200	-	-	Cache-Control == public, max-age=86400	-
 /ocat/jars/PureWriter2-0.0.0-Windows-x64.jar	-	404	-	text/html	Cache-Control == no-store | !Server	<html lang=mul>
 /ocat/jars/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
 

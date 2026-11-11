@@ -12,7 +12,7 @@
 #
 # 做法：
 #   1. 按服务器的目录结构在临时目录里搭一个版本（5.3）：site/releases/<版本号>/ 下放 public/（产物）、caddy/site.caddy、
-#      checks/（合同表与检查脚本，均取自工作区），site/current 软链接指向它；JAR 目录用临时目录模拟，放三个以 desktop2.json
+#      checks/（合同表与检查脚本，均取自工作区），site/current 软链接指向它；JAR 目录用临时目录模拟，放三个以 desktop.json
 #      里的版本命名的假 JAR；
 #   2. 写一份只监听 127.0.0.1、只用 HTTP 的全局配置，像服务器上的 /etc/caddy/Caddyfile 一样
 #      import <版本目录>/caddy/site.caddy <版本目录>；JAR 目录经 WRITER_JARS_DIR 传给站点规则。drakeet.com 与
@@ -91,10 +91,11 @@ cp ops/contract.tsv ops/contract.py "$release/checks/"
 cp ops/caddy/drakeet.com.caddy "$bench/drakeet.com.caddy"
 ln -s "releases/$RELEASE_ID" "$bench/site/current"
 
-# 假 JAR：名字与服务器上 writer-jars-sync 放进来的一致，版本取自这次产物里的 desktop2.json。
-version="$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["version"])' "$release/public/desktop2.json")"
+# 假 JAR：名字与服务器上 writer-jars-sync 放进来的一致，版本与文件名前缀取自这次产物里的 desktop.json（前缀的取法与合同的 {prefix} 相同）。
+version="$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["version"])' "$release/public/desktop.json")"
+prefix="$(python3 -I -c 'import json, sys; print(json.load(open(sys.argv[1]))["files"]["windows-x64"]["name"].split("-")[0])' "$release/public/desktop.json")"
 for platform in Windows-x64 macOS-x64 macOS-aarch64; do
-	echo "测试台的假 JAR，不是真正的安装包" >"$bench/jars/PureWriter2-$version-$platform.jar"
+	echo "测试台的假 JAR，不是真正的安装包" >"$bench/jars/$prefix-$version-$platform.jar"
 done
 
 # 2. 本机的全局配置：只监听 127.0.0.1，只用 HTTP；不开管理接口、不保存配置，数据目录都在测试台里。

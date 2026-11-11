@@ -1,6 +1,6 @@
 {{- /*
   每种语言一份 sitemap（根目录的 sitemap.xml 是 Hugo 生成的索引）。只列正式地址与 lastmod，不写 xhtml:link（页头的
-  hreflang 已经足够），带 noindex 的页面不列入（4.10）。下载页的 lastmod 取 desktop2.json 的发布日期与页面自身
+  hreflang 已经足够），带 noindex 的页面不列入（4.10）。下载页的 lastmod 取 desktop.json 的发布日期与页面自身
   lastmod 中较晚的一个（4.7）：发了新版，或只改了页面文字，sitemap 的日期都会跟着变。
 */ -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
@@ -8,7 +8,7 @@
 {{- range .Pages }}
 {{- if not .Params.noindex }}
 {{- $lastmod := .Lastmod }}
-{{- if eq .Params.lastmodFrom "desktop2.json" }}
+{{- if eq .Params.lastmodFrom "desktop.json" }}
 {{- $released := time.AsTime (partialCached "desktop-release.html" "desktop2" "desktop2").released }}
 {{- if $released.After $lastmod }}{{ $lastmod = $released }}{{ end }}
 {{- end }}

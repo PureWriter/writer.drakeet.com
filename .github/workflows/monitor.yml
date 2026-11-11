@@ -66,17 +66,21 @@ jobs:
             fi
 
             version=""
-            got="$(get desktop2.json "$site/desktop2.json")"
+            prefix=""
+            got="$(get desktop.json "$site/desktop.json")"
             if [[ "$got" == "200 application/json"* ]]; then
-              version="$(jq -r '.version // empty' desktop2.json 2> /dev/null)"
-              [[ "$version" =~ ^[0-9]+(\.[0-9]+)+$ ]] || failures+=("desktop2.json 的版本号不对：${version:-空}")
+              version="$(jq -r '.version // empty' desktop.json 2> /dev/null)"
+              [[ "$version" =~ ^[0-9]+(\.[0-9]+)+$ ]] || failures+=("desktop.json 的版本号不对：${version:-空}")
+              # JAR 与安装包同一个文件名前缀（桌面版 5.3.0 把它从 PureWriter2 改成了 PureWriter），从安装包的文件名取。
+              prefix="$(jq -r '.files["windows-x64"].name // empty' desktop.json 2> /dev/null | cut -d- -f1)"
+              [[ "$prefix" =~ ^PureWriter2?$ ]] || failures+=("desktop.json 里安装包的文件名不对：${prefix:-空}")
             else
-              failures+=("desktop2.json：$got")
+              failures+=("desktop.json：$got")
             fi
 
-            if [[ -n "$version" ]]; then
+            if [[ -n "$version" && -n "$prefix" ]]; then
               for platform in Windows-x64 macOS-x64 macOS-aarch64; do
-                name="PureWriter2-$version-$platform.jar"
+                name="$prefix-$version-$platform.jar"
                 # 每个平台各用一个响应头文件，免得请求失败时读到上一个平台的大小。
                 got="$("${CURL[@]}" -I -o "headers-$platform.txt" -w '%{http_code}' "$site/ocat/jars/$name" 2> /dev/null)"
                 size="$(tr -d '\r' < "headers-$platform.txt" 2> /dev/null | awk 'tolower($1) == "content-length:" {print $2}' | tail -n 1)"

@@ -13,7 +13,7 @@
 #   3. rsync 上传为服务器上的一个新版本：按内容比较、不保留修改时间，内容未变的文件与当前版本做硬链接，实际只传改动；
 #   4. 记下服务器上切换前的版本，再 ssh 调用 writer-release 原子切换 current 并重载 Caddy（Caddy 拒绝新规则时它会自己切回
 #      原版本）。它报告失败时，先查服务器上 current 实际指向哪个版本：已是这次的版本就照常检查，否则如实报告；
-#   5. 在服务器上对这个环境跑 URL 合同（按主机名连本机 443，不经公网）；正式站另从本机核对线上 desktop2.json 的版本
+#   5. 在服务器上对这个环境跑 URL 合同（按主机名连本机 443，不经公网）；正式站另从本机核对线上 desktop.json 的版本
 #      等于这次提交里的版本（与旧站相同）。任何一项不通过都自动切回切换前的那个版本并报错；
 #   6. 正式站部署成功（检查都通过、没有回滚）之后，把内容有变化的页面推送给 IndexNow（docs/rebuild.md 第九节 E）：在服务器上
 #      逐个比较切换前后两个版本里 sitemap 所列页面的文件（scripts/indexnow-urls.py），有变化或新增的地址一次 POST 过去。
@@ -214,8 +214,8 @@ git archive --format=tar "$commit" | tar -x -C "$src"
 #    set -e 会让脚本直接退出，跳过检查与回滚。
 cp "$src/caddy/site.caddy" "$release/caddy/site.caddy"
 cp "$src/ops/contract.tsv" "$src/ops/contract.py" "$release/checks/"
-expected_version="$(jq -r .version "$release/public/desktop2.json")"
-[[ -n "$expected_version" && "$expected_version" != null ]] || die "读不出 desktop2.json 的版本号"
+expected_version="$(jq -r .version "$release/public/desktop.json")"
+[[ -n "$expected_version" && "$expected_version" != null ]] || die "读不出 desktop.json 的版本号"
 
 # 权限在本地统一好再上传（macOS 自带的 openrsync 不支持 --chmod=D755,F644 这种写法）。
 find "$release" -type d -exec chmod 0755 {} +
@@ -260,10 +260,10 @@ if ! "${SSH[@]}" "$HOST" python3 -I "$base/releases/$id/checks/contract.py" --si
 fi
 if [[ "$env" == prod ]]; then
 	# curl -f 让 4xx、5xx 与传输中断都算失败；curl 不跟随跳转，3xx 的正文不是带版本号的 JSON，jq -e 读不出 version，同样算失败。
-	if live_json="$(curl -fsS --max-time 30 "https://$site/desktop2.json")" && live_version="$(jq -er .version <<<"$live_json")"; then
-		[[ "$live_version" == "$expected_version" ]] || failures+=("desktop2.json：期望版本 ${expected_version}，实际 $live_version")
+	if live_json="$(curl -fsS --max-time 30 "https://$site/desktop.json")" && live_version="$(jq -er .version <<<"$live_json")"; then
+		[[ "$live_version" == "$expected_version" ]] || failures+=("desktop.json：期望版本 ${expected_version}，实际 $live_version")
 	else
-		failures+=("从本机读取 https://$site/desktop2.json 失败，或其中没有版本号（见上面 curl 或 jq 的输出）")
+		failures+=("从本机读取 https://$site/desktop.json 失败，或其中没有版本号（见上面 curl 或 jq 的输出）")
 	fi
 fi
 

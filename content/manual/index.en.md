@@ -1294,10 +1294,10 @@ Please update Pure Writer on every device to the latest version. When the same d
 ### Why won’t Pure Writer Desktop open? {#cannot-open-pure-writer-desktop}
 
 - Make sure the installer matches your computer: the Windows installer is x64 only, and macOS has separate installers for Apple silicon and Intel.
-- On Windows, some antivirus software mistakenly flags installers that don’t have a digital signature. Pure Writer comes from a developer and a company registered under their real names, so you can safely add the installer and the install folder `C:\Users\<username>\AppData\Local\Pure Writer 2` to your allowlist.
+- On Windows, some antivirus software may still flag the installer by mistake. Pure Writer comes from a developer and a company registered under their real names, and the installer is digitally signed by Drakeet Co., Ltd., so you can safely add the installer and the install folder `C:\Users\<username>\AppData\Local\Pure Writer` to your allowlist.
 - If Pure Writer doesn’t open after installing, allow it to access folders under “Ransomware protection” (Controlled folder access) in Windows Security.
 - If Pure Writer for Windows v2.1.9 is still on your computer, uninstall it first in Settings › Apps › Installed apps, then install the new version.
-- If you see “Pure Writer 2 has not finished quitting from last time”, wait a moment and open it again. If it still won’t open, end the Pure Writer 2 process that’s still running in Task Manager (Windows) or Activity Monitor (macOS), then open it again; content already saved on your computer isn’t affected.
+- If you see “Pure Writer has not finished quitting from last time”, wait a moment and open it again. If it still won’t open, end the Pure Writer process that’s still running in Task Manager (Windows) or Activity Monitor (macOS), then open it again; content already saved on your computer isn’t affected.
 
 If that doesn’t solve the problem, please email [writer@drakeet.com](mailto:writer@drakeet.com) and include your system version and the name of the installer.
 

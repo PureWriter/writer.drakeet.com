@@ -96,7 +96,7 @@
 | `/images/icon512.png` | Android「关于」页 | 原样 |
 | `/images/` 下其余旧图片，含 ocat.app 曾热链的 5 张（2026-11-08 起它自己托管），以及 2026-10-27 从首页撤下、Facebook 旧分享仍在引用的横幅 | 第三方 README；ocat.app 的 og:image、JSON-LD 与 PWA manifest；社交平台的预览 | 原样，整个目录保留 |
 | `/desktop2.json` | 桌面版 release.sh 发版后的线上校验（curl 不跟随跳转） | 原样 |
-| `/ocat/jars/PureWriter2-<版本>-<平台>.jar` | rebase-server：客户端报告连不上 GitHub 时，约一半的自动更新下载改写到这里；桌面版 CI 的兜底下载 | 原样（文件放在站点目录之外，见 5.6） |
+| `/ocat/jars/PureWriter-<版本>-<平台>.jar`（5.3.0 之前的版本是 `PureWriter2-`） | rebase-server：客户端报告连不上 GitHub 时，约一半的自动更新下载改写到这里；桌面版 CI 的兜底下载 | 原样（文件放在站点目录之外，见 5.6） |
 | `/`、`/index`、`/index.html`（含 `?lang=` 与 `#ios-*` 等锚点） | Android「需要更新」对话框、iOS 示例文章、App Store 营销网址、外部链接 | 协商；`?lang=` 合法时 301 |
 | `/desktop`、`/desktop.html`（含 `?lang=` 与 `#download-*`） | Homebrew、Scoop、AUR 等包管理器的清单、Android 文案 | 协商 |
 | `/desktop2`、`/desktop2_en`、`/desktop_en`，以及 `/desktop2JpAbortIfPureWriterRunning…`、`/desktop2_enJpAbortIfPureWriterRunning…` | 已安装桌面版的「检查更新」、Windows「已安装的应用」里的链接（后两种写法见 2.1）、rebase-server、Android 文案、winget 清单 | 协商（这几个旧地址本来就不带语言） |
@@ -305,10 +305,10 @@ scripts/             构建、预览、检查、部署与回滚
   - 10 秒后调用 `window.close()` 的脚本从未生效：桌面版用系统浏览器打开授权地址，浏览器不允许脚本关闭这类标签页。去掉这段脚本，正文里如有「将自动关闭」的说法一并去掉。
 - 页面带 `noindex`，不进 sitemap。
 
-### 4.7 桌面版下载页与 desktop2.json
+### 4.7 桌面版下载页与 desktop.json
 
-- 构建时读取仓库根目录的 `desktop2.json`，渲染进下载页：版本、发布日期、安装包大小、SHA-256，以及各语言的「最近更新」。页面不再在运行时读取 JSON，不开脚本也能看到完整信息。sitemap 里这一页的 lastmod 取 JSON 里的发布日期。
-- 同一份文件原样发布在 `/desktop2.json`，供 release.sh 校验与外部读取，缓存头为 `no-cache`。文件名里的「2」是历史遗留，保持不变。
+- 构建时读取仓库根目录的 `desktop.json`，渲染进下载页：版本、发布日期、安装包大小、SHA-256，以及各语言的「最近更新」。页面不再在运行时读取 JSON，不开脚本也能看到完整信息。sitemap 里这一页的 lastmod 取 JSON 里的发布日期。
+- 同一份文件原样发布在 `/desktop.json`，供 release.sh 校验与外部读取，缓存头为 `no-cache`。它原来叫 `desktop2.json`，桌面版改名为 Pure Writer 时（桌面仓库 `docs/rename-to-pure-writer.md`）一起改了；旧地址 `/desktop2.json` 上放同一份内容的副本，留给仍在读旧地址的外部读取方。本文其余各处提到的 `desktop2.json` 是改名之前的写法。
 - 「只突出适合这台电脑的安装包」改为外部脚本做的渐进增强，没有脚本时三个安装包并列显示。这是全站唯一的脚本。
 
 ### 4.8 静态资源

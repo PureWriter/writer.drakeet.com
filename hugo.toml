@@ -50,13 +50,13 @@ timeZone = "Asia/Shanghai"
   # 产品的四个名字（4.10）：WebSite 结构化数据与每页的关键词共用。第一个是站点名，其余是别名，按优先顺序排列。
   siteNames = ["纯纯写作", "Pure Writer", "純純寫作", "純純執筆"]
 
-# 语言键沿用 iOS App 与 desktop2.json 已有的那套（4.3 的表）。
+# 语言键沿用 iOS App 与 desktop.json 已有的那套（4.3 的表）。
 #   locale        Hugo 用来格式化日期等的区域标识，同时也是 html lang 的取值
 #   label         语言切换器里显示的本语言名称
 #   title         站点名
 #   hreflang      hreflang 标注；英文同时作为 x-default
 #   ogLocale      OpenGraph 的 og:locale
-#   dataKey       desktop2.json 里 notes 的键，也是旧站 ?lang= 用的写法
+#   dataKey       desktop.json 里 notes 的键，也是旧站 ?lang= 用的写法
 #   homeURL       顶部「回到首页」的目标；不写就是本语言的首页。俄文没有首页，回到根地址由服务器按浏览器语言协商
 #   icp、gongan   备案号。只有带这两项的语言（简体中文）才输出页脚的版权与备案信息，市场差异由结构保证（4.3）
 [languages]

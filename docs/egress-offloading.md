@@ -65,10 +65,10 @@
 ### 2.4 R2 上的清理逻辑（结论：不会碰到 `writer/`）
 
 - 删除对象的代码共三处：
-  - 桌面版 `buildAllJars.sh` 第 3 步，经 `scripts/release-common.sh` 的 `r2_delete`：键必须整串匹配 `^PureWriter2-[0-9.]+-(Windows-x64|macOS-x64|macOS-aarch64)\.jar$`；
-  - 桌面版 `release.sh` 的 `prune_installers`，同样经 `r2_delete`：键必须整串匹配 `^PureWriter2-[0-9]+(\.[0-9]+)+-(Windows-x64\.exe|macOS-x64\.dmg|macOS-aarch64\.dmg)$`；
+  - 桌面版 `buildAllJars.sh` 第 3 步，经 `scripts/release-common.sh` 的 `r2_delete`：键必须整串匹配 `^PureWriter2?-[0-9.]+-(Windows-x64|macOS-x64|macOS-aarch64)\.jar$`（5.3.0 起前缀是 `PureWriter-`，旧前缀的文件按同一规则淘汰）；
+  - 桌面版 `release.sh` 的 `prune_installers`，同样经 `r2_delete`：键必须整串匹配 `^PureWriter2?-[0-9]+(\.[0-9]+)+-(Windows-x64\.exe|macOS-x64\.dmg|macOS-aarch64\.dmg)$`；
   - OCAT 仓库（`/Users/drakeet/Documents/Flutter/OCAT`）的 `fastlane/upload_android_apk_to_r2.sh`：上传新 APK 之后，列出键以 `ocat` 开头、以 `.apk` 结尾的对象，删掉除新键之外最旧的一个。它直接调用 aws，不经 `r2_delete`。
-- `writer/images/…` 不以 `PureWriter2-` 或 `ocat` 开头，三处都不可能选中它。桌面版的 `r2_put` 与 OCAT 的上传都以 `basename` 作键，也不会写进 `writer/`。
+- `writer/images/…` 不以 `PureWriter` 或 `ocat` 开头，三处都不可能选中它。桌面版的 `r2_put` 与 OCAT 的上传都以 `basename` 作键，也不会写进 `writer/`。
 - 在本机的 rebase-server、桌面版、Android、官网、iOS 仓库与 `~/Documents/Flutter` 下搜过 `kuromi` 与删除对象的调用，没有别的代码清理这个存储桶。服务器上的 `writer-jars-sync` 只经公开地址读取。
 - Cloudflare 控制台上的对象生命周期规则已核对（第十一节第 8 条）：只有默认的「7 天后中止未完成的分段上传」，不删除对象。
 - 仍加一道防护（6.1），以后改桌面版的正则时也不会误删。

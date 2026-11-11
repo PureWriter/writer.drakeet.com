@@ -19,7 +19,7 @@
   8. 本机运行的 bash 脚本（本脚本所在的 scripts/ 目录）里，`$名字` 后面不得紧跟中文等非 ASCII 字符：macOS 自带的
      /bin/bash 3.2 在 UTF-8 环境下会把那个字符的首字节当成变量名的一部分，set -u 时报 unbound variable 退出（Drakeet 的
      终端就是 UTF-8，桌面版 release.sh 也在那里调用 deploy.sh），要写成 `${名字}`。ops/bin/ 在服务器的 bash 5 上运行，不查。
-第 3、4 项跳过下载页里来自桌面端更新日志的条目（data-source="desktop2.json"）：那段文字的用词归桌面端管，
+第 3、4 项跳过下载页里来自桌面端更新日志的条目（data-source="desktop.json"）：那段文字的用词归桌面端管，
 不能让官网的检查拦住桌面版发版（rebuild.md 第一节「取舍原则」）。
 
 本脚本在 build.sh 第 5 步运行，那时还没有预压缩（第 6 步），所以第 1、6 项不为 .br、.gz 留任何例外：产物里出现的 .br、.gz
@@ -173,12 +173,12 @@ def check_links(root):
 
 # 市场检查不看的产物：简体中文页面本身、旧图片、.well-known、发版数据（含各语言的更新日志）。
 MARKET_SKIP_PREFIXES = ("/zh-hans/", "/images/", "/.well-known/")
-MARKET_SKIP_FILES = {"/desktop2.json"}
+MARKET_SKIP_FILES = {"/desktop.json", "/desktop2.json"}
 MARKET_SUFFIXES = {".html", ".txt", ".xml", ".json"}
 
 
 # 下载页里来自桌面端更新日志的条目（notes shortcode 输出），市场与台港用词检查跳过它。产物经过压缩，属性可能不带引号。
-EXTERNAL_TEXT = re.compile(r"<ul[^>]*\bdata-source=[\"']?desktop2\.json[\"']?[^>]*>.*?</ul>", re.S)
+EXTERNAL_TEXT = re.compile(r"<ul[^>]*\bdata-source=[\"']?desktop\.json[\"']?[^>]*>.*?</ul>", re.S)
 
 
 def page_text(file):

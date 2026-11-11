@@ -1,7 +1,7 @@
 {{- /*
   结构化数据（4.10）。页面 front matter 的 jsonld 决定输出哪种：
     home     各语言首页：同一份 WebSite（控制搜索结果里显示的站点名），加上移动端的 SoftwareApplication
-    desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop2.json
+    desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop.json
   站点名与别名取自 hugo.toml 的 siteNames。Google 每个域名只取一个站点名，不按语言区分，所以所有语言的首页放同一份
   WebSite；根地址按语言 302 到各语言首页，Google 按跳转的目标读取。价格只在能逐平台写准时才写，所以不写；软件应用的
   富媒体结果需要价格与评分，没有它们，写上发行方也不会改变展示，所以也不写。

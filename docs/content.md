@@ -40,7 +40,7 @@
 | `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页与下载页用 |
 | `jsonld: home` 或 `jsonld: desktop` | 输出结构化数据：首页、下载页 |
 | `appName` | 下载页的结构化数据里的软件名，例如「纯纯写作桌面版」 |
-| `lastmodFrom: desktop2.json` | 下载页：sitemap 的 lastmod 取 desktop2.json 的发布日期 |
+| `lastmodFrom: desktop.json` | 下载页：sitemap 的 lastmod 取 desktop.json 的发布日期 |
 | `script: download.js` | 引用 `assets/js/` 下的脚本（全站只有下载页用） |
 | `noindex: true` | 不让搜索引擎收录，也不进 sitemap（授权完成页、404） |
 | `layout: bare` 与 `htmlLang: mul` | 不带顶部与页脚的居中单页，几种语言并列（授权完成页、根目录 404） |
@@ -114,7 +114,7 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 
 ## 六、下载页的动态部分
 
-版本、发布日期、安装包的地址与大小、校验值、最近更新都取自仓库根目录的 `desktop2.json`（桌面版 release.sh 写入），用 shortcode 在构建时写进页面，按钮文字写在内容文件里：
+版本、发布日期、安装包的地址与大小、校验值、最近更新都取自仓库根目录的 `desktop.json`（桌面版 release.sh 写入），用 shortcode 在构建时写进页面，按钮文字写在内容文件里：
 
 ```html
 <h2 id="download">下载{{< release >}}</h2>
