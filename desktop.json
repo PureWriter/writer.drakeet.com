@@ -1,61 +1,67 @@
 {
-  "version": "5.2.2",
-  "released": "2026-11-10",
+  "version": "5.3.0",
+  "released": "2026-11-11",
   "files": {
     "windows-x64": {
-      "name": "PureWriter2-5.2.2-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-Windows-x64.exe",
-      "size": 92431360,
-      "sha256": "fa1ade0b40721e56a07687490034221b83bc4787aa2a1092906cded1f7c49cc3"
+      "name": "PureWriter-5.3.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-Windows-x64.exe",
+      "size": 92762424,
+      "sha256": "12c817fb1715ce566b675b9918561166d7b8194bd75455c07c4468f08aab6a7e"
     },
     "macos-aarch64": {
-      "name": "PureWriter2-5.2.2-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-macOS-aarch64.dmg",
-      "size": 88942801,
-      "sha256": "c0cadc706a5ab848c30e10c3c4a725127d33bbfa22b8b0993f98b290b3cdbf44"
+      "name": "PureWriter-5.3.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-macOS-aarch64.dmg",
+      "size": 88985326,
+      "sha256": "b934ddcbc993a63b0c087acbc01d437601d8409713442b8f50331a5b81133d71"
     },
     "macos-x64": {
-      "name": "PureWriter2-5.2.2-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter2-5.2.2-macOS-x64.dmg",
-      "size": 90557425,
-      "sha256": "1cbae2ae6a3fb8124ab56867a6c1ab3b8aa9a036d329a21ec0b136b836857de5"
+      "name": "PureWriter-5.3.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-macOS-x64.dmg",
+      "size": 90602577,
+      "sha256": "9fdec5fe6963b7a3427ce80e73963c861db7368b02cea7789cf42ea505f23b90"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "修复 macOS 上启动后偶尔没有菜单栏的问题。"
+        "App 更名为「Pure Writer」（纯纯写作），名称里不再带「2」。从官网下载安装包重新安装后，系统里显示的名称也会更新，文章与设置都会保留；固定在任务栏或程序坞上的图标需要重新固定一次。",
+        "Windows：安装包与程序现在带有 Drakeet Co., Ltd. 的数字签名。"
       ]
     },
     "zh-Hant": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "修正 macOS 上啟動後偶爾沒有選單列的問題。"
+        "App 更名為「Pure Writer」（純純寫作），名稱裡不再帶「2」。從官網下載安裝檔重新安裝後，系統裡顯示的名稱也會更新，文章與設定都會保留；釘選在工作列或 Dock 上的圖示需要重新釘選一次。",
+        "Windows：安裝檔與應用程式現在帶有 Drakeet Co., Ltd. 的數位簽章。"
       ]
     },
     "zh-HK": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "修正 macOS 上啟動後偶爾沒有選單列的問題。"
+        "App 更名為「Pure Writer」（純純寫作），名稱裏不再帶「2」。從官網下載安裝程式重新安裝後，系統裏顯示的名稱也會更新，文章與設定都會保留；釘選在工作列或 Dock 上的圖示需要重新釘選一次。",
+        "Windows：安裝程式與應用程式現在帶有 Drakeet Co., Ltd. 的數碼簽署。"
       ]
     },
     "en": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "Fixed an issue where the menu bar was sometimes missing after launch on macOS."
+        "The app is now called “Pure Writer”, without the “2”. Reinstall it with the installer from our website and the name shown by your system is updated too; your documents and settings are kept. An icon pinned to the taskbar or kept in the Dock needs to be added again.",
+        "Windows: the installer and the app are now digitally signed by Drakeet Co., Ltd."
       ]
     },
     "ja": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "macOS で起動後にメニューバーが表示されないことがある問題を修正しました。"
+        "アプリの名前が「Pure Writer」（純純執筆）に変わり、「2」が付かなくなりました。公式サイトのインストーラーで入れ直すと、システムに表示される名前も新しくなります。文章と設定はそのまま引き継がれます。タスクバーにピン留めしたアイコンや Dock に置いたアイコンは、もう一度追加してください。",
+        "Windows：インストーラーとアプリに Drakeet Co., Ltd. のデジタル署名が付きました。"
       ]
     },
     "ru": {
-      "version": "5.2.2",
+      "version": "5.3.0",
       "items": [
-        "Исправлена ошибка, из-за которой в macOS после запуска иногда отсутствовала строка меню."
+        "Приложение теперь называется «Pure Writer», без «2». Если переустановить его с помощью установщика с нашего сайта, обновится и название, которое показывает система; ваши документы и настройки сохранятся. Значок, закреплённый на панели задач или в Dock, нужно будет добавить заново.",
+        "Windows: установщик и приложение теперь подписаны цифровой подписью Drakeet Co., Ltd."
       ]
     }
   }
