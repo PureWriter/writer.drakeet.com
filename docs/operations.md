@@ -161,6 +161,10 @@ ssh drakeet@writer.drakeet.com 'sudo /root/writer-provision/ops/provision.sh web
 ssh drakeet@writer.drakeet.com 'sudo install -m 0755 -o root -g root /root/writer-provision/ops/bin/<脚本> /usr/local/bin/<脚本>'
 ```
 
+由 AI 助手代办时的两点（2026-11-11 遇到）：Claude Code 的自动审查不放行在这台服务器上执行 `sudo rm -rf` 与 `sudo install`。
+这次改动没有删除 `ops/` 下的文件时，第 2 步可以去掉 `sudo rm -rf`，把 `ops/` 直接覆盖解入（`sudo tar -C /root/writer-provision -xf - --no-same-owner`），结果相同；
+有文件被删除时，第 2 步的原命令也请 Drakeet 运行。`sudo install` 这一条由 Drakeet 运行，装好后用 `sha256sum /usr/local/bin/<脚本>` 与仓库里的文件核对（不需要 sudo）。
+
 **drakeet.com 与 www.drakeet.com 的跳转规则**（`ops/caddy/drakeet.com.caddy`，rebuild.md 5.7）不随站点部署，改了要按本节装到服务器：
 
 1. 提交之前在本机运行 `scripts/test-caddy.sh`，它连同这份规则的合同 `ops/contract-drakeet.com.tsv` 一起跑。
@@ -198,6 +202,8 @@ for host in drakeet.com www.drakeet.com; do python3 -I ops/contract.py --contrac
 - 公开仓库 60 天没有提交时，GitHub 会停用定时任务（会先发邮件提醒）；平时桌面发版就会产生提交，若被停用，在 Actions 页面重新启用即可。
 - 检查点在境外，GitHub 的调度也常有十几分钟的延迟，所以它只用来发现「挂了」，不用来衡量国内访问速度。
 - 首页按访客语言跳转（不带语言头时 302 到 `/zh-hans/`），监控跟随跳转后检查最终是 200 的网页。
+- 监控运行的是 GitHub 默认分支上的工作流，检查的却是正式站。改动让它去检查正式站上还没有的东西时（例如 2026-11 把 `desktop2.json` 换成 `desktop.json`），
+  次序是先部署正式站、再推送到 GitHub；先推送的话，部署之前每 15 分钟报一次警。
 
 ## 8. 出了问题
 
