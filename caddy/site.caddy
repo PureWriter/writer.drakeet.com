@@ -112,10 +112,12 @@ route {
 	#      /robots.txt、/sitemap.xml、/llms.txt、站点图标
 	#      /indexnow.txt                              IndexNow 的密钥文件（第九节 E）：搜索引擎按推送里的 keyLocation 读取，
 	#                                                 放在根目录，作用范围才覆盖全站
+	#      /baidu_verify_*.html                       百度搜索资源平台的站点验证文件：百度定期回来读，读不到或被跳转就判为
+	#                                                 验证失效，所以不能删，也不能参与协商
 	#      /css/、/js/、/img/                           Hugo 生成的带内容指纹的样式、脚本与图片
 	#    唯一的跳转是 file_server 的规范化：文件写成带尾斜杠的地址（例如 /desktop.json/）时 308 到不带斜杠的写法，
 	#    与第 3 段目录补斜杠对称。没有依赖方这样请求，保留 Caddy 的默认行为。
-	@static path /.well-known/* /images/* /desktop.json /desktop2.json /robots.txt /sitemap.xml /llms.txt /indexnow.txt /favicon.ico /apple-touch-icon.png /apple-touch-icon-precomposed.png /css/* /js/* /img/*
+	@static path /.well-known/* /images/* /desktop.json /desktop2.json /robots.txt /sitemap.xml /llms.txt /indexnow.txt /baidu_verify_*.html /favicon.ico /apple-touch-icon.png /apple-touch-icon-precomposed.png /css/* /js/* /img/*
 	handle @static {
 		# 这个文件没有扩展名，Caddy 不会自动给类型，而关联域名要求 application/json（第三节）。
 		header /.well-known/apple-app-site-association Content-Type "application/json"

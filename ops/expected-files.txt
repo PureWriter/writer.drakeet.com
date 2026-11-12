@@ -5,6 +5,7 @@
 404.html
 apple-touch-icon-precomposed.png
 apple-touch-icon.png
+baidu_verify_codeva-PxSFfSALDb.html
 css/main.min.<fingerprint>.css
 desktop.json
 desktop2.json

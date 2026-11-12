@@ -377,6 +377,7 @@ scripts/             构建、预览、检查、部署与回滚
 - **关键词**：每个可收录的页面写一行 `<meta name="keywords">`，只列这四个名字，本语言的写法在前。Google 与 Bing 已明确不看这个标签，百度没有明确的现行说法，个别搜索引擎仍会参考；名字能被搜到，主要靠上面的 WebSite 别名与各语言页面的标题。
 - **iOS 智能横幅**：首页、各语言的 iOS 版介绍页、iOS 支持页与 iOS 隐私政策保留 iOS 智能横幅的 meta。
 - **`/.well-known/security.txt`**：写明联系邮箱，Expires 在构建时自动生成为一年内的日期，不需要人记着更新。
+- **`/baidu_verify_codeva-PxSFfSALDb.html`**：百度搜索资源平台的站点验证文件（`static/` 下，文件名与内容由百度给定），见第九节 E。
 - **`/indexnow.txt`**：IndexNow 的密钥文件（`static/indexnow.txt`），正式站部署成功后推送有变化的页面时用到，见第九节 E。
 - **不加任何统计脚本**。需要了解访问情况时，用 `ops/` 下的日志报告脚本（5.5）在服务器上做聚合。
 
@@ -732,7 +733,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### E. SEO 与 AI 可发现性
 
-- **站长平台**：Google Search Console 已添加站点并提交 sitemap（2026-11-08，网址前缀资源 `https://writer.drakeet.com/`）。必应站长平台（Bing Webmaster Tools）2026-11-12 改为要做（Drakeet 定），当天已从 Search Console 导入本站：它的索引同时供给 ChatGPT 搜索与 Copilot。导入时授权的是 Search Console 所在的 Google 账号（只读权限，必应用它定期复核验证状态与 sitemap），只导入了 `https://writer.drakeet.com/`，同一账号下的 drakeet.com 与 ocat.app 没有导入；sitemap 随之导入。百度的站长平台不做。
+- **站长平台**：Google Search Console 已添加站点并提交 sitemap（2026-11-08，网址前缀资源 `https://writer.drakeet.com/`）。必应站长平台（Bing Webmaster Tools）2026-11-12 改为要做（Drakeet 定），当天已从 Search Console 导入本站：它的索引同时供给 ChatGPT 搜索与 Copilot。导入时授权的是 Search Console 所在的 Google 账号（只读权限，必应用它定期复核验证状态与 sitemap），只导入了 `https://writer.drakeet.com/`，同一账号下的 drakeet.com 与 ocat.app 没有导入；sitemap 随之导入。百度搜索资源平台同一天也改为要做（Drakeet 定）：账号 drakeet，站点 `https://writer.drakeet.com`，站点领域选「工具服务及在线查询」与「信息技术」（有意不选「书籍文档」，与「文本编辑器、不提供阅读内容」的定位一致；验证成功后 30 天内只能改一次），用文件验证：验证文件 `static/baidu_verify_codeva-PxSFfSALDb.html` 发布在根目录，站点规则第 2 段把它列进 `@static` 原样提供，合同核对它的内容。百度会定期回来读这个文件，不能删。不用 HTML 标签验证：它读的是首页，而根地址会按语言 302。
 - **部署后自动推送**：`scripts/deploy.sh` 部署正式站成功后，把这次有变化的地址推送给 IndexNow（Bing、Yandex、Naver、Seznam 等共用一个接口，凭据是站点根目录的一个密钥文件，不需要账号）；推送失败只提示，不影响部署。Google 不支持 IndexNow，靠 sitemap；百度的推送接口需要它站长平台的凭据，不做。实现：
   - **密钥文件**：`static/indexnow.txt`，发布在根目录 `/indexnow.txt`，内容只有密钥本身（32 位十六进制，不带换行）。放在根目录，作用范围才覆盖全站；推送时用 `keyLocation` 指向它。密钥本来就是公开的。站点规则第 2 段把它列进 `@static`，按原样提供（`text/plain`、`no-cache`，与 robots.txt 相同）；合同表核对它的内容就是密钥，换密钥时两处一起改。
   - **推送什么**：只推内容有变化、且应当收录的页面。`scripts/indexnow-urls.py` 经 ssh 从标准输入交给服务器上的 python3 运行（不必安装到服务器上，脚本取自这次部署的提交）：读新版本的 sitemap，逐个逐字节比较切换前后两个版本目录里同一地址对应的页面文件（`…/index.html`），输出内容不同或上一版没有的地址。sitemap 不列带 noindex 的页面（4.10），所以列在里面就是应当收录的。没有可比较的上一版时（首次）每个页面都算新增，推送全部；没有变化就不推送。CSS 指纹一变，所有页面的 HTML 都跟着变，这时全推，不另作处理。
