@@ -1,0 +1,66 @@
+{{- /*
+  把一个页面的正文转成 Markdown，供 /llms-full.txt 使用（layouts/index.llmsfull.txt；docs/content.md 第九节）。
+  返回的文字以本页的一级标题开头，构建时检查这一点，模板据此在标题下面写出来源地址。
+
+  做法：取渲染后的正文（.Content：Markdown 源的页面是 goldmark 的输出，HTML 源的页面是原样的 HTML 加 shortcode 的输出），
+  先去掉只对浏览器有意义的部分、把站内链接改成绝对地址，再交给 Hugo 自带的 transform.HTMLToMarkdown。标题层级、列表、
+  表格、代码块与行内代码都由它照原样转换，所以 Markdown 源的页面得到的基本就是原来的写法，HTML 源的页面也保留小标题与列表。
+  不从 .RawContent 取 Markdown 原文：原文里有 {#id}、shortcode、原样 HTML 与相对链接要逐一处理，而且必须避开代码块里
+  的示例（手册的 Markdown 指南里满是 # 标题、[链接](#锚点) 一类的示例），不如从渲染结果转换可靠。
+
+  下面按标记逐条处理的几处（截图列表、hidden、下载按钮、校验值、aside、sup.ios）都对应本站模板与 shortcode 现有的写法：
+  改了这些标记，构建出来的 llms-full.txt 要再通读一遍。
+*/ -}}
+{{- $page := . -}}
+{{- $origin := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $html := string $page.Content -}}
+
+{{- /* 源文件里写给维护者的 HTML 注释会留在 .Content 里（HTML 内容文件开头的说明、Markdown 里的原样注释）。 */ -}}
+{{- $html = replaceRE `(?s)<!--.*?-->` "" $html -}}
+
+{{- /*
+  图片与图标在纯文本里没有意义。首页与 iOS 版介绍页的截图列表（ul.shots）整个去掉，否则会剩下一串空的列表项；
+  其余的 img（页面图标、横幅、下载页截图）与按钮里的 SVG 图标直接去掉。
+*/ -}}
+{{- $html = replaceRE `(?s)<ul class="shots">.*?</ul>` "" $html -}}
+{{- $html = replaceRE `(?s)<svg.*?</svg>` "" $html -}}
+{{- $html = replaceRE `<img[^>]*>` "" $html -}}
+
+{{- /* 带 hidden 属性的段落是给脚本备用的重复内容（下载页「其他安装包」一行，与上面的下载按钮是同一组链接）。 */ -}}
+{{- $html = replaceRE `(?s)<p[^>]*\shidden[\s>].*?</p>` "" $html -}}
+
+{{- /*
+  下载页折叠起来的 SHA-256 校验值（checksums shortcode 输出的 <dl>）：只对拿着安装包核对的人有用，AI 助手转述一串
+  校验值没有意义，版本更新后旧的校验值还会误导，所以不收录。
+*/ -}}
+{{- $html = replaceRE `(?s)<details[^>]*>\s*<summary>[^<]*</summary>\s*<dl>.*?</dl>\s*</details>` "" $html -}}
+
+{{- /*
+  下载页的按钮（download shortcode）：按钮名与说明是两个紧挨着的 span，转换后会连成「Download for Windowsx64 · 93 MB」，
+  这里改成「Download for Windows (x64 · 93 MB)」；三个按钮所在的 div 改成列表，每个按钮一行。
+*/ -}}
+{{- $html = replaceRE `<span class="name">([^<]*)</span><span class="detail">([^<]*)</span>` "$1 ($2)" $html -}}
+{{- $html = replaceRE `(?s)(<a class="download"[^>]*>.*?</a>)` "<li>$1</li>" $html -}}
+{{- $html = replaceRE `(?s)<div class="downloads">(.*?)</div>` "<ul>$1</ul>" $html -}}
+
+{{- /*
+  标题旁的 span.aside（下载页的版本与日期）在网页上靠样式隔开，转换后会与标题连在一起，前面补一个空格；
+  首页功能清单里标注 iOS 独有的上标（sup.ios）同理，改成前面带空格的半角括注 (iOS)。
+*/ -}}
+{{- $html = replaceRE `<span class="aside">` ` <span class="aside">` $html -}}
+{{- $html = replaceRE `<sup class="ios">([^<]*)</sup>` " ($1)" $html -}}
+
+{{- /*
+  链接改成绝对地址：llms-full.txt 脱离页面单独阅读，相对地址没有意义。站内链接都以 / 开头（docs/content.md 第四节）；
+  只有 # 开头的是本页锚点，补上本页地址。代码与行内代码里的 href 已被转义成 &quot;，不会被改到。
+*/ -}}
+{{- $html = replaceRE `href="/` (printf `href="%s/` $origin) $html -}}
+{{- $html = replaceRE `href="#` (printf `href="%s#` $page.Permalink) $html -}}
+
+{{- $markdown := transform.HTMLToMarkdown $html -}}
+{{- /* 只有空白的行（转换器给列表项里的空行留下的缩进）清成空行；行尾的两个空格是硬换行，不动。 */ -}}
+{{- $markdown = replaceRE `(?m)^[ \t]+$` "" $markdown | strings.TrimSpace -}}
+{{- if not (hasPrefix $markdown "# ") -}}
+{{- errorf "llms-full.txt：%s 转换后不是以一级标题开头，模板要靠它写出每一部分的标题与来源" $page.Permalink -}}
+{{- end -}}
+{{- return $markdown -}}

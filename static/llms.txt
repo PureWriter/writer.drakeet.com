@@ -6,6 +6,10 @@ Pure Writer is a text editor for writing and organizing your own text. It does n
 
 Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be tried free for 7 days; afterwards a monthly subscription, a yearly subscription or a lifetime membership unlocks everything.
 
+## Full text
+
+- [Full text of the main pages](https://writer.drakeet.com/llms-full.txt): one Markdown file with the English home page, Pure Writer for iOS and its support page, the desktop download page, the user manual and the backup tutorial, followed by the pages available only in Simplified Chinese
+
 ## Home pages
 
 - [English](https://writer.drakeet.com/en/): overview, features, and download links
@@ -25,6 +29,8 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 
 - [User manual](https://writer.drakeet.com/en/manual/): also in [简体中文](https://writer.drakeet.com/zh-hans/manual/) and [繁體中文](https://writer.drakeet.com/zh-hant/manual/)
 - [Automatic and cloud backup tutorial](https://writer.drakeet.com/en/backups/): also in [简体中文](https://writer.drakeet.com/zh-hans/backups/) and [繁體中文](https://writer.drakeet.com/zh-hant/backups/)
+- [Markdown quick guide](https://writer.drakeet.com/zh-hans/markdown/) (Simplified Chinese only): switching a document to Markdown, previewing it, and the basic syntax; the user manual covers the full syntax
+- [How Pure Writer protects your writing](https://writer.drakeet.com/zh-hans/protections/) (Simplified Chinese only): autosave, undo, History, Trash, automatic local backups and cloud backups
 - [Pure Writer for iOS support](https://writer.drakeet.com/en/ios/support/)
 - Feedback and support: writer@drakeet.com
 - Telegram channel: https://t.me/PureWriter
@@ -35,3 +41,8 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 - [Pure Writer for iOS](https://writer.drakeet.com/en/ios/privacy/)
 - [Pure Writer for Android](https://writer.drakeet.com/en/android/privacy/)
 - [Pure Writer Desktop](https://writer.drakeet.com/en/desktop/privacy/)
+
+## Optional
+
+- [Please use genuine Pure Writer](https://writer.drakeet.com/zh-hans/genuine/) (Simplified Chinese only): the page Pure Writer for Android opens when it detects a cracked or pirated copy, with links to the official downloads
+- [New desktop dev story](https://writer.drakeet.com/en/blog/new-desktop-dev-story/): the developer's 2024 essay on building the all-new Pure Writer Desktop

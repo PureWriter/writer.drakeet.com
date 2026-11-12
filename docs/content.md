@@ -39,7 +39,7 @@
 | `image` | 分享卡片用的图片，写 `static/` 下的路径；写了就用大卡片，不写就用站点图标的小卡片。首页与 iOS 版介绍页用 `img/og/<语言>.jpg`（`assets/` 下，1200×630，由 `scripts/og-images.py` 从 App Store 的页头生成，港繁共用 zh-hant；构建时加内容指纹、原样发布为 JPEG），下载页用 `static/` 下的桌面版截图 |
 | `iosBanner: true` | 输出 Safari 的 iOS 智能横幅（首页、iOS 版介绍页、iOS 支持页、iOS 隐私政策） |
 | `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页、下载页与 iOS 版介绍页用 |
-| `jsonld: home`、`jsonld: desktop` 或 `jsonld: ios` | 输出结构化数据：首页、下载页、iOS 版介绍页 |
+| `jsonld: home`、`jsonld: desktop` 或 `jsonld: ios` | 输出结构化数据：首页、下载页、iOS 版介绍页。`ios` 另从正文的 `<h2 id="faq">` 一节生成 FAQPage（每个 h3 一问，其后的段落与列表是回答），这一节缺了构建会失败 |
 | `appName` | 下载页与 iOS 版介绍页的结构化数据里的软件名，例如「纯纯写作桌面版」「纯纯写作 iOS 版」 |
 | `lastmodFrom: desktop.json` | 下载页：sitemap 的 lastmod 取 desktop.json 的发布日期 |
 | `script: download.js` | 引用 `assets/js/` 下的脚本（全站只有下载页用） |
@@ -156,3 +156,25 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 - **署名的主体**：简体中文写「苏州小白迷雾科技有限公司」，其余语言一律写「Drakeet Co., Ltd.」（日本公司的英文名，日文页也是这样写）。例外是简体的 iOS 隐私政策与 iOS 支持页：iOS 版在 App Store 上的销售商是 Drakeet Co., Ltd.，正文与署名都写它，页脚用 front matter 的 `company` 跟着改（第二节）。
 - 首页中文段落开头的「　　」是写在文字里的缩进，长文页面不加。
 - 统一结构只改标记，不改文字：改前改后各构建一份产物（`scripts/build-page.sh --out <目录>`），比对这几页的正文与锚点没有变化。
+
+## 九、llms.txt 与 llms-full.txt
+
+根目录的两个纯文本文件，给 AI 助手与检索系统读（rebuild.md 4.10）。两者都只有一份、不按语言区分，不参与语言协商；都已写进 URL 合同与站点规则的静态路径。页面的 `<head>` 里不加指向它们的链接：llms.txt 的约定只有根目录这个位置，没有约定 `<link>` 的写法，不用自造的 rel。
+
+| | `/llms.txt` | `/llms-full.txt` |
+|---|---|---|
+| 定位 | 索引：一段事实性概述，加上按主题分节的主要页面链接 | 全文：主要页面的正文合成一个 Markdown 文件，一次读完 |
+| 来源 | 手写的 `static/llms.txt` | 构建时由 `layouts/index.llmsfull.txt` 从站内页面生成，不手写 |
+| 语言 | 英文；链接注明有哪些语言版本 | 以英文版为主体，后面附只有简体中文的页面的原文 |
+
+**llms.txt 的写法**按 llmstxt.org 的约定：一个 H1（产品名），一个引用块写概述，随后可以有不带标题的段落，再往下是 H2 分节的链接列表，每项「`[名称](地址)`：一句说明」；次要的页面放在最后的 `## Optional`。第一个 H2 之前只放概述：llms-full.txt 的开头原样取这一部分，两处说法因此始终一致，改概述只改 llms.txt。概述只写事实，不写价格（各地区不同，以商店显示为准）。
+
+**llms-full.txt 的构成**：开头是上面的概述、语言构成与各语言首页、隐私政策的链接与目录；之后每个页面一部分，以页面自己的一级标题开头，下一行写来源地址。收录哪些页面、什么顺序写在模板开头的 `$sources` 里；页面正文转成 Markdown 的规则在 `layouts/partials/llms-markdown.html`（Markdown 源的页面保留原来的标题层级与写法，HTML 源的页面保留小标题、列表与链接，图片、隐藏的重复链接与安装包校验值去掉，链接一律改成绝对地址）。隐私政策只给链接，不收全文。
+
+**新增或改动页面时**：
+
+- 新增页面：llms.txt 里加一项链接，写在对应的分节里，各语言版本以实际存在的文件为准；只有简体中文的页面注明「Simplified Chinese only」。产品介绍与帮助类的页面（介绍页、手册、教程）同时在 llms-full.txt 模板的 `$sources` 里加一项：有英文版的收英文版，只有简体中文的放在简体那几页一起。隐私政策、授权完成页、404 与开发故事一类的文章不收进 llms-full.txt。
+- 删除页面或改地址：两处一起改。模板找不到 `$sources` 里的页面时构建会失败；llms.txt 是手写的，构建检查不核对其中的链接，要自己核对。
+- 只改页面的文字：llms-full.txt 随下一次构建自动更新，不用动；概述里说到的事实（平台、系统要求、试用与会员）变了，改 llms.txt 的概述。
+- 改了 HTML 页面的标记结构（截图列表、下载按钮、校验值的写法，标题旁的 aside 等）：构建后通读 llms-full.txt 里对应的部分，转换规则按标记逐条处理，标记变了可能需要跟着改。
+- llms-full.txt 在根目录，构建检查按非大陆的产物扫描它的市场差异（`ops/market-rules.toml`）。附在后面的简体页面一旦写进只适合中国大陆的内容，构建会失败：那时把这一页从 `$sources` 里拿掉，不要给 llms-full.txt 加豁免。

@@ -2,7 +2,8 @@
   结构化数据（4.10）。页面 front matter 的 jsonld 决定输出哪种：
     home     各语言首页：同一份 WebSite（控制搜索结果里显示的站点名），加上移动端的 SoftwareApplication
     desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop.json
-    ios      iOS 版介绍页：iOS 版的 SoftwareApplication，安装地址与 sameAs 都是 App Store 的应用页
+    ios      iOS 版介绍页：iOS 版的 SoftwareApplication，安装地址与 sameAs 都是 App Store 的应用页；另加 FAQPage，
+             问答取自本页的「常见问题」一节（见下面 ios 一段的注释）
   站点名与别名取自 hugo.toml 的 siteNames。Google 每个域名只取一个站点名，不按语言区分，所以所有语言的首页放同一份
   WebSite；根地址按语言 302 到各语言首页，Google 按跳转的目标读取。价格只在能逐平台写准时才写，所以不写；软件应用的
   富媒体结果需要价格与评分，没有它们，写上发行方也不会改变展示，所以也不写。
@@ -28,4 +29,29 @@
 {{- $appStore := printf "https://apps.apple.com/app/id%s" site.Params.iosAppID }}
 {{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" (.Params.appName | default site.Title) "alternateName" $alternates "operatingSystem" "iOS 26, iPadOS 26" "applicationCategory" "UtilitiesApplication" "installUrl" $appStore "sameAs" (slice $appStore) "url" .Permalink "image" ("images/icon512.png" | absURL) }}
 <script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{- /*
+  FAQPage（4.10）：问答从本页正文里取，不在 front matter 里另抄一份，页面改了，结构化数据跟着变。
+  「常见问题」一节是 <h2 id="faq"> 到下一个 h2 之间的部分：每个 h3 是一个问题，它与下一个 h3 之间的段落、列表是回答，
+  经 plain-text.html 转成纯文本（长回答的导语、编号列表与结语都完整保留）。五种语言的 iOS 版介绍页都要有这一节；
+  找不到 id="faq" 的 h2，或其中一个问题也没有时，让构建失败，免得结构化数据悄悄消失。
+  Google 自 2023 年起只给少数权威网站展示 FAQ 富媒体结果，所以不指望它改变搜索结果的样子；它的用处是让其他搜索引擎与
+  AI 检索系统直接读到成对的问答。
+*/ -}}
+{{- $html := string .Content }}
+{{- if ne (len (findRE `<h2[^>]*\sid="faq"[\s>]` $html)) 1 }}
+{{- errorf "%s：iOS 版介绍页要有恰好一个 <h2 id=\"faq\">（常见问题），FAQPage 结构化数据从它取问答" .File.Path }}
+{{- end }}
+{{- $section := replaceRE `(?s)^.*?<h2[^>]*\sid="faq"[^>]*>` "" $html 1 }}
+{{- $section = replaceRE `(?s)<h2.*$` "" $section 1 }}
+{{- $questions := slice }}
+{{- range after 1 (split $section "<h3") }}
+{{- $name := replaceRE `(?s)^[^>]*>(.*?)</h3>.*$` "$1" . | partial "plain-text.html" }}
+{{- $answer := replaceRE `(?s)^.*?</h3>` "" . 1 | partial "plain-text.html" }}
+{{- $questions = $questions | append (dict "@type" "Question" "name" $name "acceptedAnswer" (dict "@type" "Answer" "text" $answer)) }}
+{{- end }}
+{{- if not $questions }}
+{{- errorf "%s：「常见问题」一节（<h2 id=\"faq\">）里一个 h3 问题也没有" .File.Path }}
+{{- end }}
+{{- $faq := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $questions }}
+<script type="application/ld+json">{{ $faq | jsonify | safeJS }}</script>
 {{- end }}

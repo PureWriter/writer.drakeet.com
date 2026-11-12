@@ -14,6 +14,8 @@ appName: Pure Writer for iOS
   简体页「Android 版的会员」一问里的支付宝只适合大陆用户，这里照英文首页 #ios-en 一节的第三条，只写 Google Play。
   常见问题第一条不对应简体的「苹果版」，改为英文用户会搜的问法（iPhone），第二条接着问 iPad。
   截图上「同步」那张只写了 Dropbox、OneDrive，alt 照图上写；正文的网盘清单照首页。
+  「常见问题」一节由 layouts/partials/jsonld.html 解析成 FAQPage 结构化数据：h2 上的 id="faq" 不能去掉，
+  每问一个 h3，回答写在它后面的段落与列表里。
 -->
 
 <header>
@@ -71,7 +73,7 @@ appName: Pure Writer for iOS
   <li>If you choose not to pay after the trial, you can still export all your writing in one tap, and apart from editing and creating documents, many features such as reading, backup, and sync stay available.</li>
 </ul>
 
-<h2>Frequently Asked Questions</h2>
+<h2 id="faq">Frequently Asked Questions</h2>
 
 <h3>Is there a Pure Writer app for iPhone?</h3>
 <p>Yes. Pure Writer for iOS is available on the App Store for iPhone and iPad. Search for “Pure Writer” on the App Store, or use the download button at the top of this page.</p>

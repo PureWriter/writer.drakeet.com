@@ -43,6 +43,17 @@ timeZone = "Asia/Shanghai"
   home = ["html"]
   page = ["html"]
 
+# /llms-full.txt：给 AI 助手与检索系统一次读完的全文（docs/content.md 第九节、rebuild.md 4.10），模板是
+# layouts/index.llmsfull.txt。全站只要一份、放在根目录，所以 root 设为 true，并且只给英文首页加这种输出（见下面的
+# languages.en.outputs）：几种语言都输出的话，会争同一个根目录文件。isPlainText 让模板按纯文本处理、不做 HTML 转义；
+# notAlternative 让它不算作页面的备选格式。
+[outputFormats.llmsfull]
+  mediaType = "text/plain"
+  baseName = "llms-full"
+  isPlainText = true
+  notAlternative = true
+  root = true
+
 [params]
   # iOS App 在 App Store 的 ID：智能横幅与下载链接共用。
   iosAppID = "6803257195"
@@ -98,6 +109,9 @@ timeZone = "Asia/Shanghai"
       hreflang = "en"
       ogLocale = "en_US"
       dataKey = "en"
+    # 英文首页另外输出根目录的 /llms-full.txt（见上面的 outputFormats.llmsfull）。
+    [languages.en.outputs]
+      home = ["html", "llmsfull"]
   [languages.ja]
     weight = 5
     locale = "ja"

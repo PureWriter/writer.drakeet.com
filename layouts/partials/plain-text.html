@@ -1,0 +1,24 @@
+{{- /*
+  把一段 HTML 转成纯文本，保留段落与列表的结构：段落之间空一行，有序列表逐项编号（1. 2. …），无序列表每项以「- 」开头，
+  其余标签去掉，实体还原成字符。结构化数据里的文本（FAQPage 的问题与回答，见 jsonld.html）用它，所以要求结果是读得懂的
+  纯文本，而不是 Markdown：加粗、链接只留文字。
+  只处理本站正文里出现的写法：列表不嵌套，代码块不会出现在这类文本里。
+*/ -}}
+{{- $text := replaceRE `(?s)<!--.*?-->` "" . -}}
+{{- /* HTML 源码里的换行与缩进只是排版，先压成一个空格，下面再按标签写出需要的换行。 */ -}}
+{{- $text = replaceRE `\s+` " " $text -}}
+{{- /* 有序列表：每一项前面写上序号。替换后的文字里不再有 <li，下面的无序列表规则不会再碰到它们。 */ -}}
+{{- range findRE `<ol[^>]*>.*?</ol>` $text -}}
+{{- $numbered := "" -}}
+{{- range $index, $item := after 1 (split . "<li") -}}
+{{- $numbered = printf "%s\n%d. %s" $numbered (add $index 1) (replaceRE `^[^>]*>` "" $item) -}}
+{{- end -}}
+{{- $text = replace $text . (printf "%s\n\n" $numbered) 1 -}}
+{{- end -}}
+{{- $text = replaceRE `<li[^>]*>` "\n- " $text -}}
+{{- $text = replaceRE `<br\s*/?>` "\n" $text -}}
+{{- $text = replaceRE `</(?:p|ul|ol|div|h[1-6]|blockquote)>` "\n\n" $text -}}
+{{- $text = replaceRE `<[^>]+>` "" $text | htmlUnescape -}}
+{{- $text = replaceRE ` *\n *` "\n" $text -}}
+{{- $text = replaceRE `\n{3,}` "\n\n" $text -}}
+{{- return strings.TrimSpace $text -}}

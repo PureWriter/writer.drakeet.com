@@ -1,7 +1,9 @@
 # 市场差异的构建检查（docs/rebuild.md 4.3「市场差异由结构保证」；约定的出处是根目录 AGENTS.md）。
 #
 # 只适合中国大陆用户的内容只放在简体中文（/zh-hans/）页面里。scripts/check.py 扫描构建产物里简体中文目录以外的
-# HTML 与文本文件（含页面里的 JSON-LD、根目录的 llms.txt），命中下面任何一组就让构建失败。
+# HTML 与文本文件（含页面里的 JSON-LD、根目录的 llms.txt 与 llms-full.txt），命中下面任何一组就让构建失败。
+# llms-full.txt 附有几个简体中文页面的全文，同样按非大陆的产物检查：那几页写进大陆专属内容时，把它从 llms-full.txt
+# 的收录名单里拿掉（docs/content.md 第九节），不给 llms-full.txt 加豁免。
 # 不扫描：/zh-hans/、/images/（旧图片）、/.well-known/、desktop.json 与它在旧地址 desktop2.json 上的副本（发版数据，
 # 里面本来就有各语言的更新日志）。
 #

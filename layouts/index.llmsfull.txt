@@ -1,0 +1,81 @@
+{{- /*
+  /llms-full.txt：官网主要页面的全文，给 AI 助手与检索系统一次读完（docs/content.md 第九节、rebuild.md 4.10）。
+  只有英文首页输出这种格式，发布在根目录（hugo.toml 的 outputFormats.llmsfull 与 languages.en.outputs）。
+
+  内容全部取自站内页面，构建时生成，不另外手写一份，免得与页面脱节：
+    - 开头的概述取自 static/llms.txt 第一个二级标题之前的部分（引用块与随后的段落），两个文件说法一致，改概述只改 llms.txt；
+    - 每一部分是一个页面，由 layouts/partials/llms-markdown.html 转成 Markdown，以页面自己的一级标题开头，标题下面
+      一行写来源地址；
+    - 以英文版为主体，之后附上只有简体中文的几页的原文。不写价格：各地区不同，以商店显示为准（站点既定口径）。
+      隐私政策只给链接，不收录全文：法律文本以页面本身为准，篇幅也大。
+  新增页面时，要不要收进这里见 docs/content.md 第九节；收录的话，在下面的 $sources 里按阅读顺序加一项。
+*/ -}}
+{{- $sources := slice
+  (dict "lang" "en" "path" "/")
+  (dict "lang" "en" "path" "/ios")
+  (dict "lang" "en" "path" "/ios-support")
+  (dict "lang" "en" "path" "/desktop")
+  (dict "lang" "en" "path" "/manual")
+  (dict "lang" "en" "path" "/backups")
+  (dict "lang" "zh-hans" "path" "/markdown")
+  (dict "lang" "zh-hans" "path" "/protections")
+  (dict "lang" "zh-hans" "path" "/genuine")
+-}}
+{{- $privacy := slice
+  (dict "label" "Pure Writer for iOS" "path" "/ios-privacy")
+  (dict "label" "Pure Writer for Android" "path" "/android-privacy")
+  (dict "label" "Pure Writer Desktop" "path" "/desktop-privacy")
+-}}
+
+{{- /* 按语言与路径找页面；找不到就让构建失败，不悄悄漏掉一部分。 */ -}}
+{{- $getPage := dict -}}
+{{- range hugo.Sites -}}
+{{- $getPage = merge $getPage (dict .Language.Lang .) -}}
+{{- end -}}
+
+{{- $parts := slice -}}
+{{- range $sources -}}
+{{- $page := (index $getPage .lang).GetPage .path -}}
+{{- if not $page }}{{ errorf "llms-full.txt：找不到页面 %s（%s）" .path .lang }}{{ end -}}
+{{- $markdown := partial "llms-markdown.html" $page -}}
+{{- $lines := split $markdown "\n" -}}
+{{- $title := index $lines 0 | strings.TrimPrefix "# " -}}
+{{- $body := delimit (after 1 $lines) "\n" | strings.TrimSpace -}}
+{{- $parts = $parts | append (dict "title" $title "body" $body "url" $page.Permalink "lang" $page.Lang "label" $page.Language.Label) -}}
+{{- end -}}
+
+{{- $overview := os.ReadFile "static/llms.txt" -}}
+{{- $overview = index (split $overview "\n## ") 0 | replaceRE `^# [^\n]*\n` "" | strings.TrimSpace -}}
+
+{{- /* 各语言的首页：英文在前，其余按 hugo.toml 里的顺序。俄文没有首页，不在首页的译文里。 */ -}}
+{{- $homes := where .AllTranslations "Lang" "en" | append (where .AllTranslations "Lang" "ne" "en") -}}
+# Pure Writer: Full Text of writer.drakeet.com
+
+{{ $overview }}
+
+This file is the full text of the main pages of the official Pure Writer website, generated from those pages each time the site is built, for AI assistants and search systems that want to read everything at once. A shorter index with links is [llms.txt]({{ "llms.txt" | absURL }}). Each part below starts with the page title as a level-1 heading, followed by the address of the page it comes from.
+
+Most of this file is in English. The website is also available in Simplified Chinese, Traditional Chinese (Taiwan and Hong Kong) and Japanese; the last parts are pages that exist only in Simplified Chinese, included in their original language. Home pages by language:
+
+{{ range $homes -}}
+- {{ .Language.Label }}: {{ .Permalink }}
+{{ end }}
+Prices are not listed here: they differ by country or region, and the App Store and Google Play show the price that applies. The privacy policies are linked but not included:
+
+{{ range $privacy -}}
+{{- $page := (index $getPage "en").GetPage .path -}}
+{{- if not $page }}{{ errorf "llms-full.txt：找不到英文的隐私政策 %s" .path }}{{ end -}}
+- {{ .label }}: {{ $page.Permalink }}
+{{ end }}
+Contents:
+
+{{ range $index, $part := $parts -}}
+{{ add $index 1 }}. {{ $part.title }}{{ if ne $part.lang "en" }} ({{ $part.label }}){{ end }}: {{ $part.url }}
+{{ end -}}
+{{ range $parts }}
+# {{ .title }}
+
+Source: {{ .url }}
+
+{{ .body }}
+{{ end -}}

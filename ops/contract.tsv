@@ -102,7 +102,12 @@
 /robots.txt	-	200	-	text/plain	Cache-Control == no-cache	Sitemap: https://writer.drakeet.com/sitemap.xml
 /sitemap.xml	-	200	-	text/xml | application/xml	-	https://writer.drakeet.com/zh-hans/sitemap.xml
 /zh-hans/sitemap.xml	-	200	-	text/xml | application/xml	-	<loc>https://writer.drakeet.com/zh-hans/</loc>
-/llms.txt	-	200	-	text/plain	-	Pure Writer
+/llms.txt	-	200	-	text/plain; charset=utf-8	-	Pure Writer | https://writer.drakeet.com/llms-full.txt
+# 给 AI 助手与检索系统的全文（4.10）：Hugo 从站内页面生成，只有根目录这一份，带语言头或 ?lang= 也原样返回、不协商。
+# 内容核对开头的标题、英文部分与简体独有部分各一处来源地址，以及 iOS 版常见问题里的长回答（Google Play 会员一问）。
+/llms-full.txt	-	200	-	text/plain; charset=utf-8	Cache-Control == no-cache	# Pure Writer: Full Text of writer.drakeet.com | Source: https://writer.drakeet.com/en/manual/ | Source: https://writer.drakeet.com/zh-hans/genuine/ | Products that share purchases across platforms almost always require an account first.
+/llms-full.txt?lang=ja	Accept-Language: ja	200	-	text/plain; charset=utf-8	-	Source: https://writer.drakeet.com/en/ios/
+/llms-full.txt	Accept-Encoding: br, gzip	200	-	text/plain; charset=utf-8	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
 # IndexNow 的密钥文件（第九节 E）：正式站部署后推送时用 keyLocation 指向它，搜索引擎读到的内容必须就是密钥，否则推送
 # 被拒（403）。密钥本来就公开；换密钥时与 static/indexnow.txt 一起改。
 /indexnow.txt	-	200	-	text/plain	Cache-Control == no-cache	8f30c9d03867559f7910e8d7fc30a544
