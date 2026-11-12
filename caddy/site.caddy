@@ -195,7 +195,7 @@ route {
 	#    不看它，留在地址里只会让人误以为它起了作用。
 	#
 	#    入口一览（map 的输出：入口种类、语言前缀之后的页面路径）：
-	#      core     /、/index、/index.html；/ios/privacy、/ios/support 与 .html 写法       首页与 iOS 两页：五种核心语言
+	#      core     /、/index、/index.html；/ios、/ios/privacy、/ios/support 与 .html 写法  首页与 iOS 三页：五种核心语言
 	#      desktop  /desktop、/desktop2、/desktop2_en、/desktop_en 与 .html 写法；         桌面版下载页：五种核心语言加 ru
 	#               Windows 安装包写进「已安装的应用」的坏链接 /desktop2(_en)JpAbortIfPureWriterRunning…（2.1）
 	#      zh       /desktop2_zh、/desktop_zh 与 .html 写法                                  只在 zh-hk 与 zh-hant 之间协商，默认 zh-hant
@@ -203,6 +203,7 @@ route {
 	#    已安装桌面版的「检查更新」、rebase-server、包管理器的清单（Homebrew、Scoop、AUR、winget）、Android 文案。
 	map {vars.clean_path} {entry} {entry_page} {
 		~^/(?:index(?:\.html)?)?$ core ""
+		~^/ios(?:\.html)?$ core ios/
 		~^/ios/(privacy|support)(?:\.html)?$ core ios/${1}/
 		~^/(?:desktop|desktop2|desktop2_en|desktop_en)(?:\.html)?$ desktop desktop/
 		~^/desktop2(?:_en)?JpAbortIfPureWriterRunning desktop desktop/
@@ -378,7 +379,7 @@ route {
 	#    字母、数字、点与下划线都不在其中，所以 /desktop2.json、/desktop2_en 不会被误伤。旧入口已在上面精确匹配过，
 	#    这里只会遇到带尾巴的写法；/cn/、/v28/ 这类本身就在表里的写法上面已经一步到位。
 	#    这个字符类与下面的 @junk_root、第 3 段的 @prefixed_junk 完全相同，三处必须一起改。
-	@junk path_regexp junk ^/(index|desktop|desktop2|desktop2_en|desktop2_zh|desktop2_ru|desktop_en|desktop_zh|ios/privacy|ios/support|wiki|wiki_zh|wiki_en|backups|backups_zh|backups_en|warning|privacy|privacy_en|privacy_individual|home_en|blog/NewDesktopDevStory|d/privacy|desktop/privacy|markdown|protections|dorakito|cn|v28|v28\.1|about|pro|ocat/ocat|ocat/privacy|ocat/terms)(?:[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]|/$)
+	@junk path_regexp junk ^/(index|desktop|desktop2|desktop2_en|desktop2_zh|desktop2_ru|desktop_en|desktop_zh|ios|ios/privacy|ios/support|wiki|wiki_zh|wiki_en|backups|backups_zh|backups_en|warning|privacy|privacy_en|privacy_individual|home_en|blog/NewDesktopDevStory|d/privacy|desktop/privacy|markdown|protections|dorakito|cn|v28|v28\.1|about|pro|ocat/ocat|ocat/privacy|ocat/terms)(?:[\x{3000}-\x{303F}\x{FF01}-\x{FF0F}\x{FF1A}-\x{FF20}\x{FF3B}-\x{FF40}\x{FF5B}-\x{FF65}\x{2010}-\x{2027}\x{00B7}\x{00A0}\x{2007}\x{202F}\x{FEFF})\x60*~\[\]]|/$)
 	handle @junk {
 		header Cache-Control "max-age=86400"
 		redir * /{re.junk.1}{?query} 301

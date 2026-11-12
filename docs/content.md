@@ -20,6 +20,7 @@
 | 保护机制 | `content/protections/` | zh-hans | `/zh-hans/protections/` |
 | 请使用正版 | `content/genuine/` | zh-hans | `/zh-hans/genuine/` |
 | Android 隐私政策 | `content/android-privacy/`（`url: android/privacy/`） | zh-hans、en | `/<语言>/android/privacy/` |
+| iOS 版介绍 | `content/ios/` | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/` |
 | iOS 隐私政策 | `content/ios-privacy/`（`url: ios/privacy/`） | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/privacy/` |
 | iOS 支持 | `content/ios-support/`（`url: ios/support/`） | 同上 | `/<语言>/ios/support/` |
 | 桌面版隐私政策 | `content/desktop-privacy/`（`url: desktop/privacy/`） | en | `/en/desktop/privacy/` |
@@ -35,11 +36,11 @@
 | `description` | meta 描述。旧页有就沿用；没有的，从本页开头的正文里摘原话（不新增事实，不写宣传语），中文以 50～120 字为宜；开头没有合适长度的句子时可以短一些，不硬凑 |
 | `lastmod` | 内容最后一次实质修改的日期（YYYY-MM-DD），进 sitemap。迁移时取旧页文件在旧站仓库里最后一次提交的日期 |
 | `url` | 见第一节 |
-| `image` | 分享卡片用的图片，写 `static/` 下的路径；写了就用大卡片，不写就用站点图标的小卡片。首页用 `img/og/<语言>.jpg`（`assets/` 下，1200×630，由 `scripts/og-images.py` 从 App Store 的页头生成，港繁共用 zh-hant；构建时加内容指纹、原样发布为 JPEG），下载页用 `static/` 下的桌面版截图 |
-| `iosBanner: true` | 输出 Safari 的 iOS 智能横幅（首页、iOS 支持页、iOS 隐私政策） |
-| `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页与下载页用 |
-| `jsonld: home` 或 `jsonld: desktop` | 输出结构化数据：首页、下载页 |
-| `appName` | 下载页的结构化数据里的软件名，例如「纯纯写作桌面版」 |
+| `image` | 分享卡片用的图片，写 `static/` 下的路径；写了就用大卡片，不写就用站点图标的小卡片。首页与 iOS 版介绍页用 `img/og/<语言>.jpg`（`assets/` 下，1200×630，由 `scripts/og-images.py` 从 App Store 的页头生成，港繁共用 zh-hant；构建时加内容指纹、原样发布为 JPEG），下载页用 `static/` 下的桌面版截图 |
+| `iosBanner: true` | 输出 Safari 的 iOS 智能横幅（首页、iOS 版介绍页、iOS 支持页、iOS 隐私政策） |
+| `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页、下载页与 iOS 版介绍页用 |
+| `jsonld: home`、`jsonld: desktop` 或 `jsonld: ios` | 输出结构化数据：首页、下载页、iOS 版介绍页 |
+| `appName` | 下载页与 iOS 版介绍页的结构化数据里的软件名，例如「纯纯写作桌面版」「纯纯写作 iOS 版」 |
 | `lastmodFrom: desktop.json` | 下载页：sitemap 的 lastmod 取 desktop.json 的发布日期 |
 | `script: download.js` | 引用 `assets/js/` 下的脚本（全站只有下载页用） |
 | `noindex: true` | 不让搜索引擎收录，也不进 sitemap（授权完成页、404） |
@@ -94,6 +95,7 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 | `/markdown`、`/protections`、`/warning` | `/zh-hans/markdown/`、`/zh-hans/protections/`、`/zh-hans/genuine/` |
 | `/privacy`、`/privacy_en` | `/zh-hans/android/privacy/`、`/en/android/privacy/` |
 | `/ios/privacy?lang=<x>`、`/ios/support?lang=<x>` | `/<语言>/ios/privacy/`、`/<语言>/ios/support/` |
+| `/ios`（对外张贴用的不带语言的入口，站内不用） | `/<语言>/ios/` |
 | `/d/privacy` | `/en/desktop/privacy/` |
 | `/blog/NewDesktopDevStory` | `/en/blog/new-desktop-dev-story/` |
 | `https://writer.drakeet.com/…` 写成的站内链接 | 同上，去掉域名 |
@@ -110,6 +112,7 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
   - `width` 是显示宽度（CSS 像素），正文宽度是 680；首屏的大图写 `loading="eager"`，其余用默认的 `lazy`。
   - 单独成段时，Hugo 会去掉 shortcode 两侧的 `<p>`；样式表已经让直接位于正文下的图片成为块级并带段落的下边距，不需要再用 `<p>` 包。
   - `alt` 沿用旧页的写法，旧页没有就写一句说明图片内容的话。
+- iOS 版介绍页的截图是 App Store 的商店截图：取 iOS 仓库 `store-assets/screenshots/<语言>/` 里 iPhone 的那五张，用 `sips` 缩到 660 宽、存成 JPEG 放在 `assets/img/ios/<语言>-<序号>-<画面>.jpg`（香港繁体共用 zh-hant 的一套），页面里写成 `<ul class="shots">` 里的 `img` shortcode，`width="216"`。商店截图更新后这里跟着换。
 - 页面图标（首页与下载页的 72px 图标）直接写 `<img src="/images/icon512.png" alt="" width="72" height="72">`。
 
 ## 六、下载页的动态部分

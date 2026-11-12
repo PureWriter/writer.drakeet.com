@@ -391,6 +391,31 @@ sup.ios {
   margin-left: 3px;
 }
 
+/* ───────────── iOS 版介绍页 ───────────── */
+/*
+  商店截图横排成一行：一屏放不下时左右滑动，不换行，每张保持竖图的比例。宽度取 216px，正文宽度里恰好露出第四张的
+  一条边，提示后面还有。用列表而不是一串并排的图片，读屏会报出「共几项」。
+*/
+.shots {
+  display: flex;
+  gap: 14px;
+  margin: 28px 0 0;
+  padding: 0 0 10px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+.shots li {
+  flex: none;
+  margin: 0;
+  scroll-snap-align: start;
+}
+.shots img {
+  display: block;
+  width: 216px;
+  border-radius: 14px;
+}
+
 /* ───────────── 桌面版下载页 ───────────── */
 .shot {
   display: block;

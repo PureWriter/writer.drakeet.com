@@ -173,6 +173,11 @@
 /zh-hans/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/genuine/>
 /zh-hans/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/android/privacy/>
 /en/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/android/privacy/>
+/zh-hans/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/ios/>
+/zh-hant/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/ios/>
+/zh-hk/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hk/ios/>
+/en/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/ios/>
+/ja/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/ios/>
 /zh-hans/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/ios/privacy/>
 /zh-hant/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/ios/privacy/>
 /zh-hk/ios/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hk/ios/privacy/>
@@ -308,6 +313,15 @@
 /ios/privacy	Accept-Language: en-GB	302	/en/ios/privacy/	-	-	-
 /ios/privacy.html?lang=ja	-	301	/ja/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy.html	Accept-Language: zh-HK	302	/zh-hk/ios/privacy/	-	-	-
+# iOS 版介绍页 /ios：对外张贴用的不带语言的地址，规则与另外两页相同；没有俄文版，ru 落到 en。
+/ios	-	302	/zh-hans/ios/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios	Accept-Language: en-US	302	/en/ios/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios	Accept-Language: zh-TW	302	/zh-hant/ios/	-	-	-
+/ios	Accept-Language: zh-HK	302	/zh-hk/ios/	-	-	-
+/ios	Accept-Language: ru-RU	302	/en/ios/	-	-	-
+/ios?lang=ja	-	301	/ja/ios/	-	Cache-Control == max-age=86400	-
+/ios?lang=de&a=1	Accept-Language: ja-JP	302	/ja/ios/?a=1	-	-	-
+/ios.html	Accept-Language: en-GB	302	/en/ios/	-	-	-
 # iOS 支持页 /ios/support：App Store Connect 的支持网址，规则与隐私政策相同。
 /ios/support	-	302	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios/support	Accept-Language: ja-JP	302	/ja/ios/support/	-	-	-
@@ -547,6 +561,7 @@
 # 其他旧入口同样适用。
 /desktop2_zh%E3%80%82	-	301	/desktop2_zh	-	-	-
 /desktop2_en%EF%BC%89	-	301	/desktop2_en	-	-	-
+/ios%E3%80%82	-	301	/ios	-	-	-
 /ios/privacy%E3%80%82	-	301	/ios/privacy	-	-	-
 /wiki%EF%BC%8C	-	301	/wiki	-	-	-
 /v28.1%E3%80%82	-	301	/v28.1	-	-	-
@@ -562,6 +577,7 @@
 /desktop2/?lang=ja	-	301	/desktop2?lang=ja	-	-	-
 /desktop/	-	301	/desktop	-	-	-
 /wiki/	-	301	/wiki	-	-	-
+/ios/	-	301	/ios	-	-	-
 /ios/privacy/	-	301	/ios/privacy	-	-	-
 /index/	-	301	/index	-	-	-
 /about/	-	301	/about	-	-	-

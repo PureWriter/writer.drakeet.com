@@ -2,6 +2,7 @@
   结构化数据（4.10）。页面 front matter 的 jsonld 决定输出哪种：
     home     各语言首页：同一份 WebSite（控制搜索结果里显示的站点名），加上移动端的 SoftwareApplication
     desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop.json
+    ios      iOS 版介绍页：iOS 版的 SoftwareApplication，安装地址与 sameAs 都是 App Store 的应用页
   站点名与别名取自 hugo.toml 的 siteNames。Google 每个域名只取一个站点名，不按语言区分，所以所有语言的首页放同一份
   WebSite；根地址按语言 302 到各语言首页，Google 按跳转的目标读取。价格只在能逐平台写准时才写，所以不写；软件应用的
   富媒体结果需要价格与评分，没有它们，写上发行方也不会改变展示，所以也不写。
@@ -22,5 +23,9 @@
 {{- $downloads := slice }}
 {{- range slice "windows-x64" "macos-aarch64" "macos-x64" }}{{ with index $release.files . }}{{ $downloads = $downloads | append .url }}{{ end }}{{ end }}
 {{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" (.Params.appName | default site.Title) "alternateName" $alternates "operatingSystem" "Windows, macOS" "applicationCategory" "UtilitiesApplication" "softwareVersion" $release.version "datePublished" $release.released "downloadUrl" $downloads "url" .Permalink }}
+<script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{- else if eq .Params.jsonld "ios" }}
+{{- $appStore := printf "https://apps.apple.com/app/id%s" site.Params.iosAppID }}
+{{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" (.Params.appName | default site.Title) "alternateName" $alternates "operatingSystem" "iOS 26, iPadOS 26" "applicationCategory" "UtilitiesApplication" "installUrl" $appStore "sameAs" (slice $appStore) "url" .Permalink "image" ("images/icon512.png" | absURL) }}
 <script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
 {{- end }}

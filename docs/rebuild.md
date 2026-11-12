@@ -11,7 +11,7 @@
 - **第 B 步（新站开发与预发）**：完成。全部页面迁入 `content/` 并与旧页逐页比对一致，站点规则、URL 合同（500 行）、部署脚本与构建检查经三轮复审（第十二节第三轮），预发站 writer2.drakeet.com 上的合同全部通过。
 - **第 C 步（切换网站）**：2026-11-07 完成，执行记录见第九节 C 的末尾。线上就是新站，使用手册（第 F 步提前完成的三端重写）与按 Drakeet 意见修改的隐私政策随之上线。
 - **下一步**：
-  - 第 E 步：已完成并上线（第九节 E），只剩 Drakeet 在 Google Search Console 添加站点，列在下面的收尾清单；
+  - 第 E 步：已完成并上线（第九节 E）。2026-11-12 按各搜索引擎的实际结果做了一轮跟进（第九节 E 末尾「2026-11-12 实测与跟进」）：drakeet.com 的跳转已在线上改为到本站；首页标题与描述、桌面页的「电脑版」、iOS 版介绍页与 `/ios` 入口在 `master` 上，随下一次部署上线。部署后要做的事与要观察的事列在那一节的末尾；
   - 第 F 步：完成。使用手册与两份教程都已按三端现行版本重写并上线（教程 fc0b13d，GPT 复审未发现事实错误）；
   - 第 D 步在上线一周后（11-14 前后）核对；
   - 10.1 的翻新建议已全部定下：第 F 步之外的各条 2026-11-08 在 `master` 上实施完毕；正式站的部署，以及把 drakeet.com 的跳转规则装到服务器（operations.md 第 6 节），等 Drakeet 同意后进行；
@@ -21,7 +21,7 @@
   - 重建期间的 `rebuild` 分支已在第 C 步快进进 `master`，它的工作树随后移除；旧站另有完整副本在本机 `/Users/drakeet/GitHub/writer.drakeet.com.old`。
 - **收尾时必须做、不论进行到哪一步都不能漏**（Drakeet 问「所有事情都完成了吗」时逐条提出）：
   - 请 Drakeet 先给 drakeet 账户设口令，再收回重建期间的免密 sudo（5.3；安全的操作顺序见 operations.md 第 9 节）；
-  - 请 Drakeet 在 Google Search Console 添加站点并提交 sitemap（第九节 E）；
+  - ~~请 Drakeet 在 Google Search Console 添加站点并提交 sitemap~~：2026-11-08 已添加并提交，11-12 核对读取成功（第九节 E）；
   - 请 Drakeet 考虑官网上的商店链接是否加来源参数：App Store 的 campaign 参数（pt、ct）与 Google Play 的 referrer，用来在 App Store Connect 与 Play 管理中心看到来自官网的下载，官网本身仍不加统计脚本。
 
 ## 一、目标与原则
@@ -227,6 +227,7 @@ scripts/             构建、预览、检查、部署与回滚
 | 保护机制 | zh-hans | `/zh-hans/protections/` | `/protections` |
 | 请使用正版 | zh-hans | `/zh-hans/genuine/` | `/warning` |
 | Android 隐私政策 | zh-hans、en | `/<语言>/android/privacy/` | `/privacy`、`/privacy_en`、`/privacy_individual` |
+| iOS 版介绍（2026-11-12 新增） | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/` | `/ios`（不是旧地址：新增的不带语言的入口，对外张贴用） |
 | iOS 隐私政策 | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/privacy/` | `/ios/privacy` |
 | iOS 支持 | 同上 | `/<语言>/ios/support/` | `/ios/support` |
 | 桌面版隐私政策 | en | `/en/desktop/privacy/` | `/d/privacy`、`/desktop/privacy` |
@@ -257,7 +258,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 合同检查用日志里出现过的真实取值（如 `zh`、`zh-hans`、带尾巴的 `zh-Hans]…`）和 iOS 的 30 种界面语言做用例。
 
-**多语言入口的协商**：适用于 `/`、`/index`、`/desktop`、`/desktop2`、`/desktop2_en`、`/desktop_en`、`/ios/privacy`、`/ios/support`，以及它们的 `.html` 写法与 2.1 所说的安装包坏链接。
+**多语言入口的协商**：适用于 `/`、`/index`、`/desktop`、`/desktop2`、`/desktop2_en`、`/desktop_en`、`/ios`、`/ios/privacy`、`/ios/support`，以及它们的 `.html` 写法与 2.1 所说的安装包坏链接。
 
 1. `?lang=` 规范化后是目标页面支持的语言：301 到该语言，去掉 `lang` 参数，其余参数照带。
 2. 否则按 `Accept-Language` 的顺序逐个规范化，取第一个目标页面支持的语言。这一步不解析 q 值，与旧站一致；目标页没有的语言直接跳过，看下一个。
@@ -371,10 +372,10 @@ scripts/             构建、预览、检查、部署与回滚
 - **爬虫一律放行**，包括各家 AI 的检索与训练爬虫：目标就是让用户和各种服务更容易知道、搜到纯纯写作。`User-agent: *` 放行即可，不必逐家列出。不想被收录的页面（授权完成页、404）用 `noindex`，不在 robots.txt 里屏蔽，否则爬虫看不到 noindex。
 - **结构化数据（JSON-LD）**：
   - 所有语言的首页放同一份 WebSite 数据（站点名与别名），用来控制搜索结果里显示的站点名。站点名是「纯纯写作」，别名依次是 Pure Writer、純純寫作、純純執筆，写在 `hugo.toml` 的 `siteNames`。Google 每个域名只取一个站点名、不按语言区分，根地址按语言跳转时按跳转的目标读取；
-  - 首页与下载页再放 SoftwareApplication，写名称、别名、平台、类别、地址与下载地址。价格只在能逐平台写准时才写：iOS 是试用后付费解锁，Android 是免费加内购。发行方不写：软件应用的富媒体结果需要价格与评分，没有它们，写上发行方也不改变展示。
+  - 首页、下载页与 iOS 版介绍页再放 SoftwareApplication，写名称、别名、平台、类别、地址与下载地址（iOS 版写 App Store 的安装地址）。价格只在能逐平台写准时才写：iOS 是试用后付费解锁，Android 是免费加内购。发行方不写：软件应用的富媒体结果需要价格与评分，没有它们，写上发行方也不改变展示。
 - **`llms.txt`**：根目录一份手写的 `static/llms.txt`，用英文写，开头列全「纯纯写作、純純寫作、Pure Writer、純純執筆」四个名字，按语言列出主要页面。不另外输出 Markdown 版页面：Google 已说明搜索与生成式功能都不使用 llms.txt 与 Markdown 版，新站的 HTML 本身也已经干净。
 - **关键词**：每个可收录的页面写一行 `<meta name="keywords">`，只列这四个名字，本语言的写法在前。Google 与 Bing 已明确不看这个标签，百度没有明确的现行说法，个别搜索引擎仍会参考；名字能被搜到，主要靠上面的 WebSite 别名与各语言页面的标题。
-- **iOS 智能横幅**：首页、各语言的 iOS 支持页与 iOS 隐私政策保留 iOS 智能横幅的 meta。
+- **iOS 智能横幅**：首页、各语言的 iOS 版介绍页、iOS 支持页与 iOS 隐私政策保留 iOS 智能横幅的 meta。
 - **`/.well-known/security.txt`**：写明联系邮箱，Expires 在构建时自动生成为一年内的日期，不需要人记着更新。
 - **`/indexnow.txt`**：IndexNow 的密钥文件（`static/indexnow.txt`），正式站部署成功后推送有变化的页面时用到，见第九节 E。
 - **不加任何统计脚本**。需要了解访问情况时，用 `ops/` 下的日志报告脚本（5.5）在服务器上做聚合。
@@ -568,7 +569,7 @@ scripts/             构建、预览、检查、部署与回滚
   - **规则**：`/privacy`、`/terms`（区分大小写，允许一个尾斜杠）是旧介绍页链接着的 OCAT 隐私政策与使用条款，仍 301 到 ocat.app 上对应的页面：跳到本站会落到纯纯写作 Android 版的隐私政策（本站的旧地址 `/privacy`），文不对题。其余一律 301 到本站的根地址，由它按访客语言协商到各语言的首页（4.5）；查询串原样带上，缓存一天，与本站旧地址的 301 一致。不保留路径：那样会把这里从来没有过的地址变成本站的地址。跳转目标只由固定写法拼成，不带请求里的原始路径，所以拼不出跳到别处的地址。本站的 DeepOCAT 旧页（第三节）不受影响，照旧 301 到 ocat.app 的首页、`/privacy` 与 `/terms`，`static/ocat/` 已删除。
   - **放在哪里**：规则写在 `ops/caddy/drakeet.com.caddy`，由 `ops/provision.sh web` 装到 `/etc/caddy/`，全局配置在这两个主机名的站点块里导入它。它与站点内容无关，不随站点版本发布、回滚，所以合同单独成表 `ops/contract-drakeet.com.tsv`，不放进每次部署都跑的 `ops/contract.tsv`；`scripts/test-caddy.sh` 在测试台导入同一份规则跑这张表。装到服务器与对线上核对的步骤见 operations.md 第 6 节。
   - **证书**：照旧由 Caddy 自动签发，跳转之前要先完成 TLS 握手。drakeet.com 没有 CAA 记录，不限制签发的 CA。
-  - **上线**：2026-11-08 装到服务器并平滑重载，两个主机名的合同对线上各 17 行全过。服务器上原来的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 随后删除（`provision.sh` 也不再复制它们）；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
+  - **上线**：2026-11-08 装到服务器并平滑重载，两个主机名的合同对线上各 17 行全过。2026-11-12 改为到本站的规则同样装到服务器并平滑重载（0ddace5），合同对线上各 17 行全过。服务器上原来的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 随后删除（`provision.sh` 也不再复制它们）；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。
   - **DNS**：根域名原来是指向 writer.drakeet.com 的 CNAME，又同时有 MX 等记录，不符合 DNS 规范（一个名字有 CNAME 就不能再有别的记录）。2026-11-08 改为指向本机公网地址的 A 记录，与 www 一致；MX（Google Workspace）与 TXT（Search Console 等的域名验证）不变，权威 DNS 上核对过。writer2.drakeet.com 是现役的预发站（`scripts/deploy.sh --staging`），解析保留。
 - **个人代理服务**：不放进主线，`provision.sh` 不安装它。2026-11-08 按需重新部署（Ubuntu 官方源的 shadowsocks-libev，只开 TCP），做法与理由见 operations.md 第 10 节。
 
@@ -731,7 +732,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### E. SEO 与 AI 可发现性
 
-- **站长平台**：只在 Google Search Console 添加站点并提交 sitemap，Bing 与百度的站长平台不做。由 Drakeet 在收尾阶段亲自添加，见「当前游标」的收尾清单。
+- **站长平台**：Google Search Console 已添加站点并提交 sitemap（2026-11-08，网址前缀资源 `https://writer.drakeet.com/`）。必应站长平台（Bing Webmaster Tools）2026-11-12 改为要做（Drakeet 定），当天已从 Search Console 导入本站：它的索引同时供给 ChatGPT 搜索与 Copilot。导入时授权的是 Search Console 所在的 Google 账号（只读权限，必应用它定期复核验证状态与 sitemap），只导入了 `https://writer.drakeet.com/`，同一账号下的 drakeet.com 与 ocat.app 没有导入；sitemap 随之导入。百度的站长平台不做。
 - **部署后自动推送**：`scripts/deploy.sh` 部署正式站成功后，把这次有变化的地址推送给 IndexNow（Bing、Yandex、Naver、Seznam 等共用一个接口，凭据是站点根目录的一个密钥文件，不需要账号）；推送失败只提示，不影响部署。Google 不支持 IndexNow，靠 sitemap；百度的推送接口需要它站长平台的凭据，不做。实现：
   - **密钥文件**：`static/indexnow.txt`，发布在根目录 `/indexnow.txt`，内容只有密钥本身（32 位十六进制，不带换行）。放在根目录，作用范围才覆盖全站；推送时用 `keyLocation` 指向它。密钥本来就是公开的。站点规则第 2 段把它列进 `@static`，按原样提供（`text/plain`、`no-cache`，与 robots.txt 相同）；合同表核对它的内容就是密钥，换密钥时两处一起改。
   - **推送什么**：只推内容有变化、且应当收录的页面。`scripts/indexnow-urls.py` 经 ssh 从标准输入交给服务器上的 python3 运行（不必安装到服务器上，脚本取自这次部署的提交）：读新版本的 sitemap，逐个逐字节比较切换前后两个版本目录里同一地址对应的页面文件（`…/index.html`），输出内容不同或上一版没有的地址。sitemap 不列带 noindex 的页面（4.10），所以列在里面就是应当收录的。没有可比较的上一版时（首次）每个页面都算新增，推送全部；没有变化就不推送。CSS 指纹一变，所有页面的 HTML 都跟着变，这时全推，不另作处理。
@@ -746,6 +747,14 @@ scripts/             构建、预览、检查、部署与回滚
   - 2026-11-07 体检（PageSpeed Insights，移动端，简体首页）：性能 91、无障碍 95、最佳做法 100、SEO 100；真实用户的 Core Web Vitals 通过（LCP 2.2 秒、INP 101 毫秒、CLS 0）。
   - 无障碍扣分的是「链接只靠颜色区分」，正文链接已加淡下划线（c777135c）。
   - 「样式表阻塞渲染」不处理：压缩后只有 1.7 KB，内联要连带改 URL 合同里检查 `/css/` 的几行；国内访问慢的主因是 JAR 下载挤占出口，由第九节 H 解决。
+- **2026-11-12 实测与跟进**（新站上线五天后，查 Google、必应、百度的实际结果与 Search Console 的数据）：
+  - **Google 把本站的站点名显示成「OCAT App」**（桌面版页面显示「drakeet.com」，标题后被加上「- Drakeet」）。原因有两层：Search Console 的网址检查里，根地址 `https://writer.drakeet.com/` 是「Google 不知道的网址」（站内链接与 sitemap 都只写带语言前缀的地址，没有任何地方引用根地址），所以 Google 还没有从根地址的跳转目标读到 WebSite 数据；取不到子域名的站点名时退回主域名的，而 drakeet.com 当时 301 到 ocat.app。处置：drakeet.com 与 www 改为 301 到本站的根地址（5.7，已上线）；在 Search Console 对根地址请求编入索引（已提交）。Google 的文档写明首页跳转时站点名按跳转的目标读取，重新抓取要几天到几周。观察到 12 月上旬仍不对的话，再考虑让根地址对不带 Accept-Language 的请求直接返回简体首页（200，canonical 指向 `/zh-hans/`），那要改站点规则第 5 段与合同。
+  - **Search Console 的数据**（8 月中至 11-10，共 35 次点击、216 次展示）：查询词以「pure writer desktop」「pure writer pc」「純純寫作電腦版」「纯纯写作电脑版」为主，而桌面版页面里「电脑版」「PC」一次都没有出现。处置：六种语言的桌面版页面在描述里带上本语言的说法（电脑版、電腦版、PC 版、PC and Mac、ПК），三种中文在副标题里再出现一次。未编入索引的只有 3 个：`/ios/support`（跳转，正常）、`/markdown` 与 `/zh-hans/markdown/`（已抓取、尚未编入）。
+  - **百度**：品牌词第一条是本站，显示的是根地址。相关搜索是「纯纯写作app官网」「纯纯写作下载」「纯纯写作有没有苹果版」「纯纯写作pc版」「纯纯写作会员值得开吗」「纯纯写作app怎么用」。处置：五种语言首页的标题由「文本编辑器」改为「写作软件」一类用户真正搜的词，描述以「纯纯写作（Pure Writer）官方网站。」开头并补上电脑版；新增 iOS 版介绍页（4.4），常见问题里回答「有没有 iOS 版（苹果版）」。价格不公开（Drakeet 定），「会员与价格」一节不做。`site:` 查询被验证码拦住，内页的收录情况没有核实。
+  - **英文品牌词「Pure Writer」**：Google 首页没有本站，是 2019 年的评测、下载站与 Reddit；AI 概览引用的是第三方页面，说它主要面向 Android，没有提 iOS 版。处置：GitHub 上 `PureWriter/desktop`（README 还写着划掉的旧地址）与 `PureWriter/PureWriter` 的 README、主页与简介改为指向本站对应的页面。Google Play 的开发者网站本来就是本站。其余自有渠道（App Store 的营销网址、Microsoft Store 条目、Medium、Telegram 频道简介）由 Drakeet 酌情更新。
+  - **`/ios` 入口**：不带语言的 `https://writer.drakeet.com/ios` 按访客语言协商到各语言的 iOS 版介绍页（站点规则第 5 段的 core 入口），适合填作 App Store 的营销网址与对外张贴。
+  - **查过、不做**：软件应用的星级富媒体结果（Google 不允许引用其他网站的评分，应用商店的评分不能用）；把手册拆成多页（App 在深链手册的锚点，单页必须保留，另拆专题页会造成重复内容）；FAQ 结构化数据（Google 已基本不再展示）；三份隐私政策的标题（Drakeet：暂不改）。
+  - **部署之后**：在 Search Console 对五个首页、五个 iOS 版介绍页与桌面版页面请求编入索引；过一两天核对必应读到的 sitemap（导入当天还在处理中）。
 - **不做**：IPv6（阿里云的 IPv6 公网带宽另外收费，需要付费的一律先不做）；境内的外部监控（GitHub Actions 从境外访问本站是通的，足够）。
 
 ### F. 使用手册全面检查与翻新

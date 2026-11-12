@@ -17,6 +17,7 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 ## Downloads
 
 - [Pure Writer for iOS on the App Store](https://apps.apple.com/app/id6803257195)
+- [Pure Writer for iOS](https://writer.drakeet.com/en/ios/): overview for iPhone and iPad, system requirements, free trial and membership; also available in [简体中文](https://writer.drakeet.com/zh-hans/ios/), [繁體中文（台灣）](https://writer.drakeet.com/zh-hant/ios/), [繁體中文（香港）](https://writer.drakeet.com/zh-hk/ios/) and [日本語](https://writer.drakeet.com/ja/ios/)
 - [Pure Writer for Android on Google Play](https://play.google.com/store/apps/details?id=com.drakeet.purewriter)
 - [Pure Writer Desktop for Windows and macOS](https://writer.drakeet.com/en/desktop/): also available in [简体中文](https://writer.drakeet.com/zh-hans/desktop/), [繁體中文（台灣）](https://writer.drakeet.com/zh-hant/desktop/), [繁體中文（香港）](https://writer.drakeet.com/zh-hk/desktop/), [日本語](https://writer.drakeet.com/ja/desktop/) and [Русский](https://writer.drakeet.com/ru/desktop/)
 
