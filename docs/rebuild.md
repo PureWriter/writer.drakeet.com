@@ -562,10 +562,10 @@ scripts/             构建、预览、检查、部署与回滚
 
 ### 5.7 其他托管
 
-- **drakeet.com 与 www.drakeet.com：一律 301 到 OCAT 的官网 https://ocat.app。**
+- **drakeet.com 与 www.drakeet.com：301 到本站的根地址 https://writer.drakeet.com/；旧介绍页链接着的 `/privacy`、`/terms` 仍到 ocat.app。**
   - **现状**（2026-11-08 核对）：DNS 上，drakeet.com 是指向 writer.drakeet.com 的 CNAME，www.drakeet.com 是指向本机的 A 记录，两者都没有 CAA 记录（阿里云权威 DNS 对根域名的 CAA 查询回 NODATA）。换系统后由全局配置里这两个主机名的站点块原样提供旧服务器备份下来的 OCAT 介绍页（`/srv/legacy/drakeet.com`）。这个页面链接着 `/privacy` 与 `/terms`，服务器上从来没有这两个文件，一直是 404。新服务器上线以来的访问日志里，真实的请求几乎只有首页与这两个地址，其余都是扫描器的探测。
-  - **为什么跳转**：OCAT 已有自己的官网 ocat.app，上面有首页、隐私政策（`/privacy`）与使用条款（`/terms`）；这里的旧页停在 2025 年，说法与 ocat.app 不一致（例如介绍页说「不收集任何隐私信息」，DeepOCAT 的隐私政策页又列出了收集的数据，10.1 第 6 条），留着只会误导。301 让旧链接与搜索结果都落到 ocat.app，比停止服务对访客友好，也不必再维护两份内容。
-  - **规则**：ocat.app 上有对应页面的旧路径保留路径（`/privacy`、`/terms`，区分大小写，允许一个尾斜杠），其余一律到 ocat.app 的首页；查询串原样带上，缓存一天，与本站旧地址的 301 一致（4.5）。不跟着 ocat.app 现有的地址自动保留路径：那样会把这里从来没有过的地址也变成它的地址。跳转目标只由固定写法拼成，不带请求里的原始路径，所以拼不出跳到别处的地址。本站的 DeepOCAT 旧页（第三节）按同样的口径 301 到 ocat.app 的首页、`/privacy` 与 `/terms`，`static/ocat/` 随之删除。
+  - **为什么跳转**：这里的旧页停在 2025 年，说法与 OCAT 自己的官网 ocat.app 不一致（例如介绍页说「不收集任何隐私信息」，DeepOCAT 的隐私政策页又列出了收集的数据，10.1 第 6 条），留着只会误导，所以不再提供页面。2026-11-08 起先是一律 301 到 ocat.app；2026-11-12 改为到本站（Drakeet 定）：搜索引擎按子域名的根地址取站点名，取不到时退回主域名首页的，主域名跳到 ocat.app 的几天里，Google 把 writer.drakeet.com 各页的站点名显示成了「OCAT App」（Search Console 里本站的根地址当时还是「Google 不知道的网址」）。主域名的首页落到本站之后，退回的名字也是纯纯写作。
+  - **规则**：`/privacy`、`/terms`（区分大小写，允许一个尾斜杠）是旧介绍页链接着的 OCAT 隐私政策与使用条款，仍 301 到 ocat.app 上对应的页面：跳到本站会落到纯纯写作 Android 版的隐私政策（本站的旧地址 `/privacy`），文不对题。其余一律 301 到本站的根地址，由它按访客语言协商到各语言的首页（4.5）；查询串原样带上，缓存一天，与本站旧地址的 301 一致。不保留路径：那样会把这里从来没有过的地址变成本站的地址。跳转目标只由固定写法拼成，不带请求里的原始路径，所以拼不出跳到别处的地址。本站的 DeepOCAT 旧页（第三节）不受影响，照旧 301 到 ocat.app 的首页、`/privacy` 与 `/terms`，`static/ocat/` 已删除。
   - **放在哪里**：规则写在 `ops/caddy/drakeet.com.caddy`，由 `ops/provision.sh web` 装到 `/etc/caddy/`，全局配置在这两个主机名的站点块里导入它。它与站点内容无关，不随站点版本发布、回滚，所以合同单独成表 `ops/contract-drakeet.com.tsv`，不放进每次部署都跑的 `ops/contract.tsv`；`scripts/test-caddy.sh` 在测试台导入同一份规则跑这张表。装到服务器与对线上核对的步骤见 operations.md 第 6 节。
   - **证书**：照旧由 Caddy 自动签发，跳转之前要先完成 TLS 握手。drakeet.com 没有 CAA 记录，不限制签发的 CA。
   - **上线**：2026-11-08 装到服务器并平滑重载，两个主机名的合同对线上各 17 行全过。服务器上原来的 `/srv/legacy/drakeet.com` 与 `/root/writer-provision/drakeet.com` 随后删除（`provision.sh` 也不再复制它们）；原页面在本机 `evidence/website-rebuild-2026-11/server-backup/drakeet.com/` 留有备份。

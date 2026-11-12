@@ -10,7 +10,7 @@ writer.drakeet.com 所在服务器的现役事实，以及部署与运维的日�
 | 网络 | 公网 IP `106.14.149.103`（实例自带的固定公网 IP，不是 EIP，更换系统盘不会变）；私网 `172.29.122.120`；固定带宽 2 Mbps（出方向） |
 | 系统 | Ubuntu 26.04 LTS（2026-11-07 更换系统盘装入，镜像 `ubuntu_26_04_x64_20G_alibase_20261023`） |
 | Web 服务器 | Caddy 2（官方 Cloudsmith 源，`apt-mark hold`，升级只走第 5 节的受控升级） |
-| 主机名 | `writer.drakeet.com`（正式站）、`writer2.drakeet.com`（预发站）、`drakeet.com` 与 `www.drakeet.com`（一律 301 到 OCAT 的官网 https://ocat.app，见 rebuild.md 5.7） |
+| 主机名 | `writer.drakeet.com`（正式站）、`writer2.drakeet.com`（预发站）、`drakeet.com` 与 `www.drakeet.com`（301 到本站的根地址 https://writer.drakeet.com/，见 rebuild.md 5.7） |
 | 证书 | Caddy 自动签发与续期：Let's Encrypt 为主，ZeroSSL 兜底；ACME 账户邮箱 writer@drakeet.com |
 | DNS | 阿里云云解析（drakeet.com）。`writer` 与 `writer2` 各有两条 CAA：`0 issue "letsencrypt.org"` 与 `0 issue "sectigo.com"`（ZeroSSL 由 Sectigo 签发），只允许这两家给它们签发证书；改用别家签发前先改 CAA |
 

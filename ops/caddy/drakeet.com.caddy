@@ -1,20 +1,24 @@
-# drakeet.com 与 www.drakeet.com 的规则（docs/rebuild.md 5.7）：一律 301 到 OCAT 的官网 https://ocat.app。
+# drakeet.com 与 www.drakeet.com 的规则（docs/rebuild.md 5.7）：301 到纯纯写作官网 https://writer.drakeet.com/。
 # 由 ops/provision.sh web 安装到 /etc/caddy/drakeet.com.caddy，全局配置在这两个主机名的站点块里导入它（ops/caddy/Caddyfile）。
 # 改了这里，先用 scripts/test-caddy.sh 在本机跑 ops/contract-drakeet.com.tsv；装到服务器之后，按 docs/operations.md 第 6 节
 # 对线上再跑一遍。
 #
+# 为什么指向本站：搜索引擎按子域名的根地址取站点名，取不到时退回主域名首页的。主域名的首页落到本站，writer.drakeet.com
+# 各页退回的站点名才是纯纯写作，而不是别的产品。
+#
 # 这两个主机名过去只提供一个 OCAT 介绍页（首页），页里链接着 /privacy 与 /terms（服务器上一直没有这两个文件，是 404）。
-# ocat.app 上有对应页面的旧路径保留路径，其余一律到 ocat.app 的首页，查询串原样带上。访问日志里其余的路径都是扫描器的
-# 探测，不逐条映射，也不跟着 ocat.app 现有的地址自动保留路径：那样会把这里从来没有过的地址也变成它的地址。
-# 跳转目标只由下面的固定写法拼成，不带请求里的原始路径，所以不会被拼成跳到别处的地址。
+# 这两个旧路径指的是 OCAT 的隐私政策与使用条款，301 到 ocat.app 上对应的页面：跳到本站会落到纯纯写作 Android 版的隐私政策
+# （本站的旧地址 /privacy），文不对题。其余一律到本站的根地址，由它按访客语言协商到各语言的首页（caddy/site.caddy 第 5 段），
+# 查询串原样带上。访问日志里其余的路径都是扫描器的探测，不逐条映射，也不保留路径：那样会把这里从来没有过的地址变成本站的
+# 地址。跳转目标只由下面的固定写法拼成，不带请求里的原始路径，所以不会被拼成跳到别处的地址。
 # 先带一天的缓存，与官网旧地址的 301 一致（docs/rebuild.md 4.5）：写错的映射修正后，最多一天就从浏览器里消失。
 
 header -Server
 header Cache-Control "max-age=86400"
 
 route {
-	# 区分大小写，与 ocat.app 一致：/PRIVACY 在那里不是隐私政策，到首页。允许一个尾斜杠。
-	@same_page path_regexp same_page ^/(privacy|terms)/?$
-	redir @same_page https://ocat.app/{re.same_page.1}{?query} 301
-	redir * https://ocat.app/{?query} 301
+	# 区分大小写，与 ocat.app 一致：/PRIVACY 在那里不是隐私政策，按其余路径处理。允许一个尾斜杠。
+	@ocat_page path_regexp ocat_page ^/(privacy|terms)/?$
+	redir @ocat_page https://ocat.app/{re.ocat_page.1}{?query} 301
+	redir * https://writer.drakeet.com/{?query} 301
 }

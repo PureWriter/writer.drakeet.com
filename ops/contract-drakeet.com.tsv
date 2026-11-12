@@ -1,30 +1,30 @@
-# drakeet.com 与 www.drakeet.com 的 URL 合同（docs/rebuild.md 5.7）：两个主机名一律 301 到 OCAT 的官网 https://ocat.app。
+# drakeet.com 与 www.drakeet.com 的 URL 合同（docs/rebuild.md 5.7）：两个主机名 301 到纯纯写作官网 https://writer.drakeet.com/。
 # 规则在 ops/caddy/drakeet.com.caddy，属于服务器的全局配置，不随站点版本发布，所以单独成表，不放进 ops/contract.tsv
 # （那份表在每次部署时对正式站与预发站跑，与这两个主机名无关）。由 ops/contract.py 执行，格式与 contract.tsv 相同：
 #   - scripts/test-caddy.sh 在本机测试台导入同一份规则，对两个主机名各跑一遍；
 #   - 规则装到服务器之后，从本机对线上跑一遍（docs/operations.md 第 6 节）：
 #       python3 -I ops/contract.py --contract ops/contract-drakeet.com.tsv --site drakeet.com --connect 106.14.149.103
 #
-# 旧路径在 ocat.app 上有对应页面的保留路径（/privacy、/terms），其余到首页；查询串原样带上，缓存一天。
+# 旧介绍页链接着的 /privacy、/terms 是 OCAT 的页面，仍到 ocat.app 上对应的地址；其余到本站的根地址，查询串原样带上，缓存一天。
 
-/	-	301	https://ocat.app/	-	Cache-Control == max-age=86400 | !Server	-
-/index.html	-	301	https://ocat.app/	-	-	-
-/?utm_source=x	-	301	https://ocat.app/?utm_source=x	-	-	-
-# 旧介绍页链接着的两页，在 ocat.app 上有对应页面。
+/	-	301	https://writer.drakeet.com/	-	Cache-Control == max-age=86400 | !Server	-
+/index.html	-	301	https://writer.drakeet.com/	-	-	-
+/?utm_source=x	-	301	https://writer.drakeet.com/?utm_source=x	-	-	-
+# 旧介绍页链接着的两页是 OCAT 的隐私政策与使用条款，仍到 ocat.app 上对应的页面。
 /privacy	-	301	https://ocat.app/privacy	-	Cache-Control == max-age=86400	-
 /terms	-	301	https://ocat.app/terms	-	-	-
 /privacy/	-	301	https://ocat.app/privacy	-	-	-
 /terms?lang=en	-	301	https://ocat.app/terms?lang=en	-	-	-
 //privacy	-	301	https://ocat.app/privacy	-	-	-
-# 区分大小写，与 ocat.app 一致：那里的 /PRIVACY 不是隐私政策，到首页。
-/PRIVACY	-	301	https://ocat.app/	-	-	-
-# 其余（旧服务器的错误页、扫描器的探测）到首页；跳转目标不带请求里的路径，反斜杠、编码过的斜杠也拼不出站外地址。
-/50x.html	-	301	https://ocat.app/	-	-	-
-/app-ads.txt	-	301	https://ocat.app/	-	-	-
-/wp-login.php?redirect_to=x	-	301	https://ocat.app/?redirect_to=x	-	-	-
-/%5Cexample.invalid/	-	301	https://ocat.app/	-	-	-
-/%2F%2Fexample.invalid/	-	301	https://ocat.app/	-	-	-
-/	Accept-Language: ja-JP	301	https://ocat.app/	-	-	-
-/	:method: HEAD	301	https://ocat.app/	-	-	-
+# 区分大小写，与 ocat.app 一致：那里的 /PRIVACY 不是隐私政策，按其余路径到本站的根地址。
+/PRIVACY	-	301	https://writer.drakeet.com/	-	-	-
+# 其余（旧服务器的错误页、扫描器的探测）到本站的根地址；跳转目标不带请求里的路径，反斜杠、编码过的斜杠也拼不出站外地址。
+/50x.html	-	301	https://writer.drakeet.com/	-	-	-
+/app-ads.txt	-	301	https://writer.drakeet.com/	-	-	-
+/wp-login.php?redirect_to=x	-	301	https://writer.drakeet.com/?redirect_to=x	-	-	-
+/%5Cexample.invalid/	-	301	https://writer.drakeet.com/	-	-	-
+/%2F%2Fexample.invalid/	-	301	https://writer.drakeet.com/	-	-	-
+/	Accept-Language: ja-JP	301	https://writer.drakeet.com/	-	-	-
+/	:method: HEAD	301	https://writer.drakeet.com/	-	-	-
 # HTTP 先由 Caddy 自动 308 到 HTTPS 的同一路径（本机测试台没有 HTTPS，这行跳过）。
 http://{host}/privacy	-	308	https://{host}/privacy	-	-	-
