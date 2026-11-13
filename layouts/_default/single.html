@@ -1,6 +1,10 @@
 {{- define "main" }}
 <article>
 {{ .Content }}
+{{- /* 博客文章的末尾：发布与更新日期、回到博客列表页的链接（article-footer.html）。 */ -}}
+{{- if eq .Params.jsonld "article" }}
+{{ partial "article-footer.html" . }}
+{{- end }}
 </article>
 {{- end }}
 {{- define "scripts" }}

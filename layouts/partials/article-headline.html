@@ -1,0 +1,14 @@
+{{- /*
+  博客文章的标题文字：列表页的链接文字与 BlogPosting 的 headline 都用它。
+  优先取正文里的一级标题（文章恰好有一个 #，docs/content.md 第八节），转成纯文本；没有 h1 时退回 <title> 去掉「 - 站点名」
+  后缀的部分。不直接用 title：title 带着站点名，而且开发故事一类的旧文章，title 是旧页的文件名式写法
+  （New Desktop Dev Story），与读者在页面上看到的标题不同。
+*/ -}}
+{{- $headline := "" -}}
+{{- with findRESubmatch `(?s)<h1[^>]*>(.*?)</h1>` (string .Content) 1 -}}
+{{- $headline = index . 0 1 | plainify | htmlUnescape | strings.TrimSpace -}}
+{{- end -}}
+{{- if not $headline -}}
+{{- $headline = strings.TrimSuffix (printf " - %s" .Site.Title) .Title -}}
+{{- end -}}
+{{- return $headline -}}

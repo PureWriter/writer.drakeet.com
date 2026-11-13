@@ -1,0 +1,12 @@
+{{- /*
+  首页「其它介绍」列表里通往博客列表页的一项（docs/content.md「博客文章」一节）：
+    {{< blog-link >}}纯纯写作博客{{< /blog-link >}}
+    {{< blog-link lang="zh-hant" >}}純純寫作部落格{{< /blog-link >}}   香港繁体没有自己的博客，与链接手册时一样指向台湾繁体
+  输出一个 <li>，里面是指向列表页的链接，链接文字就是中间写的内容（可以含 <strong> 一类的标记）。
+  列表页只在这种语言有博客文章时才存在（content/blog/_content.gotmpl）。不存在时这一项整个不输出，首页不会留下死链；
+  等这种语言的第一篇文章到了，入口自动出现，首页不用再改。
+*/ -}}
+{{- $lang := .Get "lang" | default .Page.Lang -}}
+{{- with partial "blog-list-page.html" $lang -}}
+<li><a href="{{ .RelPermalink }}">{{ $.Inner }}</a></li>
+{{- end -}}

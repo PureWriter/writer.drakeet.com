@@ -105,7 +105,7 @@
 /llms.txt	-	200	-	text/plain; charset=utf-8	-	Pure Writer | https://writer.drakeet.com/llms-full.txt
 # 给 AI 助手与检索系统的全文（4.10）：Hugo 从站内页面生成，只有根目录这一份，带语言头或 ?lang= 也原样返回、不协商。
 # 内容核对开头的标题、英文部分与简体独有部分各一处来源地址，以及 iOS 版常见问题里的长回答（Google Play 会员一问）。
-/llms-full.txt	-	200	-	text/plain; charset=utf-8	Cache-Control == no-cache	# Pure Writer: Full Text of writer.drakeet.com | Source: https://writer.drakeet.com/en/manual/ | Source: https://writer.drakeet.com/zh-hans/genuine/ | Products that share purchases across platforms almost always require an account first.
+/llms-full.txt	-	200	-	text/plain; charset=utf-8	Cache-Control == no-cache	# Pure Writer: Full Text of writer.drakeet.com | Source: https://writer.drakeet.com/en/manual/ | Source: https://writer.drakeet.com/en/genuine/ | Products that share purchases across platforms almost always require an account first.
 /llms-full.txt?lang=ja	Accept-Language: ja	200	-	text/plain; charset=utf-8	-	Source: https://writer.drakeet.com/en/ios/
 /llms-full.txt	Accept-Encoding: br, gzip	200	-	text/plain; charset=utf-8	Content-Encoding =~ br|gzip | Vary: Accept-Encoding	-
 # IndexNow 的密钥文件（第九节 E）：正式站部署后推送时用 keyLocation 指向它，搜索引擎读到的内容必须就是密钥，否则推送
@@ -144,6 +144,7 @@
 /zh-hans	-	308	/zh-hans/	-	-	-
 /en/desktop	-	308	/en/desktop/	-	-	-
 /zh-hans/genuine	-	308	/zh-hans/genuine/	-	-	-
+/zh-hans/blog	-	308	/zh-hans/blog/	-	-	-
 # 未知路径：404，用该语言目录下的 404.html，不做协商、不跳首页。俄文没有首页。
 /zh-hans/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hans>
 /zh-hant/no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=zh-Hant-TW>
@@ -156,6 +157,8 @@
 /ru	-	404	-	text/html	Cache-Control == no-store	<html lang=ru>
 # 不带语言前缀的未知路径：根目录那份多语言 404 页。
 /no-such-page	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
+# 博客列表页只有带语言前缀的地址：/blog/ 不是旧地址，没有依赖方，不做协商（旧地址 /blog/NewDesktopDevStory 的 301 见后面）。
+/blog/	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
 /no-such-page	Accept-Language: ja-JP	404	-	text/html	Cache-Control == no-store	<html lang=mul>
 /no-such-page	Accept-Encoding: gzip	404	-	text/html	Cache-Control == no-store | Content-Encoding == gzip	<html lang=mul>
 /desktop2/PureWriter2-4.4.0-Windows-x64.exe	-	404	-	text/html	Cache-Control == no-store	<html lang=mul>
@@ -180,6 +183,9 @@
 /zh-hans/markdown/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/markdown/>
 /zh-hans/protections/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/protections/>
 /zh-hans/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/genuine/>
+/zh-hant/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/genuine/>
+/en/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/genuine/>
+/ja/genuine/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/genuine/>
 /zh-hans/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/android/privacy/>
 /en/android/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/android/privacy/>
 /zh-hans/ios/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/ios/>
@@ -199,6 +205,36 @@
 /ja/ios/support/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/ios/support/>
 /en/desktop/privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/desktop/privacy/>
 /en/blog/new-desktop-dev-story/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/new-desktop-dev-story/>
+# 博客列表页（content/blog/_content.gotmpl 生成，docs/content.md「博客文章」一节）：只在这种语言有博客文章时存在，
+# 香港繁体与俄文没有博客。各篇文章的地址在文章发布时补在这几行之后。
+/zh-hans/blog/	-	200	-	text/html	Cache-Control == no-cache	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/>
+/en/blog/	-	200	-	text/html	Cache-Control == no-cache	rel=canonical href=https://writer.drakeet.com/en/blog/> | href=/en/blog/new-desktop-dev-story/
+/zh-hant/blog/	-	200	-	text/html	Cache-Control == no-cache	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/>
+/ja/blog/	-	200	-	text/html	Cache-Control == no-cache	rel=canonical href=https://writer.drakeet.com/ja/blog/>
+# 博客文章（2026-11-13 第一批）：每个语言版本一行，200 与指向自身的 canonical。
+/zh-hans/blog/typewriter-mode/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/typewriter-mode/>
+/zh-hant/blog/typewriter-mode/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/typewriter-mode/>
+/en/blog/typewriter-mode/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/typewriter-mode/>
+/ja/blog/typewriter-mode/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/typewriter-mode/>
+/zh-hans/blog/word-count-vs-character-count/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/word-count-vs-character-count/>
+/zh-hant/blog/word-count-vs-character-count/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/word-count-vs-character-count/>
+/en/blog/word-count-vs-character-count/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/word-count-vs-character-count/>
+/ja/blog/word-count-vs-character-count/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/word-count-vs-character-count/>
+/zh-hans/blog/writing-app-privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/writing-app-privacy/>
+/zh-hant/blog/writing-app-privacy/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/writing-app-privacy/>
+/zh-hans/blog/never-lose-your-draft/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/never-lose-your-draft/>
+/zh-hant/blog/never-lose-your-draft/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/never-lose-your-draft/>
+/en/blog/never-lose-your-draft/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/never-lose-your-draft/>
+/zh-hans/blog/sync-writing-between-phone-and-computer/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/sync-writing-between-phone-and-computer/>
+/zh-hant/blog/sync-writing-between-phone-and-computer/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/sync-writing-between-phone-and-computer/>
+/en/blog/sync-writing-between-phone-and-computer/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/sync-writing-between-phone-and-computer/>
+/ja/blog/sync-writing-between-phone-and-computer/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/sync-writing-between-phone-and-computer/>
+/zh-hans/blog/txt-encoding-garbled-text/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/txt-encoding-garbled-text/>
+/zh-hant/blog/txt-encoding-garbled-text/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/txt-encoding-garbled-text/>
+/zh-hans/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/getting-started/>
+/zh-hant/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/getting-started/>
+/en/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/getting-started/>
+/ja/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/getting-started/>
 
 # ======================================================================================================================
 # 多语言入口的协商（4.5）：?lang= 合法时 301（去掉 lang，其余参数照带）；否则按 Accept-Language 的顺序取第一个目标页

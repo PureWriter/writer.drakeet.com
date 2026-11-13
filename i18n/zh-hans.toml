@@ -8,3 +8,11 @@ notFoundHome = "回到纯纯写作首页"
 copyright = "版权所有：{{ .Company }}"
 company = "苏州小白迷雾科技有限公司"
 megabytes = "{{ .Count }} MB"
+# 博客文章的末尾与博客列表页（layouts/partials/article-footer.html、layouts/_default/blog.html）。dateFormat 是 Go 的时间格式。
+# 香港繁体与俄文还没有博客，不写这几项：将来有了这两种语言的文章而忘了补，构建会报缺少界面文字（警告即错误）。
+dateFormat = "2006 年 1 月 2 日"
+blogPublished = "发布日期："
+blogUpdated = "更新日期："
+dateSeparator = "　"
+blogMore = "更多文章："
+blogName = "纯纯写作博客"

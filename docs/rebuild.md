@@ -163,6 +163,7 @@ scripts/             构建、预览、检查、部署与回滚
 
 - **扁平的叶子包**。Hugo 的叶子包里不能再嵌套页面，顶层目录默认会生成列表页。所以每个页面都是一个顶层目录（例如 `content/ios-privacy/`），嵌套的 URL 用 front matter 的 `url` 表达（例如 `url: ios/privacy/`），由 Hugo 加语言前缀。
 - **关掉用不到的页面类型**：分类与标签页、RSS、各目录的列表页、俄文首页都不输出。
+- **博客列表页不是 Hugo 的目录列表页**：各目录的列表页仍然关着，`/<语言>/blog/` 是内容适配器 `content/blog/_content.gotmpl` 生成的普通页面，只在这种语言有博客文章时生成（4.4）。
 - **期望产物清单**：`scripts/build.sh` 把 `public/` 下生成的文件与入库的 `ops/expected-files.txt` 比对，多一个、少一个都报错。这样新站的地址空间严格等于本文的约定，Hugo 自作主张多生成的页面也能当场暴露。
 - **`desktop2.json` 留在仓库根目录**，路径与旧站完全相同：
   - 桌面版 release.sh 的 site 步骤因此一行都不用改；
@@ -225,13 +226,15 @@ scripts/             构建、预览、检查、部署与回滚
 | 自动备份与云备份教程 | zh-hans、zh-hant、en | `/<语言>/backups/` | `/backups`、`/backups_zh`、`/backups_en` |
 | Markdown 教程 | zh-hans | `/zh-hans/markdown/` | `/markdown` |
 | 保护机制 | zh-hans | `/zh-hans/protections/` | `/protections` |
-| 请使用正版 | zh-hans | `/zh-hans/genuine/` | `/warning` |
+| 请使用正版 | zh-hans、zh-hant、en、ja（后三种 2026-11-13 新增，面向搜索「mod apk」「破解版」的读者；`/warning` 仍只跳到简体页） | `/<语言>/genuine/` | `/warning` |
 | Android 隐私政策 | zh-hans、en | `/<语言>/android/privacy/` | `/privacy`、`/privacy_en`、`/privacy_individual` |
 | iOS 版介绍（2026-11-12 新增） | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/` | `/ios`（不是旧地址：新增的不带语言的入口，对外张贴用） |
 | iOS 隐私政策 | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/privacy/` | `/ios/privacy` |
 | iOS 支持 | 同上 | `/<语言>/ios/support/` | `/ios/support` |
 | 桌面版隐私政策 | en | `/en/desktop/privacy/` | `/d/privacy`、`/desktop/privacy` |
 | 新桌面版开发故事 | en | `/en/blog/new-desktop-dev-story/` | `/blog/NewDesktopDevStory` |
+| 博客文章（2026-11-13 新增） | 各篇不同 | `/<语言>/blog/<slug>/` | — |
+| 博客列表页（2026-11-13 新增） | 有博客文章的语言 | `/<语言>/blog/` | — |
 | 网盘授权完成 | 每页五种语言并列（4.6） | `/drives/oauth/<onedrive｜dropbox｜aliyun>/` | `/drives/oauth/*` |
 | 404 | 各语言，另有一份根目录的多语言版 | 各语言目录下的 `404.html`、根目录 `404.html` | — |
 
@@ -240,6 +243,7 @@ scripts/             构建、预览、检查、部署与回滚
 - 旧名「wiki」改为「manual」，因为它是使用手册，不是维基；「warning」改为「genuine」，页面讲的是请使用正版。旧地址都保留 301，改名不影响任何入口，代价只是旧链接多跳一次。
 - 旧的 `/privacy` 实际是 Android 版的隐私政策，正文写的都是 Android 的情况，所以新地址按端分开：`/android/privacy/`、`/ios/privacy/`、`/desktop/privacy/`。
 - `/home_en`、`/dorakito`、`/cn/` 是没有站内入口的旧首页，作用已由同语言的新首页承担，不再迁移内容，改为 301。
+- 博客（2026-11-13 新增）：文章是 `content/blog-<slug>/` 下的普通页面，地址 `/<语言>/blog/<slug>/`，与早先的开发故事同在 `/<语言>/blog/` 下。列表页 `/<语言>/blog/` 由内容适配器 `content/blog/_content.gotmpl` 生成，只在这种语言有博客文章时存在，不靠人记着增删；首页的入口与文章末尾的链接在列表页不存在时不输出。不带语言前缀的 `/blog/` 不是旧地址、没有依赖方，不做协商，照常 404。写法见 [content.md](content.md) 第十节。站点规则不用改：带语言前缀的地址本来就由 file_server 直接提供，粘着杂字符的写法也已由第 3 段清理。
 
 **旧锚点的保留**：
 
@@ -373,6 +377,7 @@ scripts/             构建、预览、检查、部署与回滚
 - **结构化数据（JSON-LD）**：
   - 所有语言的首页放同一份 WebSite 数据（站点名与别名），用来控制搜索结果里显示的站点名。站点名是「纯纯写作」，别名依次是 Pure Writer、純純寫作、純純執筆，写在 `hugo.toml` 的 `siteNames`。Google 每个域名只取一个站点名、不按语言区分，根地址按语言跳转时按跳转的目标读取；
   - 首页、下载页与 iOS 版介绍页再放 SoftwareApplication，写名称、别名、平台、类别、地址与下载地址（iOS 版写 App Store 的安装地址）。价格只在能逐平台写准时才写：iOS 是试用后付费解锁，Android 是免费加内购。发行方不写：软件应用的富媒体结果需要价格与评分，没有它们，写上发行方也不改变展示；
+  - 博客文章放 BlogPosting（标题、描述、发布与修改日期、语言、本页地址、站点图标）。作者与发布者写本语言的站点名，不写公司：各市场的运营主体不同，站点名是读者在页面上看到的、各市场都成立的名字；有署名的文章（开发故事）作者写本人。正文有「常见问题」一节时另放 FAQPage，取法与 iOS 版介绍页相同（`layouts/partials/faq-page.html` 两处共用），这一节可以没有；Open Graph 另写 `article:published_time` 与 `article:modified_time`。博客列表页的 og:type 与首页一样是 website；
   - iOS 版介绍页另放 FAQPage（五种语言）：模板从本页正文的「常见问题」一节（`<h2 id="faq">`）取问答，每个 h3 是一问，其后的段落与列表转成纯文本作回答，不在 front matter 里另抄一份。Google 自 2023 年起只给少数权威网站展示 FAQ 富媒体结果，这份数据不为改变 Google 的展示，而是让其他搜索引擎与 AI 检索系统直接读到成对的问答；问答取自页面本身，没有额外的维护成本。
 - **`llms.txt` 与 `llms-full.txt`**（写法与维护见 [content.md](content.md) 第九节）：
   - `llms.txt`：根目录一份手写的 `static/llms.txt`，按 llmstxt.org 的约定用英文写：开头列全「纯纯写作、純純寫作、Pure Writer、純純執筆」四个名字的概述，分节列出主要页面（注明各有哪些语言），次要的放 `## Optional`；

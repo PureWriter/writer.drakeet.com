@@ -1,0 +1,92 @@
+{{- /*
+  博客列表页 /<语言>/blog/（docs/content.md「博客文章」一节）。这是 Hugo 的内容适配器：它不是模板，而是在收集内容时运行、
+  用代码生成页面的「内容文件」，所以放在 content/ 下，与其他页面的源文件在一起。
+
+  为什么不用普通的内容文件（content/blog/index.<语言>.md）：
+    列表页要「某语言有博客文章才存在」。普通内容文件写了就一定生成，一种语言还没有文章时会留下一个空列表页；没写的话，等这种
+    语言的第一篇文章到了，又得有人记得补上。这里改为每种语言运行一次（EnableAllLanguages），只给确实有文章的语言生成列表页，
+    增删文章不用碰这个文件，由结构保证。
+  为什么要自己读文件：
+    适配器运行时站点的页面还没有收集完，不能用 site.RegularPages（Hugo 会报「站点尚未初始化」）。所以直接看 content/ 下各页面
+    目录里本语言的文件（index.<语言>.md 或 .html），读出 front matter，写着 jsonld: article、且不是草稿的就算一篇文章。
+    这与列表页、文章页模板里用 site.RegularPages 认文章的口径相同；万一两边不一致（例如有人写了一种这里认不出的 front matter），
+    列表页模板与文章末尾的模板会让构建失败并说明原因，不会悄悄漏掉文章或留下死链。
+
+  列表页的地址、标题与引言：
+    - 页面路径是 /blog/list（站内用 site.GetPage "/blog/list" 找它，见 layouts/partials/blog-list-page.html），发布地址由 url 定为
+      /<语言>/blog/；各语言的列表页路径相同，Hugo 因此把它们当作彼此的译文，hreflang 只列出确实存在的那几种语言。
+    - title、description 是 <title> 与 meta 描述，正文（h1 与一两句引言）用 Markdown 写；文章列表由 layouts/_default/blog.html 输出。
+    - 文案写给搜索与读者看：说清这里是什么、有哪类文章，不写宣传语。只写泛指的主题，不点名具体文章：各语言收录的文章不同，
+      也会陆续增加。繁体用台湾用词（香港繁体没有自己的博客，首页链接到台湾繁体的列表页）。
+    - 新增一种语言的博客时，在下面的 $copy 里加上这种语言的一项；有文章而没有文案时构建失败，提醒补上。
+  列表页的 lastmod（进 sitemap）不在这里算，由 sitemap 模板取本语言文章里最晚的那个（layouts/sitemap.xml）。
+*/ -}}
+{{- .EnableAllLanguages -}}
+{{- $lang := .Site.Language.Lang -}}
+
+{{- $copy := dict
+  "zh-hans" (dict
+    "title" "纯纯写作博客：写作方法与使用指南"
+    "description" "纯纯写作博客的文章解答写作时常遇到的具体问题，例如字数怎么统计、稿子怎样不丢、手机与电脑之间怎样同步、文本为什么乱码，也介绍纯纯写作的用法。"
+    "body" "# 纯纯写作博客\n\n这里的文章回答写作时常遇到的具体问题：字数怎么统计、稿子怎样才不会丢、手机与电脑之间怎样同步，也介绍纯纯写作的用法。"
+  )
+  "zh-hant" (dict
+    "title" "純純寫作部落格：寫作方法與使用指南"
+    "description" "純純寫作部落格的文章解答寫作時常遇到的具體問題，例如字數怎麼計算、稿子怎樣才不會遺失、手機與電腦之間如何同步，也介紹純純寫作的使用方式。"
+    "body" "# 純純寫作部落格\n\n這裡的文章回答寫作時常遇到的具體問題：字數怎麼計算、稿子怎樣才不會遺失、手機與電腦之間如何同步，也介紹純純寫作的使用方式。"
+  )
+  "en" (dict
+    "title" "Pure Writer Blog: Writing Tips and How-To Guides"
+    "description" "Articles from Pure Writer on practical questions that come up while writing, such as how words are counted, how to keep a draft from being lost and how to sync between phone and computer, plus guides to using the app."
+    "body" "# Pure Writer Blog\n\nAnswers to practical questions that come up while writing: how words are counted, how to keep a draft from being lost, how to sync between your phone and computer. You will also find guides to using Pure Writer here."
+  )
+  "ja" (dict
+    "title" "純純執筆ブログ：書くためのヒントと使い方ガイド"
+    "description" "文字数の数え方、原稿をなくさないための備え、スマートフォンとパソコンの同期など、文章を書くときに出てくる具体的な疑問に答える記事と、純純執筆の使い方を紹介します。"
+    "body" "# 純純執筆ブログ\n\n文章を書くときに出てくる具体的な疑問に答えます。文字数はどう数えるのか、原稿をなくさないためには何をしておけばよいか、スマートフォンとパソコンの間でどう同期するか。純純執筆の使い方も紹介します。"
+  )
+-}}
+
+{{- /* 本语言有没有博客文章：逐个看 content/ 下的页面目录（扁平的叶子包，docs/content.md 第一节），只看本语言的那个文件。 */ -}}
+{{- $hasArticle := false -}}
+{{- range os.ReadDir "content" -}}
+{{- if .IsDir -}}
+{{- $dir := .Name -}}
+{{- range os.ReadDir (printf "content/%s" $dir) -}}
+{{- if in (slice (printf "index.%s.md" $lang) (printf "index.%s.html" $lang)) .Name -}}
+{{- $text := os.ReadFile (printf "content/%s/%s" $dir .Name) -}}
+{{- /* 全站的 front matter 都是 --- 包起来的 YAML；transform.Unmarshal 按内容识别格式，YAML 解析出来是一个 map。 */ -}}
+{{- with findRESubmatch `(?s)\A---\r?\n(.*?)\r?\n---\r?\n` $text 1 -}}
+{{- $frontMatter := index . 0 1 | transform.Unmarshal -}}
+{{- /*
+  Hugo 默认不发布草稿，也不发布发布日期在未来的页面（publishDate，没写时取 date）；这里跟着跳过，否则一种语言只有一篇
+  明天才发布的文章时，会生成一个空列表页（列表页模板会因此报错）。时间按 hugo.toml 的 timeZone 解析，与 Hugo 一致。
+*/ -}}
+{{- $publish := $frontMatter.publishDate | default $frontMatter.date -}}
+{{- $future := and $publish ((time.AsTime $publish).After now) -}}
+{{- if and (eq $frontMatter.jsonld "article") (not $frontMatter.draft) (not $future) -}}
+{{- $hasArticle = true -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- if $hasArticle -}}
+{{- $text := index $copy $lang -}}
+{{- if not $text -}}
+{{- errorf "content/blog/_content.gotmpl：%s 有博客文章，但这里还没有这种语言的列表页文案（$copy）" $lang -}}
+{{- end -}}
+{{- $page := dict
+  "path" "list"
+  "kind" "page"
+  "url" "blog/"
+  "layout" "blog"
+  "title" $text.title
+  "description" $text.description
+  "params" (dict "blogList" true)
+  "content" (dict "mediaType" "text/markdown" "value" $text.body)
+-}}
+{{- .AddPage $page -}}
+{{- end -}}

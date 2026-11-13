@@ -1,0 +1,28 @@
+{{- /*
+  博客列表页 /<语言>/blog/（页面由 content/blog/_content.gotmpl 生成，docs/content.md「博客文章」一节）。
+  先是列表页自己的正文（h1 与一两句引言，写在 _content.gotmpl 里），然后列出本语言的全部博客文章，新的在前
+  （blog-articles.html）。每篇写标题（链接）、发布日期与 description：description 本来就是给搜索结果写的一两句摘要，
+  放在这里读者能据此判断要不要点开，不另写一份。
+  每篇的标题用 h2：全页只有列表页自己的 h1，文章标题是它下面并列的条目（docs/content.md 第八节「不跳级」）。
+  列表页只在有文章时才生成；万一生成了却一篇也找不到（_content.gotmpl 与这里认文章的口径不一致），让构建失败，不发布空列表页。
+*/ -}}
+{{- define "main" }}
+{{- $articles := partial "blog-articles.html" . }}
+{{- if not $articles }}
+{{- errorf "%s 的博客列表页生成了，却找不到一篇 jsonld: article 的页面：content/blog/_content.gotmpl 与 layouts/partials/blog-articles.html 认文章的口径不一致" .Lang }}
+{{- end }}
+<article>
+{{ .Content }}
+<ul class="posts">
+{{- range $articles }}
+<li>
+<h2><a href="{{ .RelPermalink }}">{{ partial "article-headline.html" . }}</a></h2>
+<p class="meta">{{ partial "date.html" .Date }}</p>
+{{- with .Description }}
+<p>{{ . }}</p>
+{{- end }}
+</li>
+{{- end }}
+</ul>
+</article>
+{{- end }}

@@ -3,7 +3,8 @@
     home     各语言首页：同一份 WebSite（控制搜索结果里显示的站点名），加上移动端的 SoftwareApplication
     desktop  桌面版下载页：桌面版的 SoftwareApplication，版本与下载地址取自 desktop.json
     ios      iOS 版介绍页：iOS 版的 SoftwareApplication，安装地址与 sameAs 都是 App Store 的应用页；另加 FAQPage，
-             问答取自本页的「常见问题」一节（见下面 ios 一段的注释）
+             问答取自本页的「常见问题」一节（见 faq-page.html）
+    article  博客文章：BlogPosting；正文有「常见问题」一节时另加 FAQPage（见下面 article 一段的注释）
   站点名与别名取自 hugo.toml 的 siteNames。Google 每个域名只取一个站点名，不按语言区分，所以所有语言的首页放同一份
   WebSite；根地址按语言 302 到各语言首页，Google 按跳转的目标读取。价格只在能逐平台写准时才写，所以不写；软件应用的
   富媒体结果需要价格与评分，没有它们，写上发行方也不会改变展示，所以也不写。
@@ -29,29 +30,55 @@
 {{- $appStore := printf "https://apps.apple.com/app/id%s" site.Params.iosAppID }}
 {{- $app := dict "@context" "https://schema.org" "@type" "SoftwareApplication" "name" (.Params.appName | default site.Title) "alternateName" $alternates "operatingSystem" "iOS 26, iPadOS 26" "applicationCategory" "UtilitiesApplication" "installUrl" $appStore "sameAs" (slice $appStore) "url" .Permalink "image" ("images/icon512.png" | absURL) }}
 <script type="application/ld+json">{{ $app | jsonify | safeJS }}</script>
+{{- /* FAQPage（4.10）：问答取自本页正文的「常见问题」一节，写法与出错时的处理见 faq-page.html。iOS 版介绍页五种语言都要有这一节。 */ -}}
+{{- with partial "faq-page.html" (dict "page" . "required" true) }}
+<script type="application/ld+json">{{ . | jsonify | safeJS }}</script>
+{{- end }}
+{{- else if eq .Params.jsonld "article" }}
 {{- /*
-  FAQPage（4.10）：问答从本页正文里取，不在 front matter 里另抄一份，页面改了，结构化数据跟着变。
-  「常见问题」一节是 <h2 id="faq"> 到下一个 h2 之间的部分：每个 h3 是一个问题，它与下一个 h3 之间的段落、列表是回答，
-  经 plain-text.html 转成纯文本（长回答的导语、编号列表与结语都完整保留）。五种语言的 iOS 版介绍页都要有这一节；
-  找不到 id="faq" 的 h2，或其中一个问题也没有时，让构建失败，免得结构化数据悄悄消失。
-  Google 自 2023 年起只给少数权威网站展示 FAQ 富媒体结果，所以不指望它改变搜索结果的样子；它的用处是让其他搜索引擎与
-  AI 检索系统直接读到成对的问答。
+  博客文章（docs/content.md「博客文章」一节）：BlogPosting，字段取自页面本身，不另外手写。
+    headline          正文的一级标题（article-headline.html；没有 h1 时用去掉站点名后缀的 title）
+    description       meta 描述
+    datePublished     front matter 的 date；dateModified 取 lastmod（没写 lastmod 时 Hugo 用 date）。写成带时区的完整时间，
+                      Hugo 按 hugo.toml 的 timeZone 解析只写了日期的值，所以是当天零点的东八区时间
+    inLanguage        html lang 的取值（zh-Hans、zh-Hant-TW、en、ja），与页面一致
+    mainEntityOfPage  本页地址：这份数据描述的就是本页的主体内容
+    image             站点图标：文章本批不放图片，图标是全站固定的方图，满足「要有图片」的建议，又不会与正文脱节
+  author 与 publisher：
+    文件开头说「不另写 Organization」，是因为各市场的运营主体不同（简体是苏州小白迷雾科技有限公司，其余是 Drakeet Co., Ltd.，
+    docs/content.md 第八节），写一个代表公司的 Organization，哪个主体都不能对所有语言成立。这里写的不是公司，而是本语言的站点名
+    （纯纯写作、純純寫作、Pure Writer、純純執筆），它就是页面顶部与 og:site_name 里读者看到的名字，各市场都成立，也不会把法律
+    主体写进一个页面上没有出现的地方。文章没有署名（正文不写署名），以站点名作为作者，与读者看到的一致。
+    例外：front matter 写了 author 的（目前只有 Drakeet 第一人称写的开发故事），作者是这个人（Person），发布者仍是站点。
+    发布者带上站点图标作 logo；作者不重复写图标。
+  FAQPage：正文有「常见问题」一节（`## 常见问题 {#faq}`）时才输出，没有这一节不报错；写法与出错时的处理见 faq-page.html。
 */ -}}
-{{- $html := string .Content }}
-{{- if ne (len (findRE `<h2[^>]*\sid="faq"[\s>]` $html)) 1 }}
-{{- errorf "%s：iOS 版介绍页要有恰好一个 <h2 id=\"faq\">（常见问题），FAQPage 结构化数据从它取问答" .File.Path }}
+{{- if .Date.IsZero }}
+{{- errorf "%s：博客文章（jsonld: article）要写 date，它是发布日期，进结构化数据、文章末尾与列表页" .File.Path }}
 {{- end }}
-{{- $section := replaceRE `(?s)^.*?<h2[^>]*\sid="faq"[^>]*>` "" $html 1 }}
-{{- $section = replaceRE `(?s)<h2.*$` "" $section 1 }}
-{{- $questions := slice }}
-{{- range after 1 (split $section "<h3") }}
-{{- $name := replaceRE `(?s)^[^>]*>(.*?)</h3>.*$` "$1" . | partial "plain-text.html" }}
-{{- $answer := replaceRE `(?s)^.*?</h3>` "" . 1 | partial "plain-text.html" }}
-{{- $questions = $questions | append (dict "@type" "Question" "name" $name "acceptedAnswer" (dict "@type" "Answer" "text" $answer)) }}
+{{- $icon := "images/icon512.png" | absURL }}
+{{- $publisher := dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink "logo" (dict "@type" "ImageObject" "url" $icon) }}
+{{- $author := dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink }}
+{{- with .Params.author }}
+{{- $author = dict "@type" "Person" "name" . }}
 {{- end }}
-{{- if not $questions }}
-{{- errorf "%s：「常见问题」一节（<h2 id=\"faq\">）里一个 h3 问题也没有" .File.Path }}
+{{- $timeFormat := "2006-01-02T15:04:05-07:00" }}
+{{- $post := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" (partial "article-headline.html" .)
+  "description" .Description
+  "datePublished" (.Date.Format $timeFormat)
+  "dateModified" (.Lastmod.Format $timeFormat)
+  "inLanguage" .Language.Locale
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "url" .Permalink
+  "image" $icon
+  "author" $author
+  "publisher" $publisher
+}}
+<script type="application/ld+json">{{ $post | jsonify | safeJS }}</script>
+{{- with partial "faq-page.html" (dict "page" . "required" false) }}
+<script type="application/ld+json">{{ . | jsonify | safeJS }}</script>
 {{- end }}
-{{- $faq := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $questions }}
-<script type="application/ld+json">{{ $faq | jsonify | safeJS }}</script>
 {{- end }}

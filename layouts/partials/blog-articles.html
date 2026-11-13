@@ -1,0 +1,10 @@
+{{- /*
+  一种语言的全部博客文章，新的在前（docs/content.md「博客文章」一节）。传入的是一个页面，取它所在语言的站点。
+  「博客文章」就是 front matter 写着 jsonld: article 的页面：目录叫 blog-<slug> 的新文章，加上早先的
+  new-desktop-dev-story，同一个口径，不按目录名判断。列表页（layouts/_default/blog.html）与 sitemap 里列表页的 lastmod
+  （layouts/sitemap.xml）都用它，免得两处的口径分叉。
+  排序：先按发布日期（date）从新到旧；site.RegularPages 本来的顺序是权重、日期、标题，sort 是稳定排序，所以同一天发布的几篇
+  按标题排，每次构建的顺序都一样。
+*/ -}}
+{{- $articles := where .Site.RegularPages "Params.jsonld" "article" -}}
+{{- return sort $articles "Date" "desc" -}}

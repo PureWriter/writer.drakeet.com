@@ -1,0 +1,16 @@
+{{- /*
+  找某种语言的博客列表页（content/blog/_content.gotmpl 生成，页面路径 /blog/list），传入语言键（zh-hans、en……），
+  找不到时返回 false。列表页只在这种语言有博客文章时才存在，所以用到它的地方（首页的入口、文章末尾的链接）都要先问一声，
+  不能直接拼出 /<语言>/blog/：那样在这种语言还没有文章时就是死链。
+  按语言遍历 hugo.Sites，是因为香港繁体的首页要找台湾繁体的列表页，不能只看当前语言的站点。
+*/ -}}
+{{- $lang := . -}}
+{{- $found := false -}}
+{{- range hugo.Sites -}}
+{{- if eq .Language.Lang $lang -}}
+{{- with .GetPage "/blog/list" -}}
+{{- $found = . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- return $found -}}

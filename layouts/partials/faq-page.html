@@ -1,0 +1,39 @@
+{{- /*
+  从页面正文的「常见问题」一节生成 FAQPage 结构化数据（rebuild.md 4.10），iOS 版介绍页与博客文章共用（layouts/partials/jsonld.html）。
+  传入 dict：page（页面）与 required（这一节是不是必须有）。返回 FAQPage 的 dict；这一节不存在、且不是必须的，返回 false。
+
+  问答从正文里取，不在 front matter 里另抄一份：页面改了，结构化数据跟着变。
+  「常见问题」一节是 <h2 id="faq"> 到下一个 h2 之间的部分（Markdown 写作 `## 常见问题 {#faq}`）：每个 h3 是一个问题，
+  它与下一个 h3 之间的段落、列表是回答，经 plain-text.html 转成纯文本（长回答的导语、编号列表与结语都完整保留）。
+  出错时让构建失败，免得结构化数据悄悄消失或错位：
+    - 有不止一个 id="faq" 的 h2；
+    - 必须有这一节（iOS 版介绍页）却找不到；
+    - 有这一节，但其中一个 h3 问题也没有。
+  Google 自 2023 年起只给少数权威网站展示 FAQ 富媒体结果，所以不指望它改变搜索结果的样子；它的用处是让其他搜索引擎与
+  AI 检索系统直接读到成对的问答。
+*/ -}}
+{{- $page := .page -}}
+{{- $html := string $page.Content -}}
+{{- $count := len (findRE `<h2[^>]*\sid="faq"[\s>]` $html) -}}
+{{- $faq := false -}}
+{{- if gt $count 1 -}}
+{{- errorf "%s：「常见问题」一节（<h2 id=\"faq\">）只能有一个，现在有 %d 个" $page.File.Path $count -}}
+{{- else if eq $count 0 -}}
+{{- if .required -}}
+{{- errorf "%s：这一页要有恰好一个 <h2 id=\"faq\">（常见问题），FAQPage 结构化数据从它取问答" $page.File.Path -}}
+{{- end -}}
+{{- else -}}
+{{- $section := replaceRE `(?s)^.*?<h2[^>]*\sid="faq"[^>]*>` "" $html 1 -}}
+{{- $section = replaceRE `(?s)<h2.*$` "" $section 1 -}}
+{{- $questions := slice -}}
+{{- range after 1 (split $section "<h3") -}}
+{{- $name := replaceRE `(?s)^[^>]*>(.*?)</h3>.*$` "$1" . | partial "plain-text.html" -}}
+{{- $answer := replaceRE `(?s)^.*?</h3>` "" . 1 | partial "plain-text.html" -}}
+{{- $questions = $questions | append (dict "@type" "Question" "name" $name "acceptedAnswer" (dict "@type" "Answer" "text" $answer)) -}}
+{{- end -}}
+{{- if not $questions -}}
+{{- errorf "%s：「常见问题」一节（<h2 id=\"faq\">）里一个 h3 问题也没有" $page.File.Path -}}
+{{- end -}}
+{{- $faq = dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $questions -}}
+{{- end -}}
+{{- return $faq -}}

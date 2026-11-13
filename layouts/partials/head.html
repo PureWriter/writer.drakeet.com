@@ -61,7 +61,15 @@
 {{- $imageURL = . | absURL }}
 {{- end }}
 {{- end }}
-<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+{{- /*
+  og:type：首页与博客列表页（content/blog/_content.gotmpl 生成，带 blogList）是 website，其余页面是 article。博客文章另写
+  发布与修改时间（Open Graph 的 article:published_time、article:modified_time），与 BlogPosting 结构化数据里的日期一致。
+*/ -}}
+<meta property="og:type" content="{{ if or .IsHome .Params.blogList }}website{{ else }}article{{ end }}">
+{{- if eq .Params.jsonld "article" }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}">
+{{- end }}
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:title" content="{{ $title }}">
 {{- with .Description }}

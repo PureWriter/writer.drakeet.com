@@ -1,0 +1,18 @@
+{{- /*
+  博客文章（jsonld: article）的末尾，由模板统一输出，正文里不写日期行与署名（docs/content.md「博客文章」一节）：
+    - 发布日期与更新日期：取 front matter 的 date 与 lastmod，按各语言的习惯写（date.html）。两者是同一天时只写发布日期，
+      免得一行里出现两个相同的日期；
+    - 回到本语言博客列表页的链接，读者读完可以接着看别的文章，也让列表页与文章之间互相可达。
+  列表页由 content/blog/_content.gotmpl 按「这种语言有没有文章」生成，有文章就一定有列表页；万一找不到（两边认文章的口径
+  不一致），让构建失败，而不是输出一个死链或悄悄不输出。
+*/ -}}
+{{- $list := partial "blog-list-page.html" .Lang -}}
+{{- if not $list -}}
+{{- errorf "%s：找不到 %s 的博客列表页（/blog/list）。列表页由 content/blog/_content.gotmpl 读取 front matter 生成，检查这篇文章的 front matter 是不是 --- 包起来的 YAML" .File.Path .Lang -}}
+{{- end -}}
+{{- $published := .Date.Format "2006-01-02" -}}
+{{- $updated := .Lastmod.Format "2006-01-02" }}
+<footer class="post-footer">
+<p>{{ T "blogPublished" }}{{ partial "date.html" .Date }}{{ if ne $published $updated }}{{ T "dateSeparator" }}{{ T "blogUpdated" }}{{ partial "date.html" .Lastmod }}{{ end }}</p>
+<p>{{ T "blogMore" }}<a href="{{ $list.RelPermalink }}">{{ T "blogName" }}</a></p>
+</footer>

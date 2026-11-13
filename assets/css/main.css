@@ -193,8 +193,13 @@ table {
   display: block;
   overflow-x: auto;
 }
+/*
+  单元格至少 3em 宽：窄屏上表格被挤窄时，中文可以在任意两字之间折行，「字数」「项目」这类短的表头会被折成一字一行。
+  3 个汉字宽够放下常见的表头与短的格子；列多到放不下时，表格整体在自身内部横向滚动（上面的 overflow-x），不撑破页面。
+*/
 th,
 td {
+  min-width: 3em;
   padding: 6px 12px;
   border: 1px solid var(--rule);
   text-align: left;
@@ -539,6 +544,48 @@ details.note dd {
   border-top: 1px solid var(--rule);
   color: var(--secondary);
   font-size: 0.9rem;
+}
+
+/* ───────────── 博客：列表页与文章末尾 ───────────── */
+/*
+  列表页：每篇文章一项，项与项之间一条细线，与 h2 章节之间的分隔线同一种写法。文章标题是 h2（全页只有列表页自己一个 h1），
+  但这里只是条目的标题，不要章节标题那样的上边框与大段留白，字号也小一档，免得一页都是大标题。
+*/
+.posts {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.posts li {
+  margin: 0;
+  padding: 18px 0 6px;
+  border-top: 1px solid var(--rule);
+}
+.posts h2 {
+  font-size: 1.15rem;
+  line-height: 1.45;
+  margin: 0 0 2px;
+  padding-top: 0;
+  border-top: 0;
+}
+/* 日期紧跟在标题下面，作为标题的附注；去掉 .meta 本来给文档日期段的大下边距。 */
+.posts .meta {
+  margin-bottom: 6px;
+}
+/* 文章末尾：发布与更新日期、回到列表页的链接。与隐私政策末尾的署名（.company）同一种写法：一条分隔线，次要色的小字。 */
+.post-footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+.post-footer p {
+  margin: 0 0 4px;
+}
+/* 日期整体折行，不在「2026 年」与「11 月」之间断开。 */
+.post-footer time {
+  white-space: nowrap;
 }
 
 /* ───────────── 不带顶部与页脚的居中单页：网盘授权完成页、根目录 404 ───────────── */

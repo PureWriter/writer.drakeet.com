@@ -18,13 +18,15 @@
 | 自动备份与云备份教程 | `content/backups/` | zh-hans、zh-hant、en | `/<语言>/backups/` |
 | Markdown 教程 | `content/markdown/` | zh-hans | `/zh-hans/markdown/` |
 | 保护机制 | `content/protections/` | zh-hans | `/zh-hans/protections/` |
-| 请使用正版 | `content/genuine/` | zh-hans | `/zh-hans/genuine/` |
+| 请使用正版 | `content/genuine/` | zh-hans、zh-hant、en、ja | `/<语言>/genuine/`（旧地址 `/warning` 只跳到简体页） |
 | Android 隐私政策 | `content/android-privacy/`（`url: android/privacy/`） | zh-hans、en | `/<语言>/android/privacy/` |
 | iOS 版介绍 | `content/ios/` | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/` |
 | iOS 隐私政策 | `content/ios-privacy/`（`url: ios/privacy/`） | zh-hans、zh-hant、zh-hk、en、ja | `/<语言>/ios/privacy/` |
 | iOS 支持 | `content/ios-support/`（`url: ios/support/`） | 同上 | `/<语言>/ios/support/` |
 | 桌面版隐私政策 | `content/desktop-privacy/`（`url: desktop/privacy/`） | en | `/en/desktop/privacy/` |
 | 新桌面版开发故事 | `content/new-desktop-dev-story/`（`url: blog/new-desktop-dev-story/`） | en | `/en/blog/new-desktop-dev-story/` |
+| 博客文章 | `content/blog-<slug>/`（`url: blog/<slug>/`），见第十节 | 各篇不同 | `/<语言>/blog/<slug>/` |
+| 博客列表页 | `content/blog/_content.gotmpl`（内容适配器，按文章自动生成），见第十节 | 有博客文章的语言 | `/<语言>/blog/` |
 | 网盘授权完成 | `content/drives-oauth-<onedrive｜dropbox｜aliyun>/`（`url: /drives/oauth/…/`） | 五种语言并列在一页 | `/drives/oauth/<服务商>/` |
 | 根目录 404 | `content/root-404/`（`url: /404.html`） | 五种语言并列在一页 | `/404.html` |
 
@@ -40,6 +42,9 @@
 | `iosBanner: true` | 输出 Safari 的 iOS 智能横幅（首页、iOS 版介绍页、iOS 支持页、iOS 隐私政策） |
 | `icons: true` | 输出按钮用的线条图标（`#icon-android`、`#icon-apple`、`#icon-desktop`、`#icon-windows`），首页、下载页与 iOS 版介绍页用 |
 | `jsonld: home`、`jsonld: desktop` 或 `jsonld: ios` | 输出结构化数据：首页、下载页、iOS 版介绍页。`ios` 另从正文的 `<h2 id="faq">` 一节生成 FAQPage（每个 h3 一问，其后的段落与列表是回答），这一节缺了构建会失败 |
+| `jsonld: article` | 博客文章（第十节）：输出 BlogPosting，正文有「常见问题」一节（`<h2 id="faq">`）时另加 FAQPage（这一节可以没有）；末尾由模板输出日期与博客列表页的链接；收进本语言的博客列表页。要同时写 `date` |
+| `date` | 发布日期（YYYY-MM-DD），博客文章必须写：进结构化数据、Open Graph、文章末尾与列表页的排序 |
+| `author` | 只用于有署名的博客文章（目前只有 Drakeet 第一人称写的开发故事）：BlogPosting 的作者写成这个人；不写时作者是本语言的站点名 |
 | `appName` | 下载页与 iOS 版介绍页的结构化数据里的软件名，例如「纯纯写作桌面版」「纯纯写作 iOS 版」 |
 | `lastmodFrom: desktop.json` | 下载页：sitemap 的 lastmod 取 desktop.json 的发布日期 |
 | `script: download.js` | 引用 `assets/js/` 下的脚本（全站只有下载页用） |
@@ -178,3 +183,44 @@ python3 -I scripts/compare-text.py <旧页.html> /tmp/site-<页面>/<语言>/<�
 - 只改页面的文字：llms-full.txt 随下一次构建自动更新，不用动；概述里说到的事实（平台、系统要求、试用与会员）变了，改 llms.txt 的概述。
 - 改了 HTML 页面的标记结构（截图列表、下载按钮、校验值的写法，标题旁的 aside 等）：构建后通读 llms-full.txt 里对应的部分，转换规则按标记逐条处理，标记变了可能需要跟着改。
 - llms-full.txt 在根目录，构建检查按非大陆的产物扫描它的市场差异（`ops/market-rules.toml`）。附在后面的简体页面一旦写进只适合中国大陆的内容，构建会失败：那时把这一页从 `$sources` 里拿掉，不要给 llms-full.txt 加豁免。
+
+## 十、博客文章
+
+博客文章回答写作者搜索的具体问题，面向搜索引擎与 AI 检索（rebuild.md 4.4、4.10）。「博客文章」的唯一标志是 front matter 的 `jsonld: article`：列表页、结构化数据与文章末尾都按它认，不按目录名。早先的 `new-desktop-dev-story` 也是一篇。
+
+**目录与 front matter**：一篇文章一个顶层目录 `content/blog-<slug>/`，每种语言一个 `index.<语言>.md`（zh-hans、zh-hant、en、ja）。slug 只用小写字母、数字与短横：站点规则清理地址后面粘着的杂字符时只认这种写法（rebuild.md 4.5）。
+
+```yaml
+---
+title: <h1 的文字> - 纯纯写作
+description: <50～120 字，含核心检索词的原话，只写事实>
+date: 2026-11-13
+lastmod: 2026-11-13
+url: blog/<slug>/
+jsonld: article
+---
+```
+
+- 同一篇文章的各语言版本放在同一个目录里，hreflang 自动只列出确实存在的语言；`url` 各语言相同（Hugo 加上语言前缀）。
+- `date` 是发布日期，必须写（缺了构建失败）；`lastmod` 是最后一次实质修改的日期，修改正文时跟着改。两者相同时文章末尾只写发布日期。日期在未来的文章（以及草稿）不发布，列表页也不收。
+- front matter 之后写一段 HTML 注释，说明定位与目标检索词、关于纯纯写作的事实出自手册哪几节、维护提示（手册改了相关说法，这里跟着改）。
+
+**正文**：恰好一个 `#` 一级标题（不带站点名，它就是列表页里的链接文字与结构化数据的 headline），章节 `##`、小节 `###`，不跳级，标题里不放链接（第八节）。正文里不写日期行与署名，模板会在末尾输出发布日期、更新日期（与发布日期不同时）与「更多文章」一行（回到本语言的博客列表页）。对比用 Markdown 表格，窄屏时表格在自身内部横向滚动，不撑破页面。
+
+**常见问题一节**：文末之前写 `## 常见问题 {#faq}`（英文 `## FAQ {#faq}`，日文 `## よくある質問 {#faq}`，id 一律是 `faq`），每个 `###` 是一个问题，其后的段落与列表是回答。模板据此生成 FAQPage（`layouts/partials/faq-page.html`，与 iOS 版介绍页共用）：回答转成纯文本，加粗与链接只留文字，所以回答要能单独读懂，不写「如上所述」「见下表」。这一节可以没有；有的话至少一个问题，`id="faq"` 的 h2 只能有一个，否则构建失败。
+
+**列表页**：`/<语言>/blog/` 由 `content/blog/_content.gotmpl`（Hugo 的内容适配器）生成，不用为它写内容文件：
+
+- 构建时看 content/ 下每个页面目录里本语言的文件，有一篇 `jsonld: article`、不是草稿、发布日期不在未来的，就生成这种语言的列表页；一篇也没有就不生成。新语言的第一篇文章到了，列表页、首页的入口与文章末尾的链接都会自动出现。
+- 列出本语言的全部博客文章：标题（一级标题的文字）、发布日期、description，按发布日期从新到旧，同一天的按标题排序。sitemap 里列表页的 lastmod 取本语言文章里最晚的 lastmod。
+- 列表页自己的 title、description、h1 与引言写在 `_content.gotmpl` 的 `$copy` 里，每种语言一项，只写泛指的主题，不点名具体文章。要给一种还没有的语言（例如香港繁体）开博客，先在那里加文案，再在 `i18n/<语言>.toml` 里补上博客的几项界面文字（dateFormat 等），缺了构建会报错。
+- 首页的入口是 `{{< blog-link >}}链接文字{{< /blog-link >}}`（香港繁体首页写 `lang="zh-hant"`，指向台湾繁体的列表页），列表页不存在时整项不输出，不会留下死链。
+- 万一列表页与文章两边认文章的口径不一致（例如 front matter 不是 `---` 包起来的 YAML），构建会失败并说明原因。
+
+**新增一篇文章要做的事**：
+
+1. 写 `content/blog-<slug>/index.<语言>.md`，用 `scripts/build-page.sh --out <临时目录> content/blog-<slug> content/manual` 构建自查（博客列表页会一起带上）；
+2. `ops/contract.tsv` 的「博客列表页」几行之后，给每个语言版本加一行 `/<语言>/blog/<slug>/`，期望 200 与指向自身的 canonical（写法照旁边的行）；这种语言的列表页是第一次出现时，同时给列表页加一行；
+3. `scripts/build.sh --worktree --update-expected` 重写期望产物清单，核对多出的正是这几页（以及新出现的列表页），再跑一遍 `scripts/build.sh --worktree` 与 `scripts/test-caddy.sh`；
+4. llms.txt：在博客那一节加一项链接，注明有哪些语言（只有简体的写「Simplified Chinese only」），见第九节。博客文章默认不收进 llms-full.txt（与开发故事相同）：它们以通用的写作问题为主，llms-full.txt 收的是产品介绍与帮助；附在后面的简体页面也要过非大陆的市场检查，文章里写了只适合大陆的内容就不能收；
+5. 其余不用手动改：列表页、hreflang、sitemap、文章末尾的链接与首页的入口都由模板生成。

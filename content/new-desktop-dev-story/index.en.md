@@ -1,8 +1,11 @@
 ---
 title: New Desktop Dev Story - Pure Writer
 description: "Drakeet looks back on more than two years of building the new Pure Writer desktop: the pressure, over 1,400 errors resolved one by one, and why a deadline matters."
+date: 2024-08-18
 lastmod: 2024-08-18
 url: blog/new-desktop-dev-story/
+jsonld: article
+author: Drakeet
 ---
 
 <!--
@@ -10,6 +13,9 @@ url: blog/new-desktop-dev-story/
   正文与旧站逐字一致：直引号与弯撇号（' 与 ’）混用、破折号与省略号都是旧页原样，不要统一。
   旧页没有标题元素，开头加粗的一段就是文章标题，保持原样。
   结构按全站写法统一（docs/content.md 第八节）：标题 h1、章节 h2、小节 h3；正文与锚点不变。
+  它也是一篇博客文章（jsonld: article，docs/content.md「博客文章」一节）：收进英文博客列表页，末尾由模板输出日期与列表页链接。
+  date 取旧页在旧站仓库里唯一一次提交的日期（2024-08-18）。author 写 Drakeet：这是他第一人称写的文章，BlogPosting 的作者
+  是他本人，其他博客文章没有署名、作者是站点。
 -->
 
 # "Without a Deadline, I Can't Get Anything Done"

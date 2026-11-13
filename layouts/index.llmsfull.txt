@@ -17,9 +17,9 @@
   (dict "lang" "en" "path" "/desktop")
   (dict "lang" "en" "path" "/manual")
   (dict "lang" "en" "path" "/backups")
+  (dict "lang" "en" "path" "/genuine")
   (dict "lang" "zh-hans" "path" "/markdown")
   (dict "lang" "zh-hans" "path" "/protections")
-  (dict "lang" "zh-hans" "path" "/genuine")
 -}}
 {{- $privacy := slice
   (dict "label" "Pure Writer for iOS" "path" "/ios-privacy")

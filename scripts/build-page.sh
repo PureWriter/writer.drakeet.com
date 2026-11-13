@@ -25,6 +25,12 @@ mkdir -p "$work/src/content"
 rsync -a --exclude '/.git' --exclude '/public/' --exclude '/content/' ./ "$work/src/"
 # 俄文首页的开关文件总要带上，否则 Hugo 会为俄文生成一个空首页。
 cp content/_index.ru.md "$work/src/content/"
+# 博客列表页（content/blog/_content.gotmpl）也总要带上：它按副本里实际有的博客文章生成各语言的列表页，没有文章就什么也不生成；
+# 文章末尾的「更多文章」链接要找到本语言的列表页，缺了它，只构建一篇文章时会报找不到列表页。
+rsync -a ./content/blog "$work/src/content/"
+# /llms-full.txt 的模板（layouts/index.llmsfull.txt）要收录的页面缺一个就让构建失败，这在全站构建里是对的，但这里只有指定的
+# 几页，它必然失败。副本里换成一个只输出一行说明的模板；真正的模板只在全站构建（scripts/build.sh）里检查与生成。
+printf '%s\n' 'scripts/build-page.sh 只构建指定的页面，不生成 llms-full.txt；全站构建见 scripts/build.sh。' >"$work/src/layouts/index.llmsfull.txt"
 for path in "$@"; do
 	[[ "$path" == content/* && -e "$path" ]] || die "不是 content 下存在的文件或目录：$path"
 	rsync -a --relative "./$path" "$work/src/"

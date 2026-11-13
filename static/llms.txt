@@ -36,6 +36,19 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 - Telegram channel: https://t.me/PureWriter
 - WeChat Official Account: Drakeets
 
+## Blog
+
+Articles that answer practical questions about writing and explain how to use Pure Writer. Each language has its own list page; the articles are written for readers of that language, not translated word for word.
+
+- [Pure Writer Blog](https://writer.drakeet.com/en/blog/): list of English articles; also [简体中文](https://writer.drakeet.com/zh-hans/blog/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/) and [日本語](https://writer.drakeet.com/ja/blog/)
+- [How to use Pure Writer: a ten-minute tutorial](https://writer.drakeet.com/en/blog/getting-started/): a getting-started guide in the order a new user needs things, with where to find each feature on Android, iOS and desktop; also in [简体中文](https://writer.drakeet.com/zh-hans/blog/getting-started/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/getting-started/), [日本語](https://writer.drakeet.com/ja/blog/getting-started/)
+- [What is typewriter mode?](https://writer.drakeet.com/en/blog/typewriter-mode/): the two meanings of the term (typewriter scrolling and dimming all but the current paragraph), when to use it, and how Pure Writer's Typewriter mode works; also in [简体中文](https://writer.drakeet.com/zh-hans/blog/typewriter-mode/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/typewriter-mode/), [日本語](https://writer.drakeet.com/ja/blog/typewriter-mode/)
+- [Word count vs. character count](https://writer.drakeet.com/en/blog/word-count-vs-character-count/): how words and characters are counted, why tools disagree, how Chinese and Japanese text is counted, and Pure Writer's word count options; also in [简体中文](https://writer.drakeet.com/zh-hans/blog/word-count-vs-character-count/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/word-count-vs-character-count/), [日本語](https://writer.drakeet.com/ja/blog/word-count-vs-character-count/)
+- [How to never lose your writing](https://writer.drakeet.com/en/blog/never-lose-your-draft/): the ways drafts get lost, why sync is not a backup, how to recover lost text, and Pure Writer's six layers of protection; also in [简体中文](https://writer.drakeet.com/zh-hans/blog/never-lose-your-draft/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/never-lose-your-draft/)
+- [How to sync writing between your phone and computer](https://writer.drakeet.com/en/blog/sync-writing-between-phone-and-computer/): three common approaches compared, how to avoid overwrites, and how to set up cloud sync in Pure Writer; also in [简体中文](https://writer.drakeet.com/zh-hans/blog/sync-writing-between-phone-and-computer/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/sync-writing-between-phone-and-computer/), [日本語](https://writer.drakeet.com/ja/blog/sync-writing-between-phone-and-computer/)
+- [Is your writing private in a writing app?](https://writer.drakeet.com/zh-hans/blog/writing-app-privacy/) (Chinese only: [简体中文](https://writer.drakeet.com/zh-hans/blog/writing-app-privacy/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/writing-app-privacy/)): where the risks to a manuscript come from, a checklist for judging any writing app, and where Pure Writer keeps documents and backups
+- [Garbled text in a TXT file](https://writer.drakeet.com/zh-hans/blog/txt-encoding-garbled-text/) (Chinese only: [简体中文](https://writer.drakeet.com/zh-hans/blog/txt-encoding-garbled-text/), [繁體中文](https://writer.drakeet.com/zh-hant/blog/txt-encoding-garbled-text/)): why TXT files show garbled characters (UTF-8 vs. GBK or Big5), how to reopen or convert them, and the encodings Pure Writer uses for export and import
+
 ## Privacy policies
 
 - [Pure Writer for iOS](https://writer.drakeet.com/en/ios/privacy/)
@@ -44,5 +57,5 @@ Pure Writer for iOS requires iOS 26 or iPadOS 26 or later. Every feature can be 
 
 ## Optional
 
-- [Please use genuine Pure Writer](https://writer.drakeet.com/zh-hans/genuine/) (Simplified Chinese only): the page Pure Writer for Android opens when it detects a cracked or pirated copy, with links to the official downloads
+- [Please use the genuine Pure Writer app](https://writer.drakeet.com/en/genuine/): why mod APKs and cracked copies are unsafe, what is free in Pure Writer for Android, and the official download sources; also in [简体中文](https://writer.drakeet.com/zh-hans/genuine/), [繁體中文](https://writer.drakeet.com/zh-hant/genuine/) and [日本語](https://writer.drakeet.com/ja/genuine/). The Simplified Chinese page is what Pure Writer for Android opens when it detects a cracked or pirated copy
 - [New desktop dev story](https://writer.drakeet.com/en/blog/new-desktop-dev-story/): the developer's 2024 essay on building the all-new Pure Writer Desktop

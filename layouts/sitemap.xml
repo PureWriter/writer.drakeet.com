@@ -2,6 +2,8 @@
   每种语言一份 sitemap（根目录的 sitemap.xml 是 Hugo 生成的索引）。只列正式地址与 lastmod，不写 xhtml:link（页头的
   hreflang 已经足够），带 noindex 的页面不列入（4.10）。下载页的 lastmod 取 desktop.json 的发布日期与页面自身
   lastmod 中较晚的一个（4.7）：发了新版，或只改了页面文字，sitemap 的日期都会跟着变。
+  博客列表页（blogList，content/blog/_content.gotmpl 生成）没有自己的 lastmod，取本语言博客文章里最晚的 lastmod：
+  新增或修改一篇文章，列表页的内容就变了（标题、摘要、日期都在上面）。
 */ -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -11,6 +13,11 @@
 {{- if eq .Params.lastmodFrom "desktop.json" }}
 {{- $released := time.AsTime (partialCached "desktop-release.html" "desktop2" "desktop2").released }}
 {{- if $released.After $lastmod }}{{ $lastmod = $released }}{{ end }}
+{{- end }}
+{{- if .Params.blogList }}
+{{- range partial "blog-articles.html" . }}
+{{- if .Lastmod.After $lastmod }}{{ $lastmod = .Lastmod }}{{ end }}
+{{- end }}
 {{- end }}
   <url>
     <loc>{{ .Permalink }}</loc>
