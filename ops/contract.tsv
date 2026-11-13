@@ -235,6 +235,20 @@
 /zh-hant/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/getting-started/>
 /en/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/getting-started/>
 /ja/blog/getting-started/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/getting-started/>
+# 博客文章（2026-11-13 第二批）。
+/zh-hans/blog/novel-writing-app-guide/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/novel-writing-app-guide/>
+/zh-hant/blog/novel-writing-app-guide/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/novel-writing-app-guide/>
+/zh-hans/blog/organize-long-novel-chapters/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/organize-long-novel-chapters/>
+/zh-hant/blog/organize-long-novel-chapters/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/organize-long-novel-chapters/>
+/zh-hans/blog/markdown-for-writers/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/markdown-for-writers/>
+/zh-hant/blog/markdown-for-writers/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/markdown-for-writers/>
+/en/blog/markdown-for-writers/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/markdown-for-writers/>
+/ja/blog/markdown-for-writers/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/markdown-for-writers/>
+/zh-hans/blog/web-novel-formatting/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/web-novel-formatting/>
+/zh-hans/blog/private-diary-app/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hans/blog/private-diary-app/>
+/zh-hant/blog/private-diary-app/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/zh-hant/blog/private-diary-app/>
+/en/blog/distraction-free-writing-app/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/en/blog/distraction-free-writing-app/>
+/ja/blog/distraction-free-writing-app/	-	200	-	text/html	-	rel=canonical href=https://writer.drakeet.com/ja/blog/distraction-free-writing-app/>
 
 # ======================================================================================================================
 # 多语言入口的协商（4.5）：?lang= 合法时 301（去掉 lang，其余参数照带）；否则按 Accept-Language 的顺序取第一个目标页
