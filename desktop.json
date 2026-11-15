@@ -1,67 +1,79 @@
 {
-  "version": "5.3.0",
-  "released": "2026-11-11",
+  "version": "5.4.0",
+  "released": "2026-11-15",
   "files": {
     "windows-x64": {
-      "name": "PureWriter-5.3.0-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-Windows-x64.exe",
-      "size": 92762424,
-      "sha256": "12c817fb1715ce566b675b9918561166d7b8194bd75455c07c4468f08aab6a7e"
+      "name": "PureWriter-5.4.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.0-Windows-x64.exe",
+      "size": 94961968,
+      "sha256": "d66757c7bb7ea6f9433a777886fe3892630dfba4ac3a8c53b1ed690913184a37"
     },
     "macos-aarch64": {
-      "name": "PureWriter-5.3.0-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-macOS-aarch64.dmg",
-      "size": 88985326,
-      "sha256": "b934ddcbc993a63b0c087acbc01d437601d8409713442b8f50331a5b81133d71"
+      "name": "PureWriter-5.4.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.0-macOS-aarch64.dmg",
+      "size": 91072253,
+      "sha256": "c1caa6f7ce11c9f311988c3f9588d97bc06f0374106426b1f94f85d3a063baff"
     },
     "macos-x64": {
-      "name": "PureWriter-5.3.0-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.3.0-macOS-x64.dmg",
-      "size": 90602577,
-      "sha256": "9fdec5fe6963b7a3427ce80e73963c861db7368b02cea7789cf42ea505f23b90"
+      "name": "PureWriter-5.4.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.0-macOS-x64.dmg",
+      "size": 92703116,
+      "sha256": "9a91a7fe82521ea785f22974fab45b96457ed9a519489559c5735bec2900d03e"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "App 更名为「Pure Writer」（纯纯写作），名称里不再带「2」。从官网下载安装包重新安装后，系统里显示的名称也会更新，文章与设置都会保留；固定在任务栏或程序坞上的图标需要重新固定一次。",
-        "Windows：安装包与程序现在带有 Drakeet Co., Ltd. 的数字签名。"
+        "Markdown 文章可以打开「编辑器与预览」：编辑器旁边显示排版后的样子，标题、列表、引用、表格、代码、图片和公式都按格式呈现，边写边看。点标签栏右侧的图标即可切换，每篇文章会记住各自的选择。",
+        "在预览里双击，编辑器会跳到对应的位置；单击链接即可打开，单击插入到文章里的图片可以在「图片资源」中查看，网络图片则在浏览器中打开。",
+        "在空白的纯文本文章里粘贴 Markdown 内容时，会先询问是否切换为 Markdown 模式；选择切换后按原文粘贴，段落之间的空行不会被去除。",
+        "Windows：程序运行时加载的各个组件现在也都带有数字签名，开启「智能应用控制」时不会再提示「此应用的一部分已被阻止」。"
       ]
     },
     "zh-Hant": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "App 更名為「Pure Writer」（純純寫作），名稱裡不再帶「2」。從官網下載安裝檔重新安裝後，系統裡顯示的名稱也會更新，文章與設定都會保留；釘選在工作列或 Dock 上的圖示需要重新釘選一次。",
-        "Windows：安裝檔與應用程式現在帶有 Drakeet Co., Ltd. 的數位簽章。"
+        "Markdown 文章可以開啟「編輯器與預覽」：編輯器旁邊顯示排版後的樣子，標題、清單、引用、表格、程式碼、圖片和公式都按格式呈現，邊寫邊看。點擊標籤列右側的圖示即可切換，每篇文章會記住各自的選擇。",
+        "在預覽裡按兩下，編輯器會跳到對應的位置；點擊連結即可開啟，點擊插入到文章裡的圖片可以在「圖片資源」中查看，網路圖片則在瀏覽器中開啟。",
+        "在空白的純文字文章裡貼上 Markdown 內容時，會先詢問是否切換為 Markdown 模式；選擇切換後按原文貼上，段落之間的空行不會被移除。",
+        "Windows：應用程式執行時載入的各個元件現在也都帶有數位簽章，開啟「智慧型應用程式控制」時不會再提示應用程式的部分元件遭到封鎖。"
       ]
     },
     "zh-HK": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "App 更名為「Pure Writer」（純純寫作），名稱裏不再帶「2」。從官網下載安裝程式重新安裝後，系統裏顯示的名稱也會更新，文章與設定都會保留；釘選在工作列或 Dock 上的圖示需要重新釘選一次。",
-        "Windows：安裝程式與應用程式現在帶有 Drakeet Co., Ltd. 的數碼簽署。"
+        "Markdown 文章可以開啟「編輯器與預覽」：編輯器旁邊顯示排版後的樣子，標題、列表、引用、表格、代碼、圖片和公式都按格式呈現，邊寫邊看。點擊標籤欄右側的圖示即可切換，每篇文章會記住各自的選擇。",
+        "在預覽裡雙擊，編輯器會跳到對應的位置；點擊連結即可開啟，點擊插入到文章裡的圖片可以在「圖片資源」中查看，網絡圖片則在瀏覽器中開啟。",
+        "在空白的純文字文章裡貼上 Markdown 內容時，會先詢問是否切換為 Markdown 模式；選擇切換後按原文貼上，段落之間的空行不會被移除。",
+        "Windows：應用程式運行時載入的各個組件現在亦都帶有數碼簽署，開啟「智慧型應用程式控制」時不會再提示應用程式的部分組件已被封鎖。"
       ]
     },
     "en": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "The app is now called “Pure Writer”, without the “2”. Reinstall it with the installer from our website and the name shown by your system is updated too; your documents and settings are kept. An icon pinned to the taskbar or kept in the Dock needs to be added again.",
-        "Windows: the installer and the app are now digitally signed by Drakeet Co., Ltd."
+        "Markdown documents can now open in “Editor and Preview”: the formatted result appears next to the editor, with headings, lists, quotes, tables, code, images, and formulas all laid out, so you can see it as you write. Switch with the icons at the right end of the tab bar; each document remembers its own choice.",
+        "Double-click in the preview to jump to the same place in the editor. Click a link to open it; click an image you inserted into the document to view it in the Image Assets window, while web images open in your browser.",
+        "When you paste Markdown into an empty plain text document, Pure Writer now asks whether to switch to Markdown mode first, so the blank lines between paragraphs are kept.",
+        "Windows: the components the app loads while running are now digitally signed too, so Smart App Control no longer shows “Part of this app has been blocked”."
       ]
     },
     "ja": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "アプリの名前が「Pure Writer」（純純執筆）に変わり、「2」が付かなくなりました。公式サイトのインストーラーで入れ直すと、システムに表示される名前も新しくなります。文章と設定はそのまま引き継がれます。タスクバーにピン留めしたアイコンや Dock に置いたアイコンは、もう一度追加してください。",
-        "Windows：インストーラーとアプリに Drakeet Co., Ltd. のデジタル署名が付きました。"
+        "Markdown の文章で「エディタとプレビュー」を開けるようになりました。エディタの隣に整形後の表示が並び、見出し・リスト・引用・表・コード・画像・数式も書式どおりに表示されるので、書きながら仕上がりを確認できます。タブバー右側のアイコンで切り替えられ、文章ごとに選択が記憶されます。",
+        "プレビューでダブルクリックすると、エディタの対応する位置へ移動します。リンクはクリックで開き、文章に挿入した画像はクリックすると「画像アセット」ウィンドウで表示されます。Web 上の画像はブラウザで開きます。",
+        "空のプレーンテキストの文章に Markdown を貼り付けるとき、先に Markdown モードへ切り替えるかを確認するようになりました。切り替えると、段落の間の空行を残したまま貼り付けます。",
+        "Windows：アプリが実行中に読み込むコンポーネントにもデジタル署名が付き、スマート アプリ コントロールを有効にしていても、アプリの一部がブロックされたと表示されなくなりました。"
       ]
     },
     "ru": {
-      "version": "5.3.0",
+      "version": "5.4.0",
       "items": [
-        "Приложение теперь называется «Pure Writer», без «2». Если переустановить его с помощью установщика с нашего сайта, обновится и название, которое показывает система; ваши документы и настройки сохранятся. Значок, закреплённый на панели задач или в Dock, нужно будет добавить заново.",
-        "Windows: установщик и приложение теперь подписаны цифровой подписью Drakeet Co., Ltd."
+        "Документы Markdown теперь можно открыть в режиме «Редактор и предпросмотр»: рядом с редактором отображается оформленный результат с заголовками, списками, цитатами, таблицами, кодом, изображениями и формулами, так что видно, как выглядит текст, прямо во время письма. Режим переключается значками справа на панели вкладок; каждый документ запоминает свой выбор.",
+        "Двойной щелчок в предпросмотре переносит к тому же месту в редакторе. Ссылка открывается щелчком; щелчок по изображению, вставленному в документ, открывает его в окне «Библиотека изображений», а изображения из интернета открываются в браузере.",
+        "При вставке Markdown в пустой документ с простым текстом приложение сначала спрашивает, переключиться ли в режим Markdown; пустые строки между абзацами при этом сохраняются.",
+        "Windows: компоненты, которые приложение загружает во время работы, теперь тоже подписаны цифровой подписью, поэтому интеллектуальное управление приложениями больше не сообщает, что часть приложения заблокирована."
       ]
     }
   }
