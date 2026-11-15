@@ -195,8 +195,13 @@ route {
 	#      2) 否则按 Accept-Language 的顺序逐个规范化，取第一个目标页面支持的语言（不解析 q 值，与旧站一致；目标页没有的
 	#         语言直接跳过，看下一个）；
 	#      3) 请求根本不带 Accept-Language（多为爬虫与检查程序）时落到默认语言；带了、但都不受支持时落到英文。
-	#    第 2、3 步返回 302，带 Vary: Accept-Language 与 Cache-Control: no-store。302 同样去掉 lang 参数：带语言前缀的页面
-	#    不看它，留在地址里只会让人误以为它起了作用。
+	#    第 2 步返回 302，第 3 步返回 301，两者都带 Vary: Accept-Language 与 Cache-Control: no-store，也都去掉 lang 参数：
+	#    带语言前缀的页面不看它，留在地址里只会让人误以为它起了作用。
+	#    第 3 步用 301（docs/rebuild.md 4.5、第九节 E「2026-11-15 实测与跟进」）：Googlebot、bingbot 等不带这个请求头，302 让
+	#    它们把这些不带前缀的地址当成独立的页面收录，而这些地址不在各语言页面的 hreflang 互指里，外链的权重也留在上面。301 让
+	#    搜索引擎把它们并入默认语言的页面，各语言的用户再由 hreflang 得到自己语言的版本。这不是按 User-Agent 区别对待：任何
+	#    不带这个请求头的客户端拿到的都一样，目标也与原来相同。Vary 与 no-store 照旧：响应确实取决于有没有这个请求头，不让
+	#    中间缓存与客户端把这个 301 长期记住，日后要调整时不会被缓存拖住。
 	#
 	#    入口一览（map 的输出：入口种类、语言前缀之后的页面路径）：
 	#      core     /、/index、/index.html；/ios、/ios/privacy、/ios/support 与 .html 写法  首页与 iOS 三页：五种核心语言
@@ -312,12 +317,13 @@ route {
 			header Cache-Control "max-age=86400"
 			redir * /{entry_lang_by_param}/{entry_page}{query_without_lang} 301
 		}
-		# 3) 请求根本不带 Accept-Language。要排在 2) 前面判断：handle 按书写顺序取第一个匹配的。
+		# 3) 请求根本不带 Accept-Language：301 到默认语言（理由见本段开头）。带了但为空的不算，走 2)。
+		#    要排在 2) 前面判断：handle 按书写顺序取第一个匹配的。
 		@no_accept_language header !Accept-Language
 		handle @no_accept_language {
 			header Cache-Control "no-store"
 			header Vary "Accept-Language"
-			redir * /{entry_lang_default}/{entry_page}{query_without_lang} 302
+			redir * /{entry_lang_default}/{entry_page}{query_without_lang} 301
 		}
 		# 2) 按 Accept-Language 协商（都不受支持时，core 与 desktop 落到 en，zh 落到 zh-hant）。
 		handle {

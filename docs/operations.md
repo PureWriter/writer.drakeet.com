@@ -201,7 +201,7 @@ for host in drakeet.com www.drakeet.com; do python3 -I ops/contract.py --contrac
 - 失败通知发给最后修改 cron 那一行的 GitHub 账号（目前是 drakeet），要在 GitHub 的 Settings → Notifications → Actions 里开着「失败时发邮件」。
 - 公开仓库 60 天没有提交时，GitHub 会停用定时任务（会先发邮件提醒）；平时桌面发版就会产生提交，若被停用，在 Actions 页面重新启用即可。
 - 检查点在境外，GitHub 的调度也常有十几分钟的延迟，所以它只用来发现「挂了」，不用来衡量国内访问速度。
-- 首页按访客语言跳转（不带语言头时 302 到 `/zh-hans/`），监控跟随跳转后检查最终是 200 的网页。
+- 首页按访客语言跳转（不带语言头时 301 到 `/zh-hans/`），监控跟随跳转后检查最终是 200 的网页。
 - 监控运行的是 GitHub 默认分支上的工作流，检查的却是正式站。改动让它去检查正式站上还没有的东西时（例如 2026-11 把 `desktop2.json` 换成 `desktop.json`），
   次序是先部署正式站、再推送到 GitHub；先推送的话，部署之前每 15 分钟报一次警。
 

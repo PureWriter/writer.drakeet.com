@@ -224,3 +224,21 @@ jsonld: article
 3. `scripts/build.sh --worktree --update-expected` 重写期望产物清单，核对多出的正是这几页（以及新出现的列表页），再跑一遍 `scripts/build.sh --worktree` 与 `scripts/test-caddy.sh`；
 4. llms.txt：在博客那一节加一项链接，注明有哪些语言（只有简体的写「Simplified Chinese only」），见第九节。博客文章默认不收进 llms-full.txt（与开发故事相同）：它们以通用的写作问题为主，llms-full.txt 收的是产品介绍与帮助；附在后面的简体页面也要过非大陆的市场检查，文章里写了只适合大陆的内容就不能收；
 5. 其余不用手动改：列表页、hreflang、sitemap、文章末尾的链接与首页的入口都由模板生成。
+
+## 十一、首页
+
+**指向 OCAT 的链接**：五种语言的首页在末尾链接列表那一节（简体是「其它介绍」）的列表之后，各有一行小字（`<p class="note">`）介绍同一团队的另一款 App OCAT（ocat.app），并链到它对应语言的页面。OCAT 的官网在 Google 上的外链基础比本站好，两站互相加一条链接（OCAT 那边的在 OCAT 的仓库里），让搜索引擎看清两者的关系，也给各自的读者一个入口（rebuild.md 第九节 E「2026-11-15 实测与跟进」）。
+
+| 首页 | 链接地址 | 文字 |
+|---|---|---|
+| zh-hans | `https://ocat.app/zh` | 同一团队的另一款作品：OCAT，用 AI 练习日语口语的 App。 |
+| zh-hant | `https://ocat.app/zh-tw` | 同一團隊的另一款作品：OCAT，用 AI 練習日文口說的 App。 |
+| zh-hk | `https://ocat.app/zh-tw`（OCAT 没有香港繁体页） | 同一團隊的另一款作品：OCAT，用 AI 練習日文會話的 App。 |
+| en | `https://ocat.app/` | Also from our team: OCAT, an AI app for practicing spoken Japanese. |
+| ja | `https://ocat.app/ja` | 同じチームのアプリ：OCAT（AI 外国語会話アプリ） |
+
+- 日文版不写「日本語」：OCAT 的日文版面向学外语的日语母语者，它自己的标题就是「AI 外国語会話アプリ」。
+- 是普通的站外链接，与首页里应用商店的链接一样不加 `rel` 与 `target`；不加 `nofollow`，这条链接本来就是要让搜索引擎看到的。
+- 不放进页眉与下载区：它是次要信息，用已有的 `.note` 小字样式，不新增版块。
+- 英文首页收进 `llms-full.txt`（第九节），这一行随之出现在那里，不用另外处理。
+- URL 合同里五个首页的行各核对一次这条链接（`ops/contract.tsv`）；改地址或删掉时一起改。

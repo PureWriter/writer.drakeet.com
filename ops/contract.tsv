@@ -131,11 +131,12 @@
 # 干净的地址（见后面「清理杂字符」）。
 # ======================================================================================================================
 # 简体中文首页带 ICP 备案号、指向 beian.miit.gov.cn 的链接与公安备案号（5.5）；其他语言的页面不带（AGENTS.md 的市场约定）。
-/zh-hans/	-	200	-	text/html	Cache-Control == no-cache	闽ICP备2021006387号-1 | https://beian.miit.gov.cn/ | 苏公网安备32050602012178号
-/zh-hant/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-TW | !beian.miit.gov.cn
-/zh-hk/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-HK | !beian.miit.gov.cn
-/en/	-	200	-	text/html	Cache-Control == no-cache	<html lang=en | !beian.miit.gov.cn
-/ja/	-	200	-	text/html	Cache-Control == no-cache	<html lang=ja | !beian.miit.gov.cn
+# 各语言首页都有一条指向 OCAT 对应语言页面的链接（docs/content.md 第十一节）。
+/zh-hans/	-	200	-	text/html	Cache-Control == no-cache	闽ICP备2021006387号-1 | https://beian.miit.gov.cn/ | 苏公网安备32050602012178号 | <a href=https://ocat.app/zh>OCAT</a>
+/zh-hant/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-TW | !beian.miit.gov.cn | <a href=https://ocat.app/zh-tw>OCAT</a>
+/zh-hk/	-	200	-	text/html	Cache-Control == no-cache	<html lang=zh-Hant-HK | !beian.miit.gov.cn | <a href=https://ocat.app/zh-tw>OCAT</a>
+/en/	-	200	-	text/html	Cache-Control == no-cache	<html lang=en | !beian.miit.gov.cn | <a href=https://ocat.app/>OCAT</a>
+/ja/	-	200	-	text/html	Cache-Control == no-cache	<html lang=ja | !beian.miit.gov.cn | <a href=https://ocat.app/ja>OCAT</a>
 # 带前缀的地址不看语言头与 ?lang=。
 /zh-hans/	Accept-Language: en-US	200	-	text/html	-	<html lang=zh-Hans
 /en/?lang=zh-Hans	Accept-Language: zh-CN	200	-	text/html	-	<html lang=en
@@ -252,10 +253,15 @@
 
 # ======================================================================================================================
 # 多语言入口的协商（4.5）：?lang= 合法时 301（去掉 lang，其余参数照带）；否则按 Accept-Language 的顺序取第一个目标页
-# 支持的语言，302，带 Vary: Accept-Language 与 no-store；不带语言头落到 zh-hans，带了但都不受支持落到 en。
+# 支持的语言，302，带 Vary: Accept-Language 与 no-store；带了但都不受支持（包括带了但为空）落到 en。请求根本不带
+# Accept-Language 时落到默认语言（zh 入口是 zh-hant，其余是 zh-hans），301，同样带 Vary: Accept-Language 与 no-store。
 # ======================================================================================================================
 # 首页 /（Android「需要更新」对话框、iOS 示例文章、App Store 营销网址、外部链接）。5.5：不带语言头与 zh-CN 都到 /zh-hans/。
-/	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	-	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+# 不带语言头的 301 与有没有别的请求头、用什么方法无关；它不是按 ?lang= 的 301，不带一天的缓存，照旧带 Vary。
+/	Accept-Encoding: br, gzip	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	:method: HEAD	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/	User-Agent: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /	Accept-Language: zh-CN	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /	Accept-Language: zh-CN,zh;q=0.9,en;q=0.8	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /	Accept-Language: zh-TW	302	/zh-hant/	-	Cache-Control == no-store | Vary: Accept-Language	-
@@ -288,7 +294,7 @@
 # 多行 Accept-Language 按出现顺序连起来看；其中一行为空也一样。
 /	Accept-Language: fr | Accept-Language: ja-JP	302	/ja/	-	-	-
 /	Accept-Language:  | Accept-Language: zh-HK	302	/zh-hk/	-	Cache-Control == no-store | Vary: Accept-Language	-
-/index	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/index	-	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /index	Accept-Language: en	302	/en/	-	-	-
 /index.html	Accept-Language: ja	302	/ja/	-	Cache-Control == no-store | Vary: Accept-Language	-
 # ?lang=：日志里出现过的真实取值。规范化后合法就 301，结果只取决于地址，不带 Vary。
@@ -321,59 +327,63 @@
 # 只认原始查询串里字面的 lang=：半角分号不是分隔符，lang=en;x=1 整个是 lang 的值，规范化为 en（与旧站脚本相同）；
 # 编码过的键名不是 lang，原样留在查询串里。
 /?lang=en;x=1	Accept-Language: ja	301	/en/	-	-	-
-/?l%61ng=en	-	302	/zh-hans/?l%61ng=en	-	-	-
-# ?lang= 不是首页支持的语言（ru、fr、cn、1、空）：视为没有传，按 Accept-Language 协商，302 同样去掉 lang。
-/?lang=ru	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?l%61ng=en	-	301	/zh-hans/?l%61ng=en	-	-	-
+# ?lang= 不是首页支持的语言（ru、fr、cn、1、空）：视为没有传，按 Accept-Language 协商；不带语言头时 301 到默认语言。
+# 302 与这种 301 同样去掉 lang，其余参数的顺序与写法照带。
+/?lang=ru	-	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?lang=ru&utm_source=x	-	301	/zh-hans/?utm_source=x	-	Cache-Control == no-store | Vary: Accept-Language	-
+/?a=1&lang=fr&b=2	-	301	/zh-hans/?a=1&b=2	-	-	-
+/?utm_source=x	-	301	/zh-hans/?utm_source=x	-	Cache-Control == no-store | Vary: Accept-Language	-
 /?lang=ru	Accept-Language: ru-RU,ru;q=0.9	302	/en/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /?lang=fr&a=1	Accept-Language: ja	302	/ja/?a=1	-	Cache-Control == no-store | Vary: Accept-Language	-
 /?lang=cn	Accept-Language: zh-TW	302	/zh-hant/	-	-	-
-/?lang=1	-	302	/zh-hans/	-	-	-
+/?lang=1	-	301	/zh-hans/	-	-	-
 /?lang=	Accept-Language: en	302	/en/	-	-	-
 /?utm_source=x	Accept-Language: zh-HK	302	/zh-hk/?utm_source=x	-	Cache-Control == no-store | Vary: Accept-Language	-
 
 # iOS 隐私政策 /ios/privacy：App 内链接带 ?lang=<界面语言>（iOS 的 30 种界面语言），App Store Connect 的隐私政策网址。
-# 页面支持的 5 种 301；其余 25 种视为没有传，交给 Accept-Language（这几行不带语言头，所以落到 zh-hans）。
+# 页面支持的 5 种 301；其余 25 种视为没有传，交给 Accept-Language（这几行不带语言头，所以 301 到 zh-hans）。
 /ios/privacy?lang=en	-	301	/en/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy?lang=zh-Hans	-	301	/zh-hans/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy?lang=zh-Hant	-	301	/zh-hant/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy?lang=zh-HK	-	301	/zh-hk/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy?lang=ja	-	301	/ja/ios/privacy/	-	Cache-Control == max-age=86400	-
-/ios/privacy?lang=bg	-	302	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
-/ios/privacy?lang=cs	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=da	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=de	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=el	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=es	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=fi	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=fr	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=hi	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=hu	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=id	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=it	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=ko	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=nl	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=pl	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=pt-BR	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=pt-PT	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=ro	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=ru	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=sv	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=ta	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=th	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=tr	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=uk	-	302	/zh-hans/ios/privacy/	-	-	-
-/ios/privacy?lang=vi	-	302	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=bg	-	301	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/privacy?lang=cs	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=da	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=de	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=el	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=es	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=fi	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=fr	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=hi	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=hu	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=id	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=it	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ko	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=nl	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pl	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pt-BR	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=pt-PT	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ro	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ru	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=sv	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=ta	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=th	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=tr	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=uk	-	301	/zh-hans/ios/privacy/	-	-	-
+/ios/privacy?lang=vi	-	301	/zh-hans/ios/privacy/	-	-	-
 # 同样的界面语言，再带上 iOS 内置浏览器会发的语言头：不受支持的落到 en，受支持的按顺序取。
 /ios/privacy?lang=de	Accept-Language: de-DE,de;q=0.9	302	/en/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios/privacy?lang=fr	Accept-Language: fr-FR,fr;q=0.9	302	/en/ios/privacy/	-	-	-
 /ios/privacy?lang=ru	Accept-Language: ru-RU	302	/en/ios/privacy/	-	-	-
 /ios/privacy?lang=pt-BR	Accept-Language: pt-BR, zh-Hant-TW;q=0.8	302	/zh-hant/ios/privacy/	-	-	-
-/ios/privacy	-	302	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/privacy	-	301	/zh-hans/ios/privacy/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios/privacy	Accept-Language: en-GB	302	/en/ios/privacy/	-	-	-
 /ios/privacy.html?lang=ja	-	301	/ja/ios/privacy/	-	Cache-Control == max-age=86400	-
 /ios/privacy.html	Accept-Language: zh-HK	302	/zh-hk/ios/privacy/	-	-	-
 # iOS 版介绍页 /ios：对外张贴用的不带语言的地址，规则与另外两页相同；没有俄文版，ru 落到 en。
-/ios	-	302	/zh-hans/ios/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios	-	301	/zh-hans/ios/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios	Accept-Language: en-US	302	/en/ios/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios	Accept-Language: zh-TW	302	/zh-hant/ios/	-	-	-
 /ios	Accept-Language: zh-HK	302	/zh-hk/ios/	-	-	-
@@ -382,20 +392,22 @@
 /ios?lang=de&a=1	Accept-Language: ja-JP	302	/ja/ios/?a=1	-	-	-
 /ios.html	Accept-Language: en-GB	302	/en/ios/	-	-	-
 # iOS 支持页 /ios/support：App Store Connect 的支持网址，规则与隐私政策相同。
-/ios/support	-	302	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support	-	301	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios/support	Accept-Language: ja-JP	302	/ja/ios/support/	-	-	-
 /ios/support?lang=en	-	301	/en/ios/support/	-	Cache-Control == max-age=86400	-
 /ios/support?lang=zh-Hans	-	301	/zh-hans/ios/support/	-	-	-
 /ios/support?lang=zh-Hant	-	301	/zh-hant/ios/support/	-	-	-
 /ios/support?lang=zh-HK	-	301	/zh-hk/ios/support/	-	-	-
 /ios/support?lang=ja	-	301	/ja/ios/support/	-	-	-
-/ios/support?lang=de	-	302	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support?lang=de	-	301	/zh-hans/ios/support/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support?lang=de&from=appstore	-	301	/zh-hans/ios/support/?from=appstore	-	Cache-Control == no-store | Vary: Accept-Language	-
+/ios/support?lang=de&from=appstore	Accept-Language: zh-CN	302	/zh-hans/ios/support/?from=appstore	-	Cache-Control == no-store | Vary: Accept-Language	-
 /ios/support?lang=ko	Accept-Language: ko-KR, ja-JP;q=0.5	302	/ja/ios/support/	-	-	-
 /ios/support.html	Accept-Language: en-US	302	/en/ios/support/	-	-	-
 
 # 桌面版下载页：/desktop（包管理器清单、Android 文案），/desktop2、/desktop2_en、/desktop_en（已安装桌面版的「检查更新」、
 # rebase-server、winget 清单），以及 Windows 安装包写进「已安装的应用」的坏链接。比首页多一个 ru。
-/desktop	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	-	301	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop	Accept-Language: ru-RU	302	/ru/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop	Accept-Language: ru-RU, en;q=0.5	302	/ru/desktop/	-	-	-
 /desktop	Accept-Language: fr, ru	302	/ru/desktop/	-	-	-
@@ -411,11 +423,16 @@
 /desktop	Accept-Language: en-US	302	/en/desktop/	-	-	-
 /desktop	Accept-Language: fr	302	/en/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop	Accept-Language: fr, ja	302	/ja/desktop/	-	-	-
+# 带了 Accept-Language 就照旧 302 协商：与默认语言相同的结果、带了但为空、多行里只有空行，都不是「不带」。
+/desktop	Accept-Language: zh-CN,zh;q=0.9	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language:	302	/en/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop	Accept-Language:  | Accept-Language:	302	/en/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop?utm_source=x&lang=fr&b=2	-	301	/zh-hans/desktop/?utm_source=x&b=2	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop?lang=ru	-	301	/ru/desktop/	-	Cache-Control == max-age=86400	-
 /desktop?lang=zh-Hant	Accept-Language: en	301	/zh-hant/desktop/	-	Cache-Control == max-age=86400	-
 /desktop.html	Accept-Language: ja	302	/ja/desktop/	-	-	-
 /desktop.html?lang=en	-	301	/en/desktop/	-	-	-
-/desktop2	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2	-	301	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop2	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
 /desktop2	Accept-Language: ru	302	/ru/desktop/	-	-	-
 /desktop2?lang=zh-Hans	-	301	/zh-hans/desktop/	-	Cache-Control == max-age=86400	-
@@ -432,7 +449,7 @@
 /desktop2?lang=zh-Hant%5D	-	301	/zh-hant/desktop/	-	-	-
 /desktop2?lang=zh-Hans&v=5.1.0	-	301	/zh-hans/desktop/?v=5.1.0	-	-	-
 /desktop2.html	Accept-Language: en	302	/en/desktop/	-	-	-
-/desktop2_en	-	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_en	-	301	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop2_en	Accept-Language: fr	302	/en/desktop/	-	-	-
 /desktop2_en	Accept-Language: zh-CN	302	/zh-hans/desktop/	-	-	-
 /desktop2_en.html	Accept-Language: ja	302	/ja/desktop/	-	-	-
@@ -441,13 +458,13 @@
 /desktop_en?lang=ru	-	301	/ru/desktop/	-	-	-
 # Windows 安装包里的坏链接（约从 3.1.0 起；存量安装改不了，由网站兜底）。
 /desktop2JpAbortIfPureWriterRunningPure	Accept-Language: zh-CN	302	/zh-hans/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
-/desktop2JpAbortIfPureWriterRunningPure	-	302	/zh-hans/desktop/	-	-	-
+/desktop2JpAbortIfPureWriterRunningPure	-	301	/zh-hans/desktop/	-	-	-
 /desktop2_enJpAbortIfPureWriterRunningPure	Accept-Language: en-US	302	/en/desktop/	-	-	-
 /desktop2_enJpAbortIfPureWriterRunningPure%20Writer	Accept-Language: ja	302	/ja/desktop/	-	-	-
 
 # 繁体桌面入口 /desktop2_zh、/desktop_zh（rebase-server 与 Android 繁体文案，台湾与香港都会用到）：只在 zh-hk 与 zh-hant
 # 之间协商，默认 zh-hant；规范化为 zh-hans 的标签（zh-CN、zh-Hans-HK）与其他语言都跳过。
-/desktop2_zh	-	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	-	301	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop2_zh	Accept-Language: zh-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop2_zh	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
 /desktop2_zh	Accept-Language: zh-MO	302	/zh-hk/desktop/	-	-	-
@@ -474,10 +491,14 @@
 /desktop2_zh?lang=zh-TW&lang=zh-HK	-	301	/zh-hant/desktop/?lang=zh-HK	-	-	-
 # ?lang= 不是 zh-hk 或 zh-hant：视为没有传。
 /desktop2_zh?lang=en	Accept-Language: zh-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
-/desktop2_zh?lang=zh-Hans	-	302	/zh-hant/desktop/	-	-	-
-/desktop2_zh.html	-	302	/zh-hant/desktop/	-	-	-
+/desktop2_zh?lang=zh-Hans	-	301	/zh-hant/desktop/	-	-	-
+/desktop2_zh.html	-	301	/zh-hant/desktop/	-	-	-
 /desktop_zh	Accept-Language: zh-Hant-HK	302	/zh-hk/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
-/desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+/desktop_zh	-	301	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop_zh?lang=en&a=1	-	301	/zh-hant/desktop/?a=1	-	Cache-Control == no-store | Vary: Accept-Language	-
+# 带了 Accept-Language、但没有 zh-hk 或 zh-hant 的候选（包括带了但为空）：照旧 302 到 zh-hant，不是不带语言头的 301。
+/desktop_zh	Accept-Language:	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
+/desktop2_zh	Accept-Language: ru	302	/zh-hant/desktop/	-	Cache-Control == no-store | Vary: Accept-Language	-
 /desktop_zh.html	Accept-Language: zh-TW	302	/zh-hant/desktop/	-	-	-
 
 # ======================================================================================================================
@@ -664,12 +685,12 @@
 # //wiki 40 次、// 13 次、//wiki_en 11 次，另有 //desktop、//desktop_zh、//markdown、//backups*、//privacy*、
 # //ios/privacy?lang=…、//ios/support?lang=…、/./desktop_* 等。
 # ======================================================================================================================
-//	-	302	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
+//	-	301	/zh-hans/	-	Cache-Control == no-store | Vary: Accept-Language	-
 //wiki	-	301	/zh-hans/manual/	-	Cache-Control == max-age=86400	-
 //wiki_en	-	301	/en/manual/	-	-	-
-//desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+//desktop_zh	-	301	/zh-hant/desktop/	-	-	-
 //ios/privacy?lang=zh-HK	-	301	/zh-hk/ios/privacy/	-	-	-
-/./desktop_zh	-	302	/zh-hant/desktop/	-	-	-
+/./desktop_zh	-	301	/zh-hant/desktop/	-	-	-
 /x/../wiki	-	301	/zh-hans/manual/	-	-	-
 //drives/oauth/OneDrive_ja	-	200	-	text/html	-	Pure Writer is now connected to OneDrive!
 //zh-hans/	-	200	-	text/html	-	<html lang=zh-Hans
