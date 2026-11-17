@@ -1,61 +1,67 @@
 {
-  "version": "5.4.1",
-  "released": "2026-11-15",
+  "version": "5.5.0",
+  "released": "2026-11-17",
   "files": {
     "windows-x64": {
-      "name": "PureWriter-5.4.1-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.1-Windows-x64.exe",
-      "size": 94974256,
-      "sha256": "ecca4743edea419a54d4d8164b1c4f21d707f46a03109e75902892ca5494fff6"
+      "name": "PureWriter-5.5.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.5.0-Windows-x64.exe",
+      "size": 94998840,
+      "sha256": "c938c3eb5c7233b037f441edc9be7a9a9d9805b8c63678a70b1425f2ab9a18c6"
     },
     "macos-aarch64": {
-      "name": "PureWriter-5.4.1-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.1-macOS-aarch64.dmg",
-      "size": 91084263,
-      "sha256": "75fa2495d638757e25dbceeba14cb0318567c732e860722e4139e78d2185864d"
+      "name": "PureWriter-5.5.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.5.0-macOS-aarch64.dmg",
+      "size": 91109009,
+      "sha256": "7e1a5bc0e43422dfc63ab3bc630f593d2988a780dd5079d2580f75be97f56c4d"
     },
     "macos-x64": {
-      "name": "PureWriter-5.4.1-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.4.1-macOS-x64.dmg",
-      "size": 92721080,
-      "sha256": "cdf19b6a3e9e0677bd79e2ccc8b2e7164d9a3509f6e80ede93ebb5f700026c1d"
+      "name": "PureWriter-5.5.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.5.0-macOS-x64.dmg",
+      "size": 92751356,
+      "sha256": "a35c88133e937843854806223bc8d4fb47a65b192dd7e7d02dbea22b384b34f3"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "编辑器与预览之间、左右分栏之间的分界更清楚了：浅色主题在中间显示一枚小把手，深色主题显示一条分隔线，拖动即可调整两侧的宽度。"
+        "设置菜单新增「自动缩进」与「默认缩进」：可以决定新建的纯文本文章是否预先填好一个缩进，也可以自选段首缩进的宽度（2、4、6、8 个半角空格，或 1、2 个全角空格）。Tab 键、快捷输入栏的「段首缩进」、一键排版和格式化面板里的「在段首插入缩进」都会使用这个宽度，只对纯文本文章生效。",
+        "修复部分图片一直显示「仅在本机，等待上传」，却始终没有上传到网盘的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "編輯器與預覽之間、左右分欄之間的分界更清楚了：淺色主題在中間顯示一個小把手，深色主題顯示一條分隔線，拖曳即可調整兩側的寬度。"
+        "設定選單新增「自動縮排」與「預設縮排」：可以決定新建的純文字文章是否預先填好一個縮排，也可以自選段首縮排的寬度（2、4、6、8 個半形空白，或 1、2 個全形空白）。Tab 鍵、快捷輸入欄的「段首縮排」、一鍵排版和格式化面板裡的「在段首插入縮排」都會使用這個寬度，只對純文字文章生效。",
+        "修正部分圖片一直顯示「僅在本機，等待上傳」，卻始終沒有上傳到雲端硬碟的問題。"
       ]
     },
     "zh-HK": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "編輯器與預覽之間、左右分欄之間的分界更清楚了：淺色主題在中間顯示一個小把手，深色主題顯示一條分隔線，拖動即可調整兩側的寬度。"
+        "設置選單新增「自動縮排」與「預設縮排」：可以決定新建的純文字文章是否預先填好一個縮排，亦可以自選段首縮排的寬度（2、4、6、8 個半角空格，或 1、2 個全角空格）。Tab 鍵、快捷輸入欄的「段首縮進」、一鍵排版及格式化面板裡的「在段首插入縮排」都會使用這個寬度，只對純文字文章生效。",
+        "修正部分圖片一直顯示「僅在本機，等待上傳」，卻始終沒有上傳到雲端硬碟的問題。"
       ]
     },
     "en": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "The boundary between the editor and the preview, and between the left and right panes, is now easier to see: light themes show a small handle in the middle, dark themes show a divider line. Drag it to adjust the widths."
+        "The Settings menu adds “Auto indent” and “Default indent”: choose whether new plain text documents start with an indent, and pick the indent width (2, 4, 6, or 8 half-width spaces, or 1 or 2 full-width spaces). The Tab key, “Indent” on the shortcut bar, one-click formatting, and “Indent each paragraph” in the formatting panel all use this width. Applies to plain text documents only.",
+        "Fixed an issue where some images stayed “Only on this device, waiting to upload” without ever uploading to your cloud drive."
       ]
     },
     "ja": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "エディタとプレビューの間、左右に分割した間の境目がわかりやすくなりました。ライトテーマでは中央に小さなハンドルを、ダークテーマでは区切り線を表示します。ドラッグすると左右の幅を調整できます。"
+        "設定メニューに「自動字下げ」と「標準の字下げ」を追加しました。新しく作るプレーンテキストの文章にあらかじめ字下げを入れておくかどうかと、字下げの幅（半角スペース 2・4・6・8 個、または全角スペース 1・2 個）を選べます。Tab キー、ショートカットバーの「字下げ」、一括整形、整形パネルの「各段落の先頭に字下げを追加」はすべてこの幅を使います。プレーンテキストの文章にのみ適用されます。",
+        "一部の画像が「このデバイスのみ、アップロード待ち」のまま、クラウドドライブにアップロードされない問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "items": [
-        "Граница между редактором и предпросмотром, а также между левой и правой панелями стала заметнее: в светлых темах посередине показывается небольшая ручка, в тёмных — разделительная линия. Потяните за границу, чтобы изменить ширину."
+        "В меню «Настройки» появились пункты «Автоотступ» и «Отступ по умолчанию»: можно выбрать, начинаются ли новые документы с простым текстом с отступа, и задать ширину отступа (2, 4, 6 или 8 полуширинных пробелов либо 1 или 2 полноширинных пробела). Эту ширину используют клавиша Tab, «Отступ» на панели быстрого ввода, «Форматирование одним нажатием» и «Добавить отступ в начале каждого абзаца» на панели форматирования. Действует только для документов с простым текстом.",
+        "Исправлена ошибка, из-за которой некоторые изображения оставались в состоянии «Только на этом устройстве, ждёт загрузки» и так и не загружались в облачное хранилище."
       ]
     }
   }
