@@ -1,61 +1,73 @@
 {
-  "version": "5.6.0",
+  "version": "5.6.1",
   "released": "2026-11-21",
   "files": {
     "windows-x64": {
-      "name": "PureWriter-5.6.0-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.0-Windows-x64.exe",
-      "size": 95060280,
-      "sha256": "09f307bd6bcd85f58641b226beecef28a93d01e3ae8d07bf71ce50e27ca910f8"
+      "name": "PureWriter-5.6.1-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-Windows-x64.exe",
+      "size": 95068472,
+      "sha256": "a480d4ce14ddac2b0378433d77a9341fb2c6ce6025eca8dbae9c071269de9e60"
     },
     "macos-aarch64": {
-      "name": "PureWriter-5.6.0-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.0-macOS-aarch64.dmg",
-      "size": 91187001,
-      "sha256": "4730b33fd8eaccd4f92d074193a9b0fe7a33c8841b2c1263c57cbbbcf119e131"
+      "name": "PureWriter-5.6.1-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-macOS-aarch64.dmg",
+      "size": 91202319,
+      "sha256": "04bd3789589491a328a85d31d20f95798a77a05b75c0eb279b404ccaff918a4b"
     },
     "macos-x64": {
-      "name": "PureWriter-5.6.0-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.0-macOS-x64.dmg",
-      "size": 92802991,
-      "sha256": "b4ca91adc33531d13ea7cd9cd30317cb0c5a7f3f5367fb0a9d20f41bd560fe78"
+      "name": "PureWriter-5.6.1-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-macOS-x64.dmg",
+      "size": 92813503,
+      "sha256": "ada7f33440f55ceb4244889a323b32edcb23b606fa69966c0b31028d4aa2d3b4"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "新建文章时默认沿用相邻文章的格式（纯文本或 Markdown），不必每篇手动切换；想固定用某一种，可以在设置菜单的「Markdown 选项」→「新文章的格式」里选择。"
+        "修复切换标签或文章后，侧栏的选中偶尔没有跟着切换、状态栏出现「database is locked」的问题。",
+        "修复 Windows 上部分窗口右上角的关闭按钮过宽的问题。",
+        "修复 Windows 上打开链接时偶尔弹出命令行窗口的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "新增文章時預設沿用相鄰文章的格式（純文字或 Markdown），不必每篇手動切換；想固定使用某一種，可以在設定選單的「Markdown 選項」→「新文章的格式」裡選擇。"
+        "修正切換分頁或文章後，側欄的選取偶爾沒有跟著切換、狀態列出現「database is locked」的問題。",
+        "修正 Windows 上部分視窗右上角的關閉按鈕過寬的問題。",
+        "修正 Windows 上開啟連結時偶爾彈出命令提示字元視窗的問題。"
       ]
     },
     "zh-HK": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "新建文章時預設沿用相鄰文章的格式（純文字或 Markdown），不必每篇手動切換；想固定使用某一種，可以在設置選單的「Markdown 選項」→「新文章的格式」中選擇。"
+        "修正切換分頁或文章後，側欄的選取偶爾沒有跟著切換、狀態欄出現「database is locked」的問題。",
+        "修正 Windows 上部分視窗右上角的關閉按鈕過闊的問題。",
+        "修正 Windows 上開啟連結時偶爾彈出命令提示字元視窗的問題。"
       ]
     },
     "en": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "New documents now use the same format as the document next to them (plain text or Markdown), so you don’t have to switch each one by hand. To always use one format, choose it in the Settings menu under “Markdown options” → “Format for new documents”."
+        "Fixed the sidebar selection sometimes not following when you switch tabs or documents, with “database is locked” shown in the status bar.",
+        "Fixed the close button at the top right of some windows being too wide on Windows.",
+        "Fixed a Command Prompt window occasionally popping up when opening a link on Windows."
       ]
     },
     "ja": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "新しい文章は隣の文章と同じ形式（プレーンテキストまたは Markdown）で作成されるようになり、毎回切り替える必要がなくなりました。形式を固定したい場合は、設定メニューの「Markdown オプション」→「新しい文章の形式」で選べます。"
+        "タブや文章を切り替えたあと、サイドバーの選択がまれに切り替わらず、ステータスバーに「database is locked」と表示される問題を修正しました。",
+        "Windows で、一部のウィンドウ右上の閉じるボタンの幅が広すぎる問題を修正しました。",
+        "Windows で、リンクを開くときにまれにコマンドプロンプトのウィンドウが表示される問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "5.6.0",
+      "version": "5.6.1",
       "items": [
-        "Новые документы теперь создаются в том же формате, что и соседний документ (простой текст или Markdown), так что переключать формат каждый раз вручную не нужно. Чтобы всегда использовать один формат, выберите его в меню «Настройки» → «Параметры Markdown» → «Формат новых документов»."
+        "Исправлено: после переключения вкладки или документа выделение на боковой панели иногда не переключалось, а в строке состояния появлялось сообщение «database is locked».",
+        "Исправлено: в Windows кнопка закрытия в правом верхнем углу некоторых окон была слишком широкой.",
+        "Исправлено: в Windows при открытии ссылки иногда появлялось окно командной строки."
       ]
     }
   }
