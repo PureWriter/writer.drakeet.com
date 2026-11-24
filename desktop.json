@@ -1,73 +1,73 @@
 {
-  "version": "5.6.1",
-  "released": "2026-11-21",
+  "version": "5.7.0",
+  "released": "2026-11-24",
   "files": {
     "windows-x64": {
-      "name": "PureWriter-5.6.1-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-Windows-x64.exe",
-      "size": 95068472,
-      "sha256": "a480d4ce14ddac2b0378433d77a9341fb2c6ce6025eca8dbae9c071269de9e60"
+      "name": "PureWriter-5.7.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-Windows-x64.exe",
+      "size": 95387960,
+      "sha256": "f6c742d3d50c1141fb48f8e721a3d0d6fd4f2a6d3b2ccca0e8b8227a0558cc29"
     },
     "macos-aarch64": {
-      "name": "PureWriter-5.6.1-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-macOS-aarch64.dmg",
-      "size": 91202319,
-      "sha256": "04bd3789589491a328a85d31d20f95798a77a05b75c0eb279b404ccaff918a4b"
+      "name": "PureWriter-5.7.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-macOS-aarch64.dmg",
+      "size": 91516487,
+      "sha256": "0a5b67c7f3ab76ba0f8862df6f7e5a7d3a07ce2797e35efd6d68b755b9b3c655"
     },
     "macos-x64": {
-      "name": "PureWriter-5.6.1-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.6.1-macOS-x64.dmg",
-      "size": 92813503,
-      "sha256": "ada7f33440f55ceb4244889a323b32edcb23b606fa69966c0b31028d4aa2d3b4"
+      "name": "PureWriter-5.7.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-macOS-x64.dmg",
+      "size": 93140586,
+      "sha256": "b1385814b419b2a6cd1c848afec9aa4b69d9a54f9b91cbc4666df98f714cc82a"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "修复切换标签或文章后，侧栏的选中偶尔没有跟着切换、状态栏出现「database is locked」的问题。",
-        "修复 Windows 上部分窗口右上角的关闭按钮过宽的问题。",
-        "修复 Windows 上打开链接时偶尔弹出命令行窗口的问题。"
+        "快捷输入栏可以在电脑上直接新建和编辑快捷项了：常用的短语、成对的符号、日期与时间，或是撤销、一键排版这样的功能。点栏尾的「＋」新建，右键一项选「编辑」修改。（点顶栏左侧第二个按钮可以显示或隐藏快捷输入栏。）",
+        "快捷输入栏按「栏」分行显示，与手机上的分栏一致。在右上角设置菜单的「快捷输入栏」里，可以拖动快捷项排序、移到别的栏，并选择显示哪些栏。",
+        "快捷输入栏里的功能项带有图标，也可以设为只显示图标；栏的高度随内容自动变化，不必再拖动分割线。"
       ]
     },
     "zh-Hant": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "修正切換分頁或文章後，側欄的選取偶爾沒有跟著切換、狀態列出現「database is locked」的問題。",
-        "修正 Windows 上部分視窗右上角的關閉按鈕過寬的問題。",
-        "修正 Windows 上開啟連結時偶爾彈出命令提示字元視窗的問題。"
+        "快捷輸入欄可以在電腦上直接新增和編輯快捷項了：常用的短語、成對的符號、日期與時間，或是復原、一鍵排版這樣的功能。點擊欄尾的「＋」新增，在快捷項上按右鍵選「編輯」即可修改。（點擊頂端左側的第二個按鈕，可以顯示或隱藏快捷輸入欄。）",
+        "快捷輸入欄按「欄」分行顯示，與手機上的分欄一致。在右上角設定選單的「快捷輸入欄」裡，可以拖曳快捷項排序、移到別的欄，並選擇要顯示哪些欄。",
+        "快捷輸入欄裡的功能項附有圖示，也可以設為只顯示圖示；欄的高度隨內容自動變化，不必再拖曳分隔線。"
       ]
     },
     "zh-HK": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "修正切換分頁或文章後，側欄的選取偶爾沒有跟著切換、狀態欄出現「database is locked」的問題。",
-        "修正 Windows 上部分視窗右上角的關閉按鈕過闊的問題。",
-        "修正 Windows 上開啟連結時偶爾彈出命令提示字元視窗的問題。"
+        "快捷輸入欄可以在電腦上直接新增及編輯快捷項了：常用的短語、成對的符號、日期與時間，或是撤銷、一鍵排版這類功能。點擊欄尾的「＋」新增，在快捷項上按右鍵選「編輯」即可修改。（點擊頂欄左側第二個按鈕，可以顯示或隱藏快捷輸入欄。）",
+        "快捷輸入欄按「欄」分行顯示，與手機上的分欄一致。在右上角設置選單的「快捷輸入欄」中，可以拖動快捷項排序、移到其他欄，並選擇要顯示哪些欄。",
+        "快捷輸入欄中的功能項帶有圖示，亦可以設為只顯示圖示；欄的高度隨內容自動變化，不必再拖動分隔線。"
       ]
     },
     "en": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "Fixed the sidebar selection sometimes not following when you switch tabs or documents, with “database is locked” shown in the status bar.",
-        "Fixed the close button at the top right of some windows being too wide on Windows.",
-        "Fixed a Command Prompt window occasionally popping up when opening a link on Windows."
+        "You can now create and edit shortcuts right on your computer: frequently used phrases, paired symbols, dates and times, or actions such as Undo and One-click formatting. Click “+” at the end of a row to add one, or right-click a shortcut and choose “Edit…”. (Use the second button at the top left to show or hide the shortcut bar.)",
+        "The shortcut bar now shows each row on its own line, matching the rows on your phone. Open “Shortcut bar…” in the settings menu at the top right to drag shortcuts into a new order, move them to another row, and choose which rows to show.",
+        "Actions in the shortcut bar now have icons and can be set to show the icon only. The bar’s height follows its content, so there is no divider to drag."
       ]
     },
     "ja": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "タブや文章を切り替えたあと、サイドバーの選択がまれに切り替わらず、ステータスバーに「database is locked」と表示される問題を修正しました。",
-        "Windows で、一部のウィンドウ右上の閉じるボタンの幅が広すぎる問題を修正しました。",
-        "Windows で、リンクを開くときにまれにコマンドプロンプトのウィンドウが表示される問題を修正しました。"
+        "パソコン上でショートカットを直接作成・編集できるようになりました。よく使うフレーズ、対になる記号、日付と時刻のほか、「元に戻す」や「一括整形」などの機能も登録できます。段の末尾の「＋」をクリックすると追加でき、ショートカットを右クリックして「編集」を選ぶと変更できます。（左上の 2 番目のボタンで、ショートカットバーの表示／非表示を切り替えられます。）",
+        "ショートカットバーは段ごとに分かれて表示され、スマートフォンの段と同じ構成になりました。右上の設定メニューの「ショートカットバー」から、ショートカットをドラッグして並べ替えたり別の段へ移動したり、表示する段を選んだりできます。",
+        "ショートカットバーの機能にはアイコンが付き、アイコンのみの表示にも設定できます。バーの高さは内容に合わせて変わるため、区切り線をドラッグする必要はなくなりました。"
       ]
     },
     "ru": {
-      "version": "5.6.1",
+      "version": "5.7.0",
       "items": [
-        "Исправлено: после переключения вкладки или документа выделение на боковой панели иногда не переключалось, а в строке состояния появлялось сообщение «database is locked».",
-        "Исправлено: в Windows кнопка закрытия в правом верхнем углу некоторых окон была слишком широкой.",
-        "Исправлено: в Windows при открытии ссылки иногда появлялось окно командной строки."
+        "Теперь быстрые кнопки можно создавать и редактировать прямо на компьютере: часто используемые фразы, парные символы, дату и время или действия вроде «Отменить» и «Форматирование одним нажатием». Нажмите «+» в конце ряда, чтобы добавить новую, или щёлкните быструю кнопку правой кнопкой мыши и выберите «Редактировать…». (Показать или скрыть панель быстрого ввода можно второй кнопкой в левом верхнем углу.)",
+        "Панель быстрого ввода теперь показывает каждый ряд отдельно — так же, как ряды на телефоне. Откройте «Панель быстрого ввода…» в меню «Настройки» в правом верхнем углу, чтобы перетаскиванием менять порядок быстрых кнопок, переносить их в другой ряд и выбирать, какие ряды показывать.",
+        "У действий на панели быстрого ввода появились значки, и для них можно включить показ только значка. Высота панели подстраивается под содержимое, так что перетаскивать разделитель больше не нужно."
       ]
     }
   }
