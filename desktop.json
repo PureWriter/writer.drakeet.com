@@ -1,73 +1,73 @@
 {
-  "version": "5.7.0",
-  "released": "2026-11-24",
+  "version": "5.8.0",
+  "released": "2026-11-26",
   "files": {
     "windows-x64": {
-      "name": "PureWriter-5.7.0-Windows-x64.exe",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-Windows-x64.exe",
-      "size": 95387960,
-      "sha256": "f6c742d3d50c1141fb48f8e721a3d0d6fd4f2a6d3b2ccca0e8b8227a0558cc29"
+      "name": "PureWriter-5.8.0-Windows-x64.exe",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.8.0-Windows-x64.exe",
+      "size": 95400248,
+      "sha256": "ca4032b56aaab3132627a702b62b12fd648222be763b998670aada9ef3138f08"
     },
     "macos-aarch64": {
-      "name": "PureWriter-5.7.0-macOS-aarch64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-macOS-aarch64.dmg",
-      "size": 91516487,
-      "sha256": "0a5b67c7f3ab76ba0f8862df6f7e5a7d3a07ce2797e35efd6d68b755b9b3c655"
+      "name": "PureWriter-5.8.0-macOS-aarch64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.8.0-macOS-aarch64.dmg",
+      "size": 91614790,
+      "sha256": "4f3230c68f1bf2dc3b651dc76203efd2baa192d97080cd885215eb94cb11a7e2"
     },
     "macos-x64": {
-      "name": "PureWriter-5.7.0-macOS-x64.dmg",
-      "url": "https://kuromi.drakeet.cn/PureWriter-5.7.0-macOS-x64.dmg",
-      "size": 93140586,
-      "sha256": "b1385814b419b2a6cd1c848afec9aa4b69d9a54f9b91cbc4666df98f714cc82a"
+      "name": "PureWriter-5.8.0-macOS-x64.dmg",
+      "url": "https://kuromi.drakeet.cn/PureWriter-5.8.0-macOS-x64.dmg",
+      "size": 93121855,
+      "sha256": "6cdb78941be48caea296ba6978a376092c5b91840afe2d4f8d49ab1d8acf5394"
     }
   },
   "notes": {
     "zh-Hans": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "快捷输入栏可以在电脑上直接新建和编辑快捷项了：常用的短语、成对的符号、日期与时间，或是撤销、一键排版这样的功能。点栏尾的「＋」新建，右键一项选「编辑」修改。（点顶栏左侧第二个按钮可以显示或隐藏快捷输入栏。）",
-        "快捷输入栏按「栏」分行显示，与手机上的分栏一致。在右上角设置菜单的「快捷输入栏」里，可以拖动快捷项排序、移到别的栏，并选择显示哪些栏。",
-        "快捷输入栏里的功能项带有图标，也可以设为只显示图标；栏的高度随内容自动变化，不必再拖动分割线。"
+        "修复切换主题后，再打开之前关掉的文章时文字颜色没有跟着更新、几乎看不清的问题。",
+        "修复 Windows 上窗口贴靠在屏幕左半或右半边（Win+←／→）时关闭，下次启动位置略有偏移的问题；窗口放在外接屏幕上时，下次启动也会回到那块屏幕。",
+        "修复查找替换时，连续点「替换」只有第一次生效的问题。"
       ]
     },
     "zh-Hant": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "快捷輸入欄可以在電腦上直接新增和編輯快捷項了：常用的短語、成對的符號、日期與時間，或是復原、一鍵排版這樣的功能。點擊欄尾的「＋」新增，在快捷項上按右鍵選「編輯」即可修改。（點擊頂端左側的第二個按鈕，可以顯示或隱藏快捷輸入欄。）",
-        "快捷輸入欄按「欄」分行顯示，與手機上的分欄一致。在右上角設定選單的「快捷輸入欄」裡，可以拖曳快捷項排序、移到別的欄，並選擇要顯示哪些欄。",
-        "快捷輸入欄裡的功能項附有圖示，也可以設為只顯示圖示；欄的高度隨內容自動變化，不必再拖曳分隔線。"
+        "修正切換主題後，再開啟之前關掉的文章時文字顏色沒有跟著更新、幾乎看不清楚的問題。",
+        "修正 Windows 上視窗貼齊在螢幕左半或右半邊（Win+←／→）時關閉，下次啟動位置略有偏移的問題；視窗放在外接螢幕上時，下次啟動也會回到那個螢幕。",
+        "修正尋找並替換時，連續按「替換」只有第一次有效的問題。"
       ]
     },
     "zh-HK": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "快捷輸入欄可以在電腦上直接新增及編輯快捷項了：常用的短語、成對的符號、日期與時間，或是撤銷、一鍵排版這類功能。點擊欄尾的「＋」新增，在快捷項上按右鍵選「編輯」即可修改。（點擊頂欄左側第二個按鈕，可以顯示或隱藏快捷輸入欄。）",
-        "快捷輸入欄按「欄」分行顯示，與手機上的分欄一致。在右上角設置選單的「快捷輸入欄」中，可以拖動快捷項排序、移到其他欄，並選擇要顯示哪些欄。",
-        "快捷輸入欄中的功能項帶有圖示，亦可以設為只顯示圖示；欄的高度隨內容自動變化，不必再拖動分隔線。"
+        "修正切換主題後，再開啟之前關閉的文章時文字顏色沒有跟著更新、幾乎看不清楚的問題。",
+        "修正 Windows 上視窗貼齊在螢幕左半或右半邊（Win+←／→）時關閉，下次啟動位置略有偏移的問題；視窗放在外接螢幕上時，下次啟動也會回到該螢幕。",
+        "修正尋找並替換時，連續按「替換」只有第一次有效的問題。"
       ]
     },
     "en": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "You can now create and edit shortcuts right on your computer: frequently used phrases, paired symbols, dates and times, or actions such as Undo and One-click formatting. Click “+” at the end of a row to add one, or right-click a shortcut and choose “Edit…”. (Use the second button at the top left to show or hide the shortcut bar.)",
-        "The shortcut bar now shows each row on its own line, matching the rows on your phone. Open “Shortcut bar…” in the settings menu at the top right to drag shortcuts into a new order, move them to another row, and choose which rows to show.",
-        "Actions in the shortcut bar now have icons and can be set to show the icon only. The bar’s height follows its content, so there is no divider to drag."
+        "Fixed text keeping the previous theme’s color, and being almost unreadable, when you reopen a document that was closed before you switched themes.",
+        "Fixed the window ending up slightly out of place on the next launch after being closed while snapped to the left or right half of the screen (Win+←/→) on Windows. A window left on an external display now also reopens on that display.",
+        "Fixed “Replace” in find and replace only working the first time when clicked several times in a row."
       ]
     },
     "ja": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "パソコン上でショートカットを直接作成・編集できるようになりました。よく使うフレーズ、対になる記号、日付と時刻のほか、「元に戻す」や「一括整形」などの機能も登録できます。段の末尾の「＋」をクリックすると追加でき、ショートカットを右クリックして「編集」を選ぶと変更できます。（左上の 2 番目のボタンで、ショートカットバーの表示／非表示を切り替えられます。）",
-        "ショートカットバーは段ごとに分かれて表示され、スマートフォンの段と同じ構成になりました。右上の設定メニューの「ショートカットバー」から、ショートカットをドラッグして並べ替えたり別の段へ移動したり、表示する段を選んだりできます。",
-        "ショートカットバーの機能にはアイコンが付き、アイコンのみの表示にも設定できます。バーの高さは内容に合わせて変わるため、区切り線をドラッグする必要はなくなりました。"
+        "テーマを切り替えたあと、前に閉じた文章を開き直すと文字の色が切り替わらず、ほとんど読めなくなる問題を修正しました。",
+        "Windows で、ウィンドウを画面の左半分または右半分にスナップ（Win+←／→）した状態で終了すると、次回起動時に位置が少しずれる問題を修正しました。外部ディスプレイに置いたウィンドウも、次回はそのディスプレイで開きます。",
+        "検索と置換で、「置換」を続けてクリックしても最初の 1 回しか置換されない問題を修正しました。"
       ]
     },
     "ru": {
-      "version": "5.7.0",
+      "version": "5.8.0",
       "items": [
-        "Теперь быстрые кнопки можно создавать и редактировать прямо на компьютере: часто используемые фразы, парные символы, дату и время или действия вроде «Отменить» и «Форматирование одним нажатием». Нажмите «+» в конце ряда, чтобы добавить новую, или щёлкните быструю кнопку правой кнопкой мыши и выберите «Редактировать…». (Показать или скрыть панель быстрого ввода можно второй кнопкой в левом верхнем углу.)",
-        "Панель быстрого ввода теперь показывает каждый ряд отдельно — так же, как ряды на телефоне. Откройте «Панель быстрого ввода…» в меню «Настройки» в правом верхнем углу, чтобы перетаскиванием менять порядок быстрых кнопок, переносить их в другой ряд и выбирать, какие ряды показывать.",
-        "У действий на панели быстрого ввода появились значки, и для них можно включить показ только значка. Высота панели подстраивается под содержимое, так что перетаскивать разделитель больше не нужно."
+        "Исправлено: после смены темы текст в повторно открытом документе, закрытом ранее, сохранял цвет прежней темы и был почти не виден.",
+        "Исправлено: в Windows окно, закрытое в прикреплённом к левой или правой половине экрана состоянии (Win+←/→), при следующем запуске оказывалось немного смещённым. Окно, оставленное на внешнем экране, теперь тоже открывается на нём.",
+        "Исправлено: при поиске и замене кнопка «Заменить» при нескольких нажатиях подряд срабатывала только в первый раз."
       ]
     }
   }
